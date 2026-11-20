@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal de Capacitación Autónoma IHFB El Salvador</title>
+  <title>IHFB Training Portal • Nivelación y Acreditación Operativa</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,18 +12,29 @@
   <!-- Google Identity Services Oficial -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
           colors: {
+            obsidian: '#0A0A0B',
             ihfb: {
-              navy: '#002B49',
-              primary: '#0B4F8A',
-              accent: '#2563EB',
-              emerald: '#059669',
-              amber: '#D97706',
-              dark: '#081726'
+              navy: '#0A0A0B',
+              primary: '#1A64FF',
+              accent: '#1A64FF',
+              magenta: '#EC4899',
+              emerald: '#10B981',
+              amber: '#F59E0B',
+              dark: '#090D16'
             }
           }
         }
@@ -32,20 +43,71 @@
   </script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
-    
     /* SUPRESIÓN TOTAL DE BARRAS DE GOOGLE TRANSLATE */
     html, body { 
-      font-family: 'Plus Jakarta Sans', sans-serif; 
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
       top: 0px !important; 
-      position: static !important; 
+      position: static !important;
+      background-color: #F8FAFC;
+      color: #0F172A;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scroll::-webkit-scrollbar-track { background: #F1F5F9; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 9999px; }
+    html {
+      font-size: clamp(13.5px, 0.22vw + 12.6px, 15.5px);
+    }
+    h1, h2, h3, h4, .font-display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+
+    .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
     .modal-glass {
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Architectural Surface Elevation (IHFB Executive Standard) */
+    .exec-panel {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 14px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 4px 14px -2px rgba(15, 23, 42, 0.03);
+    }
+    .exec-input {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 10px;
+      font-size: 13px;
+      color: #0F172A;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .exec-input:focus {
+      outline: none;
+      border-color: #1A64FF;
+      box-shadow: 0 0 0 3px rgba(26, 100, 255, 0.12);
+    }
+
+    /* Collapsible Desktop Sidebar */
+    #mainNavMenu {
+      transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+    }
+    #mainNavMenu.sidebar-collapsed {
+      width: 4.75rem;
+    }
+    #mainNavMenu.sidebar-collapsed .sb-hide {
+      display: none !important;
+    }
+    #mainNavMenu.sidebar-collapsed .sb-center {
+      justify-content: center !important;
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    #mainNavMenu.sidebar-collapsed .nav-btn {
+      justify-content: center !important;
+      padding-left: 0.65rem !important;
+      padding-right: 0.65rem !important;
     }
 
     /* ELIMINA 100% CUALQUIER BARRA O POPUP DE GOOGLE TRANSLATE */
@@ -61,9 +123,6 @@
       height: 0px !important;
       width: 0px !important;
       opacity: 0 !important;
-    }
-    body {
-      top: 0px !important;
     }
     .goog-text-highlight {
       background-color: transparent !important;
@@ -87,655 +146,790 @@
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
-<body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white relative">
+<body class="bg-[#F8FAFC] text-slate-900 antialiased min-h-screen flex flex-col lg:flex-row selection:bg-[#1A64FF] selection:text-white relative">
 
-  <!-- ================= TOPBAR INSTITUCIONAL PREMIUM ================= -->
-  <header class="bg-[#002B49] text-white shadow-lg sticky top-0 z-40 border-b border-blue-950">
-    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
-      
-      <!-- LOGO OFICIAL IHFB -->
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="handleLogoClick()">
-        <img src="logo.png" onerror="this.onerror=null; this.src='logo.png.jpg';" alt="Logo IHFB" class="w-11 h-11 object-contain rounded-xl bg-white p-1 shadow-md shrink-0 border border-slate-100">
+  <!-- Mobile Backdrop -->
+  <div id="mobileTrainingBackdrop" onclick="toggleMobileTrainingSidebar(false)" class="fixed inset-0 bg-slate-950/60 z-30 hidden lg:hidden"></div>
+
+  <!-- ================= EXECUTIVE LEFT SIDEBAR (SHOWN WHEN LOGGED IN / ADMIN) ================= -->
+  <aside id="mainNavMenu" class="hidden fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#0A0A0B] text-slate-400 flex-col justify-between shrink-0 border-r border-slate-800/90 z-40 -translate-x-full lg:translate-x-0">
+    <div>
+      <!-- Brand Header + Collapse Button -->
+      <div class="h-16 px-4 flex items-center justify-between gap-2 border-b border-slate-800/80 sb-center">
+        <div onclick="handleLogoClick()" class="flex items-center gap-3 min-w-0 cursor-pointer">
+          <div class="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center shrink-0">
+            <img src="logo.png" onerror="this.onerror=null; this.src='logo.png.jpg';" alt="IHFB" class="max-w-full max-h-full object-contain">
+          </div>
+          <div class="min-w-0 sb-hide">
+            <div class="text-sm font-bold text-white tracking-tight truncate">IHFB Training</div>
+            <div class="flex items-center gap-1 mt-1">
+              <span class="w-3 h-0.5 bg-[#1A64FF] rounded-full"></span>
+              <span class="w-3 h-0.5 bg-[#EC4899] rounded-full"></span>
+              <span class="w-3 h-0.5 bg-[#10B981] rounded-full"></span>
+              <span class="text-[9px] font-semibold text-slate-500 uppercase tracking-widest ml-1">Academy</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" onclick="toggleDesktopTrainingSidebar()" title="Contraer / Expandir menú" class="hidden lg:inline-flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition shrink-0 cursor-pointer">
+          <i id="sbCollapseIcon" class="fa-solid fa-angles-left text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="px-3 py-4 space-y-5 overflow-y-auto custom-scroll">
         <div>
-          <h1 class="text-sm sm:text-base font-extrabold tracking-tight text-white leading-tight">
-            Portal de Capacitación Autónoma
-          </h1>
-          <p class="text-[11px] text-blue-200">IHFB El Salvador • Nivelación y Acreditación Operativa</p>
+          <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Ruta Formativa</div>
+          <nav class="space-y-1 text-[13px] font-medium">
+            <button onclick="switchTab('dashboard'); toggleMobileTrainingSidebar(false)" id="nav-dashboard" title="Home Formativo" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-2 border-l-[#1A64FF] transition cursor-pointer">
+              <i class="fa-solid fa-gauge-high w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Home Formativo</span>
+            </button>
+            <button onclick="switchTab('modulos'); toggleMobileTrainingSidebar(false)" id="nav-modulos" title="Módulos de Aprendizaje" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 border-l-2 border-l-transparent hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-layer-group w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Módulos de Aprendizaje</span>
+            </button>
+            <button onclick="switchTab('practicas'); toggleMobileTrainingSidebar(false)" id="nav-practicas" title="Prácticas en Vivo" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 border-l-2 border-l-transparent hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-laptop-code w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Prácticas en Vivo</span>
+            </button>
+            <button onclick="switchTab('quizzes'); toggleMobileTrainingSidebar(false)" id="nav-quizzes" title="Evaluaciones (Quizzes)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 border-l-2 border-l-transparent hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-circle-question w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Evaluaciones (Quizzes)</span>
+            </button>
+            <button onclick="switchTab('progreso'); toggleMobileTrainingSidebar(false)" id="nav-progreso" title="Mi Progreso y Validación" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 border-l-2 border-l-transparent hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-award w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Mi Progreso y Validación</span>
+            </button>
+            <button onclick="switchTab('faq'); toggleMobileTrainingSidebar(false)" id="nav-faq" title="Preguntas y Soporte" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 border-l-2 border-l-transparent hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+              <i class="fa-solid fa-comments w-4 text-center text-[#60A5FA] shrink-0"></i>
+              <span class="sb-hide truncate">Preguntas y Soporte</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Admin Database Quick Access -->
+        <div id="nav-admin-db" class="hidden pt-2 border-t border-slate-800/80">
+          <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Coordinación</div>
+          <button onclick="openAdminDatabaseModal(); toggleMobileTrainingSidebar(false)" title="Google Sheets & Auditoría" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition cursor-pointer font-semibold">
+            <i class="fa-solid fa-table-cells w-4 text-center text-[#10B981] shrink-0"></i>
+            <span class="sb-hide truncate">Google Sheets & Auditoría</span>
+          </button>
         </div>
       </div>
-
-      <!-- BOTONES DE IDIOMA EN LA ESQUINA SUPERIOR DERECHA + BADGE USUARIO -->
-      <div class="flex items-center space-x-3">
-        
-        <!-- SELECTOR INTERNO PILL-STYLE EN LA ESQUINA DERECHA -->
-        <div class="flex items-center bg-white/10 backdrop-blur rounded-full p-1 border border-white/20 text-xs shadow-inner">
-          <button onclick="triggerGoogleTranslate('es')" id="lang-btn-es" class="px-3 py-1 rounded-full font-bold text-slate-900 bg-white transition shadow-sm">
-            Español
-          </button>
-          <button onclick="triggerGoogleTranslate('en')" id="lang-btn-en" class="px-3 py-1 rounded-full font-medium text-blue-200 hover:text-white transition">
-            English
-          </button>
-          <button onclick="triggerGoogleTranslate('ko')" id="lang-btn-ko" class="px-3 py-1 rounded-full font-medium text-blue-200 hover:text-white transition">
-            한국어
-          </button>
-        </div>
-
-        <!-- Perfil Usuario Conectado -->
-        <div id="topUserBadge" onclick="openProfileEditModal()" title="Haz clic para modificar tu nombre o rol" class="hidden cursor-pointer hover:bg-[#071F36] transition items-center space-x-2 bg-[#061B2E] px-3.5 py-1.5 rounded-full border border-blue-400/25 text-xs shadow-sm">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="topUserName" class="font-medium text-white truncate max-w-[120px] sm:max-w-[170px]">Usuario</span>
-          <span class="text-blue-400">|</span>
-          <span id="topUserRole" class="text-blue-200 font-bold uppercase text-[10px] tracking-wider">DOCENTE</span>
-          <i class="fa-solid fa-user-pen text-[11px] text-blue-300 ml-1"></i>
-          <button onclick="event.stopPropagation(); requestLogoutConfirmation();" title="Cerrar sesión" class="ml-1 text-slate-400 hover:text-rose-400">
-            <i class="fa-solid fa-right-from-bracket"></i>
-          </button>
-        </div>
-
-        <!-- Indicador Admin Activo -->
-        <div id="topAdminBadge" class="hidden items-center gap-2 bg-slate-900 text-slate-200 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-700 shadow-sm">
-          <i class="fa-solid fa-shield-halved text-blue-400 text-xs"></i>
-          <span>Modo Admin</span>
-          <button onclick="closeAdminSession()" title="Salir de administración" class="ml-1 text-slate-400 hover:text-rose-400">&times;</button>
-        </div>
-      </div>
-
     </div>
 
-    <!-- NAVEGACIÓN PRINCIPAL -->
-    <nav id="mainNavMenu" class="hidden bg-[#071F36] border-t border-blue-950 px-3 sm:px-6 shadow-md">
-      <div class="w-full max-w-[1600px] mx-auto flex items-center space-x-2 overflow-x-auto custom-scroll py-2 text-xs sm:text-sm font-medium">
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-xl text-white bg-blue-700 whitespace-nowrap transition flex items-center gap-2 shadow font-bold">
-          <i class="fa-solid fa-gauge-high text-xs"></i> <span>Home Formativo</span>
-        </button>
-        <button onclick="switchTab('modulos')" id="nav-modulos" class="nav-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 whitespace-nowrap transition flex items-center gap-2 font-semibold">
-          <i class="fa-solid fa-layer-group text-xs"></i> <span>Módulos de Aprendizaje</span>
-        </button>
-        <button onclick="switchTab('practicas')" id="nav-practicas" class="nav-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 whitespace-nowrap transition flex items-center gap-2 font-semibold">
-          <i class="fa-solid fa-laptop-code text-xs"></i> <span>Prácticas en Vivo</span>
-        </button>
-        <button onclick="switchTab('quizzes')" id="nav-quizzes" class="nav-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 whitespace-nowrap transition flex items-center gap-2 font-semibold">
-          <i class="fa-solid fa-circle-question text-xs"></i> <span>Evaluaciones (Quizzes)</span>
-        </button>
-        <button onclick="switchTab('progreso')" id="nav-progreso" class="nav-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 whitespace-nowrap transition flex items-center gap-2 font-semibold">
-          <i class="fa-solid fa-award text-xs"></i> <span>Mi Progreso y Validación</span>
-        </button>
-        <button onclick="switchTab('faq')" id="nav-faq" class="nav-btn px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 whitespace-nowrap transition flex items-center gap-2 font-semibold">
-          <i class="fa-solid fa-comments text-xs"></i> <span>Preguntas y Soporte</span>
-        </button>
-        <button onclick="openAdminDatabaseModal()" id="nav-admin-db" class="hidden nav-btn px-4 py-2 rounded-xl text-emerald-300 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-500/30 whitespace-nowrap transition flex items-center gap-2 font-bold">
-          <i class="fa-solid fa-table-cells text-xs text-emerald-400"></i> <span>Google Sheets & Auditoría</span>
-        </button>
-      </div>
-    </nav>
-  </header>
-
-  <!-- ================= CONTENEDOR CENTRAL ================= -->
-  <main class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-6 flex-1">
-
-    <!-- 1. SECCIÓN: INICIO, REGISTRO Y LOGIN VINCULADO REAL CON GOOGLE -->
-    <section id="section-inicio" class="tab-content block space-y-6">
-      
-      <!-- BANNER INSTITUCIONAL (EDITABLE EN MODO ADMIN) -->
-      <div class="relative bg-gradient-to-r from-[#002B49] via-[#0A3C66] to-[#0B4F8A] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col lg:flex-row gap-6 items-center justify-between border border-blue-900/50">
-        <!-- Botón Admin para editar cartel -->
-        <button id="btnEditBannerAdmin" onclick="openAdminBannerEditModal()" class="hidden absolute top-4 right-4 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow-md items-center gap-1.5 z-10">
-          <i class="fa-solid fa-pen"></i> Editar Cartel de Bienvenida
-        </button>
-
-        <div class="space-y-3 max-w-3xl">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-            <i class="fa-solid fa-shield-halved text-[10px]"></i> <span id="portalBannerTag">Capacitación Oficial y Nivelación Autónoma</span>
-          </span>
-          <h2 id="portalBannerTitle" class="text-2xl sm:text-3xl font-black tracking-tight">Bienvenido al Espacio Formativo IHFB</h2>
-          <p id="portalBannerDesc" class="text-slate-200 text-xs sm:text-sm leading-relaxed">
-            Plataforma diseñada para el autoaprendizaje, reposición de jornadas no presenciadas y acreditación modular de competencias operativas para todo el equipo en El Salvador.
-          </p>
-        </div>
-        <div class="flex items-center gap-8 bg-white/10 backdrop-blur px-8 py-4 rounded-2xl border border-white/10 text-center shrink-0">
-          <div>
-            <div id="portalBannerModulesNum" class="text-3xl sm:text-4xl font-black text-white">7</div>
-            <div class="text-[10px] uppercase font-bold text-slate-200 tracking-wider">Módulos</div>
-          </div>
-          <div class="h-10 w-px bg-white/20"></div>
-          <div>
-            <div id="portalBannerApprovalNum" class="text-3xl sm:text-4xl font-black text-emerald-400">80%</div>
-            <div class="text-[10px] uppercase font-bold text-slate-200 tracking-wider">Aprobación</div>
+    <!-- Sidebar User Account Footer -->
+    <div class="p-3.5 border-t border-slate-800/80 bg-black/30">
+      <div onclick="openProfileEditModal()" title="Editar perfil" class="flex items-center gap-3 sb-center cursor-pointer group">
+        <div id="sbUserAvatar" class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 font-bold text-xs flex items-center justify-center shrink-0">U</div>
+        <div class="min-w-0 flex-1 sb-hide">
+          <div id="sbUserName" class="text-[13px] font-semibold text-slate-100 truncate group-hover:text-white">Usuario</div>
+          <div class="mt-1">
+            <span id="sbUserRole" class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/25 text-[#34D399] border border-[#10B981]/50">Docente</span>
           </div>
         </div>
+        <button type="button" onclick="event.stopPropagation(); requestLogoutConfirmation();" title="Cerrar sesión" class="sb-hide text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
+          <i class="fa-solid fa-right-from-bracket text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT SHELL ================= -->
+  <div class="flex-1 min-w-0 flex flex-col min-h-screen">
+
+    <!-- Clean Executive Top Command Bar -->
+    <header class="bg-white border-b border-slate-200/90 sticky top-0 z-30 shrink-0">
+      <!-- Signature IHFB Tri-Color Top Hairline -->
+      <div class="h-1 w-full flex">
+        <div class="flex-1 bg-[#1A64FF]"></div>
+        <div class="flex-1 bg-[#EC4899]"></div>
+        <div class="flex-1 bg-[#10B981]"></div>
       </div>
 
-      <!-- Cuadrícula de Acceso PROPORCIONADA Y DE ALTO IMPACTO -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="w-full px-4 sm:px-8 h-15 py-2.5 flex items-center justify-between gap-4">
+        <!-- Brand & Page Title -->
+        <div class="flex items-center gap-3 min-w-0">
+          <button id="btnMobileMenuToggle" type="button" onclick="toggleMobileTrainingSidebar(true)" class="hidden lg:hidden p-2 -ml-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 cursor-pointer">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="flex items-center gap-3 cursor-pointer min-w-0" onclick="handleLogoClick()">
+            <div class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200 p-1 flex items-center justify-center shrink-0">
+              <img src="logo.png" onerror="this.onerror=null; this.src='logo.png.jpg';" alt="Logo IHFB" class="max-w-full max-h-full object-contain">
+            </div>
+            <div class="min-w-0">
+              <h1 id="workspaceHeaderTitle" class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 truncate">
+                Portal de Capacitación Autónoma
+              </h1>
+              <p class="text-[11px] text-slate-400 truncate hidden sm:block">IHFB El Salvador • Nivelación y Acreditación Operativa</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Controls: Language Switcher + User Pill + Admin Indicator -->
+        <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
+          <!-- Pill Language Switcher -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/90 text-xs">
+            <button onclick="triggerGoogleTranslate('es')" id="lang-btn-es" class="px-2.5 py-1 rounded-lg font-bold text-slate-900 bg-white transition shadow-2xs cursor-pointer">
+              Español
+            </button>
+            <button onclick="triggerGoogleTranslate('en')" id="lang-btn-en" class="px-2.5 py-1 rounded-lg font-medium text-slate-500 hover:text-slate-900 transition cursor-pointer">
+              English
+            </button>
+            <button onclick="triggerGoogleTranslate('ko')" id="lang-btn-ko" class="px-2.5 py-1 rounded-lg font-medium text-slate-500 hover:text-slate-900 transition cursor-pointer">
+              한국어
+            </button>
+          </div>
+
+          <!-- Active User Pill (Top Bar) -->
+          <div id="topUserBadge" onclick="openProfileEditModal()" title="Haz clic para modificar tu nombre o rol" class="hidden cursor-pointer hover:bg-slate-50 transition items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-slate-200 text-xs shadow-2xs">
+            <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
+            <span id="topUserName" class="font-semibold text-slate-800 truncate max-w-[110px] sm:max-w-[160px]">Usuario</span>
+            <span id="topUserRole" class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/20 text-[#34D399] border border-[#10B981]/40">DOCENTE</span>
+            <button onclick="event.stopPropagation(); requestLogoutConfirmation();" title="Cerrar sesión" class="ml-0.5 text-slate-400 hover:text-rose-600 transition cursor-pointer">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+
+          <!-- Admin Active Badge -->
+          <div id="topAdminBadge" class="hidden items-center gap-2 bg-[#0A0A0B] text-white px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-800 shadow-sm">
+            <i class="fa-solid fa-shield-halved text-[#EC4899] text-xs"></i>
+            <span>Admin</span>
+            <button onclick="closeAdminSession()" title="Salir de administración" class="ml-1 text-slate-400 hover:text-rose-400 cursor-pointer">&times;</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= CONTENEDOR CENTRAL ================= -->
+    <main class="w-full max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1">
+
+      <!-- 1. SECCIÓN: INICIO, REGISTRO Y LOGIN VINCULADO REAL CON GOOGLE -->
+      <section id="section-inicio" class="tab-content block space-y-6">
         
-        <!-- Tarjeta de Acceso Ejecutiva (PROPORCIONAL Y SIN ESPACIOS VACÍOS) -->
-        <div class="lg:col-span-5 bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-          
-          <!-- Encabezado de la Tarjeta de Acceso -->
-          <div class="bg-gradient-to-r from-[#002B49] to-[#0A3C66] text-white p-5 flex items-center justify-between border-b border-blue-950">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-blue-300 text-base shadow-inner">
-                <i class="fa-solid fa-id-badge"></i>
-              </div>
-              <div>
-                <h3 class="text-sm font-extrabold text-white leading-tight">Acceso Institucional Seguro</h3>
-                <p class="text-[11px] text-blue-200">Acreditación Oficial IHFB El Salvador</p>
-              </div>
-            </div>
-            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold">
-              Google Workspace
-            </span>
+        <!-- EXECUTIVE HERO BANNER (EDITABLE EN MODO ADMIN) -->
+        <div class="relative bg-[#0A0A0B] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between border border-slate-800 overflow-hidden">
+          <!-- Subtle Ambient Gradient -->
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#1e293b_0%,transparent_55%)] opacity-70 pointer-events-none"></div>
+          <!-- Left Tri-Color Accent -->
+          <div class="absolute left-0 top-0 bottom-0 w-1.5 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
           </div>
 
-          <div class="p-6 space-y-5">
-            <!-- PESTAÑAS CON DISEÑO DE ALTO CONTRASTE -->
-            <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl gap-1 border border-slate-200">
-              <button type="button" onclick="setAuthTab('register')" id="tabBtnRegister" class="py-2.5 px-3 text-xs font-extrabold rounded-lg transition text-white bg-blue-700 shadow-sm flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Registrarse</span>
-              </button>
-              <button type="button" onclick="setAuthTab('login')" id="tabBtnLogin" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-right-to-bracket text-[11px]"></i> <span>Iniciar Sesión</span>
-              </button>
-            </div>
-
-            <!-- VISTA 1: REGISTRARSE (EL BOTÓN GOOGLE SE ACTIVA SOLO SI HAY NOMBRE Y ROL) -->
-            <div id="authViewRegister" class="space-y-4">
-              <div class="p-3 bg-blue-50/80 border border-blue-100 rounded-xl text-xs text-blue-900 leading-relaxed">
-                <span class="font-bold flex items-center gap-1 text-blue-950 mb-0.5">
-                  <i class="fa-solid fa-circle-info text-blue-600"></i> Registro por primera vez:
-                </span>
-                Digita tu nombre completo y rol operativo. El botón de Google se habilitará automáticamente para vincular tu cuenta institucional.
-              </div>
-
-              <div class="space-y-3.5">
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <i class="fa-solid fa-user text-slate-400 text-[10px]"></i> 1. Nombre Completo Oficial (Para constancia) *
-                  </label>
-                  <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Nelson Edgardo Morales" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:ring-2 focus:ring-blue-600 outline-none transition font-medium" />
-                </div>
-
-                <div>
-                  <label class="block text-xs font-bold text-slate-700 mb-1 flex items-center gap-1">
-                    <i class="fa-solid fa-briefcase text-slate-400 text-[10px]"></i> 2. Rol Operativo *
-                  </label>
-                  <select id="regUserRole" onchange="validateRegistrationForm()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm focus:ring-2 focus:ring-blue-600 outline-none bg-white font-medium">
-                    <option value="Docente">Docente</option>
-                    <option value="Tutor">Tutor</option>
-                    <option value="Facilitador">Facilitador</option>
-                    <option value="Monitor">Monitor</option>
-                    <option value="Supervisor">Supervisor</option>
-                    <option value="Auditor">Auditor</option>
-                  </select>
-                </div>
-
-                <!-- CONTENEDOR DEL BOTÓN DE GOOGLE: DESHABILITADO SI FALTA EL NOMBRE -->
-                <div class="pt-2">
-                  <!-- Indicador de bloqueo cuando está vacío -->
-                  <div id="regGoogleDisabledNotice" class="w-full py-3 px-4 bg-slate-100 border border-slate-200 text-slate-400 font-bold rounded-full text-xs text-center flex items-center justify-center gap-2 cursor-not-allowed">
-                    <i class="fa-solid fa-lock text-slate-400 text-xs"></i>
-                    <span>Escribe tu nombre para activar Google</span>
-                  </div>
-
-                  <!-- Botón real de Google GSI (Se muestra únicamente cuando se llena el nombre) -->
-                  <div id="regGoogleActiveBox" class="hidden flex justify-center w-full">
-                    <div id="gsi_register_button" class="w-full flex justify-center"></div>
-                  </div>
-                </div>
-
-                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-500 space-y-1">
-                  <div class="flex items-center gap-1 font-semibold text-slate-700">
-                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> Garantía de validez:
-                  </div>
-                  <div>Tu nombre oficial quedará impreso en tu constancia digital y sincronizado con la base de datos central.</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- VISTA 2: INICIAR SESIÓN (DISEÑO LLENO, PROPORCIONADO Y ELEGANTE) -->
-            <div id="authViewLogin" class="space-y-4 hidden py-2">
-              <div class="p-3.5 bg-blue-50/80 border border-blue-100 rounded-xl text-xs text-blue-950 space-y-1">
-                <div class="font-extrabold flex items-center gap-1.5 text-blue-900">
-                  <i class="fa-solid fa-user-check text-blue-600"></i> Retoma de formación autónoma
-                </div>
-                <p class="text-slate-600 text-[11px] leading-relaxed">
-                  Si ya te registraste anteriormente, selecciona tu cuenta de Google. El portal cargará tus avances, notas y constancias de inmediato.
-                </p>
-              </div>
-
-              <!-- BOTÓN OFICIAL DE GOOGLE GSI CENTRADO -->
-              <div class="py-3 flex flex-col items-center justify-center">
-                <div id="gsi_login_button" class="w-full flex justify-center"></div>
-              </div>
-
-              <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl text-[11px] text-slate-600 space-y-2">
-                <div class="font-bold text-slate-800 flex items-center gap-1.5">
-                  <i class="fa-solid fa-circle-check text-emerald-600"></i> Cuentas autorizadas:
-                </div>
-                <div class="space-y-1 pl-4 text-[10px] text-slate-500">
-                  <div>• Cuentas oficiales del MINED (<code>@clases.edu.sv</code>)</div>
-                  <div>• Cuentas del equipo técnico IHFB (<code>@ihateflyingbugs.com</code>)</div>
-                  <div>• Cuentas Google registradas en el programa</div>
-                </div>
-              </div>
-
-              <div class="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
-                <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5 text-xs"></i>
-                <span>¿Es tu primera vez aquí? Ve a la pestaña <strong>Registrarse</strong> para crear tu expediente.</span>
-              </div>
-            </div>
-
-            <div class="pt-3 text-center text-[10px] text-slate-400 border-t border-slate-100 flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-server text-blue-500 text-[9px]"></i>
-              <span>Sincronización en tiempo real con Google Sheets Oficial</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Video de Inducción General (Reproducción directa en la misma página) -->
-        <div class="lg:col-span-7 bg-white rounded-2xl shadow-lg border border-slate-200 p-6 flex flex-col justify-between relative">
-          <!-- Botón Admin para cambiar el Video de Inducción -->
-          <button id="btnEditIntroVideoAdmin" onclick="openAdminIntroVideoEditModal()" class="hidden absolute top-4 right-4 px-3 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow-md items-center gap-1.5 z-10">
-            <i class="fa-solid fa-video"></i> Editar Video
+          <!-- Botón Admin para editar cartel -->
+          <button id="btnEditBannerAdmin" onclick="openAdminBannerEditModal()" class="hidden absolute top-4 right-4 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow-md items-center gap-1.5 z-10 cursor-pointer">
+            <i class="fa-solid fa-pen"></i> Editar Cartel de Bienvenida
           </button>
 
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="text-xs uppercase tracking-wider font-extrabold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md">
-                Guía de Inducción
-              </span>
-              <span class="text-xs text-slate-400">Duración: 2 min 40s</span>
-            </div>
-            <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-2">¿Cómo funciona la capacitación autónoma?</h3>
-            <p class="text-xs text-slate-600 leading-relaxed mb-4">
-              Cada módulo contiene cápsulas en video y manuales operativos estándar. Para acreditar un módulo, debes realizar la práctica interactiva y aprobar la evaluación con mínimo 80%.
+          <div class="relative z-10 pl-2 space-y-2.5 max-w-3xl">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-white/10 text-[#60A5FA] border border-white/15">
+              <i class="fa-solid fa-shield-halved text-[10px] text-[#10B981]"></i> <span id="portalBannerTag">Capacitación Oficial y Nivelación Autónoma</span>
+            </span>
+            <h2 id="portalBannerTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Bienvenido al Espacio Formativo IHFB</h2>
+            <p id="portalBannerDesc" class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Plataforma diseñada para el autoaprendizaje, reposición de jornadas no presenciadas y acreditación modular de competencias operativas para todo el equipo en El Salvador.
             </p>
-            
-            <!-- REPRODUCTOR EN LA MISMA PÁGINA (INLINE PLAYER) -->
-            <div id="inlineIntroPlayerContainer" class="relative w-full aspect-video bg-slate-950 rounded-xl overflow-hidden shadow-inner flex items-center justify-center border border-slate-800">
-              <img id="introPosterImg" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Aula tecnológica" class="absolute inset-0 w-full h-full object-cover opacity-45">
-              <button onclick="playInlineIntroVideo()" id="btnPlayIntroVideo" class="relative z-10 w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl transition transform hover:scale-110">
-                <i class="fa-solid fa-play text-xl ml-1"></i>
-              </button>
-              <div id="introVideoOverlayBar" class="absolute bottom-3 left-3 right-3 bg-slate-950/85 backdrop-blur px-3.5 py-2.5 rounded-lg flex items-center justify-between text-white text-xs">
-                <span class="font-medium flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-blue-400"></i> Protocolo de Operación en Aula IHFB</span>
-                <span class="text-blue-300 font-semibold text-[11px]">Ver aquí</span>
-              </div>
-            </div>
           </div>
 
-          <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-slate-100 text-center">
-            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-              <div class="w-6 h-6 mx-auto rounded-full bg-blue-100 text-blue-700 text-xs font-bold flex items-center justify-center mb-1">1</div>
-              <p class="text-[11px] font-semibold text-slate-700">Explora Videos & SOP</p>
-            </div>
-            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-              <div class="w-6 h-6 mx-auto rounded-full bg-slate-200 text-slate-700 text-xs font-bold flex items-center justify-center mb-1">2</div>
-              <p class="text-[11px] font-semibold text-slate-700">Simula y Evalúa</p>
-            </div>
-            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-              <div class="w-6 h-6 mx-auto rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center mb-1">3</div>
-              <p class="text-[11px] font-semibold text-slate-700">Obtén tu Constancia</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ================= HOME FORMATIVO / DASHBOARD POST-LOGIN ================= -->
-    <section id="section-dashboard" class="tab-content hidden space-y-6">
-      
-      <!-- Hero de Bienvenida -->
-      <div class="bg-gradient-to-r from-[#002B49] via-[#0A3C66] to-[#0B4F8A] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-blue-900/50">
-        <div class="space-y-2">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-            <i class="fa-solid fa-circle-check text-[10px]"></i> Sesión Activa Oficial
-          </span>
-          <h2 class="text-2xl sm:text-3xl font-black tracking-tight">
-            Hola, <span id="dashUserGreetingName">Docente</span>
-          </h2>
-          <p class="text-slate-200 text-xs sm:text-sm max-w-2xl leading-relaxed">
-            Te encuentras en tu espacio formativo oficial. Aquí puedes continuar con tus lecciones modulares, realizar las prácticas interactivas y consultar los protocolos SOP en cualquier momento.
-          </p>
-        </div>
-
-        <div class="flex flex-col sm:flex-row gap-3 shrink-0">
-          <button onclick="switchTab('modulos')" class="px-5 py-3 rounded-xl bg-white hover:bg-slate-100 text-blue-950 font-black text-xs transition shadow-md flex items-center gap-2">
-            <i class="fa-solid fa-play text-blue-700"></i>
-            <span>Continuar Ruta de Capacitación</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Tarjetas Métricas -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Avance Global</span>
-            <div id="dashMetricProgress" class="text-3xl font-black text-blue-700 mt-1">0%</div>
-            <p class="text-xs text-slate-500 mt-1">Requisito para constancia: 100%</p>
-          </div>
-          <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-chart-pie"></i>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Módulos Aprobados</span>
-            <div id="dashMetricModules" class="text-3xl font-black text-emerald-600 mt-1">0 de 7</div>
-            <p class="text-xs text-slate-500 mt-1">Mínimo 80% en cada quiz</p>
-          </div>
-          <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-award"></i>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center justify-between">
-          <div>
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Próximo Paso</span>
-            <div class="text-base font-extrabold text-slate-800 mt-1" id="dashNextStepLabel">M1: Access & Login</div>
-            <button onclick="goToModulePractice(currentSelectedModuleId)" class="text-xs text-blue-700 hover:underline font-bold mt-1 flex items-center gap-1">
-              <span>Ir a la práctica de hoy</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-          <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-laptop-code"></i>
-          </div>
-        </div>
-      </div>
-
-      <!-- Accesos Directos a los Módulos -->
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <div class="flex justify-between items-center pb-3 border-b border-slate-100">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">Módulos Disponibles en tu Ruta</h3>
-          <span class="text-xs text-slate-400">Selecciona uno para ingresar a sus videos y manuales</span>
-        </div>
-        <div id="dashModulesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-      </div>
-
-    </section>
-
-    <!-- 2. SECCIÓN: MÓDULOS DE APRENDIZAJE -->
-    <section id="section-modulos" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <span class="text-xs font-bold uppercase text-blue-700 tracking-wider">Secuencia Formativa Oficial</span>
-          <h2 class="text-xl font-extrabold text-slate-900">Módulos de Capacitación y Nivelación</h2>
-          <p class="text-xs text-slate-500">Visualiza los videos, consulta los SOP relacionados y avanza a la práctica modular para desbloquear tu evaluación.</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-xs font-medium text-slate-500">Rol activo:</span>
-          <span id="badgeCurrentRole" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-extrabold uppercase">Docente</span>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <aside class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3 lg:sticky lg:top-24">
-          <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Ruta de Módulos</h3>
-            <span id="modulesCompletedCount" class="text-xs font-bold text-blue-700">0 de 7 completados</span>
-          </div>
-          <div id="moduleListContainer" class="space-y-2.5"></div>
-        </aside>
-
-        <div class="lg:col-span-8 space-y-5">
-          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+          <div class="relative z-10 flex items-center gap-6 bg-white/5 backdrop-blur px-7 py-4 rounded-2xl border border-white/10 text-center shrink-0">
             <div>
-              <div class="flex items-center gap-2">
-                <span id="activeModuleCode" class="text-xs font-black px-2.5 py-0.5 rounded bg-blue-100 text-blue-800">M1</span>
-                <span id="activeModuleStatusBadge" class="text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">En Curso</span>
-              </div>
-              <h3 id="activeModuleTitle" class="text-lg font-bold text-slate-900 mt-1">M1: Access & Login</h3>
-              <p id="activeModuleDesc" class="text-xs text-slate-500">Configuración del entorno del aula, conectividad Wi-Fi y acceso a cuentas.</p>
+              <div id="portalBannerModulesNum" class="font-mono text-3xl sm:text-4xl font-extrabold text-white">7</div>
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mt-0.5">Módulos</div>
             </div>
-            <button onclick="goToModulePractice(currentSelectedModuleId)" class="px-5 py-2.5 rounded-xl bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold text-xs transition shadow flex items-center justify-center gap-2 shrink-0">
-              <i class="fa-solid fa-laptop-code"></i>
-              <span>Ir a la Práctica de este Módulo</span>
+            <div class="h-10 w-px bg-white/15"></div>
+            <div>
+              <div id="portalBannerApprovalNum" class="font-mono text-3xl sm:text-4xl font-extrabold text-[#10B981]">80%</div>
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mt-0.5">Aprobación</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuadrícula de Acceso Simétrica y Ejecutiva -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- Tarjeta de Acceso Ejecutiva (5 Cols) -->
+          <div class="lg:col-span-5 exec-panel overflow-hidden flex flex-col">
+            <!-- Encabezado Oscuro Obsidiana -->
+            <div class="bg-[#0A0A0B] text-white p-5 flex items-center justify-between border-b border-slate-800">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#60A5FA] text-base">
+                  <i class="fa-solid fa-id-badge"></i>
+                </div>
+                <div>
+                  <h3 class="text-sm font-bold text-white leading-tight">Acceso Institucional Seguro</h3>
+                  <p class="text-[11px] text-slate-400">Acreditación Oficial IHFB El Salvador</p>
+                </div>
+              </div>
+              <span class="text-[10px] bg-emerald-500/15 text-[#34D399] border border-emerald-500/30 px-2.5 py-1 rounded-full font-bold">
+                Google Workspace
+              </span>
+            </div>
+
+            <div class="p-6 space-y-5 flex-1 flex flex-col justify-between">
+              <div class="space-y-5">
+                <!-- Pestañas Segmented Control -->
+                <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl gap-1 border border-slate-200/90">
+                  <button type="button" onclick="setAuthTab('register')" id="tabBtnRegister" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-white bg-[#0A0A0B] shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Registrarse</span>
+                  </button>
+                  <button type="button" onclick="setAuthTab('login')" id="tabBtnLogin" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-right-to-bracket text-[11px]"></i> <span>Iniciar Sesión</span>
+                  </button>
+                </div>
+
+                <!-- VISTA 1: REGISTRARSE -->
+                <div id="authViewRegister" class="space-y-4">
+                  <div class="p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-xl text-xs text-slate-700 leading-relaxed">
+                    <span class="font-bold flex items-center gap-1.5 text-[#1A64FF] mb-0.5">
+                      <i class="fa-solid fa-circle-info"></i> Registro por primera vez:
+                    </span>
+                    Digita tu nombre completo y rol operativo. El botón de Google se habilitará automáticamente para vincular tu cuenta.
+                  </div>
+
+                  <div class="space-y-3.5">
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        1. Nombre Completo Oficial (Para constancia) *
+                      </label>
+                      <div class="relative flex items-center">
+                        <i class="fa-solid fa-user text-slate-400 text-xs absolute left-3.5 pointer-events-none"></i>
+                        <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Nelson Edgardo Morales" class="exec-input w-full pl-9 pr-3.5 py-2.5 text-sm font-medium" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+                        2. Rol Operativo *
+                      </label>
+                      <select id="regUserRole" onchange="validateRegistrationForm()" class="exec-input w-full px-3.5 py-2.5 text-sm font-semibold">
+                        <option value="Docente">Docente</option>
+                        <option value="Tutor">Tutor</option>
+                        <option value="Facilitador">Facilitador</option>
+                        <option value="Monitor">Monitor</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="Auditor">Auditor</option>
+                      </select>
+                    </div>
+
+                    <!-- CONTENEDOR DEL BOTÓN DE GOOGLE -->
+                    <div class="pt-1">
+                      <div id="regGoogleDisabledNotice" class="w-full py-3 px-4 bg-slate-100 border border-slate-200 text-slate-400 font-semibold rounded-xl text-xs text-center flex items-center justify-center gap-2 cursor-not-allowed">
+                        <i class="fa-solid fa-lock text-slate-400 text-xs"></i>
+                        <span>Escribe tu nombre para activar Google</span>
+                      </div>
+
+                      <div id="regGoogleActiveBox" class="hidden flex justify-center w-full">
+                        <div id="gsi_register_button" class="w-full flex justify-center"></div>
+                      </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 border border-slate-200/80 rounded-xl text-[11px] text-slate-500 space-y-1">
+                      <div class="flex items-center gap-1.5 font-bold text-slate-700">
+                        <i class="fa-solid fa-shield-halved text-[#10B981]"></i> Garantía de validez:
+                      </div>
+                      <div>Tu nombre oficial quedará impreso en tu constancia digital y sincronizado con la base de datos central.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- VISTA 2: INICIAR SESIÓN -->
+                <div id="authViewLogin" class="space-y-4 hidden">
+                  <div class="p-3.5 bg-blue-50/70 border border-blue-200/80 rounded-xl text-xs text-slate-700 space-y-1">
+                    <div class="font-bold flex items-center gap-1.5 text-[#1A64FF]">
+                      <i class="fa-solid fa-user-check"></i> Retoma de formación autónoma
+                    </div>
+                    <p class="text-slate-600 text-[11.5px] leading-relaxed">
+                      Si ya te registraste anteriormente, selecciona tu cuenta de Google. El portal cargará tus avances, notas y constancias de inmediato.
+                    </p>
+                  </div>
+
+                  <div class="py-3 flex flex-col items-center justify-center">
+                    <div id="gsi_login_button" class="w-full flex justify-center"></div>
+                  </div>
+
+                  <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl text-[11px] text-slate-600 space-y-1.5">
+                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                      <i class="fa-solid fa-circle-check text-[#10B981]"></i> Cuentas autorizadas:
+                    </div>
+                    <div class="space-y-1 pl-4 text-slate-500">
+                      <div>• Cuentas oficiales del MINED (<code class="font-mono text-slate-700">@clases.edu.sv</code>)</div>
+                      <div>• Cuentas del equipo técnico IHFB (<code class="font-mono text-slate-700">@ihateflyingbugs.com</code>)</div>
+                      <div>• Cuentas Google registradas en el programa</div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-pink-50/60 border border-pink-200/80 rounded-xl text-[11.5px] text-slate-700 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-[#EC4899] mt-0.5 text-xs"></i>
+                    <span>¿Es tu primera vez aquí? Ve a la pestaña <strong>Registrarse</strong> para crear tu expediente.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 text-center text-[11px] text-slate-400 border-t border-slate-100 flex items-center justify-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
+                <span>Sincronización en tiempo real con Google Sheets Oficial</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video de Inducción General (7 Cols) -->
+          <div class="lg:col-span-7 exec-panel p-6 flex flex-col justify-between relative">
+            <button id="btnEditIntroVideoAdmin" onclick="openAdminIntroVideoEditModal()" class="hidden absolute top-5 right-5 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow-md items-center gap-1.5 z-10 cursor-pointer">
+              <i class="fa-solid fa-video"></i> Editar Video
             </button>
+
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-[11px] uppercase tracking-wider font-bold text-[#1A64FF] bg-blue-50 border border-blue-200/80 px-2.5 py-1 rounded-md">
+                  Guía de Inducción
+                </span>
+                <span class="font-mono text-xs text-slate-400">Duración: 2 min 40s</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-1.5">¿Cómo funciona la capacitación autónoma?</h3>
+              <p class="text-xs sm:text-[13px] text-slate-500 leading-relaxed mb-4">
+                Cada módulo contiene cápsulas en video y manuales operativos estándar. Para acreditar un módulo, debes realizar la práctica interactiva y aprobar la evaluación con mínimo 80%.
+              </p>
+              
+              <!-- REPRODUCTOR INLINE -->
+              <div id="inlineIntroPlayerContainer" class="relative w-full aspect-video bg-[#0A0A0B] rounded-xl overflow-hidden shadow-inner flex items-center justify-center border border-slate-800">
+                <img id="introPosterImg" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Aula tecnológica" class="absolute inset-0 w-full h-full object-cover opacity-45">
+                <button onclick="playInlineIntroVideo()" id="btnPlayIntroVideo" class="relative z-10 w-16 h-16 rounded-full bg-[#1A64FF] hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl transition transform hover:scale-110 cursor-pointer">
+                  <i class="fa-solid fa-play text-xl ml-1"></i>
+                </button>
+                <div id="introVideoOverlayBar" class="absolute bottom-3 left-3 right-3 bg-[#0A0A0B]/90 backdrop-blur px-4 py-2.5 rounded-xl border border-white/10 flex items-center justify-between text-white text-xs">
+                  <span class="font-medium flex items-center gap-2"><i class="fa-solid fa-circle-play text-[#60A5FA]"></i> Protocolo de Operación en Aula IHFB</span>
+                  <span class="text-[#34D399] font-semibold text-[11px]">Reproducir aquí</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5 pt-4 border-t border-slate-100">
+              <div class="p-3 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-200 text-[#1A64FF] font-mono text-xs font-bold flex items-center justify-center shrink-0">01</div>
+                <p class="text-xs font-semibold text-slate-700">Explora Videos & SOP</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-pink-50 border border-pink-200 text-[#EC4899] font-mono text-xs font-bold flex items-center justify-center shrink-0">02</div>
+                <p class="text-xs font-semibold text-slate-700">Simula y Evalúa</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50/80 border border-slate-200/80 flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 text-[#10B981] font-mono text-xs font-bold flex items-center justify-center shrink-0">03</div>
+                <p class="text-xs font-semibold text-slate-700">Obtén tu Constancia</p>
+              </div>
+            </div>
           </div>
-          <div id="moduleCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 3. SECCIÓN: PRÁCTICAS EN VIVO SEGMENTADAS POR MÓDULOS -->
-    <section id="section-practicas" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold uppercase text-slate-600 tracking-wider">Entorno Sandbox / Sin Riesgo</span>
-          <h2 class="text-xl font-extrabold text-slate-900">Laboratorio Práctico Modular</h2>
-          <p class="text-xs text-slate-500">Completa la práctica asignada para desbloquear la evaluación (quiz) de este módulo.</p>
         </div>
-        <div class="flex items-center gap-2">
-          <label class="text-xs font-bold text-slate-600">Práctica del Módulo:</label>
-          <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 outline-none">
-            <option value="M1">M1: Conexión y Login</option>
-            <option value="M2">M2: Opciones de Menú</option>
-            <option value="M3">M3: Visibilidad</option>
-            <option value="M4">M4: Currículo y Clasificación</option>
-            <option value="M5">M5: Bloqueo Remoto de Aula</option>
-            <option value="M6">M6: Monitoreo</option>
-            <option value="M7">M7: Auditoría y Supervisor</option>
-          </select>
-        </div>
-      </div>
+      </section>
 
-      <div id="practiceContentContainer" class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6"></div>
-    </section>
-
-    <!-- 4. SECCIÓN: EVALUACIONES (QUIZZES) -->
-    <section id="section-quizzes" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <span class="text-xs font-bold uppercase text-blue-700 tracking-wider">Acreditación Académica</span>
-          <h2 class="text-xl font-extrabold text-slate-900">Evaluaciones de Validación (Quizzes)</h2>
-          <p class="text-xs text-slate-500">Para presentar el quiz, debes haber completado previamente la práctica del módulo. Mínimo 80% para aprobar.</p>
-        </div>
-        <div class="flex items-center gap-2">
-          <label class="text-xs font-bold text-slate-600">Módulo a Evaluar:</label>
-          <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 outline-none">
-            <option value="M1">M1: Access & Login</option>
-            <option value="M2">M2: Menu Options</option>
-            <option value="M3">M3: Visibility Settings</option>
-            <option value="M4">M4: Curriculum Structure</option>
-            <option value="M5">M5: Class Mode</option>
-            <option value="M6">M6: Monitoring Tools</option>
-            <option value="M7">M7: Supervisor Page</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm max-w-3xl mx-auto space-y-6">
-        <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
-          <div>
-            <span id="quizBadgeHeader" class="text-xs font-extrabold px-2.5 py-0.5 rounded bg-blue-100 text-blue-800">Cuestionario Oficial: M1</span>
-            <h3 id="quizTitleHeader" class="text-base sm:text-lg font-bold text-slate-900 mt-1">Evaluación: Access & Login</h3>
+      <!-- ================= HOME FORMATIVO / DASHBOARD POST-LOGIN ================= -->
+      <section id="section-dashboard" class="tab-content hidden space-y-6">
+        
+        <!-- Hero de Bienvenida Ejecutivo -->
+        <div class="relative bg-[#0A0A0B] text-white rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border border-slate-800 overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1.5 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
           </div>
-          <span class="text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 px-3 py-1 rounded-full">
-            Mínimo 80%
-          </span>
-        </div>
-
-        <form id="quizForm" onsubmit="submitQuiz(event)" class="space-y-6">
-          <div id="quizQuestionsContainer" class="space-y-5"></div>
-          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-400">Preguntas prácticas basadas en el SOP</span>
-            <button type="submit" id="btnSubmitQuiz" class="px-6 py-2.5 bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-2">
-              <i class="fa-solid fa-check-circle"></i>
-              <span>Calificar y Registrar</span>
-            </button>
-          </div>
-        </form>
-
-        <div id="quizResultBox" class="hidden p-5 rounded-2xl border text-xs space-y-3"></div>
-      </div>
-    </section>
-
-    <!-- 5. SECCIÓN: MI PROGRESO Y VALIDACIÓN -->
-    <section id="section-progreso" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div class="space-y-2">
-          <span class="text-xs font-bold uppercase text-emerald-600 tracking-wider">Historial de Nivelación</span>
-          <h2 class="text-2xl font-black text-slate-900">Estado de Acreditación Oficial</h2>
-          <p class="text-xs text-slate-500">Completa la práctica y el quiz de los 7 módulos para generar tu constancia.</p>
-        </div>
-        <div class="flex items-center gap-4 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-200 shrink-0">
-          <div>
-            <div id="progresoPorcentajeTotal" class="text-3xl font-black text-slate-700">0%</div>
-            <div class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Avance General</div>
-          </div>
-          <div class="w-24 h-2.5 bg-slate-200 rounded-full overflow-hidden">
-            <div id="progresoBarraGeneral" class="h-full bg-slate-400 transition-all duration-500" style="width: 0%;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-        <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-          <h3 class="text-xs font-bold uppercase text-slate-700 tracking-wider">Desglose por Módulo</h3>
-          <span class="text-xs font-semibold text-slate-500">7 módulos obligatorios</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-700">
-            <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b border-slate-200">
-              <tr>
-                <th class="px-4 py-3">Módulo</th>
-                <th class="px-4 py-3">Práctica en Vivo</th>
-                <th class="px-4 py-3">Quiz</th>
-                <th class="px-4 py-3">Calificación</th>
-                <th class="px-4 py-3 text-right">Acción</th>
-              </tr>
-            </thead>
-            <tbody id="progressTableBody" class="divide-y divide-slate-100"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Constancia Formal -->
-      <div id="certificateContainer" class="bg-gradient-to-br from-[#002B49] via-slate-900 to-[#0B4F8A] text-white rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-slate-700/60 pb-5">
-          <div>
-            <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-400 bg-emerald-950/60 px-3 py-1 rounded-full border border-emerald-500/30">
-              Acreditación Institucional
+          <div class="pl-2 space-y-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-[#34D399] border border-emerald-500/30">
+              <i class="fa-solid fa-circle-check text-[10px]"></i> Sesión Activa Oficial
             </span>
-            <h3 class="text-xl font-bold mt-2 text-white">Constancia Digital de Aprobación</h3>
-            <p class="text-xs text-slate-300">Documento formal con código alfanumérico único para auditorías.</p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Hola, <span id="dashUserGreetingName">Docente</span>
+            </h2>
+            <p class="text-slate-300 text-xs sm:text-sm max-w-2xl leading-relaxed">
+              Te encuentras en tu espacio formativo oficial. Continúa con tus lecciones modulares, realiza las prácticas interactivas y consulta los protocolos SOP en cualquier momento.
+            </p>
           </div>
-          <button id="btnPrintCertificate" onclick="printCertificate()" disabled class="px-5 py-3 rounded-xl bg-slate-700 text-slate-400 font-bold text-xs transition flex items-center justify-center gap-2 cursor-not-allowed shrink-0">
-            <i class="fa-solid fa-print"></i>
-            <span>Descargar / Imprimir Constancia</span>
-          </button>
+
+          <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+            <button onclick="switchTab('modulos')" class="px-5 py-3 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white font-bold text-xs transition shadow-md flex items-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-play"></i>
+              <span>Continuar Ruta de Capacitación</span>
+            </button>
+          </div>
         </div>
 
-        <div id="certificatePreview" class="bg-white text-slate-900 rounded-2xl p-6 sm:p-10 border-4 border-double border-blue-950 shadow-2xl relative overflow-hidden">
-          <div class="relative z-10 text-center space-y-4">
-            <div class="flex justify-between items-center border-b pb-4">
-              <div class="flex items-center gap-3">
-                <img src="logo.png" onerror="this.onerror=null; this.src='logo.png.jpg';" class="w-10 h-10 object-contain rounded-lg border border-slate-200 p-1" alt="Logo">
-                <div class="text-left font-black tracking-wider text-base text-blue-950">IHFB EL SALVADOR</div>
-              </div>
-              <div class="text-right text-[10px] text-slate-400 uppercase font-mono">Folio: <span id="certFolio" class="font-bold text-slate-700">IHFB-PENDIENTE</span></div>
+        <!-- Tarjetas Métricas con Acentos IHFB -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="exec-panel p-6 border-t-4 border-t-[#1A64FF] flex items-center justify-between">
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avance Global</span>
+              <div id="dashMetricProgress" class="font-mono text-3xl font-extrabold text-[#1A64FF] mt-1">0%</div>
+              <p class="text-xs text-slate-500 mt-1">Requisito para constancia: 100%</p>
             </div>
-
-            <div class="py-2">
-              <p class="text-xs uppercase tracking-widest font-bold text-slate-500">Se otorga la presente</p>
-              <h2 class="text-2xl sm:text-3xl font-black text-blue-900 tracking-tight mt-1">CONSTANCIA DE ACREDITACIÓN</h2>
-              <p class="text-xs text-slate-600 mt-2">Por haber completado satisfactoriamente el programa de capacitación y nivelación técnica en:</p>
-              <p class="text-sm font-extrabold text-slate-800 mt-1">"Operación y Gestión de Plataforma Educativa Digital con IA"</p>
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-200/80 text-[#1A64FF] flex items-center justify-center text-xl">
+              <i class="fa-solid fa-chart-pie"></i>
             </div>
+          </div>
 
-            <div class="py-4 border-y border-slate-200">
-              <p class="text-xs text-slate-500">Otorgado a favor de:</p>
-              <h3 id="certParticipantName" class="text-xl sm:text-2xl font-black text-blue-950 uppercase tracking-wide">JUAN PÉREZ</h3>
-              <p class="text-xs font-semibold text-blue-700 mt-1" id="certParticipantRole">Rol: Docente</p>
-              <p class="text-[11px] text-slate-400 font-mono mt-0.5">Correo: <span id="certParticipantEmail">usuario@clases.edu.sv</span></p>
+          <div class="exec-panel p-6 border-t-4 border-t-[#10B981] flex items-center justify-between">
+            <div>
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Módulos Aprobados</span>
+              <div id="dashMetricModules" class="font-mono text-3xl font-extrabold text-[#10B981] mt-1">0 de 7</div>
+              <p class="text-xs text-slate-500 mt-1">Mínimo 80% en cada quiz</p>
             </div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#10B981] flex items-center justify-center text-xl">
+              <i class="fa-solid fa-award"></i>
+            </div>
+          </div>
 
-            <div class="flex flex-col sm:flex-row justify-between items-center pt-4 text-xs text-slate-500 gap-4">
-              <div class="text-left">
-                <p>Fecha de emisión: <strong id="certDate" class="text-slate-700">--/--/----</strong></p>
-                <p>Validación: <strong class="text-emerald-700">100% Aprobado</strong></p>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-16 h-16 border border-slate-300 rounded-xl p-1 bg-white flex flex-col items-center justify-center text-[9px] text-center font-mono">
-                  <i class="fa-solid fa-qrcode text-2xl text-slate-800"></i>
-                  <span>QR VALID</span>
+          <div class="exec-panel p-6 border-t-4 border-t-[#EC4899] flex items-center justify-between">
+            <div class="min-w-0 pr-3">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Próximo Paso</span>
+              <div class="text-base font-extrabold text-slate-900 mt-1 truncate" id="dashNextStepLabel">M1: Access & Login</div>
+              <button onclick="goToModulePractice(currentSelectedModuleId)" class="text-xs text-[#EC4899] hover:underline font-bold mt-1 flex items-center gap-1 cursor-pointer">
+                <span>Ir a la práctica de hoy</span> <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </button>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-pink-50 border border-pink-200/80 text-[#EC4899] flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-laptop-code"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accesos Directos a los Módulos -->
+        <div class="exec-panel p-6 space-y-4">
+          <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800">Módulos Disponibles en tu Ruta</h3>
+            <span class="text-xs text-slate-400">Selecciona uno para ingresar a sus videos y manuales</span>
+          </div>
+          <div id="dashModulesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
+
+      </section>
+
+      <!-- 2. SECCIÓN: MÓDULOS DE APRENDIZAJE -->
+      <section id="section-modulos" class="tab-content hidden space-y-6">
+        <div class="exec-panel px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
+          </div>
+          <div class="pl-2">
+            <span class="text-[11px] font-bold uppercase text-[#1A64FF] tracking-wider">Secuencia Formativa Oficial</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Módulos de Capacitación y Nivelación</h2>
+            <p class="text-xs text-slate-500">Visualiza los videos, consulta los SOP relacionados y avanza a la práctica modular para desbloquear tu evaluación.</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="text-xs font-medium text-slate-500">Rol activo:</span>
+            <span id="badgeCurrentRole" class="px-3 py-1 bg-blue-50 text-[#1A64FF] border border-blue-200 rounded-lg text-xs font-bold uppercase">Docente</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <aside class="lg:col-span-4 exec-panel p-4 space-y-3 lg:sticky lg:top-20">
+            <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Ruta de Módulos</h3>
+              <span id="modulesCompletedCount" class="font-mono text-xs font-bold text-[#1A64FF]">0 de 7 completados</span>
+            </div>
+            <div id="moduleListContainer" class="space-y-2.5"></div>
+          </aside>
+
+          <div class="lg:col-span-8 space-y-5">
+            <div class="exec-panel p-5 flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span id="activeModuleCode" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-blue-50 text-[#1A64FF] border border-blue-200">M1</span>
+                  <span id="activeModuleStatusBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-700">En Curso</span>
                 </div>
-                <div class="text-left text-[11px]">
-                  <div class="font-bold text-slate-800">Comité Académico IHFB</div>
-                  <div class="text-slate-400 text-[10px]">Acreditación Operativa El Salvador</div>
-                </div>
+                <h3 id="activeModuleTitle" class="text-lg font-bold text-slate-900 mt-1.5">M1: Access & Login</h3>
+                <p id="activeModuleDesc" class="text-xs text-slate-500">Configuración del entorno del aula, conectividad Wi-Fi y acceso a cuentas.</p>
               </div>
+              <button onclick="goToModulePractice(currentSelectedModuleId)" class="px-5 py-2.5 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+                <i class="fa-solid fa-laptop-code"></i>
+                <span>Ir a la Práctica de este Módulo</span>
+              </button>
             </div>
+            <div id="moduleCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 6. SECCIÓN: PREGUNTAS FRECUENTES Y SOPORTE -->
-    <section id="section-faq" class="tab-content hidden space-y-6">
-      <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-        <span class="text-xs font-bold uppercase text-blue-700 tracking-wider">Centro de Ayuda</span>
-        <h2 class="text-xl font-extrabold text-slate-900">Preguntas Frecuentes y Mesa de Ayuda</h2>
-        <p class="text-xs text-slate-500">Respuestas rápidas a los problemas operativos más comunes y contacto técnico.</p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-7 space-y-3">
-          <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-            <button onclick="toggleFaq('faq1')" class="w-full px-5 py-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50">
-              <span>¿Qué hacer si un alumno pierde la conexión durante la clase?</span>
-              <i id="faq1-icon" class="fa-solid fa-chevron-down text-slate-400 text-xs"></i>
-            </button>
-            <div id="faq1" class="hidden px-5 pb-4 text-xs text-slate-600 border-t bg-slate-50/50">
-              Según el protocolo SOP de conectividad, los ejercicios ya cargados se mantienen en la memoria caché del dispositivo. Continúa la clase sin recargar la página.
-            </div>
+      <!-- 3. SECCIÓN: PRÁCTICAS EN VIVO SEGMENTADAS POR MÓDULOS -->
+      <section id="section-practicas" class="tab-content hidden space-y-6">
+        <div class="exec-panel px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
           </div>
-          <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-            <button onclick="toggleFaq('faq2')" class="w-full px-5 py-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50">
-              <span>¿Por qué no puedo presentar el Quiz de un módulo?</span>
-              <i id="faq2-icon" class="fa-solid fa-chevron-down text-slate-400 text-xs"></i>
-            </button>
-            <div id="faq2" class="hidden px-5 pb-4 text-xs text-slate-600 border-t bg-slate-50/50">
-              Por normativa operativa, es obligatorio completar primero la práctica interactiva de ese módulo. Al terminar la práctica, el quiz se desbloqueará de inmediato.
-            </div>
+          <div class="pl-2">
+            <span class="text-[11px] font-bold uppercase text-[#EC4899] tracking-wider">Entorno Sandbox / Sin Riesgo</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Laboratorio Práctico Modular</h2>
+            <p class="text-xs text-slate-500">Completa la práctica asignada para desbloquear la evaluación (quiz) de este módulo.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-600">Práctica del Módulo:</label>
+            <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="exec-input px-3 py-2 text-xs font-bold text-slate-800">
+              <option value="M1">M1: Conexión y Login</option>
+              <option value="M2">M2: Opciones de Menú</option>
+              <option value="M3">M3: Visibilidad</option>
+              <option value="M4">M4: Currículo y Clasificación</option>
+              <option value="M5">M5: Bloqueo Remoto de Aula</option>
+              <option value="M6">M6: Monitoreo</option>
+              <option value="M7">M7: Auditoría y Supervisor</option>
+            </select>
           </div>
         </div>
 
-        <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-          <h3 class="text-sm font-bold text-slate-900 mb-1 flex items-center gap-2">
-            <i class="fa-solid fa-envelope text-blue-600"></i> Consulta a Mesa de Ayuda
-          </h3>
-          <p class="text-xs text-slate-500 mb-4">¿Tienes una duda técnica con tu usuario institucional?</p>
-          <form id="supportForm" onsubmit="handleSupportSubmit(event)" class="space-y-3">
-            <input type="text" id="supName" required placeholder="Nombre Completo" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300" />
-            <input type="email" id="supEmail" required placeholder="Correo institucional" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300" />
-            <textarea id="supMsg" required rows="3" placeholder="Detalle de tu consulta..." class="w-full px-3 py-2 text-xs rounded-xl border border-slate-300"></textarea>
-            <button type="submit" class="w-full bg-[#002B49] hover:bg-blue-900 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2">
-              <i class="fa-solid fa-paper-plane"></i> <span>Enviar Consulta</span>
-            </button>
+        <div id="practiceContentContainer" class="exec-panel p-6 space-y-6"></div>
+      </section>
+
+      <!-- 4. SECCIÓN: EVALUACIONES (QUIZZES) -->
+      <section id="section-quizzes" class="tab-content hidden space-y-6">
+        <div class="exec-panel px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
+          </div>
+          <div class="pl-2">
+            <span class="text-[11px] font-bold uppercase text-[#1A64FF] tracking-wider">Acreditación Académica</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Evaluaciones de Validación (Quizzes)</h2>
+            <p class="text-xs text-slate-500">Para presentar el quiz, debes haber completado previamente la práctica del módulo. Mínimo 80% para aprobar.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-600">Módulo a Evaluar:</label>
+            <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="exec-input px-3 py-2 text-xs font-bold text-slate-800">
+              <option value="M1">M1: Access & Login</option>
+              <option value="M2">M2: Menu Options</option>
+              <option value="M3">M3: Visibility Settings</option>
+              <option value="M4">M4: Curriculum Structure</option>
+              <option value="M5">M5: Class Mode</option>
+              <option value="M6">M6: Monitoring Tools</option>
+              <option value="M7">M7: Supervisor Page</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="exec-panel p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
+          <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
+            <div>
+              <span id="quizBadgeHeader" class="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-blue-50 text-[#1A64FF] border border-blue-200">Cuestionario Oficial: M1</span>
+              <h3 id="quizTitleHeader" class="text-base sm:text-lg font-bold text-slate-900 mt-1.5">Evaluación: Access & Login</h3>
+            </div>
+            <span class="text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full">
+              Mínimo 80%
+            </span>
+          </div>
+
+          <form id="quizForm" onsubmit="submitQuiz(event)" class="space-y-6">
+            <div id="quizQuestionsContainer" class="space-y-5"></div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <span class="text-xs text-slate-400">Preguntas prácticas basadas en el SOP</span>
+              <button type="submit" id="btnSubmitQuiz" class="px-6 py-2.5 bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Calificar y Registrar</span>
+              </button>
+            </div>
           </form>
-          <div id="supSuccessMsg" class="hidden mt-3 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl">
-            Tu consulta ha sido enviada con éxito al equipo técnico.
+
+          <div id="quizResultBox" class="hidden p-5 rounded-2xl border text-xs space-y-3"></div>
+        </div>
+      </section>
+
+      <!-- 5. SECCIÓN: MI PROGRESO Y VALIDACIÓN -->
+      <section id="section-progreso" class="tab-content hidden space-y-6">
+        <div class="exec-panel p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div class="space-y-1.5">
+            <span class="text-[11px] font-bold uppercase text-[#10B981] tracking-wider">Historial de Nivelación</span>
+            <h2 class="text-2xl font-extrabold text-slate-900">Estado de Acreditación Oficial</h2>
+            <p class="text-xs text-slate-500">Completa la práctica y el quiz de los 7 módulos para generar tu constancia.</p>
+          </div>
+          <div class="flex items-center gap-4 bg-slate-50 px-5 py-3.5 rounded-2xl border border-slate-200 shrink-0">
+            <div>
+              <div id="progresoPorcentajeTotal" class="font-mono text-3xl font-extrabold text-slate-900">0%</div>
+              <div class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Avance General</div>
+            </div>
+            <div class="w-24 h-2.5 bg-slate-200 rounded-full overflow-hidden">
+              <div id="progresoBarraGeneral" class="h-full bg-slate-400 transition-all duration-500" style="width: 0%;"></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-  </main>
-
-  <!-- ================= VENTANA MODAL AMPLIA DE MÓDULO ================= -->
-  <div id="proVideoManualModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-2 sm:p-5 hidden">
-    <div class="bg-white rounded-2xl overflow-hidden max-w-6xl w-full shadow-2xl border border-slate-200 flex flex-col max-h-[95vh]">
-      
-      <div class="px-5 py-3.5 bg-slate-900 text-white flex justify-between items-center text-xs">
-        <div class="flex items-center gap-2 font-bold">
-          <span id="proModalTag" class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded font-black">VIDEO 1</span>
-          <span id="proModalHeaderTitle" class="text-slate-200 text-xs sm:text-sm">Configuración del entorno del aula</span>
+        <div class="exec-panel overflow-hidden">
+          <div class="px-6 py-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase text-slate-700 tracking-wider">Desglose por Módulo</h3>
+            <span class="font-mono text-xs font-semibold text-slate-500">7 módulos obligatorios</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-[13px] text-slate-700">
+              <thead class="bg-white text-slate-500 uppercase font-bold text-[11px] tracking-wider border-b border-slate-200">
+                <tr>
+                  <th class="px-5 py-3.5">Módulo</th>
+                  <th class="px-4 py-3.5">Práctica en Vivo</th>
+                  <th class="px-4 py-3.5">Quiz</th>
+                  <th class="px-4 py-3.5">Calificación</th>
+                  <th class="px-5 py-3.5 text-right">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="progressTableBody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
         </div>
-        <button onclick="closeProVideoModal()" class="text-slate-400 hover:text-white text-lg">
+
+        <!-- Constancia Formal -->
+        <div id="certificateContainer" class="bg-[#0A0A0B] text-white rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 border border-slate-800 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1.5 flex">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
+          </div>
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-slate-800 pb-5">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-[#34D399] bg-emerald-500/15 px-3 py-1 rounded-full border border-emerald-500/30">
+                Acreditación Institucional
+              </span>
+              <h3 class="text-xl font-bold mt-2 text-white">Constancia Digital de Aprobación</h3>
+              <p class="text-xs text-slate-400">Documento formal con código alfanumérico único para auditorías.</p>
+            </div>
+            <button id="btnPrintCertificate" onclick="printCertificate()" disabled class="px-5 py-3 rounded-xl bg-slate-800 text-slate-500 font-bold text-xs transition flex items-center justify-center gap-2 cursor-not-allowed shrink-0">
+              <i class="fa-solid fa-print"></i>
+              <span>Descargar / Imprimir Constancia</span>
+            </button>
+          </div>
+
+          <div id="certificatePreview" class="bg-white text-slate-900 rounded-2xl p-6 sm:p-10 border-4 border-double border-slate-900 shadow-2xl relative overflow-hidden">
+            <div class="relative z-10 text-center space-y-4">
+              <div class="flex justify-between items-center border-b pb-4">
+                <div class="flex items-center gap-3">
+                  <img src="logo.png" onerror="this.onerror=null; this.src='logo.png.jpg';" class="w-10 h-10 object-contain rounded-lg border border-slate-200 p-1" alt="Logo">
+                  <div class="text-left font-extrabold tracking-wider text-base text-slate-900">IHFB EL SALVADOR</div>
+                </div>
+                <div class="text-right text-[10px] text-slate-400 uppercase font-mono">Folio: <span id="certFolio" class="font-bold text-slate-800">IHFB-PENDIENTE</span></div>
+              </div>
+
+              <div class="py-2">
+                <p class="text-xs uppercase tracking-widest font-bold text-slate-500">Se otorga la presente</p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">CONSTANCIA DE ACREDITACIÓN</h2>
+                <p class="text-xs text-slate-600 mt-2">Por haber completado satisfactoriamente el programa de capacitación y nivelación técnica en:</p>
+                <p class="text-sm font-extrabold text-slate-800 mt-1">"Operación y Gestión de Plataforma Educativa Digital con IA"</p>
+              </div>
+
+              <div class="py-4 border-y border-slate-200">
+                <p class="text-xs text-slate-500">Otorgado a favor de:</p>
+                <h3 id="certParticipantName" class="text-xl sm:text-2xl font-extrabold text-slate-950 uppercase tracking-wide">JUAN PÉREZ</h3>
+                <p class="text-xs font-bold text-[#1A64FF] mt-1" id="certParticipantRole">Rol: Docente</p>
+                <p class="text-[11px] text-slate-400 font-mono mt-0.5">Correo: <span id="certParticipantEmail">usuario@clases.edu.sv</span></p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row justify-between items-center pt-4 text-xs text-slate-500 gap-4">
+                <div class="text-left">
+                  <p>Fecha de emisión: <strong id="certDate" class="text-slate-700">--/--/----</strong></p>
+                  <p>Validación: <strong class="text-emerald-700">100% Aprobado</strong></p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-16 h-16 border border-slate-300 rounded-xl p-1 bg-white flex flex-col items-center justify-center text-[9px] text-center font-mono">
+                    <i class="fa-solid fa-qrcode text-2xl text-slate-800"></i>
+                    <span>QR VALID</span>
+                  </div>
+                  <div class="text-left text-[11px]">
+                    <div class="font-bold text-slate-800">Comité Académico IHFB</div>
+                    <div class="text-slate-400 text-[10px]">Acreditación Operativa El Salvador</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. SECCIÓN: PREGUNTAS FRECUENTES Y SOPORTE -->
+      <section id="section-faq" class="tab-content hidden space-y-6">
+        <div class="exec-panel px-6 py-4 relative overflow-hidden">
+          <div class="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
+            <div class="flex-1 bg-[#1A64FF]"></div>
+            <div class="flex-1 bg-[#EC4899]"></div>
+            <div class="flex-1 bg-[#10B981]"></div>
+          </div>
+          <div class="pl-2">
+            <span class="text-[11px] font-bold uppercase text-[#1A64FF] tracking-wider">Centro de Ayuda</span>
+            <h2 class="text-lg font-extrabold text-slate-900">Preguntas Frecuentes y Mesa de Ayuda</h2>
+            <p class="text-xs text-slate-500">Respuestas rápidas a los problemas operativos más comunes y contacto técnico.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-7 space-y-3">
+            <div class="exec-panel overflow-hidden">
+              <button onclick="toggleFaq('faq1')" class="w-full px-5 py-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50 cursor-pointer">
+                <span>¿Qué hacer si un alumno pierde la conexión durante la clase?</span>
+                <i id="faq1-icon" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+              </button>
+              <div id="faq1" class="hidden px-5 pb-4 text-xs text-slate-600 border-t bg-slate-50/50 pt-3 leading-relaxed">
+                Según el protocolo SOP de conectividad, los ejercicios ya cargados se mantienen en la memoria caché del dispositivo. Continúa la clase sin recargar la página.
+              </div>
+            </div>
+            <div class="exec-panel overflow-hidden">
+              <button onclick="toggleFaq('faq2')" class="w-full px-5 py-4 text-left font-bold text-xs sm:text-sm text-slate-800 flex justify-between items-center hover:bg-slate-50 cursor-pointer">
+                <span>¿Por qué no puedo presentar el Quiz de un módulo?</span>
+                <i id="faq2-icon" class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+              </button>
+              <div id="faq2" class="hidden px-5 pb-4 text-xs text-slate-600 border-t bg-slate-50/50 pt-3 leading-relaxed">
+                Por normativa operativa, es obligatorio completar primero la práctica interactiva de ese módulo. Al terminar la práctica, el quiz se desbloqueará de inmediato.
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 exec-panel p-6">
+            <h3 class="text-sm font-bold text-slate-900 mb-1 flex items-center gap-2">
+              <i class="fa-solid fa-envelope text-[#1A64FF]"></i> Consulta a Mesa de Ayuda
+            </h3>
+            <p class="text-xs text-slate-500 mb-4">¿Tienes una duda técnica con tu usuario institucional?</p>
+            <form id="supportForm" onsubmit="handleSupportSubmit(event)" class="space-y-3">
+              <input type="text" id="supName" required placeholder="Nombre Completo" class="exec-input w-full px-3.5 py-2 text-xs" />
+              <input type="email" id="supEmail" required placeholder="Correo institucional" class="exec-input w-full px-3.5 py-2 text-xs" />
+              <textarea id="supMsg" required rows="3" placeholder="Detalle de tu consulta..." class="exec-input w-full px-3.5 py-2 text-xs"></textarea>
+              <button type="submit" class="w-full bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 transition cursor-pointer">
+                <i class="fa-solid fa-paper-plane"></i> <span>Enviar Consulta</span>
+              </button>
+            </form>
+            <div id="supSuccessMsg" class="hidden mt-3 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl">
+              Tu consulta ha sido enviada con éxito al equipo técnico.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-white text-slate-400 text-xs py-4 border-t border-slate-200/90 mt-auto">
+      <div class="w-full max-w-[1540px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p>© 2026 IHFB El Salvador • Plataforma de Capacitación y Nivelación Autónoma.</p>
+        <div class="flex items-center space-x-4 text-[11px] font-medium">
+          <span class="hover:text-slate-800 cursor-pointer" onclick="switchTab('faq')">SOP Oficial</span>
+          <span>•</span>
+          <span class="hover:text-slate-800 cursor-pointer" onclick="switchTab('faq')">Mesa de Ayuda</span>
+          <span>•</span>
+          <span class="hover:text-slate-800 cursor-pointer" onclick="switchTab('progreso')">Validación de Constancias</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= VENTANA MODAL AMPLIA DE MÓDULO (DISEÑO PREMIUM) ================= -->
+  <div id="proVideoManualModal" onclick="if(event.target===this) closeProVideoModal()" class="fixed inset-0 bg-slate-950/75 modal-glass z-50 flex items-center justify-center p-2 sm:p-5 hidden">
+    <div class="bg-white rounded-2xl overflow-hidden max-w-6xl w-full shadow-[0_28px_70px_-15px_rgba(9,13,22,0.6)] border border-slate-200 flex flex-col max-h-[95vh]">
+      <div class="h-1.5 w-full flex shrink-0">
+        <div class="flex-1 bg-[#1A64FF]"></div>
+        <div class="flex-1 bg-[#EC4899]"></div>
+        <div class="flex-1 bg-[#10B981]"></div>
+      </div>
+      
+      <div class="px-5 py-4 bg-[#0A0A0B] text-white flex justify-between items-center text-xs shrink-0">
+        <div class="flex items-center gap-2.5 font-bold min-w-0">
+          <span id="proModalTag" class="font-mono text-[10.5px] bg-[#1A64FF] text-white px-2.5 py-0.5 rounded-md font-bold shrink-0">VIDEO 1</span>
+          <span id="proModalHeaderTitle" class="text-white text-xs sm:text-sm truncate">Configuración del entorno del aula</span>
+        </div>
+        <button onclick="closeProVideoModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg bg-white/5 hover:bg-white/15 transition cursor-pointer shrink-0">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -744,53 +938,53 @@
         <div class="lg:col-span-6 p-5 border-r border-slate-200 flex flex-col justify-between space-y-4">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-black uppercase text-blue-800 bg-blue-50 px-2.5 py-1 rounded">REPRODUCTOR OFICIAL</span>
-              <a id="btnExternalVideoLink" href="#" target="_blank" class="text-[11px] text-blue-700 hover:underline flex items-center gap-1 font-semibold">
+              <span class="text-[10.5px] font-bold uppercase text-[#1A64FF] bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md">REPRODUCTOR OFICIAL</span>
+              <a id="btnExternalVideoLink" href="#" target="_blank" class="text-[11px] text-[#1A64FF] hover:underline flex items-center gap-1 font-semibold">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir en ventana exterior
               </a>
             </div>
 
-            <div class="aspect-video bg-black rounded-xl overflow-hidden shadow-inner relative">
+            <div class="aspect-video bg-black rounded-xl overflow-hidden shadow-inner relative border border-slate-800">
               <iframe id="proVideoIframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
             <div class="pt-2">
-              <h5 class="text-xs font-bold uppercase text-slate-400 tracking-wider mb-2">Contenido del video:</h5>
+              <h5 class="text-[11px] font-bold uppercase text-slate-400 tracking-wider mb-2">Contenido del video:</h5>
               <ul id="proVideoPointsList" class="space-y-1.5 text-xs text-slate-600"></ul>
             </div>
           </div>
         </div>
 
-        <div class="lg:col-span-6 p-5 flex flex-col justify-between space-y-4 bg-slate-50/50">
+        <div class="lg:col-span-6 p-5 flex flex-col justify-between space-y-4 bg-slate-50/60">
           <div class="space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
-                <i class="fa-solid fa-book-open text-blue-600"></i> <span id="proManualName">1.1 Conexión e inicio de sesión</span>
+              <span class="text-[11.5px] font-bold text-slate-800 flex items-center gap-1.5">
+                <i class="fa-solid fa-book-open text-[#EC4899]"></i> <span id="proManualName">1.1 Conexión e inicio de sesión</span>
               </span>
-              <a id="btnExternalManualLink" href="#" target="_blank" class="text-[11px] text-slate-500 hover:text-blue-700 flex items-center gap-1 font-semibold">
+              <a id="btnExternalManualLink" href="#" target="_blank" class="text-[11px] text-slate-500 hover:text-[#1A64FF] flex items-center gap-1 font-semibold">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver PDF Drive
               </a>
             </div>
 
             <div class="flex items-center justify-between bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-xs">
-              <button onclick="changeManualPage(-1)" class="text-slate-500 hover:text-slate-800 font-bold flex items-center gap-1">
+              <button onclick="changeManualPage(-1)" class="text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1 cursor-pointer">
                 <i class="fa-solid fa-chevron-left text-[10px]"></i> Manual anterior
               </button>
-              <span id="manualPageIndicator" class="font-bold text-slate-700 text-xs">1 / 4</span>
-              <button onclick="changeManualPage(1)" class="text-slate-500 hover:text-slate-800 font-bold flex items-center gap-1">
+              <span id="manualPageIndicator" class="font-mono font-bold text-slate-700 text-xs">1 / 4</span>
+              <button onclick="changeManualPage(1)" class="text-slate-600 hover:text-slate-900 font-bold flex items-center gap-1 cursor-pointer">
                 Siguiente manual <i class="fa-solid fa-chevron-right text-[10px]"></i>
               </button>
             </div>
 
-            <div class="border border-slate-200 rounded-xl bg-white p-5 shadow-sm min-h-[260px] text-xs space-y-3">
-              <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                <span class="font-extrabold text-blue-900" id="manualCardSubTitle">1.1 CONEXIÓN E INICIO DE SESIÓN EN LA PLATAFORMA</span>
-                <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Oficial SOP</span>
+            <div class="border border-slate-200 rounded-xl bg-white p-5 shadow-2xs min-h-[260px] text-xs space-y-3">
+              <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                <span class="font-extrabold text-slate-900" id="manualCardSubTitle">1.1 CONEXIÓN E INICIO DE SESIÓN EN LA PLATAFORMA</span>
+                <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold">Oficial SOP</span>
               </div>
               <p id="manualCardDesc" class="text-slate-600 leading-relaxed text-xs">
                 En este apartado se describe cómo conectarse a la red Wi-Fi escolar, la selección de la escuela en la lista oficial y el procedimiento seguro para entrar a las clases.
               </p>
-              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] font-mono text-slate-700 space-y-1.5">
+              <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-[11.5px] font-mono text-slate-700 space-y-1.5">
                 <div>• Paso 1: Encender tablet y verificar enlace SSID escolar oficial.</div>
                 <div>• Paso 2: Digitar credenciales institucionales asignadas.</div>
                 <div>• Paso 3: Abrir "Clase de Hoy" y verificar sincronización docente.</div>
@@ -801,9 +995,9 @@
         </div>
       </div>
 
-      <div class="p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <div class="p-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 shrink-0">
         <span class="text-xs text-slate-500">¿Terminaste de revisar el video y el manual? Comprueba tu aprendizaje en el simulador:</span>
-        <button id="btnModalBottomGoPractice" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0B4F8A] hover:bg-blue-800 text-white font-extrabold text-xs transition shadow-md flex items-center justify-center gap-2">
+        <button id="btnModalBottomGoPractice" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold text-xs transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
           <i class="fa-solid fa-laptop-code"></i>
           <span>Ir Directamente a la Práctica de este Módulo</span>
         </button>
@@ -813,31 +1007,36 @@
   </div>
 
   <!-- ================= MODAL: MODIFICAR PERFIL ================= -->
-  <div id="profileEditModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <h4 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-user-pen text-blue-600"></i> Mi Perfil de Participante
+  <div id="profileEditModal" onclick="if(event.target===this) closeProfileEditModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200">
+      <div class="h-1.5 w-full flex">
+        <div class="flex-1 bg-[#1A64FF]"></div>
+        <div class="flex-1 bg-[#EC4899]"></div>
+        <div class="flex-1 bg-[#10B981]"></div>
+      </div>
+      <div class="px-6 py-4 bg-[#0A0A0B] text-white flex items-center justify-between">
+        <h4 class="text-sm font-bold flex items-center gap-2">
+          <i class="fa-solid fa-user-pen text-[#60A5FA]"></i> Mi Perfil de Participante
         </h4>
-        <button onclick="closeProfileEditModal()" class="text-slate-400 hover:text-slate-700 text-sm">
+        <button onclick="closeProfileEditModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition cursor-pointer">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <form onsubmit="saveUserProfile(event)" class="space-y-3 text-xs">
+      <form onsubmit="saveUserProfile(event)" class="p-6 space-y-4 text-xs">
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Correo Vinculado (No editable)</label>
-          <input type="text" id="profileEmailDisplay" disabled class="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 font-mono">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Correo Vinculado (No editable)</label>
+          <input type="text" id="profileEmailDisplay" disabled class="w-full px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 font-mono">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Nombre Completo Oficial</label>
-          <input type="text" id="profileNameInput" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-medium">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Nombre Completo Oficial</label>
+          <input type="text" id="profileNameInput" required class="exec-input w-full px-3.5 py-2 font-semibold">
         </div>
 
         <div>
-          <label class="block font-bold text-slate-700 mb-1">Rol Operativo</label>
-          <select id="profileRoleSelect" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 bg-white font-medium">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Rol Operativo</label>
+          <select id="profileRoleSelect" class="exec-input w-full px-3.5 py-2 font-semibold">
             <option value="Docente">Docente</option>
             <option value="Tutor">Tutor</option>
             <option value="Facilitador">Facilitador</option>
@@ -847,43 +1046,43 @@
           </select>
         </div>
 
-        <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeProfileEditModal()" class="px-3 py-1.5 rounded-lg border text-slate-600 hover:bg-slate-100 font-semibold">Cancelar</button>
-          <button type="submit" class="px-4 py-1.5 rounded-lg bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold shadow-sm">Actualizar Perfil</button>
+        <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+          <button type="button" onclick="closeProfileEditModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold shadow-sm transition cursor-pointer">Actualizar Perfil</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ================= MODAL ELEGANTE: CONFIRMACIÓN CERRAR SESIÓN ================= -->
-  <div id="logoutConfirmModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-4 hidden">
+  <div id="logoutConfirmModal" onclick="if(event.target===this) closeLogoutModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4">
-      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 mx-auto flex items-center justify-center text-xl shadow-inner">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 mx-auto flex items-center justify-center text-xl shadow-2xs">
         <i class="fa-solid fa-right-from-bracket"></i>
       </div>
       <div>
         <h4 class="text-base font-extrabold text-slate-900">¿Cerrar sesión formativa?</h4>
-        <p class="text-xs text-slate-500 mt-1">Tu progreso se encuentra respaldado en Google Sheets. Podrás volver a entrar con tu cuenta de Google en cualquier momento.</p>
+        <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">Tu progreso se encuentra respaldado en Google Sheets. Podrás volver a entrar con tu cuenta de Google en cualquier momento.</p>
       </div>
-      <div class="flex gap-2 pt-2">
-        <button type="button" onclick="closeLogoutModal()" class="w-1/2 py-2.5 text-xs font-semibold rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100">
+      <div class="flex gap-2.5 pt-2">
+        <button type="button" onclick="closeLogoutModal()" class="w-1/2 py-2.5 text-xs font-semibold rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 cursor-pointer">
           Cancelar
         </button>
-        <button type="button" onclick="confirmLogoutAction()" class="w-1/2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow">
+        <button type="button" onclick="confirmLogoutAction()" class="w-1/2 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-sm cursor-pointer">
           Sí, Cerrar Sesión
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ================= PASO 2 Y 3: INTERRUPTOR TOGGLE (CTRL + SHIFT + A) ================= -->
-  <button id="secretAdminGear" onclick="openAdminPasswordModal()" title="Acceso Coordinación" class="hidden fixed bottom-4 right-4 w-10 h-10 rounded-full bg-slate-900/80 hover:bg-slate-900 text-amber-400 items-center justify-center transition opacity-80 hover:opacity-100 z-50 border border-slate-700 shadow-2xl cursor-pointer">
+  <!-- ================= INTERRUPTOR TOGGLE (CTRL + SHIFT + A) ================= -->
+  <button id="secretAdminGear" onclick="openAdminPasswordModal()" title="Acceso Coordinación" class="hidden fixed bottom-4 right-4 w-10 h-10 rounded-full bg-[#0A0A0B] hover:bg-slate-800 text-[#EC4899] items-center justify-center transition opacity-85 hover:opacity-100 z-50 border border-slate-700 shadow-2xl cursor-pointer">
     <i class="fa-solid fa-gear text-base"></i>
   </button>
 
-  <div id="adminPasswordModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-4 hidden">
+  <div id="adminPasswordModal" onclick="if(event.target===this) closeAdminPasswordModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4">
-      <div class="w-12 h-12 rounded-2xl bg-slate-900 text-blue-400 mx-auto flex items-center justify-center text-xl shadow-inner">
+      <div class="w-12 h-12 rounded-2xl bg-[#0A0A0B] text-[#60A5FA] mx-auto flex items-center justify-center text-xl shadow-inner">
         <i class="fa-solid fa-lock"></i>
       </div>
       <div>
@@ -891,12 +1090,12 @@
         <p class="text-xs text-slate-500 mt-1">Ingresa tu clave de coordinador.</p>
       </div>
       <form onsubmit="submitAdminPassword(event)" class="space-y-3">
-        <input type="password" id="adminPasswordInput" placeholder="Clave de seguridad" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-600 outline-none text-center font-mono">
+        <input type="password" id="adminPasswordInput" placeholder="Clave de seguridad" class="exec-input w-full px-3.5 py-2.5 text-sm text-center font-mono">
         <div class="flex gap-2">
-          <button type="button" onclick="closeAdminPasswordModal()" class="w-1/2 py-2 text-xs font-semibold rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-100">
+          <button type="button" onclick="closeAdminPasswordModal()" class="w-1/2 py-2 text-xs font-semibold rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 cursor-pointer">
             Cancelar
           </button>
-          <button type="submit" class="w-1/2 py-2 bg-[#0B4F8A] hover:bg-blue-800 text-white text-xs font-bold rounded-xl shadow">
+          <button type="submit" class="w-1/2 py-2 bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs font-bold rounded-xl shadow cursor-pointer">
             Verificar
           </button>
         </div>
@@ -905,118 +1104,123 @@
   </div>
 
   <!-- ================= MODAL ADMIN: EDITAR CARTEL FRONTAL ================= -->
-  <div id="adminBannerEditModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl overflow-hidden max-w-lg w-full shadow-2xl border border-slate-300">
-      <div class="p-4 bg-slate-900 text-white flex justify-between items-center font-bold text-xs sm:text-sm">
+  <div id="adminBannerEditModal" onclick="if(event.target===this) closeAdminBannerEditModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white rounded-2xl overflow-hidden max-w-lg w-full shadow-2xl border border-slate-200">
+      <div class="px-5 py-4 bg-[#0A0A0B] text-white flex justify-between items-center font-bold text-xs sm:text-sm">
         <span class="flex items-center gap-2">
-          <i class="fa-solid fa-pen text-amber-400"></i> Editar Cartel Frontal de Bienvenida
+          <i class="fa-solid fa-pen text-[#EC4899]"></i> Editar Cartel Frontal de Bienvenida
         </span>
-        <button onclick="closeAdminBannerEditModal()" class="text-slate-400 hover:text-white text-base">
+        <button onclick="closeAdminBannerEditModal()" class="text-slate-400 hover:text-white text-base cursor-pointer">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
       <form onsubmit="saveAdminBanner(event)" class="p-5 space-y-3 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Etiqueta Superior</label>
-          <input type="text" id="editBannerTag" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-medium">
+          <input type="text" id="editBannerTag" required class="exec-input w-full px-3 py-2 font-medium">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Título Principal</label>
-          <input type="text" id="editBannerTitle" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-medium">
+          <input type="text" id="editBannerTitle" required class="exec-input w-full px-3 py-2 font-medium">
         </div>
         <div>
           <label class="block font-bold text-slate-700 mb-1">Descripción del Programa</label>
-          <textarea id="editBannerDesc" rows="3" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+          <textarea id="editBannerDesc" rows="3" required class="exec-input w-full px-3 py-2"></textarea>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block font-bold text-slate-700 mb-1">Cantidad de Módulos</label>
-            <input type="text" id="editBannerModulesNum" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+            <input type="text" id="editBannerModulesNum" required class="exec-input w-full px-3 py-2 font-mono">
           </div>
           <div>
             <label class="block font-bold text-slate-700 mb-1">Porcentaje de Aprobación</label>
-            <input type="text" id="editBannerApprovalNum" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+            <input type="text" id="editBannerApprovalNum" required class="exec-input w-full px-3 py-2 font-mono">
           </div>
         </div>
         <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeAdminBannerEditModal()" class="px-3 py-1.5 rounded-lg border text-slate-600 hover:bg-slate-100">Cancelar</button>
-          <button type="submit" class="px-4 py-1.5 rounded-lg bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold shadow-sm">Guardar Cambios</button>
+          <button type="button" onclick="closeAdminBannerEditModal()" class="px-3.5 py-2 rounded-xl border text-slate-600 hover:bg-slate-50 cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold shadow-sm cursor-pointer">Guardar Cambios</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ================= MODAL ADMIN: EDITAR VIDEO INDUCCIÓN FRONTAL ================= -->
-  <div id="adminIntroVideoEditModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl overflow-hidden max-w-md w-full shadow-2xl border border-slate-300">
-      <div class="p-4 bg-slate-900 text-white flex justify-between items-center font-bold text-xs sm:text-sm">
+  <div id="adminIntroVideoEditModal" onclick="if(event.target===this) closeAdminIntroVideoEditModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white rounded-2xl overflow-hidden max-w-md w-full shadow-2xl border border-slate-200">
+      <div class="px-5 py-4 bg-[#0A0A0B] text-white flex justify-between items-center font-bold text-xs sm:text-sm">
         <span class="flex items-center gap-2">
-          <i class="fa-solid fa-video text-amber-400"></i> Editar Video de Inducción Frontal
+          <i class="fa-solid fa-video text-[#1A64FF]"></i> Editar Video de Inducción Frontal
         </span>
-        <button onclick="closeAdminIntroVideoEditModal()" class="text-slate-400 hover:text-white text-base">
+        <button onclick="closeAdminIntroVideoEditModal()" class="text-slate-400 hover:text-white text-base cursor-pointer">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
       <form onsubmit="saveAdminIntroVideo(event)" class="p-5 space-y-3.5 text-xs">
         <div>
           <label class="block font-bold text-slate-700 mb-1">Enlace del Video (YouTube o Google Drive)</label>
-          <input type="text" id="editIntroVideoUrl" required placeholder="https://www.youtube.com/watch?v=... o Google Drive" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-mono text-[11px]">
+          <input type="text" id="editIntroVideoUrl" required placeholder="https://www.youtube.com/watch?v=... o Google Drive" class="exec-input w-full px-3 py-2 font-mono text-[11px]">
           <p class="text-[10px] text-slate-500 mt-1">Acepta enlaces regulares de YouTube o enlaces compartidos de Google Drive.</p>
         </div>
         <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeAdminIntroVideoEditModal()" class="px-3 py-1.5 rounded-lg border text-slate-600 hover:bg-slate-100">Cancelar</button>
-          <button type="submit" class="px-4 py-1.5 rounded-lg bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold shadow-sm">Actualizar Video</button>
+          <button type="button" onclick="closeAdminIntroVideoEditModal()" class="px-3.5 py-2 rounded-xl border text-slate-600 hover:bg-slate-50 cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold shadow-sm cursor-pointer">Actualizar Video</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ================= MODAL: BASE DE DATOS Y CONEXIÓN CON GOOGLE SHEETS ================= -->
-  <div id="adminDatabaseModal" class="fixed inset-0 bg-slate-950/85 modal-glass z-50 flex items-center justify-center p-3 sm:p-6 hidden">
+  <div id="adminDatabaseModal" onclick="if(event.target===this) closeAdminDatabaseModal()" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-3 sm:p-6 hidden">
     <div class="bg-white rounded-2xl overflow-hidden max-w-6xl w-full shadow-2xl border border-slate-200 flex flex-col max-h-[92vh]">
+      <div class="h-1.5 w-full flex shrink-0">
+        <div class="flex-1 bg-[#1A64FF]"></div>
+        <div class="flex-1 bg-[#EC4899]"></div>
+        <div class="flex-1 bg-[#10B981]"></div>
+      </div>
       
-      <div class="p-4 sm:p-5 bg-[#002B49] text-white flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+      <div class="p-4 sm:p-5 bg-[#0A0A0B] text-white flex flex-col sm:flex-row justify-between sm:items-center gap-3 shrink-0">
         <div>
-          <span class="text-[10px] font-black uppercase text-blue-300 bg-white/10 px-2.5 py-0.5 rounded">CONSOLA PRIVADA DE COORDINACIÓN</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA] bg-white/10 px-2.5 py-0.5 rounded">CONSOLA PRIVADA DE COORDINACIÓN</span>
           <h3 class="text-lg font-bold text-white mt-1 flex items-center gap-2">
-            <i class="fa-solid fa-table text-emerald-400"></i> Registro de Participantes y Google Sheets
+            <i class="fa-solid fa-table text-[#10B981]"></i> Registro de Participantes y Google Sheets
           </h3>
-          <p class="text-xs text-blue-200">Base de datos oficial alimentada en vivo en tu hoja de cálculo.</p>
+          <p class="text-xs text-slate-400">Base de datos oficial alimentada en vivo en tu hoja de cálculo.</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="openConfiguredGoogleSheet()" id="btnOpenSheetDirect" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-extrabold flex items-center gap-2 shadow-md">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="openConfiguredGoogleSheet()" id="btnOpenSheetDirect" class="px-4 py-2 bg-[#10B981] hover:bg-emerald-600 text-white rounded-xl text-xs font-bold flex items-center gap-2 shadow-md cursor-pointer">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Google Sheet Oficial
           </button>
-          <button onclick="exportParticipantsToCSV()" class="px-3.5 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow">
+          <button onclick="exportParticipantsToCSV()" class="px-3.5 py-2 bg-[#1A64FF] hover:bg-blue-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow cursor-pointer">
             <i class="fa-solid fa-download"></i> Descargar CSV
           </button>
-          <button onclick="closeAdminDatabaseModal()" class="text-slate-300 hover:text-white text-lg ml-2">
+          <button onclick="closeAdminDatabaseModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg bg-white/5 hover:bg-white/15 ml-1 cursor-pointer">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
       </div>
 
-      <div class="p-4 bg-blue-50 border-b border-blue-200 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+      <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs shrink-0">
         <div class="w-full sm:flex-1 space-y-1">
-          <label class="font-bold text-blue-950 flex items-center gap-1.5">
-            <i class="fa-brands fa-google-drive text-emerald-600"></i> Enlace Google Sheet Oficial (Donde caen los resultados en vivo):
+          <label class="font-bold text-slate-800 flex items-center gap-1.5">
+            <i class="fa-brands fa-google-drive text-[#10B981]"></i> Enlace Google Sheet Oficial (Donde caen los resultados en vivo):
           </label>
           <div class="flex gap-2">
-            <input type="text" id="googleSheetUrlInput" readonly class="w-full px-3 py-2 border rounded-lg outline-none bg-slate-100 font-mono text-[11px] text-slate-700 cursor-text select-all">
-            <button onclick="openConfiguredGoogleSheet()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shrink-0 flex items-center gap-1.5 shadow-sm">
+            <input type="text" id="googleSheetUrlInput" readonly class="exec-input w-full px-3 py-2 bg-white font-mono text-[11px] text-slate-700 cursor-text select-all">
+            <button onclick="openConfiguredGoogleSheet()" class="px-4 py-2 bg-[#10B981] hover:bg-emerald-600 text-white rounded-xl font-bold shrink-0 flex items-center gap-1.5 shadow-2xs cursor-pointer">
               <i class="fa-solid fa-external-link"></i> Abrir Hoja
             </button>
           </div>
         </div>
       </div>
 
-      <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs">
+      <div class="p-4 bg-white border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs shrink-0">
         <div class="flex items-center gap-2 w-full sm:w-auto">
           <div class="relative flex-1 sm:w-64">
-            <input type="text" id="adminSearchInput" oninput="filterAdminDatabase()" placeholder="Buscar por nombre o correo..." class="w-full pl-8 pr-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+            <input type="text" id="adminSearchInput" oninput="filterAdminDatabase()" placeholder="Buscar por nombre o correo..." class="exec-input w-full pl-8 pr-3 py-2">
             <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-slate-400"></i>
           </div>
-          <select id="adminRoleFilter" onchange="filterAdminDatabase()" class="px-3 py-2 border rounded-xl bg-white font-medium">
+          <select id="adminRoleFilter" onchange="filterAdminDatabase()" class="exec-input px-3 py-2 font-medium">
             <option value="todos">Todos los Roles</option>
             <option value="Docente">Docente</option>
             <option value="Tutor">Tutor</option>
@@ -1024,23 +1228,23 @@
             <option value="Supervisor">Supervisor</option>
           </select>
         </div>
-        <div class="text-slate-500 font-semibold" id="adminRecordCount">
+        <div class="font-mono text-slate-500 font-semibold" id="adminRecordCount">
           Mostrando 0 registros
         </div>
       </div>
 
       <div class="overflow-x-auto flex-1 custom-scroll p-4">
-        <table class="w-full text-left text-xs text-slate-700">
-          <thead class="bg-slate-100 text-slate-600 uppercase font-semibold text-[10px] tracking-wider border-b">
+        <table class="w-full text-left text-[13px] text-slate-700">
+          <thead class="bg-slate-50 text-slate-500 uppercase font-bold text-[11px] tracking-wider border-b border-slate-200">
             <tr>
-              <th class="px-3 py-2.5">Participante</th>
-              <th class="px-3 py-2.5">Correo de Google</th>
-              <th class="px-3 py-2.5">Rol</th>
-              <th class="px-3 py-2.5">Prácticas OK</th>
-              <th class="px-3 py-2.5">Avance (%)</th>
-              <th class="px-3 py-2.5">Promedio Notas</th>
-              <th class="px-3 py-2.5">Folio / Estado</th>
-              <th class="px-3 py-2.5 text-right">Fecha</th>
+              <th class="px-3 py-3">Participante</th>
+              <th class="px-3 py-3">Correo de Google</th>
+              <th class="px-3 py-3">Rol</th>
+              <th class="px-3 py-3">Prácticas OK</th>
+              <th class="px-3 py-3">Avance (%)</th>
+              <th class="px-3 py-3">Promedio Notas</th>
+              <th class="px-3 py-3">Folio / Estado</th>
+              <th class="px-3 py-3 text-right">Fecha</th>
             </tr>
           </thead>
           <tbody id="adminTableBody" class="divide-y divide-slate-100"></tbody>
@@ -1051,13 +1255,13 @@
   </div>
 
   <!-- ================= MODAL ADMIN: EDICIÓN EN VIVO DE ENLACES DE MÓDULOS ================= -->
-  <div id="adminEditModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
-    <div class="bg-white rounded-2xl overflow-hidden max-w-lg w-full shadow-2xl border border-slate-300">
-      <div class="p-4 bg-slate-900 text-white flex justify-between items-center font-bold text-xs sm:text-sm">
+  <div id="adminEditModal" onclick="if(event.target===this) closeAdminEditModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white rounded-2xl overflow-hidden max-w-lg w-full shadow-2xl border border-slate-200">
+      <div class="px-5 py-4 bg-[#0A0A0B] text-white flex justify-between items-center font-bold text-xs sm:text-sm">
         <span class="flex items-center gap-2">
-          <i class="fa-solid fa-wrench text-blue-400"></i> Configurar Video y Manuales (Drive o YouTube)
+          <i class="fa-solid fa-wrench text-[#60A5FA]"></i> Configurar Video y Manuales (Drive o YouTube)
         </span>
-        <button onclick="closeAdminEditModal()" class="text-slate-400 hover:text-white text-base">
+        <button onclick="closeAdminEditModal()" class="text-slate-400 hover:text-white text-base cursor-pointer">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -1067,67 +1271,53 @@
         
         <div>
           <label class="block font-bold text-slate-700 mb-1">Título de la Sesión</label>
-          <input type="text" id="editCardTitle" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-medium">
+          <input type="text" id="editCardTitle" required class="exec-input w-full px-3 py-2 font-medium">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Enlace del Video (YouTube o Google Drive)</label>
-          <input type="text" id="editCardVideoUrl" required placeholder="https://www.youtube.com/watch?v=... o Drive" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-mono text-[11px]">
+          <input type="text" id="editCardVideoUrl" required placeholder="https://www.youtube.com/watch?v=... o Drive" class="exec-input w-full px-3 py-2 font-mono text-[11px]">
           <p class="text-[10px] text-slate-500 mt-0.5">El sistema lo convierte automáticamente al reproductor incrustado.</p>
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Enlace del Manual SOP (Drive o Web)</label>
-          <input type="text" id="editCardManualUrl" required placeholder="https://drive.google.com/..." class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600 font-mono text-[11px]">
+          <input type="text" id="editCardManualUrl" required placeholder="https://drive.google.com/..." class="exec-input w-full px-3 py-2 font-mono text-[11px]">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Nombre Oficial del Manual</label>
-          <input type="text" id="editCardManualText" required class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600">
+          <input type="text" id="editCardManualText" required class="exec-input w-full px-3 py-2">
         </div>
 
         <div>
           <label class="block font-bold text-slate-700 mb-1">Puntos clave del video (Separados por coma)</label>
-          <textarea id="editCardPoints" rows="2" class="w-full px-3 py-2 border rounded-xl outline-none focus:ring-2 focus:ring-blue-600"></textarea>
+          <textarea id="editCardPoints" rows="2" class="exec-input w-full px-3 py-2"></textarea>
         </div>
 
         <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeAdminEditModal()" class="px-3 py-1.5 rounded-lg border text-slate-600 hover:bg-slate-100">Cancelar</button>
-          <button type="submit" class="px-4 py-1.5 rounded-lg bg-[#0B4F8A] hover:bg-blue-800 text-white font-bold shadow-sm">Guardar Cambios</button>
+          <button type="button" onclick="closeAdminEditModal()" class="px-3.5 py-2 rounded-xl border text-slate-600 hover:bg-slate-50 cursor-pointer">Cancelar</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white font-bold shadow-sm cursor-pointer">Guardar Cambios</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- ================= MODAL ELEGANTE DE MENSAJES ================= -->
-  <div id="proAlertModal" class="fixed inset-0 bg-slate-950/80 modal-glass z-50 flex items-center justify-center p-4 hidden">
+  <div id="proAlertModal" onclick="if(event.target===this) closeProAlertModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4">
-      <div id="proAlertIconBox" class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 mx-auto flex items-center justify-center text-xl shadow-sm">
+      <div id="proAlertIconBox" class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] mx-auto flex items-center justify-center text-xl shadow-2xs">
         <i id="proAlertIcon" class="fa-solid fa-circle-check"></i>
       </div>
       <div>
         <h4 id="proAlertTitle" class="text-base font-extrabold text-slate-900">Notificación</h4>
-        <p id="proAlertMessage" class="text-xs text-slate-600 mt-1 leading-relaxed">Mensaje del sistema.</p>
+        <p id="proAlertMessage" class="text-xs text-slate-600 mt-1.5 leading-relaxed">Mensaje del sistema.</p>
       </div>
-      <button onclick="closeProAlertModal()" class="w-full py-2.5 bg-[#0B4F8A] hover:bg-blue-800 text-white text-xs font-bold rounded-xl shadow">
+      <button onclick="closeProAlertModal()" class="w-full py-2.5 bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs font-bold rounded-xl shadow-sm transition cursor-pointer">
         Entendido
       </button>
     </div>
   </div>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-slate-950 text-slate-400 text-xs py-6 border-t border-slate-900 mt-auto">
-    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 flex flex-col sm:flex-row justify-between items-center gap-3">
-      <p>© 2026 IHFB El Salvador • Plataforma de Capacitación y Nivelación Autónoma.</p>
-      <div class="flex items-center space-x-4 text-[11px]">
-        <span class="hover:text-slate-200 cursor-pointer" onclick="switchTab('faq')">SOP Oficial</span>
-        <span>•</span>
-        <span class="hover:text-slate-200 cursor-pointer" onclick="switchTab('faq')">Mesa de Ayuda</span>
-        <span>•</span>
-        <span class="hover:text-slate-200 cursor-pointer" onclick="switchTab('progreso')">Validación de Constancias</span>
-      </div>
-    </div>
-  </footer>
 
   <!-- ================= LÓGICA JAVASCRIPT ================= -->
   <script>
@@ -1615,13 +1805,34 @@
     // 8. GESTIÓN VISUAL Y NAVEGACIÓN
     function activarSesionVisual() {
       document.getElementById('topUserName').textContent = currentUser.name;
-      document.getElementById('topUserRole').textContent = currentUser.role;
+      const roleEl = document.getElementById('topUserRole');
+      roleEl.textContent = currentUser.role;
+      const isSup = String(currentUser.role || '').trim().toLowerCase() === 'supervisor';
+      roleEl.className = isSup
+        ? 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#EC4899]/20 text-[#F472B6] border border-[#EC4899]/40'
+        : 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/20 text-[#34D399] border border-[#10B981]/40';
+
+      const sbAvatar = document.getElementById('sbUserAvatar');
+      const sbName = document.getElementById('sbUserName');
+      const sbRole = document.getElementById('sbUserRole');
+      if (sbAvatar) sbAvatar.textContent = String(currentUser.name || 'U').trim().charAt(0).toUpperCase();
+      if (sbName) sbName.textContent = currentUser.name;
+      if (sbRole) {
+        sbRole.textContent = currentUser.role;
+        sbRole.className = isSup
+          ? 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#EC4899]/25 text-[#F472B6] border border-[#EC4899]/50'
+          : 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/25 text-[#34D399] border border-[#10B981]/50';
+      }
+
       document.getElementById('badgeCurrentRole').textContent = currentUser.role;
       document.getElementById('dashUserGreetingName').textContent = currentUser.name;
 
       document.getElementById('topUserBadge').classList.remove('hidden');
       document.getElementById('topUserBadge').classList.add('flex');
-      document.getElementById('mainNavMenu').classList.remove('hidden');
+      document.getElementById('mainNavMenu').classList.remove('hidden'); document.getElementById('mainNavMenu').classList.add('flex');
+      document.getElementById('mainNavMenu').classList.add('flex');
+      const mobBtn = document.getElementById('btnMobileMenuToggle');
+      if (mobBtn) mobBtn.classList.remove('hidden');
 
       document.getElementById('certParticipantName').textContent = currentUser.name;
       document.getElementById('certParticipantRole').textContent = `Rol: ${currentUser.role}`;
@@ -1641,6 +1852,34 @@
       document.getElementById('topUserBadge').classList.add('hidden');
       document.getElementById('topUserBadge').classList.remove('flex');
       document.getElementById('mainNavMenu').classList.add('hidden');
+      document.getElementById('mainNavMenu').classList.remove('flex');
+      const mobBtn = document.getElementById('btnMobileMenuToggle');
+      if (mobBtn) mobBtn.classList.add('hidden');
+      const hdrTitleEl = document.getElementById('workspaceHeaderTitle');
+      if (hdrTitleEl) hdrTitleEl.textContent = 'Portal de Capacitación Autónoma';
+    }
+
+    function toggleDesktopTrainingSidebar() {
+      const sb = document.getElementById('mainNavMenu');
+      const icon = document.getElementById('sbCollapseIcon');
+      if (!sb) return;
+      const collapsed = sb.classList.toggle('sidebar-collapsed');
+      if (icon) {
+        icon.className = collapsed ? 'fa-solid fa-angles-right text-xs' : 'fa-solid fa-angles-left text-xs';
+      }
+    }
+
+    function toggleMobileTrainingSidebar(open) {
+      const sb = document.getElementById('mainNavMenu');
+      const bd = document.getElementById('mobileTrainingBackdrop');
+      if (!sb || !bd) return;
+      if (open) {
+        sb.classList.remove('-translate-x-full');
+        bd.classList.remove('hidden');
+      } else {
+        sb.classList.add('-translate-x-full');
+        bd.classList.add('hidden');
+      }
     }
 
     function setAuthTab(tab) {
@@ -1651,13 +1890,13 @@
       const logView = document.getElementById('authViewLogin');
 
       if (tab === 'register') {
-        regTabBtn.className = "py-2.5 px-3 text-xs font-extrabold rounded-lg transition text-white bg-blue-700 shadow-sm flex items-center justify-center gap-1.5";
+        regTabBtn.className = "py-2.5 px-3 text-xs font-bold rounded-lg transition text-white bg-[#0A0A0B] shadow-sm flex items-center justify-center gap-1.5";
         logTabBtn.className = "py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5";
         regView.classList.remove('hidden');
         logView.classList.add('hidden');
         validateRegistrationForm();
       } else {
-        logTabBtn.className = "py-2.5 px-3 text-xs font-extrabold rounded-lg transition text-white bg-blue-700 shadow-sm flex items-center justify-center gap-1.5";
+        logTabBtn.className = "py-2.5 px-3 text-xs font-bold rounded-lg transition text-white bg-[#0A0A0B] shadow-sm flex items-center justify-center gap-1.5";
         regTabBtn.className = "py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5";
         logView.classList.remove('hidden');
         regView.classList.add('hidden');
@@ -1677,17 +1916,28 @@
 
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-blue-700', 'text-white', 'shadow');
-        btn.classList.add('text-slate-300');
+        btn.classList.remove('text-white', 'bg-white/10', 'border-l-[#1A64FF]', 'shadow');
+        btn.classList.add('text-slate-400', 'border-l-transparent');
       });
 
       const target = document.getElementById(`section-${tabKey}`);
       const targetNav = document.getElementById(`nav-${tabKey}`);
       if (target) target.classList.remove('hidden');
       if (targetNav) {
-        targetNav.classList.add('bg-blue-700', 'text-white', 'shadow');
-        targetNav.classList.remove('text-slate-300');
+        targetNav.classList.add('text-white', 'bg-white/10', 'border-l-[#1A64FF]');
+        targetNav.classList.remove('text-slate-400', 'border-l-transparent');
       }
+      const pageTitlesMap = {
+        inicio: 'Acceso Institucional',
+        dashboard: 'Home Formativo',
+        modulos: 'Módulos de Aprendizaje',
+        practicas: 'Prácticas en Vivo',
+        quizzes: 'Evaluaciones (Quizzes)',
+        progreso: 'Mi Progreso y Validación',
+        faq: 'Preguntas y Soporte'
+      };
+      const hdrTitleEl = document.getElementById('workspaceHeaderTitle');
+      if (hdrTitleEl && pageTitlesMap[tabKey]) hdrTitleEl.textContent = pageTitlesMap[tabKey];
 
       if (tabKey === 'modulos') {
         renderModulesSidebar();
@@ -1883,7 +2133,7 @@
 
       modulesData.forEach(mod => {
         const card = document.createElement('div');
-        card.className = "p-4 bg-slate-50 hover:bg-blue-50/50 rounded-xl border border-slate-200 transition cursor-pointer flex flex-col justify-between";
+        card.className = "p-4 bg-white hover:bg-slate-50/80 rounded-xl border border-slate-200 hover:border-[#1A64FF]/50 transition cursor-pointer flex flex-col justify-between shadow-2xs group";
         card.onclick = () => {
           currentSelectedModuleId = mod.id;
           switchTab('modulos');
@@ -2404,7 +2654,7 @@
         isAdminMode = true;
         closeAdminPasswordModal();
 
-        document.getElementById('mainNavMenu').classList.remove('hidden');
+        document.getElementById('mainNavMenu').classList.remove('hidden'); document.getElementById('mainNavMenu').classList.add('flex');
         document.getElementById('nav-admin-db').classList.remove('hidden');
         document.getElementById('topAdminBadge').classList.remove('hidden');
         document.getElementById('topAdminBadge').classList.add('flex');
