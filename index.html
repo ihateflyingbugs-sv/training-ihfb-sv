@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IHFB Global Training Academy • Acreditación Operativa</title>
-  
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -44,6 +44,7 @@
     html, body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       top: 0px !important;
+      margin-top: 0px !important;
       position: static !important;
       background-color: #F8FAFC;
       color: #0F172A;
@@ -70,7 +71,7 @@
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 14px;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 4px 14px -2px rgba(15, 23, 42, 0.03);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 18px -4px rgba(15, 23, 42, 0.04);
     }
     .exec-input {
       background: #FFFFFF;
@@ -83,7 +84,7 @@
     .exec-input:focus {
       outline: none;
       border-color: #1A64FF;
-      box-shadow: 0 0 0 3px rgba(26, 100, 255, 0.12);
+      box-shadow: 0 0 0 3px rgba(26, 100, 255, 0.14);
     }
 
     /* Collapsible Desktop Sidebar */
@@ -107,20 +108,26 @@
       padding-right: 0.65rem !important;
     }
 
-    /* Guided Pulse Highlight for Step-by-Step Simulator */
-    @keyframes simTargetPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(26, 100, 255, 0.55); }
-      50% { box-shadow: 0 0 0 7px rgba(26, 100, 255, 0); }
+    /* Shake animation on wrong click in simulator */
+    @keyframes simErrorShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
     }
-    .sim-guide-target {
-      animation: simTargetPulse 1.8s infinite;
-      border-color: #1A64FF !important;
+    .sim-shake {
+      animation: simErrorShake 0.35s ease-in-out;
     }
 
-    /* Suppress Google Translate banners */
+    /* ====================================================================== */
+    /* COMPLETE SUPPRESSION OF GOOGLE TRANSLATE CELESTE TOP BAR & POPUPS      */
+    /* ====================================================================== */
     .goog-te-banner-frame,
     .goog-te-banner-frame.skiptranslate,
     iframe.goog-te-banner-frame,
+    iframe.skiptranslate,
+    .VIpgJd-ZVi9od-ORHb-OEVmcd,
+    .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+    .VIpgJd-ZVi9od-l4eHX-hSRGPd,
     #goog-gt-tt,
     .goog-te-balloon-frame,
     .goog-tooltip,
@@ -129,7 +136,15 @@
       visibility: hidden !important;
       height: 0px !important;
       width: 0px !important;
+      max-height: 0px !important;
       opacity: 0 !important;
+      pointer-events: none !important;
+      position: fixed !important;
+      top: -9999px !important;
+    }
+    body {
+      top: 0px !important;
+      position: static !important;
     }
     .goog-text-highlight {
       background-color: transparent !important;
@@ -156,136 +171,161 @@
 <body class="bg-[#F8FAFC] text-slate-900 antialiased min-h-screen flex flex-col selection:bg-[#1A64FF] selection:text-white relative">
 
   <!-- ======================================================================== -->
-  <!-- STAGE 1: ACADEMIC SPLIT-SCREEN SIGN-IN & REGISTRATION GATE (NO VIDEO)    -->
+  <!-- DISCREET BOTTOM-LEFT LANGUAGE DROPDOWN (ALWAYS ACCESSIBLE, ZERO BANNER)  -->
   <!-- ======================================================================== -->
-  <div id="authGateScreen" class="min-h-screen flex flex-col lg:flex-row bg-white">
-    <!-- Left Showcase Column (Neutral International Academic Identity) -->
-    <div class="lg:w-6/12 xl:w-[54%] bg-[#F4F6FA] border-b lg:border-b-0 lg:border-r border-slate-200/80 p-6 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
-      <!-- Top Tri-Color Accent -->
+  <div id="discreetLangSwitcher" class="fixed bottom-4 left-4 z-50">
+    <div class="flex items-center gap-2 bg-[#0A0A0B]/92 backdrop-blur-md text-slate-200 border border-slate-700/80 rounded-xl px-3 py-1.5 shadow-lg hover:border-slate-500 transition">
+      <i class="fa-solid fa-globe text-[#60A5FA] text-xs"></i>
+      <select id="bottomLangSelect" onchange="triggerGoogleTranslate(this.value)" aria-label="Seleccionar idioma" class="bg-transparent text-xs font-semibold text-white outline-none cursor-pointer pr-1">
+        <option value="es" class="bg-[#0A0A0B] text-white">Español</option>
+        <option value="en" class="bg-[#0A0A0B] text-white">English</option>
+        <option value="ko" class="bg-[#0A0A0B] text-white">한국어</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ======================================================================== -->
+  <!-- STAGE 1: HIGH-IMPACT SPLIT-SCREEN SIGN-IN & REGISTRATION GATE            -->
+  <!-- ======================================================================== -->
+  <div id="authGateScreen" class="min-h-screen flex flex-col lg:flex-row bg-[#0A0A0B]">
+    <!-- Left High-Impact Obsidian Executive Column -->
+    <div class="lg:w-6/12 xl:w-[52%] bg-[#0A0A0B] text-white p-6 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
+      <!-- Signature IHFB Tri-Color Top Bar -->
       <div class="absolute top-0 left-0 right-0 h-1.5 flex">
         <div class="flex-1 bg-[#1A64FF]"></div>
         <div class="flex-1 bg-[#EC4899]"></div>
         <div class="flex-1 bg-[#10B981]"></div>
       </div>
 
-      <!-- Brand & Language Switcher -->
-      <div class="flex items-center justify-between gap-4 flex-wrap">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shadow-2xs">
+      <!-- Ambient Brand Radial Glows -->
+      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#1A64FF]/20 blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-10 right-0 w-80 h-80 rounded-full bg-[#EC4899]/15 blur-3xl pointer-events-none"></div>
+
+      <!-- Brand Identity -->
+      <div class="relative z-10 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-lg">
             <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
           </div>
           <div>
-            <div class="text-sm font-extrabold text-slate-900 tracking-tight">IHFB Training Academy</div>
-            <div class="text-[11px] font-medium text-slate-500">Global Certification & Onboarding</div>
+            <div class="text-base font-extrabold text-white tracking-tight">IHFB Training Academy</div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span class="w-2.5 h-0.5 bg-[#1A64FF] rounded-full"></span>
+              <span class="w-2.5 h-0.5 bg-[#EC4899] rounded-full"></span>
+              <span class="w-2.5 h-0.5 bg-[#10B981] rounded-full"></span>
+              <span class="text-[10.5px] font-semibold uppercase tracking-widest text-slate-400 ml-1">Global Certification</span>
+            </div>
           </div>
         </div>
-
-        <div class="flex items-center bg-white p-1 rounded-xl border border-slate-200 text-xs shadow-2xs">
-          <button type="button" onclick="triggerGoogleTranslate('es')" id="lang-btn-es" class="px-2.5 py-1 rounded-lg font-bold text-white bg-[#0A0A0B] transition cursor-pointer">Español</button>
-          <button type="button" onclick="triggerGoogleTranslate('en')" id="lang-btn-en" class="px-2.5 py-1 rounded-lg font-medium text-slate-500 hover:text-slate-900 transition cursor-pointer">English</button>
-          <button type="button" onclick="triggerGoogleTranslate('ko')" id="lang-btn-ko" class="px-2.5 py-1 rounded-lg font-medium text-slate-500 hover:text-slate-900 transition cursor-pointer">한국어</button>
-        </div>
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-[11px] font-semibold text-slate-200">
+          <span class="w-2 h-2 rounded-full bg-[#10B981]"></span> Google Workspace SSO
+        </span>
       </div>
 
-      <!-- Editorial Headline & Visual Value Architecture -->
-      <div class="my-auto py-8 lg:py-12 max-w-xl space-y-6">
-        <div class="space-y-3">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white text-[#1A64FF] border border-blue-200/80 shadow-2xs">
-            <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
-            <span>Plataforma Oficial de Certificación</span>
+      <!-- Hero Editorial Content -->
+      <div class="relative z-10 my-auto py-10 lg:py-12 max-w-xl space-y-7">
+        <div class="space-y-3.5">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA] border border-[#1A64FF]/40">
+            <i class="fa-solid fa-award text-[#10B981]"></i>
+            <span>Programa Oficial de Acreditación Operativa</span>
           </span>
-          <h1 class="text-3xl sm:text-4xl xl:text-[42px] font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-            Aprender sin fronteras.<br>Dominar cada herramienta.
+          <h1 class="text-3xl sm:text-4xl xl:text-[44px] font-extrabold text-white tracking-tight leading-[1.12]">
+            Formación práctica.<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#F472B6] to-[#34D399]">Certificación verificable.</span>
           </h1>
-          <p class="text-sm sm:text-[15px] text-slate-600 leading-relaxed">
-            Ruta guiada paso a paso para dominar la operación en aula, gestión de visibilidad, analítica educativa y protocolos de supervisión con validación práctica en tiempo real.
+          <p class="text-sm sm:text-[15px] text-slate-300 leading-relaxed">
+            Domina cada módulo operativo de la plataforma educativa mediante guías estándar, simuladores interactivos sin pistas y evaluaciones acreditadas por rol.
           </p>
         </div>
 
-        <!-- 3-Step Visual Journey Preview -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
-          <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-            <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#1A64FF] font-mono text-xs font-extrabold flex items-center justify-center">01</div>
-            <div class="text-xs font-bold text-slate-900">Estudia y Confirma</div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">Revisa el video y el manual SOP de cada módulo y confirma tu lectura.</p>
+        <!-- 3 High-Contrast Dark Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-[#1A64FF] text-white font-mono text-xs font-extrabold flex items-center justify-center shadow-sm">01</div>
+            <div class="text-xs font-bold text-white">Estudia y Confirma</div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Revisa el video y el manual SOP y confirma tu lectura.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-            <div class="w-8 h-8 rounded-xl bg-pink-50 text-[#EC4899] font-mono text-xs font-extrabold flex items-center justify-center">02</div>
-            <div class="text-xs font-bold text-slate-900">Practica en Vivo</div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">Ejecuta los clics reales en la réplica interactiva de la plataforma.</p>
+          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-[#EC4899] text-white font-mono text-xs font-extrabold flex items-center justify-center shadow-sm">02</div>
+            <div class="text-xs font-bold text-white">Simulador Real</div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Opera la réplica exacta de la plataforma paso a paso.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
-            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-[#10B981] font-mono text-xs font-extrabold flex items-center justify-center">03</div>
-            <div class="text-xs font-bold text-slate-900">Aprueba y Certifica</div>
-            <p class="text-[11px] text-slate-500 leading-relaxed">Supera el quiz con ≥80% para desbloquear el siguiente módulo y tu diploma.</p>
+          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm space-y-2">
+            <div class="w-8 h-8 rounded-xl bg-[#10B981] text-white font-mono text-xs font-extrabold flex items-center justify-center shadow-sm">03</div>
+            <div class="text-xs font-bold text-white">Aprueba y Certifica</div>
+            <p class="text-[11px] text-slate-400 leading-relaxed">Supera el quiz con ≥80% para desbloquear tu diploma.</p>
           </div>
         </div>
       </div>
 
-      <!-- Subtle Institutional Footer Note -->
-      <div class="flex items-center justify-between text-xs text-slate-400 border-t border-slate-200/80 pt-4">
+      <!-- Subtle Institutional Footer -->
+      <div class="relative z-10 flex items-center justify-between text-[11px] text-slate-500 border-t border-white/10 pt-4 pl-28 sm:pl-32">
         <span>© 2026 IHFB Global Training Academy</span>
-        <span class="font-mono text-[11px] text-slate-500">Google Workspace SSO</span>
+        <span class="font-mono text-slate-400">v3.0 Enterprise</span>
       </div>
     </div>
 
-    <!-- Right Column: Structured Academic Sign-In & Registration Form -->
-    <div class="lg:w-6/12 xl:w-[46%] bg-white p-6 sm:p-10 lg:p-14 flex items-center justify-center">
-      <div class="w-full max-w-[440px] space-y-6">
-        <div class="text-center space-y-1.5">
-          <div class="w-11 h-11 rounded-2xl bg-[#0A0A0B] text-white mx-auto flex items-center justify-center text-base shadow-sm mb-3">
-            <i class="fa-solid fa-graduation-cap text-[#60A5FA]"></i>
-          </div>
-          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">¡Comencemos!</h2>
-          <p class="text-xs sm:text-[13px] text-slate-500">Accede con tu cuenta institucional de Google o crea tu expediente académico.</p>
+    <!-- Right Column: Elevated Crisp Academic Form Surface -->
+    <div class="lg:w-6/12 xl:w-[48%] bg-[#F1F5F9] p-5 sm:p-10 lg:p-12 flex items-center justify-center">
+      <div class="w-full max-w-[480px] bg-white rounded-2xl shadow-[0_20px_50px_-15px_rgba(15,23,42,0.14)] border border-slate-200/90 overflow-hidden">
+        <!-- Top Accent Bar -->
+        <div class="h-1 w-full flex">
+          <div class="flex-1 bg-[#1A64FF]"></div>
+          <div class="flex-1 bg-[#EC4899]"></div>
+          <div class="flex-1 bg-[#10B981]"></div>
         </div>
 
-        <!-- Segmented Tab Switcher -->
-        <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl border border-slate-200/90 gap-1">
-          <button type="button" onclick="setAuthTab('login')" id="tabBtnLogin" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-white bg-[#0A0A0B] shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket text-[11px]"></i> <span>Iniciar Sesión</span>
-          </button>
-          <button type="button" onclick="setAuthTab('register')" id="tabBtnRegister" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer">
-            <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Crear Expediente</span>
-          </button>
-        </div>
-
-        <!-- TAB 1: INICIAR SESIÓN -->
-        <div id="authViewLogin" class="space-y-4">
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 text-xs text-slate-600 space-y-1.5">
-            <div class="font-bold text-slate-900 flex items-center gap-1.5">
-              <i class="fa-solid fa-shield-halved text-[#1A64FF]"></i> Acceso verificado con Google
-            </div>
-            <p class="leading-relaxed text-[11.5px]">Selecciona tu cuenta de Google registrada. A continuación confirmarás tu audiencia asignada para cargar tu ruta de módulos.</p>
+        <div class="p-6 sm:p-8 space-y-5">
+          <div class="text-center space-y-1">
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">¡Comencemos!</h2>
+            <p class="text-xs text-slate-500">Inicia sesión con tu cuenta Google o crea tu expediente institucional.</p>
           </div>
 
-          <div class="py-2 flex flex-col items-center justify-center">
-            <div id="gsi_login_button" class="w-full flex justify-center"></div>
+          <!-- Segmented Tab Switcher -->
+          <div class="grid grid-cols-2 p-1 bg-slate-100 rounded-xl border border-slate-200 gap-1">
+            <button type="button" onclick="setAuthTab('login')" id="tabBtnLogin" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-white bg-[#0A0A0B] shadow-sm flex items-center justify-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-right-to-bracket text-[11px]"></i> <span>Iniciar Sesión</span>
+            </button>
+            <button type="button" onclick="setAuthTab('register')" id="tabBtnRegister" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Crear Expediente</span>
+            </button>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200/80 text-[11.5px] text-slate-700 flex items-start gap-2.5">
-            <i class="fa-solid fa-circle-info text-[#1A64FF] mt-0.5"></i>
-            <span>¿Primera vez en la academia? Cambia a la pestaña <strong>Crear Expediente</strong> para completar tus datos oficiales antes de vincular Google.</span>
-          </div>
-        </div>
-
-        <!-- TAB 2: REGISTRO COMPLETO Y ESTRUCTURADO -->
-        <div id="authViewRegister" class="space-y-3.5 hidden">
-          <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200/90 text-[11.5px] text-amber-950 flex items-start gap-2">
-            <i class="fa-solid fa-id-card text-amber-600 mt-0.5"></i>
-            <span>Completa todos los campos obligatorios (<span class="text-rose-600 font-bold">*</span>). Tu nombre y rol determinan tu malla curricular y constancia oficial.</span>
-          </div>
-
-          <div class="space-y-3">
-            <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">1. Nombre Completo Oficial <span class="text-rose-600">*</span></label>
-              <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Sofía Alejandra Ramírez" class="exec-input w-full px-3.5 py-2 font-medium">
+          <!-- TAB 1: INICIAR SESIÓN -->
+          <div id="authViewLogin" class="space-y-4 py-1">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 text-xs text-slate-600 space-y-1.5">
+              <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved text-[#1A64FF]"></i> Acceso Institucional Verificado
+              </div>
+              <p class="leading-relaxed text-[11.5px]">Selecciona tu cuenta Google registrada. En el siguiente paso confirmarás tu audiencia para abrir tus módulos.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="py-2 flex flex-col items-center justify-center">
+              <div id="gsi_login_button" class="w-full flex justify-center"></div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11.5px] text-slate-700 flex items-start gap-2.5">
+              <i class="fa-solid fa-circle-info text-[#1A64FF] mt-0.5"></i>
+              <span>¿Aún no tienes expediente? Haz clic en <strong>Crear Expediente</strong> para completar tus datos oficiales y vincular tu correo institucional.</span>
+            </div>
+          </div>
+
+          <!-- TAB 2: CREAR EXPEDIENTE COMPLETO (CON CAMPOS CONDICIONALES PARA DOCENTE) -->
+          <div id="authViewRegister" class="space-y-3.5 hidden">
+            <div class="space-y-3">
               <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">2. Audiencia / Rol <span class="text-rose-600">*</span></label>
-                <select id="regUserRole" onchange="validateRegistrationForm()" class="exec-input w-full px-3 py-2 font-semibold">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">1. Nombre Completo Oficial <span class="text-rose-600">*</span></label>
+                <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Sofía Alejandra Ramírez" class="exec-input w-full px-3.5 py-2 font-medium">
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">2. Correo Electrónico Institucional <span class="text-rose-600">*</span></label>
+                <input type="email" id="regUserEmail" oninput="validateRegistrationForm()" placeholder="nombre@institucion.edu" class="exec-input w-full px-3.5 py-2 font-mono text-xs">
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">3. Audiencia / Rol <span class="text-rose-600">*</span></label>
+                <select id="regUserRole" onchange="onRegRoleChange()" class="exec-input w-full px-3.5 py-2 font-semibold">
                   <option value="Docente">Docente</option>
                   <option value="Tutor">Tutor</option>
                   <option value="Facilitador">Facilitador</option>
@@ -294,44 +334,72 @@
                   <option value="Auditor">Auditor</option>
                 </select>
               </div>
-              <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">3. Código / ID Institucional <span class="text-rose-600">*</span></label>
-                <input type="text" id="regUserCode" oninput="validateRegistrationForm()" placeholder="Ej. DOC-2026-04" class="exec-input w-full px-3 py-2 font-mono text-xs">
-              </div>
-            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">4. Institución / Centro <span class="text-rose-600">*</span></label>
-                <input type="text" id="regUserOrg" oninput="validateRegistrationForm()" placeholder="Nombre de institución" class="exec-input w-full px-3 py-2 font-medium">
+              <!-- CAMPOS ESPECÍFICOS SI ES DOCENTE -->
+              <div id="regDocenteFieldsBox" class="p-3.5 rounded-xl bg-blue-50/50 border border-blue-200/80 space-y-3">
+                <div class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF] flex items-center gap-1.5">
+                  <i class="fa-solid fa-school"></i>
+                  <span>Datos del Centro Escolar (Requerido para Docente)</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código del Centro Escolar <span class="text-rose-600">*</span></label>
+                    <input type="text" id="regSchoolCode" oninput="validateRegistrationForm()" placeholder="Ej. 10428" class="exec-input w-full px-3 py-2 font-mono text-xs">
+                  </div>
+                  <div>
+                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Municipio <span class="text-rose-600">*</span></label>
+                    <input type="text" id="regSchoolMunicipality" oninput="validateRegistrationForm()" placeholder="Ej. Distrito Central" class="exec-input w-full px-3 py-2 font-medium">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Nombre del Centro Escolar <span class="text-rose-600">*</span></label>
+                  <input type="text" id="regSchoolName" oninput="validateRegistrationForm()" placeholder="Ej. Centro Escolar República de..." class="exec-input w-full px-3 py-2 font-medium">
+                </div>
               </div>
-              <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">5. Región / País <span class="text-rose-600">*</span></label>
-                <input type="text" id="regUserRegion" oninput="validateRegistrationForm()" placeholder="Ej. Latinoamérica / Norte" class="exec-input w-full px-3 py-2 font-medium">
-              </div>
-            </div>
 
-            <label class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer text-[11.5px] text-slate-600">
-              <input type="checkbox" id="regConfirmAccuracy" onchange="validateRegistrationForm()" class="mt-0.5 w-4 h-4 accent-[#0A0A0B] rounded cursor-pointer">
-              <span>Confirmo que mis datos y mi <strong>Rol Operativo</strong> son correctos para emitir mi certificación oficial.</span>
-            </label>
-
-            <!-- Botón Google bloqueado hasta completar los 5 campos + confirmación -->
-            <div class="pt-1">
-              <div id="regGoogleDisabledNotice" class="w-full py-3 px-4 bg-slate-100 border border-slate-200 text-slate-400 font-semibold rounded-xl text-xs text-center flex items-center justify-center gap-2 cursor-not-allowed">
-                <i class="fa-solid fa-lock text-slate-400"></i>
-                <span id="regDisabledHintText">Completa los 5 campos y marca la confirmación</span>
+              <!-- CAMPOS PARA OTROS ROLES (TUTOR, FACILITADOR, MONITOR, SUPERVISOR, AUDITOR) -->
+              <div id="regOtherRoleFieldsBox" class="hidden p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
+                <div class="text-[10.5px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                  <i class="fa-solid fa-building"></i>
+                  <span>Adscripción Operativa</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código / ID Institucional <span class="text-rose-600">*</span></label>
+                    <input type="text" id="regUserCode" oninput="validateRegistrationForm()" placeholder="Ej. SUP-2026-01" class="exec-input w-full px-3 py-2 font-mono text-xs">
+                  </div>
+                  <div>
+                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Región / Jurisdicción <span class="text-rose-600">*</span></label>
+                    <input type="text" id="regUserRegion" oninput="validateRegistrationForm()" placeholder="Ej. Región Central" class="exec-input w-full px-3 py-2 font-medium">
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Organización / Institución <span class="text-rose-600">*</span></label>
+                  <input type="text" id="regUserOrg" oninput="validateRegistrationForm()" placeholder="Nombre de la organización" class="exec-input w-full px-3 py-2 font-medium">
+                </div>
               </div>
-              <div id="regGoogleActiveBox" class="hidden flex justify-center w-full">
-                <div id="gsi_register_button" class="w-full flex justify-center"></div>
+
+              <label class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer text-[11.5px] text-slate-600">
+                <input type="checkbox" id="regConfirmAccuracy" onchange="validateRegistrationForm()" class="mt-0.5 w-4 h-4 accent-[#0A0A0B] rounded cursor-pointer">
+                <span>Confirmo que mi correo institucional y rol son correctos para vincular mi cuenta Google.</span>
+              </label>
+
+              <div class="pt-1">
+                <div id="regGoogleDisabledNotice" class="w-full py-3 px-4 bg-slate-100 border border-slate-200 text-slate-400 font-semibold rounded-xl text-xs text-center flex items-center justify-center gap-2 cursor-not-allowed">
+                  <i class="fa-solid fa-lock text-slate-400"></i>
+                  <span id="regDisabledHintText">Completa todos los campos obligatorios para continuar</span>
+                </div>
+                <div id="regGoogleActiveBox" class="hidden flex justify-center w-full">
+                  <div id="gsi_register_button" class="w-full flex justify-center"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="pt-3 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
-          <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
-          <span>Progreso respaldado y transferible entre roles</span>
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400">
+            <span class="w-2 h-2 rounded-full bg-[#10B981]"></span>
+            <span>Progreso respaldado y transferible entre roles</span>
+          </div>
         </div>
       </div>
     </div>
@@ -340,45 +408,42 @@
   <!-- ======================================================================== -->
   <!-- STAGE 2: AUDIENCE SELECTION & DOUBLE-CONFIRMATION GATEKEEPER             -->
   <!-- ======================================================================== -->
-  <div id="audienceGateScreen" class="hidden min-h-screen bg-[#F8FAFC] flex-col">
-    <!-- Top Bar -->
-    <header class="bg-white border-b border-slate-200 px-4 sm:px-8 py-3.5 flex items-center justify-between">
+  <div id="audienceGateScreen" class="hidden min-h-screen bg-[#F1F5F9] flex-col">
+    <header class="bg-[#0A0A0B] text-white border-b border-slate-800 px-4 sm:px-8 py-3.5 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-slate-50 border border-slate-200 p-1.5 flex items-center justify-center">
+        <div class="w-9 h-9 rounded-xl bg-white p-1.5 flex items-center justify-center">
           <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
         </div>
         <div>
-          <div class="text-sm font-extrabold text-slate-900">IHFB Training Academy</div>
-          <div class="text-[11px] text-slate-500">Verificación de Audiencia y Ruta Curricular</div>
+          <div class="text-sm font-extrabold text-white">IHFB Training Academy</div>
+          <div class="text-[11px] text-slate-400">Verificación de Audiencia y Ruta Curricular</div>
         </div>
       </div>
       <div class="flex items-center gap-2.5">
-        <span id="audUserEmailPill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 text-slate-700 font-mono text-xs"></span>
-        <button type="button" onclick="openProfileEditModal()" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer">
-          <i class="fa-solid fa-user-pen mr-1 text-[#1A64FF]"></i> Editar Perfil / Rol
+        <span id="audUserEmailPill" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 text-slate-200 font-mono text-xs"></span>
+        <button type="button" onclick="openProfileEditModal()" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-white/5 hover:bg-white/15 text-white text-xs font-semibold cursor-pointer">
+          <i class="fa-solid fa-user-pen mr-1 text-[#60A5FA]"></i> Editar Perfil / Rol
         </button>
-        <button type="button" onclick="requestLogoutConfirmation()" class="px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold cursor-pointer">
+        <button type="button" onclick="requestLogoutConfirmation()" class="px-3 py-1.5 rounded-lg bg-rose-600/20 border border-rose-500/40 hover:bg-rose-600 text-rose-200 hover:text-white text-xs font-semibold cursor-pointer">
           Salir
         </button>
       </div>
     </header>
 
-    <!-- Centered Audience Menu -->
     <div class="flex-1 flex items-center justify-center p-4 sm:p-8">
       <div class="max-w-4xl w-full space-y-6">
         <div class="text-center space-y-2 max-w-2xl mx-auto">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-blue-50 text-[#1A64FF] border border-blue-200">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-blue-100 text-[#1A64FF] border border-blue-200">
             Doble Confirmación de Seguridad
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Hola, <span id="audWelcomeName">Participante</span>. Selecciona tu Audiencia
           </h2>
-          <p class="text-xs sm:text-sm text-slate-500">
+          <p class="text-xs sm:text-sm text-slate-600">
             Haz clic en la tarjeta correspondiente a tu perfil operativo para validar tus permisos y cargar los módulos específicos de tu rol.
           </p>
         </div>
 
-        <!-- Mismatch Error Alert (Shown if user clicks an audience they are NOT registered for) -->
         <div id="audienceMismatchAlert" class="hidden exec-panel p-4 bg-rose-50 border-rose-300 text-rose-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div class="flex items-start gap-3">
             <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
@@ -394,7 +459,6 @@
           </button>
         </div>
 
-        <!-- 6 Audience Cards Grid -->
         <div id="audienceCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
     </div>
@@ -404,13 +468,11 @@
   <!-- STAGE 3: FOOLPROOF STEP-BY-STEP TRAINING WORKSPACE                       -->
   <!-- ======================================================================== -->
   <div id="workspaceShell" class="hidden flex-1 min-h-screen flex-col lg:flex-row">
-    <!-- Mobile Backdrop -->
     <div id="mobileSidebarBackdrop" onclick="toggleMobileSidebar(false)" class="fixed inset-0 bg-slate-950/60 z-30 hidden lg:hidden"></div>
 
     <!-- Left Obsidian Sidebar -->
-    <aside id="appSidebar" class="fixed lg:sticky top-0 left-0 h-screen w-68 w-64 bg-[#0A0A0B] text-slate-400 flex flex-col justify-between shrink-0 border-r border-slate-800/90 z-40 -translate-x-full lg:translate-x-0">
+    <aside id="appSidebar" class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#0A0A0B] text-slate-400 flex flex-col justify-between shrink-0 border-r border-slate-800/90 z-40 -translate-x-full lg:translate-x-0">
       <div>
-        <!-- Brand Header -->
         <div class="h-16 px-4 flex items-center justify-between gap-2 border-b border-slate-800/80 sb-center">
           <div onclick="switchTab('dashboard')" class="flex items-center gap-3 min-w-0 cursor-pointer">
             <div class="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center shrink-0">
@@ -431,7 +493,6 @@
           </button>
         </div>
 
-        <!-- Numbered Step-by-Step Navigation -->
         <div class="px-3 py-4 space-y-5 overflow-y-auto custom-scroll">
           <div>
             <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Guía Paso a Paso</div>
@@ -463,7 +524,6 @@
             </nav>
           </div>
 
-          <!-- Switch Audience Button -->
           <div class="pt-2 border-t border-slate-800/80">
             <button type="button" onclick="returnToAudienceGate()" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition text-xs cursor-pointer">
               <i class="fa-solid fa-users-viewfinder w-5 text-center text-[#EC4899] shrink-0"></i>
@@ -471,7 +531,6 @@
             </button>
           </div>
 
-          <!-- Admin Sheets Console (Hidden unless Ctrl+Shift+A unlocked) -->
           <div id="nav-admin-db" class="hidden pt-2 border-t border-slate-800/80">
             <button type="button" onclick="openAdminDatabaseModal()" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-300 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 transition text-xs font-bold cursor-pointer">
               <i class="fa-solid fa-table-cells w-5 text-center text-[#10B981] shrink-0"></i>
@@ -481,8 +540,7 @@
         </div>
       </div>
 
-      <!-- User Profile Footer -->
-      <div class="p-3.5 border-t border-slate-800/80 bg-black/30">
+      <div class="p-3.5 pb-14 border-t border-slate-800/80 bg-black/30">
         <div onclick="openProfileEditModal()" title="Editar Perfil o Cambiar Rol" class="flex items-center gap-3 sb-center cursor-pointer group">
           <div id="sbUserAvatar" class="w-9 h-9 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 font-bold text-xs flex items-center justify-center shrink-0">U</div>
           <div class="min-w-0 flex-1 sb-hide">
@@ -500,7 +558,6 @@
 
     <!-- Main Right Column -->
     <div class="flex-1 min-w-0 flex flex-col">
-      <!-- Top Command Header -->
       <header class="bg-white border-b border-slate-200/90 sticky top-0 z-20 shrink-0">
         <div class="h-1 w-full flex">
           <div class="flex-1 bg-[#1A64FF]"></div>
@@ -519,7 +576,6 @@
           </div>
 
           <div class="flex items-center gap-2.5 shrink-0">
-            <!-- Current Step Indicator Pill -->
             <span id="wsCurrentStepPill" class="hidden md:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#1A64FF] border border-blue-200 text-xs font-bold">
               <i class="fa-solid fa-shoe-prints text-[10px]"></i>
               <span id="wsCurrentStepText">Paso actual: M1 • Revisar Material</span>
@@ -539,28 +595,27 @@
         </div>
       </header>
 
-      <!-- Scrollable Workspace Content -->
-      <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-[1480px] w-full mx-auto space-y-6">
+      <!-- Full-Width Workspace Canvas -->
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 w-full space-y-6">
 
         <!-- ================================================================ -->
         <!-- VIEW 0: DASHBOARD + VIDEO DE INTRODUCCIÓN AL SITIO               -->
         <!-- ================================================================ -->
         <section id="section-dashboard" class="tab-content space-y-6">
-          <!-- Hero Welcome -->
           <div class="relative bg-[#0A0A0B] text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800 overflow-hidden flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div class="absolute left-0 top-0 bottom-0 w-1.5 flex flex-col">
               <div class="flex-1 bg-[#1A64FF]"></div>
               <div class="flex-1 bg-[#EC4899]"></div>
               <div class="flex-1 bg-[#10B981]"></div>
             </div>
-            <div class="pl-2 space-y-2 max-w-2xl">
+            <div class="pl-2 space-y-2 max-w-3xl">
               <div class="flex items-center gap-2 flex-wrap">
                 <span id="dashRoleTag" class="px-3 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-500/20 text-[#34D399] border border-emerald-500/40">Audiencia: Docente</span>
                 <span id="dashOrgTag" class="text-xs text-slate-400 font-mono"></span>
               </div>
               <h3 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Bienvenido, <span id="dashUserGreetingName">Participante</span></h3>
               <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Sigue la ruta numerada paso a paso. Para avanzar en cada módulo: <strong class="text-white">1)</strong> Revisa el video y manual y presiona confirmar, <strong class="text-white">2)</strong> Completa la práctica interactiva, y <strong class="text-white">3)</strong> Aprueba el quiz con mínimo 80%.
+                Sigue la ruta numerada paso a paso. Para avanzar en cada módulo: <strong class="text-white">1)</strong> Revisa el video y manual y presiona confirmar, <strong class="text-white">2)</strong> Completa la práctica interactiva hasta llegar al 100%, y <strong class="text-white">3)</strong> Aprueba el quiz con mínimo 80%.
               </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-3 shrink-0">
@@ -571,7 +626,6 @@
             </div>
           </div>
 
-          <!-- KPI Cards -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div class="exec-panel p-5 border-t-4 border-t-[#1A64FF] flex items-center justify-between">
               <div>
@@ -609,9 +663,7 @@
             </div>
           </div>
 
-          <!-- Split Grid: Intro Video to Platform + Assigned Curriculum Roadmap -->
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <!-- Intro Video Card (5 Cols) -->
             <div class="lg:col-span-5 exec-panel p-6 space-y-4">
               <div class="flex items-center justify-between">
                 <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-50 text-[#1A64FF] border border-blue-200">
@@ -637,7 +689,6 @@
               </div>
             </div>
 
-            <!-- Assigned Modules Grid (7 Cols) -->
             <div class="lg:col-span-7 exec-panel p-6 space-y-4">
               <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div>
@@ -652,14 +703,12 @@
         </section>
 
         <!-- ================================================================ -->
-        <!-- VIEW 1: MÓDULOS DE APRENDIZAJE (CON CONFIRMACIÓN DE MATERIAL)    -->
+        <!-- VIEW 1: MÓDULOS DE APRENDIZAJE                                   -->
         <!-- ================================================================ -->
         <section id="section-modulos" class="tab-content hidden space-y-6">
-          <!-- Step-by-Step Banner inside Module -->
           <div id="moduleStepTrackerBanner" class="exec-panel p-5 bg-white"></div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <!-- Left Module Sequence List (4 Cols) -->
             <aside class="lg:col-span-4 exec-panel p-4 space-y-3 lg:sticky lg:top-20">
               <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Secuencia de Módulos</h3>
@@ -668,7 +717,6 @@
               <div id="moduleListContainer" class="space-y-2.5"></div>
             </aside>
 
-            <!-- Right Module Material & Mandatory Confirmation Card (8 Cols) -->
             <div class="lg:col-span-8 space-y-5">
               <div class="exec-panel p-6 space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
@@ -682,10 +730,8 @@
                   </div>
                 </div>
 
-                <!-- Video & Manual Cards -->
                 <div id="moduleCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
-                <!-- STEP 1 GATEKEEPER: MANDATORY CONFIRMATION BUTTON TO UNLOCK PRACTICE -->
                 <div id="moduleStep1ConfirmBox" class="p-5 rounded-2xl border-2 border-blue-200 bg-blue-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div class="space-y-1">
                     <div class="text-xs font-extrabold text-slate-900 flex items-center gap-2">
@@ -707,24 +753,25 @@
         </section>
 
         <!-- ================================================================ -->
-        <!-- VIEW 2: PRÁCTICAS EN VIVO (RÉPLICA EXACTA DE LA PLATAFORMA)      -->
+        <!-- VIEW 2: PRÁCTICAS EN VIVO (AMPLIA, SIN PISTAS, CON VALIDACIÓN ✗) -->
         <!-- ================================================================ -->
-        <section id="section-practicas" class="tab-content hidden space-y-6">
+        <section id="section-practicas" class="tab-content hidden space-y-5">
           <div id="practiceStepTrackerBanner" class="exec-panel p-5 bg-white"></div>
 
           <div class="exec-panel px-6 py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-[#EC4899]">Paso 2 • Simulador Interactivo Paso a Paso</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#EC4899]">Paso 2 • Simulador Interactivo Autónomo</span>
               <h2 class="text-lg font-extrabold text-slate-900">Laboratorio Práctico de Plataforma</h2>
-              <p class="text-xs text-slate-500">Ejecuta cada acción directamente en la interfaz replicada. Al completar los pasos, se desbloqueará tu Quiz.</p>
+              <p class="text-xs text-slate-500">Demuestra tu dominio operando la plataforma real sin ayudas visuales. Cada acción correcta avanza tu progreso hasta el 100%.</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 shrink-0">
               <label class="text-xs font-bold text-slate-600">Módulo:</label>
               <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="exec-input px-3 py-2 text-xs font-bold"></select>
             </div>
           </div>
 
-          <div id="practiceContentContainer" class="exec-panel p-6 space-y-6"></div>
+          <!-- Wide Full-Canvas Practice Stage -->
+          <div id="practiceContentContainer" class="exec-panel p-5 sm:p-7 space-y-5 w-full"></div>
         </section>
 
         <!-- ================================================================ -->
@@ -737,7 +784,7 @@
             <div>
               <span class="text-[11px] font-bold uppercase tracking-wider text-[#10B981]">Paso 3 • Validación de Conocimientos</span>
               <h2 class="text-lg font-extrabold text-slate-900">Evaluación Modular (Quiz)</h2>
-              <p class="text-xs text-slate-500">Requiere haber confirmado el material (Paso 1) y completado la práctica (Paso 2). Nota mínima: 80%.</p>
+              <p class="text-xs text-slate-500">Requiere haber confirmado el material (Paso 1) y completado la práctica al 100% (Paso 2). Nota mínima: 80%.</p>
             </div>
             <div class="flex items-center gap-2">
               <label class="text-xs font-bold text-slate-600">Módulo:</label>
@@ -812,7 +859,6 @@
             </div>
           </div>
 
-          <!-- Digital Certificate -->
           <div class="bg-[#0A0A0B] text-white rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 border border-slate-800 relative overflow-hidden">
             <div class="absolute top-0 left-0 right-0 h-1.5 flex">
               <div class="flex-1 bg-[#1A64FF]"></div>
@@ -894,15 +940,13 @@
               <div class="exec-panel p-5 space-y-1.5">
                 <h4 class="text-xs font-bold text-slate-900">¿Qué pasa si me registré con un rol equivocado y ya avancé en algunos módulos?</h4>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Haz clic en <strong>Mi Perfil</strong> (esquina inferior izquierda o barra superior) y actualiza tu <strong>Audiencia / Rol</strong>. Todos los módulos que ya completaste y que también formen parte de tu nuevo rol <strong>se conservan automáticamente al 100%</strong>; únicamente deberás completar los módulos adicionales exclusivos de tu nuevo rol.
+                  Haz clic en <strong>Mi Perfil</strong> y actualiza tu <strong>Audiencia / Rol</strong>. Todos los módulos que ya completaste y que también formen parte de tu nuevo rol <strong>se conservan automáticamente al 100%</strong>; únicamente deberás completar los módulos adicionales exclusivos de tu nuevo rol.
                 </p>
               </div>
               <div class="exec-panel p-5 space-y-1.5">
-                <h4 class="text-xs font-bold text-slate-900">¿Por qué está bloqueada la Práctica o el Quiz de un módulo?</h4>
+                <h4 class="text-xs font-bold text-slate-900">¿Cómo funciona la evaluación práctica en vivo?</h4>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                  Cada módulo sigue un flujo secuencial estricto de 3 pasos: <strong>Paso 1</strong> (ver material y presionar <em>"Ya vi el Video y Manual SOP"</em>) $
-ightarrow$ <strong>Paso 2</strong> (completar la práctica interactiva) $
-ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
+                  El simulador replica la plataforma real sin ayudas visuales. Si haces clic en una opción incorrecta, el sistema te mostrará una alerta roja (<strong>✗</strong>) indicando el motivo. Cada paso correcto incrementa el porcentaje de la práctica hasta llegar al <strong>100%</strong>, momento en el que se desbloquea el Quiz.
                 </p>
               </div>
             </div>
@@ -976,7 +1020,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
               <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-bold">Oficial SOP</span>
             </div>
             <p class="text-slate-600 leading-relaxed">
-              Revisa detalladamente la secuencia operativa antes de pasar al simulador práctico. Todos los pasos evaluados en la práctica corresponden exactamente a este procedimiento.
+              Revisa detalladamente la secuencia operativa antes de pasar al simulador práctico. En el simulador deberás ejecutar cada paso sin ayudas visuales.
             </p>
             <div id="modalSopChecklist" class="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-[11.5px] font-mono text-slate-700 space-y-1.5"></div>
           </div>
@@ -1014,7 +1058,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
       <form onsubmit="saveUserProfile(event)" class="p-6 space-y-4 text-xs">
         <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-emerald-950 text-[11.5px] leading-relaxed">
-          <strong class="font-bold"><i class="fa-solid fa-shield-check text-[#10B981] mr-1"></i> Protección de Progreso:</strong> Si te registraste con un rol equivocado y lo cambias aquí, <strong>todos los módulos que ya completaste y que pertenezcan a tu nuevo rol se conservarán intactos</strong>.
+          <strong class="font-bold"><i class="fa-solid fa-shield-check text-[#10B981] mr-1"></i> Protección de Progreso:</strong> Si cambias tu rol aquí, <strong>todos los módulos aprobados que pertenezcan a tu nuevo rol se conservarán intactos</strong>.
         </div>
 
         <div>
@@ -1027,32 +1071,51 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
           <input type="text" id="profileNameInput" required class="exec-input w-full px-3.5 py-2 font-semibold">
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Audiencia / Rol *</label>
-            <select id="profileRoleSelect" class="exec-input w-full px-3 py-2 font-semibold">
-              <option value="Docente">Docente</option>
-              <option value="Tutor">Tutor</option>
-              <option value="Facilitador">Facilitador</option>
-              <option value="Monitor">Monitor</option>
-              <option value="Supervisor">Supervisor</option>
-              <option value="Auditor">Auditor</option>
-            </select>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Audiencia / Rol *</label>
+          <select id="profileRoleSelect" onchange="onProfileRoleSelectChange()" class="exec-input w-full px-3.5 py-2 font-semibold">
+            <option value="Docente">Docente</option>
+            <option value="Tutor">Tutor</option>
+            <option value="Facilitador">Facilitador</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Auditor">Auditor</option>
+          </select>
+        </div>
+
+        <!-- Campos condicionales Docente en Perfil -->
+        <div id="profDocenteFieldsBox" class="p-3.5 rounded-xl bg-blue-50/50 border border-blue-200 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código del Centro Escolar *</label>
+              <input type="text" id="profSchoolCodeInput" class="exec-input w-full px-3 py-2 font-mono">
+            </div>
+            <div>
+              <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Municipio *</label>
+              <input type="text" id="profSchoolMunicipalityInput" class="exec-input w-full px-3 py-2 font-medium">
+            </div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código / ID Institucional *</label>
-            <input type="text" id="profileCodeInput" required class="exec-input w-full px-3 py-2 font-mono">
+            <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Nombre del Centro Escolar *</label>
+            <input type="text" id="profSchoolNameInput" class="exec-input w-full px-3 py-2 font-medium">
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Institución / Centro *</label>
-            <input type="text" id="profileOrgInput" required class="exec-input w-full px-3 py-2 font-medium">
+        <!-- Campos otros roles en Perfil -->
+        <div id="profOtherFieldsBox" class="hidden p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código / ID Institucional *</label>
+              <input type="text" id="profileCodeInput" class="exec-input w-full px-3 py-2 font-mono">
+            </div>
+            <div>
+              <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Región / Jurisdicción *</label>
+              <input type="text" id="profileRegionInput" class="exec-input w-full px-3 py-2 font-medium">
+            </div>
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Región / País *</label>
-            <input type="text" id="profileRegionInput" required class="exec-input w-full px-3 py-2 font-medium">
+            <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Organización / Institución *</label>
+            <input type="text" id="profileOrgInput" class="exec-input w-full px-3 py-2 font-medium">
           </div>
         </div>
 
@@ -1140,9 +1203,8 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
               <th class="px-3 py-2.5">Participante</th>
               <th class="px-3 py-2.5">Correo</th>
               <th class="px-3 py-2.5">Rol</th>
-              <th class="px-3 py-2.5">Institución / Región</th>
-              <th class="px-3 py-2.5">Avance</th>
-              <th class="px-3 py-2.5">Promedio</th>
+              <th class="px-3 py-2.5">Centro Escolar / Institución</th>
+              <th class="px-3 py-2.5">Código</th>
             </tr>
           </thead>
           <tbody id="adminTableBody" class="divide-y divide-slate-100"></tbody>
@@ -1152,7 +1214,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
   </div>
 
   <!-- ======================================================================== -->
-  <!-- JAVASCRIPT ENGINE: ROLE-SAFE PROGRESS + DOUBLE GATE + SIMULATORS         -->
+  <!-- JAVASCRIPT ENGINE: ROLE-SAFE PROGRESS + DOUBLE GATE + NO-HINT SIMULATOR  -->
   <!-- ======================================================================== -->
   <script>
     const GOOGLE_CLIENT_ID = "86803539944-23c1mc9j657os18j1jkc4e8f4dghv0h5.apps.googleusercontent.com";
@@ -1160,7 +1222,6 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     const OFFICIAL_GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1w_6bR1rGZ2pNWapXuqdzTG3Wjo4_U4nGxrAeG3RojvQ/edit?gid=0#gid=0";
     const ADMIN_PASSWORD_DEFAULT = "ihfb2026";
 
-    // Role definitions & specific curriculum module IDs per role
     const AUDIENCE_CATALOG = [
       {
         role: "Docente",
@@ -1222,7 +1283,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
             videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
             manualUrl: "https://drive.google.com",
             manual: "SOP-01: Acceso Institucional y Lista de Aulas",
-            points: ["Acceso seguro con Google Workspace", "Verificación de cuenta institucional", "Ingreso a Classroom Management / Classroom List"]
+            points: ["Acceso seguro exclusivamente con Google Workspace", "Verificación de cuenta institucional", "Ingreso a Classroom Management / Classroom List"]
           }
         ]
       },
@@ -1344,19 +1405,18 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       ]
     };
 
-    // Master User & Progress State (Role-Safe: progress is keyed by module ID so role changes NEVER erase completed work!)
     let currentUser = null;
-    let moduleProgressMap = {}; // { M1: { materialConfirmed: bool, practiceCompleted: bool, quizCompleted: bool, score: number|null }, ... }
+    let moduleProgressMap = {};
     let currentSelectedModuleId = "M1";
     let authMode = "login";
     let isAdminMode = false;
     let isGearVisible = false;
 
-    // Simulator State
-    let m1SimStep = 1;
+    // Simulator states
+    let m1SimStep = 1; // 1 = Login page (0%), 2 = Google Chooser (33%), 3 = Classroom List (67%), 4 = Done (100%)
     let m3VisibilityItems = [
       { id: "u1", name: "Unidad 1: Operaciones Fundamentales", visible: true },
-      { id: "u2", name: "Unidad 2: Resolución de Problemas (Objetivo: Ocultar)", visible: true },
+      { id: "u2", name: "Unidad 2: Resolución de Problemas", visible: true },
       { id: "u3", name: "Unidad 3: Evaluación Diagnóstica", visible: false }
     ];
     let m5ScreenLocked = false;
@@ -1380,12 +1440,12 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
     function saveProgressMap() {
       if (!currentUser || !currentUser.email) return;
-      localStorage.setItem(`ihfb_prog_v2_${currentUser.email.toLowerCase()}`, JSON.stringify(moduleProgressMap));
+      localStorage.setItem(`ihfb_prog_v3_${currentUser.email.toLowerCase()}`, JSON.stringify(moduleProgressMap));
     }
 
     function loadProgressMap(email) {
       try {
-        const raw = localStorage.getItem(`ihfb_prog_v2_${String(email || '').toLowerCase()}`);
+        const raw = localStorage.getItem(`ihfb_prog_v3_${String(email || '').toLowerCase()}`);
         moduleProgressMap = raw ? JSON.parse(raw) : {};
       } catch (e) {
         moduleProgressMap = {};
@@ -1401,8 +1461,40 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       return ensureProgressEntry(prevMod.id).quizCompleted === true;
     }
 
+    // ==================== CONTINUOUS GOOGLE TRANSLATE BANNER GUARD ====================
+    function enforceNoTranslateBanner() {
+      document.body.style.top = '0px';
+      document.documentElement.style.top = '0px';
+      document.querySelectorAll('iframe.goog-te-banner-frame, .goog-te-banner-frame, .VIpgJd-ZVi9od-ORHb-OEVmcd').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+
+    function triggerGoogleTranslate(lang) {
+      const sel = document.getElementById('bottomLangSelect');
+      if (sel && sel.value !== lang) sel.value = lang;
+      localStorage.setItem('ihfb_ui_lang', lang);
+
+      const combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        combo.value = lang;
+        combo.dispatchEvent(new Event('change'));
+        setTimeout(enforceNoTranslateBanner, 150);
+        setTimeout(enforceNoTranslateBanner, 600);
+      } else {
+        document.cookie = `googtrans=/es/${lang}; path=/;`;
+        location.reload();
+      }
+    }
+
     // ==================== INITIALIZATION ====================
     window.addEventListener('DOMContentLoaded', () => {
+      setInterval(enforceNoTranslateBanner, 400);
+
+      const savedLang = localStorage.getItem('ihfb_ui_lang') || 'es';
+      const langSel = document.getElementById('bottomLangSelect');
+      if (langSel) langSel.value = savedLang;
+
       window.addEventListener('keydown', (e) => {
         if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
           e.preventDefault();
@@ -1414,9 +1506,9 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       });
 
       initGoogleIdentityServices();
-      validateRegistrationForm();
+      onRegRoleChange();
 
-      const savedSession = JSON.parse(localStorage.getItem('ihfb_user_session_v2') || 'null');
+      const savedSession = JSON.parse(localStorage.getItem('ihfb_user_session_v3') || 'null');
       if (savedSession && savedSession.email) {
         currentUser = savedSession;
         loadProgressMap(currentUser.email);
@@ -1428,23 +1520,15 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       }
     });
 
-    function triggerGoogleTranslate(lang) {
-      ['es', 'en', 'ko'].forEach(l => {
-        const btn = document.getElementById(`lang-btn-${l}`);
-        if (btn) {
-          btn.className = (l === lang)
-            ? "px-2.5 py-1 rounded-lg font-bold text-white bg-[#0A0A0B] transition cursor-pointer"
-            : "px-2.5 py-1 rounded-lg font-medium text-slate-500 hover:text-slate-900 transition cursor-pointer";
-        }
-      });
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = lang;
-        select.dispatchEvent(new Event('change'));
-      }
+    // ==================== REGISTRATION & CONDITIONAL DOCENTE FIELDS ====================
+    function onRegRoleChange() {
+      const role = document.getElementById('regUserRole').value;
+      const isDoc = role === 'Docente';
+      document.getElementById('regDocenteFieldsBox').classList.toggle('hidden', !isDoc);
+      document.getElementById('regOtherRoleFieldsBox').classList.toggle('hidden', isDoc);
+      validateRegistrationForm();
     }
 
-    // ==================== AUTHENTICATION & REGISTRATION ====================
     function setAuthTab(tab) {
       authMode = tab;
       const btnL = document.getElementById('tabBtnLogin');
@@ -1462,19 +1546,33 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         btnL.className = "py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 cursor-pointer";
         viewR.classList.remove('hidden');
         viewL.classList.add('hidden');
-        validateRegistrationForm();
+        onRegRoleChange();
       }
       initGoogleIdentityServices();
     }
 
     function validateRegistrationForm() {
       const name = document.getElementById('regUserName').value.trim();
-      const code = document.getElementById('regUserCode').value.trim();
-      const org = document.getElementById('regUserOrg').value.trim();
-      const region = document.getElementById('regUserRegion').value.trim();
+      const email = document.getElementById('regUserEmail').value.trim().toLowerCase();
+      const role = document.getElementById('regUserRole').value;
       const confirmed = document.getElementById('regConfirmAccuracy').checked;
 
-      const isValid = name.length >= 3 && code.length >= 2 && org.length >= 2 && region.length >= 2 && confirmed;
+      const emailValid = email.includes('@') && email.includes('.');
+      let roleFieldsValid = false;
+
+      if (role === 'Docente') {
+        const sCode = document.getElementById('regSchoolCode').value.trim();
+        const sName = document.getElementById('regSchoolName').value.trim();
+        const sMuni = document.getElementById('regSchoolMunicipality').value.trim();
+        roleFieldsValid = sCode.length >= 2 && sName.length >= 3 && sMuni.length >= 2;
+      } else {
+        const uCode = document.getElementById('regUserCode').value.trim();
+        const uOrg = document.getElementById('regUserOrg').value.trim();
+        const uReg = document.getElementById('regUserRegion').value.trim();
+        roleFieldsValid = uCode.length >= 2 && uOrg.length >= 2 && uReg.length >= 2;
+      }
+
+      const isValid = name.length >= 3 && emailValid && roleFieldsValid && confirmed;
       const notice = document.getElementById('regGoogleDisabledNotice');
       const box = document.getElementById('regGoogleActiveBox');
 
@@ -1499,12 +1597,12 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         const lBox = document.getElementById("gsi_login_button");
         if (lBox) {
           lBox.innerHTML = "";
-          google.accounts.id.renderButton(lBox, { theme: "outline", size: "large", width: "360", text: "signin_with", shape: "rectangular" });
+          google.accounts.id.renderButton(lBox, { theme: "outline", size: "large", width: "380", text: "signin_with", shape: "rectangular" });
         }
         const rBox = document.getElementById("gsi_register_button");
         if (rBox) {
           rBox.innerHTML = "";
-          google.accounts.id.renderButton(rBox, { theme: "outline", size: "large", width: "360", text: "signup_with", shape: "rectangular" });
+          google.accounts.id.renderButton(rBox, { theme: "outline", size: "large", width: "380", text: "signup_with", shape: "rectangular" });
         }
       } else {
         setTimeout(initGoogleIdentityServices, 300);
@@ -1521,44 +1619,62 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     function handleGoogleCredentialResponse(response) {
       if (!response || !response.credential) return;
       const payload = parseJwt(response.credential);
-      const email = String(payload.email || "").trim().toLowerCase();
-      if (!email) return;
+      const googleEmail = String(payload.email || "").trim().toLowerCase();
+      if (!googleEmail) return;
 
-      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v2') || '[]');
-      const existing = db.find(u => u.email.toLowerCase() === email);
+      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v3') || '[]');
+      const existing = db.find(u => u.email.toLowerCase() === googleEmail);
 
       if (authMode === 'register') {
+        const typedEmail = document.getElementById('regUserEmail').value.trim().toLowerCase();
+        if (typedEmail && typedEmail !== googleEmail) {
+          showProAlert(
+            "Correo Institucional No Coincide",
+            `Digitaste "${typedEmail}" en el formulario, pero seleccionaste "${googleEmail}" en Google. Por seguridad, ambos correos deben coincidir.`,
+            false
+          );
+          return;
+        }
         if (existing) {
-          showProAlert("Cuenta Ya Registrada", `El correo (${email}) ya tiene un expediente activo como ${existing.role}. Por favor usa la pestaña "Iniciar Sesión".`, false);
+          showProAlert("Expediente Ya Existente", `La cuenta (${googleEmail}) ya está registrada como ${existing.role}. Usa la pestaña "Iniciar Sesión".`, false);
           setAuthTab('login');
           return;
         }
+
+        const role = document.getElementById('regUserRole').value;
+        const isDoc = role === 'Docente';
         const newUser = {
-          email: email,
+          email: googleEmail,
           name: document.getElementById('regUserName').value.trim(),
-          role: document.getElementById('regUserRole').value,
-          code: document.getElementById('regUserCode').value.trim(),
-          org: document.getElementById('regUserOrg').value.trim(),
-          region: document.getElementById('regUserRegion').value.trim(),
+          role: role,
+          schoolCode: isDoc ? document.getElementById('regSchoolCode').value.trim() : '',
+          schoolName: isDoc ? document.getElementById('regSchoolName').value.trim() : '',
+          municipality: isDoc ? document.getElementById('regSchoolMunicipality').value.trim() : '',
+          code: isDoc ? document.getElementById('regSchoolCode').value.trim() : document.getElementById('regUserCode').value.trim(),
+          org: isDoc ? document.getElementById('regSchoolName').value.trim() : document.getElementById('regUserOrg').value.trim(),
+          region: isDoc ? document.getElementById('regSchoolMunicipality').value.trim() : document.getElementById('regUserRegion').value.trim(),
           date: new Date().toLocaleDateString('es-ES'),
           audienceConfirmed: false
         };
+
         db.push(newUser);
-        localStorage.setItem('ihfb_participants_db_v2', JSON.stringify(db));
+        localStorage.setItem('ihfb_participants_db_v3', JSON.stringify(db));
         currentUser = newUser;
         loadProgressMap(currentUser.email);
-        localStorage.setItem('ihfb_user_session_v2', JSON.stringify(currentUser));
+        localStorage.setItem('ihfb_user_session_v3', JSON.stringify(currentUser));
         syncToGoogleSheetsWebhook(currentUser, "Registro Inicial");
         enterAudienceGate();
       } else {
         if (!existing) {
-          showProAlert("Expediente No Encontrado", `La cuenta (${email}) aún no está registrada. Completa el formulario en "Crear Expediente" para vincularla.`, false);
+          showProAlert("Cuenta No Registrada", `El correo (${googleEmail}) aún no tiene expediente. Completa el formulario en "Crear Expediente" para registrarte.`, false);
           setAuthTab('register');
+          document.getElementById('regUserEmail').value = googleEmail;
+          validateRegistrationForm();
           return;
         }
         currentUser = Object.assign({}, existing, { audienceConfirmed: false });
         loadProgressMap(currentUser.email);
-        localStorage.setItem('ihfb_user_session_v2', JSON.stringify(currentUser));
+        localStorage.setItem('ihfb_user_session_v3', JSON.stringify(currentUser));
         enterAudienceGate();
       }
     }
@@ -1578,30 +1694,28 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       document.getElementById('audienceMismatchAlert').classList.add('hidden');
 
       const grid = document.getElementById('audienceCardsGrid');
-      grid.innerHTML = AUDIENCE_CATALOG.map(aud => {
-        return `
-          <div onclick="selectAudienceCard('${aud.role}')" class="exec-panel p-6 hover:border-[#1A64FF] hover:shadow-lg transition cursor-pointer group flex flex-col justify-between gap-4 relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1" style="background:${aud.accent}"></div>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-lg group-hover:scale-105 transition" style="color:${aud.accent}">
-                  <i class="fa-solid ${aud.icon}"></i>
-                </div>
-                <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">${aud.modules.length} módulos</span>
+      grid.innerHTML = AUDIENCE_CATALOG.map(aud => `
+        <div onclick="selectAudienceCard('${aud.role}')" class="exec-panel p-6 hover:border-[#1A64FF] hover:shadow-lg transition cursor-pointer group flex flex-col justify-between gap-4 relative overflow-hidden">
+          <div class="absolute top-0 left-0 right-0 h-1" style="background:${aud.accent}"></div>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-lg group-hover:scale-105 transition" style="color:${aud.accent}">
+                <i class="fa-solid ${aud.icon}"></i>
               </div>
-              <div>
-                <div class="text-[10.5px] font-bold uppercase tracking-widest text-slate-400">${aud.role}</div>
-                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">${aud.title}</h3>
-                <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">${aud.desc}</p>
-              </div>
+              <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">${aud.modules.length} módulos</span>
             </div>
-            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-800 group-hover:text-[#1A64FF]">
-              <span>Ingresar como ${aud.role}</span>
-              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+            <div>
+              <div class="text-[10.5px] font-bold uppercase tracking-widest text-slate-400">${aud.role}</div>
+              <h3 class="text-base font-extrabold text-slate-900 mt-0.5">${aud.title}</h3>
+              <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">${aud.desc}</p>
             </div>
           </div>
-        `;
-      }).join('');
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-slate-800 group-hover:text-[#1A64FF]">
+            <span>Ingresar como ${aud.role}</span>
+            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+          </div>
+        </div>
+      `).join('');
     }
 
     function selectAudienceCard(clickedRole) {
@@ -1614,19 +1728,18 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
-
       currentUser.audienceConfirmed = true;
-      localStorage.setItem('ihfb_user_session_v2', JSON.stringify(currentUser));
+      localStorage.setItem('ihfb_user_session_v3', JSON.stringify(currentUser));
       enterWorkspaceShell();
     }
 
     function returnToAudienceGate() {
       currentUser.audienceConfirmed = false;
-      localStorage.setItem('ihfb_user_session_v2', JSON.stringify(currentUser));
+      localStorage.setItem('ihfb_user_session_v3', JSON.stringify(currentUser));
       enterAudienceGate();
     }
 
-    // ==================== STAGE 3: ENTER WORKSPACE SHELL ====================
+    // ==================== STAGE 3: WORKSPACE SHELL ====================
     function enterWorkspaceShell() {
       document.getElementById('authGateScreen').classList.add('hidden');
       document.getElementById('audienceGateScreen').classList.add('hidden');
@@ -1649,12 +1762,15 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         : 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/25 text-[#34D399] border border-[#10B981]/50';
 
       document.getElementById('dashRoleTag').textContent = `Audiencia: ${currentUser.role}`;
-      document.getElementById('dashOrgTag').textContent = `${currentUser.org || ''} • ${currentUser.region || ''} (${currentUser.code || ''})`;
+      const orgSummary = currentUser.role === 'Docente'
+        ? `Cód. ${currentUser.schoolCode || currentUser.code} • ${currentUser.schoolName || currentUser.org} (${currentUser.municipality || currentUser.region})`
+        : `${currentUser.org || ''} • ${currentUser.region || ''} (${currentUser.code || ''})`;
+      document.getElementById('dashOrgTag').textContent = orgSummary;
       document.getElementById('dashUserGreetingName').textContent = currentUser.name;
 
       document.getElementById('certParticipantName').textContent = currentUser.name;
       document.getElementById('certParticipantRole').textContent = `Audiencia Certificada: ${currentUser.role}`;
-      document.getElementById('certParticipantOrg').textContent = `${currentUser.org || ''} • ${currentUser.region || ''} • ID: ${currentUser.code || ''}`;
+      document.getElementById('certParticipantOrg').textContent = orgSummary;
       document.getElementById('certParticipantEmail').textContent = currentUser.email;
       document.getElementById('certDate').textContent = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
       document.getElementById('certFolio').textContent = `IHFB-${currentUser.role.substring(0, 3).toUpperCase()}-${currentUser.code || '2026'}`;
@@ -1685,7 +1801,6 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       document.getElementById('modulesCompletedCount').textContent = `${completedCount} / ${roleMods.length}`;
       document.getElementById('progRoleModulesCount').textContent = `${roleMods.length} módulos asignados`;
 
-      // Determine exact current step for "Foolproof" guidance
       const nextMod = roleMods.find(m => !ensureProgressEntry(m.id).quizCompleted) || roleMods[roleMods.length - 1];
       const nextProg = ensureProgressEntry(nextMod.id);
       let stepLabel = `${nextMod.code}: Paso 1 (Ver Material)`;
@@ -1713,13 +1828,9 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       }
       currentSelectedModuleId = nextMod.id;
       const p = ensureProgressEntry(nextMod.id);
-      if (!p.materialConfirmed) {
-        switchTab('modulos');
-      } else if (!p.practiceCompleted) {
-        goToModulePractice(nextMod.id);
-      } else {
-        goToModuleQuiz(nextMod.id);
-      }
+      if (!p.materialConfirmed) switchTab('modulos');
+      else if (!p.practiceCompleted) goToModulePractice(nextMod.id);
+      else goToModuleQuiz(nextMod.id);
     }
 
     // ==================== STEP TRACKER VISUAL BANNER ====================
@@ -1763,11 +1874,11 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
               </div>
               <div class="min-w-0">
                 <div class="text-xs font-bold truncate">Paso 2: Práctica Interactiva</div>
-                <div class="text-[11px] opacity-80">${s2Done ? 'Completada ✓' : (s1Done ? 'Disponible ahora' : 'Bloqueado (requiere Paso 1)')}</div>
+                <div class="text-[11px] opacity-80">${s2Done ? 'Completada (100%) ✓' : (s1Done ? 'Disponible ahora' : 'Bloqueado (requiere Paso 1)')}</div>
               </div>
             </div>
 
-            <div onclick="${s2Done ? `goToModuleQuiz('${mod.id}')` : `showProAlert('Paso 2 Requerido', 'Completa primero la Práctica Interactiva (Paso 2) para desbloquear la evaluación.', false)`}" class="p-3.5 rounded-xl border ${pillStyle(3, s3Done, s2Done)} cursor-pointer transition flex items-center gap-3">
+            <div onclick="${s2Done ? `goToModuleQuiz('${mod.id}')` : `showProAlert('Paso 2 Requerido', 'Completa primero la Práctica Interactiva al 100% (Paso 2) para desbloquear la evaluación.', false)`}" class="p-3.5 rounded-xl border ${pillStyle(3, s3Done, s2Done)} cursor-pointer transition flex items-center gap-3">
               <div class="w-8 h-8 rounded-lg ${s3Done ? 'bg-[#10B981] text-white' : (s2Done ? 'bg-[#0A0A0B] text-white' : 'bg-slate-200 text-slate-500')} font-mono text-xs font-bold flex items-center justify-center shrink-0">
                 ${s3Done ? '<i class="fa-solid fa-check"></i>' : (s2Done ? '3' : '<i class="fa-solid fa-lock text-[10px]"></i>')}
               </div>
@@ -1784,8 +1895,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     // ==================== DASHBOARD & MODULES RENDERING ====================
     function renderDashboardModules() {
       const roleMods = getRoleModulesList(currentUser.role);
-      const grid = document.getElementById('dashModulesGrid');
-      grid.innerHTML = roleMods.map(mod => {
+      document.getElementById('dashModulesGrid').innerHTML = roleMods.map(mod => {
         const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
         const p = ensureProgressEntry(mod.id);
         const statusBadge = p.quizCompleted
@@ -1793,7 +1903,6 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
           : (unlocked
             ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-[#1A64FF] border border-blue-200">Disponible</span>'
             : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-400"><i class="fa-solid fa-lock mr-1"></i>Bloqueado</span>');
-
         return `
           <div onclick="${unlocked ? `currentSelectedModuleId='${mod.id}'; switchTab('modulos')` : `showProAlert('Módulo Bloqueado', 'Debes aprobar el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 rounded-xl border ${unlocked ? 'bg-white border-slate-200 hover:border-[#1A64FF] cursor-pointer' : 'bg-slate-50 border-slate-200/70 opacity-60 cursor-not-allowed'} transition flex flex-col justify-between gap-3">
             <div class="flex items-center justify-between">
@@ -1811,13 +1920,11 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
     function renderModulesSidebar() {
       const roleMods = getRoleModulesList(currentUser.role);
-      const box = document.getElementById('moduleListContainer');
-      box.innerHTML = roleMods.map(mod => {
+      document.getElementById('moduleListContainer').innerHTML = roleMods.map(mod => {
         const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
         const p = ensureProgressEntry(mod.id);
         const isCurrent = mod.id === currentSelectedModuleId;
         const pct = p.quizCompleted ? 100 : (p.practiceCompleted ? 66 : (p.materialConfirmed ? 33 : 0));
-
         return `
           <div onclick="${unlocked ? `currentSelectedModuleId='${mod.id}'; renderModulesSidebar(); renderActiveModuleView('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba el módulo anterior para desbloquear ${mod.code}.', false)`}" class="p-3 rounded-xl border transition ${isCurrent ? 'border-[#1A64FF] bg-blue-50/60 shadow-2xs' : 'border-slate-200 bg-white hover:border-slate-300'} ${unlocked ? 'cursor-pointer' : 'opacity-55 bg-slate-50 cursor-not-allowed'} space-y-2">
             <div class="flex items-center justify-between">
@@ -1858,8 +1965,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         badge.className = "text-[11px] font-bold px-2.5 py-0.5 rounded bg-slate-100 text-slate-700";
       }
 
-      const grid = document.getElementById('moduleCardsGrid');
-      grid.innerHTML = mod.cards.map((card, idx) => {
+      document.getElementById('moduleCardsGrid').innerHTML = mod.cards.map((card, idx) => {
         const pts = card.points.map(pt => `<li class="flex items-start gap-1.5"><span class="text-[#1A64FF] font-bold">•</span><span>${pt}</span></li>`).join('');
         return `
           <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/40 flex flex-col justify-between gap-4">
@@ -1946,7 +2052,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       document.getElementById('proVideoManualModal').classList.add('hidden');
     }
 
-    // ==================== STEP 2: AUTHENTIC PLATFORM REPLICA SIMULATORS ====================
+    // ==================== STEP 2: UNASSISTED 100% REPLICA SIMULATORS ====================
     function goToModulePractice(modId) {
       const p = ensureProgressEntry(modId);
       if (!p.materialConfirmed && !isAdminMode) {
@@ -1959,6 +2065,22 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       document.getElementById('selectPracticeModule').value = modId;
       loadPracticeByModule(modId);
       switchTab('practicas');
+    }
+
+    function showSimMistakeToast(reasonText) {
+      const errBanner = document.getElementById('simMistakeBanner');
+      const errMsg = document.getElementById('simMistakeText');
+      if (!errBanner || !errMsg) return;
+      errMsg.textContent = reasonText;
+      errBanner.classList.remove('hidden');
+      errBanner.classList.remove('sim-shake');
+      void errBanner.offsetWidth;
+      errBanner.classList.add('sim-shake');
+    }
+
+    function clearSimMistakeToast() {
+      const errBanner = document.getElementById('simMistakeBanner');
+      if (errBanner) errBanner.classList.add('hidden');
     }
 
     function loadPracticeByModule(modId) {
@@ -1981,90 +2103,48 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         return;
       }
 
-      // M1: EXACT REPLICA OF THE 3 SCREENSHOTS (Landing -> Google Account Chooser -> Classroom List)
       if (modId === "M1") {
         m1SimStep = 1;
-        renderM1PlatformSimulator(container, mod);
+        renderM1PlatformSimulator(container);
         return;
       }
 
-      // M3: VISIBILITY SETTINGS REPLICA
       if (modId === "M3") {
-        renderM3VisibilitySimulator(container, mod);
+        renderM3VisibilitySimulator(container);
         return;
       }
 
-      // M5: CLASS MODE SCREEN LOCK REPLICA
       if (modId === "M5") {
         m5ScreenLocked = false;
-        container.innerHTML = `
-          <div class="space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-              <div>
-                <span class="text-[11px] font-bold uppercase text-[#EC4899]">Simulador M5 • Class Mode</span>
-                <h3 class="text-base font-extrabold text-slate-900">Misión: Activa el bloqueo remoto para captar la atención del aula</h3>
-              </div>
-              <span id="m5MissionBadge" class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Paso 1 de 1: Presiona Bloquear Pantalla</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50 space-y-4">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold text-slate-800">Consola Docente • Classroom List</span>
-                  <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">Clase en Vivo</span>
-                </div>
-                <button type="button" id="btnSimM5Lock" onclick="triggerM5ScreenLock()" class="sim-guide-target w-full py-3 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-                  <i class="fa-solid fa-lock"></i>
-                  <span>Bloquear Pantallas de Estudiantes</span>
-                </button>
-              </div>
-
-              <div class="p-5 rounded-2xl border border-slate-800 bg-[#0A0A0B] text-white min-h-[180px] flex flex-col justify-between relative overflow-hidden">
-                <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                  <span>Dispositivo Estudiante #04</span>
-                  <span>Sincronizado</span>
-                </div>
-                <div id="m5StudentNormal" class="my-auto text-center space-y-1">
-                  <div class="text-xs font-bold text-[#34D399]">Resolviendo actividad: Clase de Matemática</div>
-                  <p class="text-[11px] text-slate-400">Esperando instrucción del docente...</p>
-                </div>
-                <div id="m5StudentLocked" class="hidden absolute inset-0 bg-slate-950/95 flex flex-col items-center justify-center text-center p-5 space-y-2">
-                  <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-lock"></i></div>
-                  <div class="text-sm font-bold text-white">Pantalla bloqueada</div>
-                  <p class="text-xs text-slate-300">Es momento de concentrarte en la explicación del docente.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
+        renderM5ClassModeSimulator(container);
         return;
       }
 
-      // Interactive Checklist Verification for M2, M4, M6, M7
+      // Checklist verification for M2, M4, M6, M7
       container.innerHTML = `
         <div class="space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <span class="text-[11px] font-bold uppercase text-[#1A64FF]">${mod.code} • Laboratorio Guiado</span>
-              <h3 class="text-base font-extrabold text-slate-900">Verificación Paso a Paso: ${mod.title}</h3>
+              <span class="text-[11px] font-bold uppercase text-[#1A64FF]">${mod.code} • Misión Operativa</span>
+              <h3 class="text-base font-extrabold text-slate-900">Instrucción: Ejecuta la secuencia oficial de ${mod.title}</h3>
             </div>
             <button type="button" id="btnValidateChecklistPractice" disabled onclick="completePracticeAndUnlockQuiz('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold transition cursor-not-allowed">
-              Marca los 3 pasos para validar
+              Completa la verificación (0%)
             </button>
           </div>
 
           <div class="space-y-2.5 text-xs">
             <label class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-white flex items-center gap-3 cursor-pointer">
               <input type="checkbox" onchange="checkPracticeBoxes('${mod.id}')" class="prac-chk w-4 h-4 accent-[#1A64FF]">
-              <span><strong>Paso 1:</strong> Verificar sincronización de cuenta institucional y carga de lista de clases activas.</span>
+              <span><strong>1.</strong> Verificar sincronización de cuenta institucional y carga de lista de clases activas.</span>
             </label>
             <label class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-white flex items-center gap-3 cursor-pointer">
               <input type="checkbox" onchange="checkPracticeBoxes('${mod.id}')" class="prac-chk w-4 h-4 accent-[#1A64FF]">
-              <span><strong>Paso 2:</strong> Ejecutar la configuración operativa correspondiente a <em>${mod.title}</em> según el SOP.</span>
+              <span><strong>2.</strong> Ejecutar la configuración operativa correspondiente a <em>${mod.title}</em> según el SOP.</span>
             </label>
             <label class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-white flex items-center gap-3 cursor-pointer">
               <input type="checkbox" onchange="checkPracticeBoxes('${mod.id}')" class="prac-chk w-4 h-4 accent-[#1A64FF]">
-              <span><strong>Paso 3:</strong> Confirmar que los cambios se reflejan correctamente en el panel de monitoreo.</span>
+              <span><strong>3.</strong> Confirmar que los cambios se reflejan correctamente en el panel de monitoreo.</span>
             </label>
           </div>
         </div>
@@ -2073,147 +2153,213 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
     function checkPracticeBoxes(modId) {
       const chks = Array.from(document.querySelectorAll('.prac-chk'));
-      const allDone = chks.length > 0 && chks.every(c => c.checked);
+      const checkedCount = chks.filter(c => c.checked).length;
+      const pct = Math.round((checkedCount / chks.length) * 100);
       const btn = document.getElementById('btnValidateChecklistPractice');
-      if (allDone) {
+      if (checkedCount === chks.length) {
         btn.disabled = false;
         btn.className = "px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition cursor-pointer";
-        btn.textContent = "Completar Práctica y Desbloquear Quiz →";
+        btn.textContent = "Finalizar Práctica (100%) y Desbloquear Quiz →";
       } else {
         btn.disabled = true;
         btn.className = "px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold transition cursor-not-allowed";
-        btn.textContent = "Marca los 3 pasos para validar";
+        btn.textContent = `Completa la verificación (${pct}%)`;
       }
     }
 
-    // --- M1 EXACT PLATFORM REPLICA (FROM SCREENSHOTS) ---
-    function renderM1PlatformSimulator(container, mod) {
-      const stepInstructions = {
-        1: "Paso 1 de 3: Haz clic en el botón 'Iniciar sesión con Google' dentro de la pantalla replicada.",
-        2: "Paso 2 de 3: Selecciona tu cuenta institucional en el selector 'Elige una cuenta — Ir a schoolpt.info'.",
-        3: "Paso 3 de 3: Ya estás dentro de 'Classroom Management / Classroom List'. Haz clic en 'Move Classroom >' en Clase de Matemática para completar la práctica."
+    // --- M1: 100% REPLICA OF PLATFORM LOGIN & CLASSROOM LIST (NO HINTS, ✗ ON WRONG CLICKS, 0%->100% PROGRESS) ---
+    function renderM1PlatformSimulator(container) {
+      const pctMap = { 1: 0, 2: 33, 3: 67, 4: 100 };
+      const urlMap = {
+        1: "https://global-aidt-base.vercel.app/#/",
+        2: "https://accounts.google.com/v3/signin/accountchooser?flowName=GlifWebSignIn",
+        3: "https://aidt.app/class-room?year=2026",
+        4: "https://aidt.app/class-room/math-11A/active"
       };
+      const simPct = pctMap[m1SimStep] || 0;
 
-      let screenHTML = "";
+      let viewportHTML = "";
       if (m1SimStep === 1) {
-        // Exact replica of image_4efde2.png
-        screenHTML = `
-          <div class="grid grid-cols-1 md:grid-cols-2 min-h-[380px] bg-white">
-            <div class="bg-[#F4F5F7] p-7 flex flex-col justify-between">
-              <div class="space-y-2">
-                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
-                <h4 class="text-2xl font-extrabold text-slate-900 leading-tight">Aprender sin fronteras.<br>Crecer juntos</h4>
-                <p class="text-xs text-slate-500">Juntos, en cada paso del camino.</p>
+        // Exact 100% visual replica of image_4efde2.png — ZERO hints or glowing borders!
+        viewportHTML = `
+          <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[520px] bg-white">
+            <!-- Left Panel -->
+            <div class="bg-[#F4F5F7] p-8 sm:p-12 flex flex-col justify-between">
+              <div class="space-y-3 max-w-md">
+                <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
+                <h4 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                  Aprender sin fronteras.<br>Crecer juntos
+                </h4>
+                <p class="text-sm text-slate-500">Juntos, en cada paso del camino.</p>
               </div>
-              <div class="flex items-center gap-3 pt-6">
-                <span class="w-10 h-10 rounded-full bg-rose-500 text-white flex items-center justify-center font-bold shadow-sm">●</span>
-                <span class="w-10 h-10 rounded-full bg-amber-400 text-white flex items-center justify-center font-bold shadow-sm">▲</span>
-                <span class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold shadow-sm">■</span>
-                <span class="w-10 h-10 rounded-full bg-purple-400 text-white flex items-center justify-center font-bold shadow-sm">◆</span>
+
+              <!-- Mascot / Character Illustration Cluster matching screenshot -->
+              <div class="py-8 flex items-end justify-center gap-3">
+                <div class="w-16 h-20 rounded-t-full bg-rose-500 flex flex-col items-center justify-center text-white shadow-md">
+                  <div class="flex gap-1.5"><span class="w-2 h-2 rounded-full bg-white"></span><span class="w-2 h-2 rounded-full bg-white"></span></div>
+                </div>
+                <div class="w-20 h-16 rounded-2xl bg-amber-400 flex flex-col items-center justify-center text-slate-900 shadow-md">
+                  <div class="flex gap-2"><span class="w-2 h-2 rounded-full bg-slate-900"></span><span class="w-2 h-2 rounded-full bg-slate-900"></span></div>
+                </div>
+                <div class="w-16 h-24 rounded-t-full bg-blue-500 flex flex-col items-center justify-center text-white shadow-md">
+                  <div class="flex gap-1.5"><span class="w-2 h-2 rounded-full bg-white"></span><span class="w-2 h-2 rounded-full bg-white"></span></div>
+                </div>
+                <div class="w-16 h-20 rounded-full bg-purple-400 flex flex-col items-center justify-center text-white shadow-md">
+                  <div class="flex gap-1.5"><span class="w-2 h-2 rounded-full bg-white"></span><span class="w-2 h-2 rounded-full bg-white"></span></div>
+                </div>
               </div>
             </div>
-            <div class="p-7 flex flex-col items-center justify-center">
-              <div class="w-full max-w-[290px] space-y-4">
-                <div class="text-center space-y-2">
-                  <div class="w-9 h-9 rounded-lg bg-slate-900 text-white mx-auto flex items-center justify-center text-xs"><i class="fa-solid fa-sparkles"></i></div>
-                  <div class="text-lg font-extrabold text-slate-900">¡Comencemos!</div>
+
+            <!-- Right Panel -->
+            <div class="p-8 sm:p-12 flex flex-col items-center justify-center bg-white">
+              <div class="w-full max-w-[340px] space-y-5">
+                <div class="text-center space-y-2.5">
+                  <div class="w-10 h-10 rounded-xl bg-slate-900 text-white mx-auto flex items-center justify-center text-sm shadow-sm">
+                    <i class="fa-solid fa-sparkles"></i>
+                  </div>
+                  <div class="text-2xl font-extrabold text-slate-900">¡Comencemos!</div>
                 </div>
-                <button type="button" onclick="m1SimStep=2; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'), ALL_MODULES_MASTER[0])" class="sim-guide-target w-full py-2.5 px-4 rounded-lg border-2 border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold flex items-center justify-center gap-2 shadow-2xs cursor-pointer">
-                  <i class="fa-brands fa-google text-[#1A64FF]"></i>
+
+                <!-- Correct action: Google Sign-In -->
+                <button type="button" onclick="clearSimMistakeToast(); m1SimStep=2; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))" class="w-full py-3 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold flex items-center justify-center gap-2.5 shadow-2xs transition cursor-pointer">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
                   <span>Iniciar sesión con Google</span>
                 </button>
-                <div class="text-center text-[10px] text-slate-400">O continúa con</div>
-                <div class="space-y-2 opacity-60 pointer-events-none">
-                  <div class="text-[11px] font-semibold text-slate-700">Correo electrónico *</div>
-                  <div class="px-3 py-2 rounded-lg border border-slate-200 text-[11px] text-slate-400">Ingresa tu correo electrónico</div>
-                  <div class="text-[11px] font-semibold text-slate-700">Contraseña *</div>
-                  <div class="px-3 py-2 rounded-lg border border-slate-200 text-[11px] text-slate-400">Ingresa tu contraseña</div>
+
+                <div class="relative flex items-center py-1">
+                  <div class="flex-grow border-t border-slate-200"></div>
+                  <span class="flex-shrink mx-3 text-[11px] text-slate-400">O continúa con</span>
+                  <div class="flex-grow border-t border-slate-200"></div>
+                </div>
+
+                <!-- Trap / Wrong path: Email + Password -->
+                <div class="space-y-3">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Correo electrónico <span class="text-rose-500">*</span></label>
+                    <input type="text" onfocus="showSimMistakeToast('✗ Método incorrecto: No debes digitar correo y contraseña manual. El ingreso oficial a la plataforma se realiza con tu cuenta institucional de Google.')" placeholder="Ingresa tu correo electrónico" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 outline-none">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Contraseña <span class="text-rose-500">*</span></label>
+                    <input type="password" onfocus="showSimMistakeToast('✗ Método incorrecto: No se utiliza contraseña manual. Selecciona el botón de acceso con Google.')" placeholder="Ingresa tu contraseña" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs text-slate-700 outline-none">
+                  </div>
+                  <button type="button" onclick="showSimMistakeToast('✗ Acceso rechazado: El botón Iniciar sesión manual no está habilitado para cuentas institucionales.')" class="w-full py-3 rounded-xl bg-[#18181B] hover:bg-slate-800 text-white text-xs font-bold transition cursor-pointer">
+                    Iniciar sesión
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         `;
       } else if (m1SimStep === 2) {
-        // Exact replica of image_4f09e1.png
-        screenHTML = `
-          <div class="bg-[#F0F4F9] p-6 sm:p-10 min-h-[380px] flex items-center justify-center">
-            <div class="bg-white rounded-3xl border border-slate-200 shadow-md max-w-xl w-full p-6 sm:p-8 space-y-5">
-              <div class="flex items-center gap-2 text-xs font-semibold text-slate-600 border-b border-slate-100 pb-3">
-                <i class="fa-brands fa-google text-[#1A64FF]"></i>
+        // Exact 100% visual replica of image_4f09e1.png
+        viewportHTML = `
+          <div class="bg-[#F0F4F9] p-6 sm:p-12 min-h-[520px] flex items-center justify-center">
+            <div class="bg-white rounded-[28px] border border-slate-200 shadow-lg max-w-2xl w-full p-8 sm:p-10 space-y-6">
+              <div class="flex items-center gap-2.5 text-xs font-semibold text-slate-600 border-b border-slate-100 pb-4">
+                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
                 <span>Acceder con Google</span>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-                <div class="space-y-1.5">
-                  <h4 class="text-xl font-bold text-slate-900">Elige una cuenta</h4>
-                  <p class="text-xs text-slate-600">Ir a <span class="text-[#1A64FF] font-semibold">schoolpt.info</span></p>
-                </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start py-2">
                 <div class="space-y-2">
-                  <button type="button" onclick="m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'), ALL_MODULES_MASTER[0])" class="sim-guide-target w-full p-3 rounded-xl border-2 border-blue-200 hover:bg-blue-50/60 flex items-center gap-3 text-left transition cursor-pointer">
-                    <span class="w-8 h-8 rounded-full bg-amber-800 text-white font-bold text-xs flex items-center justify-center shrink-0">${currentUser.name.charAt(0).toUpperCase()}</span>
+                  <h4 class="text-2xl font-normal text-slate-900">Elige una cuenta</h4>
+                  <p class="text-sm text-slate-600">Ir a <span class="text-[#1A64FF] font-semibold">schoolpt.info</span></p>
+                </div>
+
+                <div class="divide-y divide-slate-200 border-t border-b border-slate-200">
+                  <!-- Correct Account -->
+                  <button type="button" onclick="clearSimMistakeToast(); m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))" class="w-full py-3.5 px-2 hover:bg-slate-50 flex items-center gap-3.5 text-left transition cursor-pointer">
+                    <span class="w-9 h-9 rounded-full bg-[#7C2D12] text-white font-bold text-xs flex items-center justify-center shrink-0">${currentUser.name.charAt(0).toUpperCase()}</span>
                     <div class="min-w-0">
                       <div class="text-xs font-bold text-slate-900 truncate">${currentUser.name}</div>
                       <div class="text-[11px] text-slate-500 truncate">${currentUser.email}</div>
                     </div>
                   </button>
-                  <div class="p-2.5 rounded-xl border border-slate-100 text-[11px] text-slate-500 flex items-center gap-2.5">
-                    <i class="fa-regular fa-circle-user text-slate-400"></i>
-                    <span>Usar otra cuenta</span>
-                  </div>
+
+                  <!-- Trap Account (Personal / Unregistered) -->
+                  <button type="button" onclick="showSimMistakeToast('✗ Cuenta no autorizada: Debes elegir tu cuenta institucional vinculada (' + currentUser.email + '), no una cuenta genérica o externa.')" class="w-full py-3.5 px-2 hover:bg-slate-50 flex items-center gap-3.5 text-left transition cursor-pointer">
+                    <span class="w-9 h-9 rounded-full bg-slate-500 text-white font-bold text-xs flex items-center justify-center shrink-0">P</span>
+                    <div class="min-w-0">
+                      <div class="text-xs font-bold text-slate-900 truncate">Cuenta Personal Invitado</div>
+                      <div class="text-[11px] text-slate-500 truncate">personal.guest@gmail.com</div>
+                    </div>
+                  </button>
+
+                  <!-- Trap: Usar otra cuenta -->
+                  <button type="button" onclick="showSimMistakeToast('✗ Acción innecesaria: Tu cuenta institucional ya aparece en la lista superior. Selecciónala directamente.')" class="w-full py-3.5 px-2 hover:bg-slate-50 flex items-center gap-3.5 text-left transition cursor-pointer">
+                    <span class="w-9 h-9 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-sm shrink-0"><i class="fa-regular fa-circle-user"></i></span>
+                    <span class="text-xs font-semibold text-slate-700">Usar otra cuenta</span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         `;
       } else {
-        // Exact replica of image_4f0d06.png (Classroom Management / Classroom List)
+        // Exact 100% visual replica of image_4f0d06.png (Classroom Management / Classroom List)
         const classesList = [
-          { name: "Clase de Matemática", sub: "11 / GENERAL / - / A / Math / Regular Class / AM", color: "bg-amber-400", target: true },
-          { name: "Clase de Lenguaje", sub: "11 / GENERAL / - / A / Language / Regular Class / AM", color: "bg-slate-400", target: false },
-          { name: "Refuerzo de Matemática", sub: "11 / GENERAL / - / A / Math / Assignment / AM", color: "bg-blue-500", target: false },
-          { name: "Refuerzo de Lenguaje", sub: "11 / GENERAL / - / A / Language / - / AM", color: "bg-emerald-500", target: false }
+          { name: "Clase de Matemática", sub: "11 / GENERAL / - / A / Math / Regular Class / AM", color: "bg-amber-400", isTarget: true },
+          { name: "Clase de Lenguaje", sub: "11 / GENERAL / - / A / Language / Regular Class / AM", color: "bg-slate-400", isTarget: false },
+          { name: "Refuerzo de Matemática", sub: "11 / GENERAL / - / A / Math / Assignment / AM", color: "bg-blue-500", isTarget: false },
+          { name: "Refuerzo de Lenguaje", sub: "11 / GENERAL / - / A / Language / - / AM", color: "bg-emerald-500", isTarget: false },
+          { name: "Remediación Matemática", sub: "11 / GENERAL / - / A / Math / Supplementary Learning / AM", color: "bg-rose-500", isTarget: false },
+          { name: "Remediación Lenguaje", sub: "11 / GENERAL / - / A / Language / Supplementary Learning / -", color: "bg-indigo-500", isTarget: false }
         ];
-        screenHTML = `
-          <div class="bg-white min-h-[380px] flex flex-col">
-            <!-- Top Nav Bar of Real Platform -->
-            <div class="px-5 py-3 border-b border-slate-200 flex items-center justify-between text-xs">
-              <div class="flex items-center gap-2.5">
-                <span class="w-6 h-6 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">IH</span>
-                <span class="font-bold text-slate-900">IHFB</span>
+
+        viewportHTML = `
+          <div class="bg-white min-h-[540px] flex flex-col">
+            <!-- Top Navigation Bar matching image_4f0d06.png -->
+            <div class="px-5 py-3 border-b border-slate-200 flex items-center justify-between text-xs bg-white">
+              <div class="flex items-center gap-3">
+                <span class="w-7 h-7 rounded-lg bg-slate-900 text-white flex items-center justify-center text-[11px] font-bold">IH</span>
+                <span class="font-extrabold text-slate-900">IHFB</span>
                 <span class="text-slate-400">Classroom Management</span>
                 <span class="text-slate-300">/</span>
-                <span class="font-bold text-slate-800">Classroom List</span>
+                <span class="font-bold text-slate-900">Classroom List</span>
               </div>
-              <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center">${currentUser.name.substring(0,2).toUpperCase()}</span>
+              <span class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center">${currentUser.name.substring(0,2).toUpperCase()}</span>
             </div>
 
-            <div class="p-6 max-w-2xl mx-auto w-full space-y-4">
-              <div>
-                <div class="text-[11px] text-slate-400 font-semibold">2026</div>
-                <div class="text-lg font-extrabold text-slate-900">Mon, November 23 <span class="text-xs font-normal text-slate-400 ml-2">‹ today ›</span></div>
-                <div class="flex items-center gap-4 text-xs mt-2 border-b border-slate-200 pb-2">
-                  <span class="font-bold text-slate-900 border-b-2 border-slate-900 pb-2 -mb-2">Classrooms with Classes <span class="text-[#10B981]">4</span></span>
-                  <span class="text-slate-400">All 4</span>
-                </div>
+            <!-- Main Content Area with Left Icon Rail -->
+            <div class="flex flex-1">
+              <div class="w-12 border-r border-slate-200 py-4 flex flex-col items-center gap-5 text-slate-400 shrink-0">
+                <i class="fa-solid fa-house text-slate-900"></i>
+                <i class="fa-solid fa-puzzle-piece"></i>
+                <i class="fa-regular fa-file-lines"></i>
+                <i class="fa-regular fa-map"></i>
               </div>
 
-              <div class="space-y-2.5">
-                ${classesList.map(c => `
-                  <div class="p-3.5 rounded-xl border border-slate-200 flex items-center justify-between gap-3">
-                    <div class="flex items-center gap-3 min-w-0">
-                      <span class="w-9 h-9 rounded-lg ${c.color} text-white flex items-center justify-center font-bold text-xs shrink-0">÷×</span>
-                      <div class="min-w-0">
-                        <div class="text-xs font-bold text-slate-900 truncate">${c.name}</div>
-                        <div class="text-[10.5px] text-slate-400 truncate">${c.sub}</div>
-                      </div>
-                    </div>
-                    <div class="flex items-center gap-2.5 shrink-0">
-                      <span class="hidden sm:inline text-[11px] text-slate-400">Continue Learning</span>
-                      <button type="button" onclick="${c.target ? `completePracticeAndUnlockQuiz('M1')` : `showProAlert('Instrucción de Práctica', 'Haz clic en \'Move Classroom >\' dentro de la tarjeta Clase de Matemática.', false)`}" class="${c.target ? 'sim-guide-target border-2 border-[#1A64FF]' : 'border border-slate-300'} px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-800 text-[11px] font-semibold cursor-pointer">
-                        Move Classroom ›
-                      </button>
+              <div class="flex-1 p-6 sm:p-8 max-w-4xl mx-auto space-y-5">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <div class="text-xs font-semibold text-slate-400">2026</div>
+                    <div class="text-xl font-extrabold text-slate-900 mt-0.5">Mon, November 23 <span class="text-xs font-normal text-slate-400 ml-3">‹ &nbsp; today &nbsp; ›</span></div>
+                    <div class="flex items-center gap-6 text-xs mt-4 border-b border-slate-200 pb-2.5">
+                      <span class="font-bold text-slate-900 border-b-2 border-slate-900 pb-2.5 -mb-2.5">Classrooms with Classes <span class="text-[#10B981] font-bold">6</span></span>
+                      <span onclick="showSimMistakeToast('✗ Esa pestaña solo cambia la vista de filtro. Ingresa directamente a la Clase de Matemática.')" class="text-slate-400 hover:text-slate-700 cursor-pointer">All 6</span>
                     </div>
                   </div>
-                `).join('')}
+                </div>
+
+                <div class="space-y-3">
+                  ${classesList.map(c => `
+                    <div class="p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white flex items-center justify-between gap-4 transition">
+                      <div class="flex items-center gap-3.5 min-w-0">
+                        <span class="w-10 h-10 rounded-xl ${c.color} text-white flex items-center justify-center font-bold text-sm shrink-0">÷×</span>
+                        <div class="min-w-0">
+                          <div class="text-sm font-bold text-slate-900 truncate">${c.name}</div>
+                          <div class="text-[11px] text-slate-400 truncate mt-0.5">${c.sub}</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-3 shrink-0">
+                        <span class="hidden sm:inline text-xs text-slate-400">Continue Learning</span>
+                        <button type="button" onclick="${c.isTarget ? `clearSimMistakeToast(); m1SimStep=4; completePracticeAndUnlockQuiz('M1')` : `showSimMistakeToast('✗ Aula incorrecta: La misión solicita ingresar específicamente a la Clase de Matemática.')`}" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold transition cursor-pointer">
+                          Move Classroom &nbsp;›
+                        </button>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
               </div>
             </div>
           </div>
@@ -2222,45 +2368,79 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
       container.innerHTML = `
         <div class="space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 bg-blue-50/70 border border-blue-200 rounded-xl px-4 py-3">
-            <div class="text-xs font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-[#1A64FF] animate-ping"></span>
-              <span>${stepInstructions[m1SimStep]}</span>
+          <!-- Objective Mission Header + Real-Time Simulator Completion Percentage -->
+          <div class="p-4 rounded-xl bg-[#0A0A0B] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-0.5">
+              <div class="text-[10.5px] font-bold uppercase tracking-widest text-[#60A5FA]">Instrucción de la Práctica (M1)</div>
+              <div class="text-xs sm:text-sm font-bold">Ingresa a la plataforma de manera correcta con tu cuenta institucional y accede a la Clase de Matemática.</div>
             </div>
-            <span class="font-mono text-[11px] font-bold text-[#1A64FF]">Simulador Interactivo M1</span>
+            <div class="flex items-center gap-3 shrink-0 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+              <span class="text-[11px] text-slate-300 font-semibold">Avance Práctica:</span>
+              <span class="font-mono text-sm font-extrabold text-[#34D399]">${simPct}%</span>
+            </div>
           </div>
-          <div class="rounded-2xl border-2 border-slate-300 overflow-hidden shadow-md">
-            ${screenHTML}
+
+          <!-- Red Error Feedback Banner (Shown with ✗ whenever user makes a wrong click) -->
+          <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-50 border-2 border-rose-400 text-rose-900 text-xs font-bold flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 font-extrabold">✗</span>
+            <span id="simMistakeText">Acción incorrecta.</span>
+          </div>
+
+          <!-- Realistic Browser Window Frame -->
+          <div class="rounded-2xl border-2 border-slate-300 overflow-hidden shadow-lg bg-white">
+            <div class="px-4 py-2.5 bg-slate-100 border-b border-slate-200 flex items-center gap-3">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <div class="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-1 font-mono text-[11px] text-slate-500 truncate">
+                <i class="fa-solid fa-lock text-emerald-600 mr-1.5"></i>${urlMap[m1SimStep]}
+              </div>
+            </div>
+            ${viewportHTML}
           </div>
         </div>
       `;
     }
 
-    // --- M3 VISIBILITY SIMULATOR ---
-    function renderM3VisibilitySimulator(container, mod) {
-      const targetHidden = !m3VisibilityItems.find(x => x.id === 'u2').visible;
+    // --- M3: VISIBILITY SIMULATOR (NO HINTS, ✗ ON WRONG CLICKS) ---
+    function renderM3VisibilitySimulator(container) {
+      const u2Hidden = !m3VisibilityItems.find(x => x.id === 'u2').visible;
+      const u1Ok = m3VisibilityItems.find(x => x.id === 'u1').visible;
+      const simPct = (u2Hidden && u1Ok) ? 100 : 0;
+
       container.innerHTML = `
         <div class="space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 bg-pink-50/70 border border-pink-200 rounded-xl px-4 py-3">
-            <div class="text-xs font-bold text-slate-900">
-              Misión M3: Apaga el interruptor de visibilidad de <strong>"Unidad 2: Resolución de Problemas"</strong> para ocultarla a los estudiantes.
+          <div class="p-4 rounded-xl bg-[#0A0A0B] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-0.5">
+              <div class="text-[10.5px] font-bold uppercase tracking-widest text-[#F472B6]">Instrucción de la Práctica (M3)</div>
+              <div class="text-xs sm:text-sm font-bold">Oculta únicamente la "Unidad 2: Resolución de Problemas" para los estudiantes sin alterar las demás unidades.</div>
             </div>
-            <span class="font-mono text-[11px] font-bold text-[#EC4899]">Visibility Settings</span>
+            <div class="flex items-center gap-3 shrink-0 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+              <span class="text-[11px] text-slate-300 font-semibold">Avance Práctica:</span>
+              <span class="font-mono text-sm font-extrabold text-[#34D399]">${simPct}%</span>
+            </div>
           </div>
 
-          <div class="rounded-2xl border-2 border-slate-300 bg-white overflow-hidden">
-            <div class="px-5 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
+          <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-50 border-2 border-rose-400 text-rose-900 text-xs font-bold flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 font-extrabold">✗</span>
+            <span id="simMistakeText">Acción incorrecta.</span>
+          </div>
+
+          <div class="rounded-2xl border-2 border-slate-300 bg-white overflow-hidden shadow-md">
+            <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs">
               <span class="font-bold text-slate-800">IHFB / Classroom Management / Visibility Settings</span>
               <span class="text-slate-500">Clase de Matemática</span>
             </div>
-            <div class="p-5 space-y-2.5">
+            <div class="p-6 space-y-3">
               ${m3VisibilityItems.map(item => `
-                <div class="p-3.5 rounded-xl border ${item.id === 'u2' && item.visible ? 'sim-guide-target border-blue-400 bg-blue-50/30' : 'border-slate-200 bg-white'} flex items-center justify-between">
-                  <div class="flex items-center gap-2.5 text-xs font-semibold text-slate-800">
+                <div class="p-4 rounded-xl border border-slate-200 bg-white flex items-center justify-between">
+                  <div class="flex items-center gap-3 text-xs font-bold text-slate-800">
                     <i class="fa-solid ${item.visible ? 'fa-eye text-[#10B981]' : 'fa-eye-slash text-slate-400'}"></i>
                     <span>${item.name}</span>
                   </div>
-                  <button type="button" onclick="toggleM3SimItem('${item.id}')" class="px-3 py-1 rounded-lg text-[11px] font-bold ${item.visible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'} cursor-pointer">
+                  <button type="button" onclick="handleM3SimClick('${item.id}')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold ${item.visible ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'} cursor-pointer">
                     ${item.visible ? 'Visible' : 'Oculto'}
                   </button>
                 </div>
@@ -2269,27 +2449,91 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
           </div>
 
           <div class="flex justify-end">
-            <button type="button" ${targetHidden ? '' : 'disabled'} onclick="completePracticeAndUnlockQuiz('M3')" class="px-5 py-2.5 rounded-xl text-xs font-bold ${targetHidden ? 'bg-[#10B981] hover:bg-emerald-600 text-white cursor-pointer shadow-sm' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}">
-              ${targetHidden ? 'Confirmar Cambio de Visibilidad y Desbloquear Quiz →' : 'Oculta la Unidad 2 para continuar'}
+            <button type="button" onclick="validateM3Submission()" class="px-5 py-2.5 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs font-bold transition cursor-pointer">
+              Guardar Configuración de Visibilidad
             </button>
           </div>
         </div>
       `;
     }
 
-    function toggleM3SimItem(id) {
+    function handleM3SimClick(id) {
+      clearSimMistakeToast();
       const it = m3VisibilityItems.find(x => x.id === id);
       if (it) it.visible = !it.visible;
-      renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'), ALL_MODULES_MASTER[2]);
+      renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'));
     }
 
-    function triggerM5ScreenLock() {
-      m5ScreenLocked = true;
-      document.getElementById('m5StudentNormal').classList.add('hidden');
-      document.getElementById('m5StudentLocked').classList.remove('hidden');
-      document.getElementById('m5MissionBadge').textContent = "¡Bloqueo verificado! ✓";
-      document.getElementById('m5MissionBadge').className = "font-mono text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200";
-      setTimeout(() => completePracticeAndUnlockQuiz('M5'), 900);
+    function validateM3Submission() {
+      const u1 = m3VisibilityItems.find(x => x.id === 'u1').visible;
+      const u2 = m3VisibilityItems.find(x => x.id === 'u2').visible;
+      const u3 = m3VisibilityItems.find(x => x.id === 'u3').visible;
+      if (!u1) {
+        showSimMistakeToast('✗ Error: Ocultaste la Unidad 1 por error. Solo debes ocultar la Unidad 2.');
+        return;
+      }
+      if (u2) {
+        showSimMistakeToast('✗ Error: La Unidad 2 sigue visible para los estudiantes. Cámbiala a Oculto.');
+        return;
+      }
+      if (u3) {
+        showSimMistakeToast('✗ Error: Activaste la Unidad 3 que debía permanecer oculta.');
+        return;
+      }
+      completePracticeAndUnlockQuiz('M3');
+    }
+
+    // --- M5: CLASS MODE SCREEN LOCK (NO HINTS, ✗ ON WRONG CLICKS) ---
+    function renderM5ClassModeSimulator(container) {
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="p-4 rounded-xl bg-[#0A0A0B] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-0.5">
+              <div class="text-[10.5px] font-bold uppercase tracking-widest text-[#F472B6]">Instrucción de la Práctica (M5)</div>
+              <div class="text-xs sm:text-sm font-bold">Necesitas explicar un concepto en la pizarra. Bloquea las pantallas de los estudiantes sin finalizar la clase.</div>
+            </div>
+            <div class="flex items-center gap-3 shrink-0 bg-white/10 px-3.5 py-2 rounded-xl border border-white/15">
+              <span class="text-[11px] text-slate-300 font-semibold">Avance Práctica:</span>
+              <span class="font-mono text-sm font-extrabold text-[#34D399]">${m5ScreenLocked ? '100%' : '0%'}</span>
+            </div>
+          </div>
+
+          <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-50 border-2 border-rose-400 text-rose-900 text-xs font-bold flex items-center gap-2.5">
+            <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 font-extrabold">✗</span>
+            <span id="simMistakeText">Acción incorrecta.</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="p-6 rounded-2xl border border-slate-200 bg-slate-50 space-y-3">
+              <div class="text-xs font-bold text-slate-800 pb-2 border-b border-slate-200">Controles de Modo Clase</div>
+              <button type="button" onclick="showSimMistakeToast('✗ Acción incorrecta: Si finalizas la clase cerrarás la sesión de todos los alumnos. Solo debes bloquear sus pantallas temporalmente.')" class="w-full py-2.5 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-power-off text-rose-500"></i>
+                <span>Finalizar Sesión de Clase</span>
+              </button>
+              <button type="button" onclick="clearSimMistakeToast(); m5ScreenLocked=true; renderM5ClassModeSimulator(document.getElementById('practiceContentContainer')); setTimeout(() => completePracticeAndUnlockQuiz('M5'), 850);" class="w-full py-2.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-lock"></i>
+                <span>Bloquear Pantallas de Alumnos</span>
+              </button>
+            </div>
+
+            <div class="p-6 rounded-2xl border border-slate-800 bg-[#0A0A0B] text-white min-h-[200px] flex flex-col justify-between relative overflow-hidden">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                <span>Dispositivo Estudiante #04</span>
+                <span>En línea</span>
+              </div>
+              <div class="${m5ScreenLocked ? 'hidden' : ''} my-auto text-center space-y-1">
+                <div class="text-xs font-bold text-[#34D399]">Resolviendo actividad: Clase de Matemática</div>
+                <p class="text-[11px] text-slate-400">Pantalla desbloqueada</p>
+              </div>
+              <div class="${m5ScreenLocked ? '' : 'hidden'} absolute inset-0 bg-slate-950/95 flex flex-col items-center justify-center text-center p-5 space-y-2">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg"><i class="fa-solid fa-lock"></i></div>
+                <div class="text-sm font-bold text-white">Pantalla bloqueada</div>
+                <p class="text-xs text-slate-300">Es momento de concentrarte en la explicación del docente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function completePracticeAndUnlockQuiz(modId) {
@@ -2297,7 +2541,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       p.practiceCompleted = true;
       saveProgressMap();
       refreshAllWorkspaceUI();
-      showProAlert("¡Práctica Completada!", `Has completado el Paso 2 de ${modId}. Ahora el Quiz (Paso 3) está desbloqueado.`);
+      showProAlert("¡Práctica Completada al 100%!", `Has superado el simulador práctico de ${modId}. Ahora el Quiz (Paso 3) está desbloqueado.`);
       goToModuleQuiz(modId);
     }
 
@@ -2305,7 +2549,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     function goToModuleQuiz(modId) {
       const p = ensureProgressEntry(modId);
       if (!p.practiceCompleted && !isAdminMode) {
-        showProAlert("Paso 2 Requerido", "Debes completar primero la Práctica Interactiva de este módulo.", false);
+        showProAlert("Paso 2 Requerido", "Debes completar primero la Práctica Interactiva al 100%.", false);
         goToModulePractice(modId);
         return;
       }
@@ -2333,7 +2577,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         container.innerHTML = `
           <div class="p-6 rounded-xl bg-slate-50 border border-slate-200 text-center space-y-2">
             <div class="font-bold text-slate-900 text-sm"><i class="fa-solid fa-lock mr-1.5 text-amber-500"></i>Quiz Bloqueado</div>
-            <p class="text-xs text-slate-500">Completa primero el Paso 1 (Material) y el Paso 2 (Práctica) de ${mod.code}.</p>
+            <p class="text-xs text-slate-500">Completa primero el Paso 1 (Material) y el Paso 2 (Práctica al 100%) de ${mod.code}.</p>
           </div>
         `;
         return;
@@ -2404,15 +2648,14 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     // ==================== PROGRESS TABLE & CERTIFICATE ====================
     function renderProgressTable() {
       const roleMods = getRoleModulesList(currentUser.role);
-      const tbody = document.getElementById('progressTableBody');
-      tbody.innerHTML = roleMods.map(mod => {
+      document.getElementById('progressTableBody').innerHTML = roleMods.map(mod => {
         const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
         const p = ensureProgressEntry(mod.id);
         return `
           <tr class="hover:bg-slate-50/80">
             <td class="px-5 py-3 font-bold text-slate-900">${mod.code}: ${mod.title}</td>
             <td class="px-4 py-3">${p.materialConfirmed ? '<span class="text-emerald-700 font-bold">Confirmado ✓</span>' : (unlocked ? '<span class="text-blue-600 font-semibold">Pendiente</span>' : '<span class="text-slate-300">Bloqueado</span>')}</td>
-            <td class="px-4 py-3">${p.practiceCompleted ? '<span class="text-emerald-700 font-bold">Completada ✓</span>' : (p.materialConfirmed ? '<span class="text-pink-600 font-semibold">Habilitada</span>' : '<span class="text-slate-300">Bloqueado</span>')}</td>
+            <td class="px-4 py-3">${p.practiceCompleted ? '<span class="text-emerald-700 font-bold">Completada (100%) ✓</span>' : (p.materialConfirmed ? '<span class="text-pink-600 font-semibold">Habilitada</span>' : '<span class="text-slate-300">Bloqueado</span>')}</td>
             <td class="px-4 py-3">${p.quizCompleted ? '<span class="text-emerald-700 font-bold">Aprobado ✓</span>' : (p.practiceCompleted ? '<span class="text-blue-600 font-semibold">Habilitado</span>' : '<span class="text-slate-300">Bloqueado</span>')}</td>
             <td class="px-4 py-3 font-mono font-bold ${p.score >= 80 ? 'text-emerald-700' : 'text-slate-500'}">${p.score !== null ? p.score + '%' : '—'}</td>
             <td class="px-5 py-3 text-right">
@@ -2444,14 +2687,28 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
     }
 
     // ==================== ROLE-SAFE PROFILE EDITING ====================
+    function onProfileRoleSelectChange() {
+      const r = document.getElementById('profileRoleSelect').value;
+      const isDoc = r === 'Docente';
+      document.getElementById('profDocenteFieldsBox').classList.toggle('hidden', !isDoc);
+      document.getElementById('profOtherFieldsBox').classList.toggle('hidden', isDoc);
+    }
+
     function openProfileEditModal() {
       if (!currentUser) return;
       document.getElementById('profileEmailDisplay').value = currentUser.email;
       document.getElementById('profileNameInput').value = currentUser.name;
       document.getElementById('profileRoleSelect').value = currentUser.role;
+
+      document.getElementById('profSchoolCodeInput').value = currentUser.schoolCode || currentUser.code || '';
+      document.getElementById('profSchoolNameInput').value = currentUser.schoolName || currentUser.org || '';
+      document.getElementById('profSchoolMunicipalityInput').value = currentUser.municipality || currentUser.region || '';
+
       document.getElementById('profileCodeInput').value = currentUser.code || '';
       document.getElementById('profileOrgInput').value = currentUser.org || '';
       document.getElementById('profileRegionInput').value = currentUser.region || '';
+
+      onProfileRoleSelectChange();
       document.getElementById('profileEditModal').classList.remove('hidden');
     }
 
@@ -2463,20 +2720,29 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       e.preventDefault();
       const oldRole = currentUser.role;
       const newRole = document.getElementById('profileRoleSelect').value;
+      const isDoc = newRole === 'Docente';
 
       currentUser.name = document.getElementById('profileNameInput').value.trim();
       currentUser.role = newRole;
-      currentUser.code = document.getElementById('profileCodeInput').value.trim();
-      currentUser.org = document.getElementById('profileOrgInput').value.trim();
-      currentUser.region = document.getElementById('profileRegionInput').value.trim();
+      if (isDoc) {
+        currentUser.schoolCode = document.getElementById('profSchoolCodeInput').value.trim();
+        currentUser.schoolName = document.getElementById('profSchoolNameInput').value.trim();
+        currentUser.municipality = document.getElementById('profSchoolMunicipalityInput').value.trim();
+        currentUser.code = currentUser.schoolCode;
+        currentUser.org = currentUser.schoolName;
+        currentUser.region = currentUser.municipality;
+      } else {
+        currentUser.code = document.getElementById('profileCodeInput').value.trim();
+        currentUser.org = document.getElementById('profileOrgInput').value.trim();
+        currentUser.region = document.getElementById('profileRegionInput').value.trim();
+      }
 
-      // Update local directory & session
-      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v2') || '[]');
+      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v3') || '[]');
       const idx = db.findIndex(u => u.email.toLowerCase() === currentUser.email.toLowerCase());
       if (idx !== -1) db[idx] = Object.assign({}, currentUser);
       else db.push(Object.assign({}, currentUser));
-      localStorage.setItem('ihfb_participants_db_v2', JSON.stringify(db));
-      localStorage.setItem('ihfb_user_session_v2', JSON.stringify(currentUser));
+      localStorage.setItem('ihfb_participants_db_v3', JSON.stringify(db));
+      localStorage.setItem('ihfb_user_session_v3', JSON.stringify(currentUser));
 
       closeProfileEditModal();
       syncToGoogleSheetsWebhook(currentUser, `Perfil/Rol Actualizado: ${oldRole} -> ${newRole}`);
@@ -2492,11 +2758,8 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
         showProAlert("Expediente Actualizado", "Tus datos institucionales se guardaron correctamente.");
       }
 
-      if (currentUser.audienceConfirmed) {
-        enterWorkspaceShell();
-      } else {
-        enterAudienceGate();
-      }
+      if (currentUser.audienceConfirmed) enterWorkspaceShell();
+      else enterAudienceGate();
     }
 
     // ==================== NAVIGATION, MODALS & GOOGLE SHEETS ====================
@@ -2518,7 +2781,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       const titles = {
         dashboard: ['Inicio e Inducción', `Audiencia: ${currentUser ? currentUser.role : ''}`],
         modulos: ['Paso 1: Módulos de Aprendizaje', 'Revisa el video y manual SOP y confirma para desbloquear la práctica'],
-        practicas: ['Paso 2: Práctica Interactiva en Vivo', 'Ejecuta cada paso en la interfaz replicada'],
+        practicas: ['Paso 2: Práctica Interactiva en Vivo', 'Opera la plataforma real sin ayudas visuales hasta alcanzar el 100%'],
         quizzes: ['Paso 3: Evaluación Modular (Quiz)', 'Aprueba con mínimo 80% para avanzar al siguiente módulo'],
         progreso: ['Paso 4: Mi Progreso y Certificación', 'Historial modular y constancia digital'],
         faq: ['Centro de Ayuda y Soporte', 'Asistencia técnica y preguntas frecuentes']
@@ -2557,7 +2820,7 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
 
     function confirmLogoutAction() {
       closeLogoutModal();
-      localStorage.removeItem('ihfb_user_session_v2');
+      localStorage.removeItem('ihfb_user_session_v3');
       location.reload();
     }
 
@@ -2638,14 +2901,13 @@ ightarrow$ <strong>Paso 3</strong> (aprobar el quiz con mínimo 80%).
       if (currentUser) refreshAllWorkspaceUI();
     }
     function openAdminDatabaseModal() {
-      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v2') || '[]');
+      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v3') || '[]');
       document.getElementById('adminTableBody').innerHTML = db.map(u => `
         <tr>
           <td class="px-3 py-2.5 font-bold text-slate-900">${u.name}</td>
           <td class="px-3 py-2.5 font-mono text-[11px]">${u.email}</td>
           <td class="px-3 py-2.5 font-semibold">${u.role}</td>
-          <td class="px-3 py-2.5">${u.org || '-'} • ${u.region || '-'}</td>
-          <td class="px-3 py-2.5 font-mono font-bold text-[#1A64FF]">Registrado</td>
+          <td class="px-3 py-2.5">${u.org || '-'} (${u.region || '-'})</td>
           <td class="px-3 py-2.5 font-mono">${u.code || '-'}</td>
         </tr>
       `).join('');
