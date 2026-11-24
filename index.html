@@ -7,7 +7,6 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -189,7 +188,7 @@
       </div>
 
       <!-- Translucent Online Training Background Image + Obsidian Depth Overlay -->
-      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1600&q=85" alt="Capacitación Online" class="absolute inset-0 w-full h-full object-cover opacity-[0.42] scale-105 pointer-events-none">
+      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1600&q=85" alt="Capacitación Online" class="absolute inset-0 w-full h-full object-cover opacity-[0.42] scale-105 pointer-events-none">
       <div class="absolute inset-0 bg-gradient-to-br from-[#0A0A0B]/88 via-[#0A0A0B]/68 to-[#0F172A]/82 pointer-events-none"></div>
 
       <!-- Ambient Brand Glows -->
@@ -301,8 +300,12 @@
               </div>
             </div>
 
-            <div class="p-4 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50 flex flex-col items-center justify-center">
-              <div id="gsi_login_button" class="w-full flex justify-center"></div>
+            <div>
+              <button type="button" onclick="launchFullWindowGoogleAuth('login')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
+                <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
+                <span>Continuar con Google</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
             </div>
 
             <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11.5px] text-slate-700 flex items-start gap-2.5">
@@ -390,8 +393,11 @@
                   <i class="fa-solid fa-lock text-slate-400"></i>
                   <span id="regDisabledHintText">Completa todos los campos obligatorios para continuar</span>
                 </div>
-                <div id="regGoogleActiveBox" class="hidden flex justify-center w-full">
-                  <div id="gsi_register_button" class="w-full flex justify-center"></div>
+                <div id="regGoogleActiveBox" class="hidden flex-col items-center gap-2 w-full">
+                  <button type="button" onclick="launchFullWindowGoogleAuth('register')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
+                    <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
+                    <span>Vincular Cuenta Google y Crear Expediente</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -407,89 +413,103 @@
   </div>
 
   <!-- ======================================================================== -->
-  <!-- STAGE 2: EXECUTIVE SPLIT-PANEL AUDIENCE SELECTOR                        -->
+  <!-- STAGE 2: ACADEMIC PROFILE & ROLE MODULES ROADMAP                        -->
   <!-- ======================================================================== -->
   <div id="audienceGateScreen" class="hidden min-h-screen flex-col lg:flex-row bg-[#0B0F17]">
-    <!-- Left Dark Executive Panel: Dossier & Identity -->
-    <div class="lg:w-5/12 xl:w-[42%] bg-[#0B0F17] text-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between relative overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+    <!-- Left Dark Executive Panel: Academic Profile Dossier + Bottom Logout -->
+    <div class="lg:w-5/12 xl:w-[40%] bg-[#0B0F17] text-white p-8 sm:p-10 lg:p-12 flex flex-col justify-between relative overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
       <div class="tri-hairline absolute top-0 left-0 right-0"></div>
 
-      <div class="flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-md">
-            <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
-          </div>
-          <div>
-            <div class="text-sm font-extrabold text-white tracking-tight">IHFB Self-Learning Training Portal</div>
-            <div class="text-[11px] text-slate-400">Directorio de Audiencias</div>
-          </div>
+      <!-- Brand Header -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-md shrink-0">
+          <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
         </div>
-        <button type="button" onclick="requestLogoutConfirmation()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-semibold transition cursor-pointer">
-          Salir
-        </button>
+        <div>
+          <div class="text-sm font-extrabold text-white tracking-tight">IHFB Self-Learning Training Portal</div>
+          <div class="text-[11px] text-slate-400">Expediente Académico Institucional</div>
+        </div>
       </div>
 
-      <div class="my-auto py-10 space-y-6 max-w-md">
+      <!-- Academic Profile Card -->
+      <div class="my-auto py-8 space-y-5 max-w-md">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-emerald-500/15 text-[#34D399] border border-emerald-500/30">
           <span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
-          <span>Paso de Verificación</span>
+          <span>Perfil Académico Activo</span>
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-          Hola, <span id="audWelcomeName" class="text-[#34D399]">Participante</span>
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-          Selecciona en el panel derecho la audiencia operativa que corresponde a tu expediente institucional para abrir tus módulos de capacitación.
-        </p>
 
-        <!-- Active Dossier Summary Box -->
-        <div class="p-5 rounded-2xl bg-white/[0.06] border border-white/10 space-y-3">
-          <div class="flex items-center justify-between text-[11px] text-slate-400 uppercase font-bold tracking-wider">
-            <span>Expediente Vinculado</span>
-            <span id="audUserEmailPill" class="font-mono text-slate-300 lowercase"></span>
-          </div>
-          <div class="flex items-center justify-between gap-3 pt-1">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+            <span id="audWelcomeName" class="text-white">Participante</span>
+          </h2>
+          <p id="audUserEmailPill" class="font-mono text-xs text-slate-400 mt-1"></p>
+        </div>
+
+        <!-- Detailed Academic Dossier Card -->
+        <div class="p-5 rounded-2xl bg-white/[0.06] border border-white/10 space-y-4">
+          <div class="flex items-center justify-between border-b border-white/10 pb-3">
             <div>
-              <div id="audRegisteredRoleHint" class="text-base font-extrabold text-white">Rol registrado: Docente</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Ruta de capacitación asignada automáticamente</div>
+              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rol / Audiencia Asignada</div>
+              <div id="audRegisteredRoleHint" class="text-base font-extrabold text-[#34D399] mt-0.5">Docente</div>
             </div>
             <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white text-slate-900 hover:bg-[#1A64FF] hover:text-white text-xs font-bold transition shrink-0 cursor-pointer">
-              Editar Perfil
+              <i class="fa-solid fa-pen-to-square mr-1"></i> Editar Perfil
             </button>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-black/25 border border-white/5">
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Centro / Institución</div>
+              <div id="audProfileOrgDisplay" class="font-semibold text-slate-100 truncate mt-0.5">—</div>
+            </div>
+            <div class="p-3 rounded-xl bg-black/25 border border-white/5">
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Código / Municipio</div>
+              <div id="audProfileCodeDisplay" class="font-mono font-semibold text-slate-100 truncate mt-0.5">—</div>
+            </div>
+          </div>
+
+          <!-- Global Academic Progress Meter -->
+          <div class="space-y-1.5 pt-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-300 font-semibold">Avance Global de Certificación</span>
+              <span id="audGlobalProgressPct" class="font-mono font-extrabold text-[#60A5FA]">0%</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="audGlobalProgressBar" class="h-full bg-gradient-to-r from-[#1A64FF] via-[#EC4899] to-[#10B981] transition-all duration-500" style="width: 0%;"></div>
+            </div>
+            <div id="audGlobalProgressSub" class="text-[11px] text-slate-400">0 de 6 módulos aprobados</div>
           </div>
         </div>
       </div>
 
-      <div class="text-[11px] text-slate-500 pl-28 sm:pl-32">
-        IHFB Self-Learning Training Portal • Acceso Institucional
+      <!-- Bottom Row: Language space + Logout Button -->
+      <div class="pt-4 border-t border-white/10 flex items-center justify-between gap-3 pl-28 sm:pl-32">
+        <span class="text-[11px] text-slate-500 hidden sm:inline">IHFB Training Portal</span>
+        <button type="button" onclick="requestLogoutConfirmation()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-bold transition flex items-center gap-2 cursor-pointer ml-auto">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Cerrar Sesión</span>
+        </button>
       </div>
     </div>
 
-    <!-- Right Clean Architectural Panel: Sleek Horizontal Role Selector -->
-    <div class="lg:w-7/12 xl:w-[58%] bg-[#F4F6F9] p-6 sm:p-12 lg:p-16 flex flex-col justify-center">
+    <!-- Right Clean Architectural Panel: Assigned Modules & Live Completion Status -->
+    <div class="lg:w-7/12 xl:w-[60%] bg-[#F4F6F9] p-6 sm:p-10 lg:p-14 flex flex-col justify-center">
       <div class="max-w-2xl w-full mx-auto space-y-5">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 class="text-lg font-extrabold text-slate-900">Selecciona tu Perfil Operativo</h3>
-            <p class="text-xs text-slate-500">Haz clic sobre tu rol registrado para iniciar</p>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-[#1A64FF]">Ruta Curricular Asignada</span>
+            <h3 id="audModulesHeaderTitle" class="text-xl font-extrabold text-slate-900 mt-0.5">Módulos para Docente</h3>
+            <p class="text-xs text-slate-500">Estado en tiempo real de tus módulos asignados. Haz clic en un módulo habilitado para continuar.</p>
           </div>
-          <span class="text-xs font-mono font-bold text-slate-400">6 AUDIENCIAS</span>
-        </div>
-
-        <!-- Mismatch Alert -->
-        <div id="audienceMismatchAlert" class="hidden p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div class="flex items-start gap-3">
-            <i class="fa-solid fa-circle-exclamation text-rose-600 text-base mt-0.5"></i>
-            <div class="text-xs space-y-0.5">
-              <div class="font-extrabold text-rose-950" id="audMismatchTitle">Rol no autorizado</div>
-              <p id="audMismatchBody" class="text-rose-800"></p>
-            </div>
-          </div>
-          <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shrink-0 cursor-pointer">
-            Cambiar Rol
+          <button type="button" onclick="enterWorkspaceFromRoadmap()" class="px-5 py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition flex items-center justify-center gap-2 shrink-0 cursor-pointer">
+            <span>Entrar al Portal</span>
+            <i class="fa-solid fa-arrow-right"></i>
           </button>
         </div>
 
-        <!-- Clean Stacked Horizontal Role Rows -->
+        <div id="audienceMismatchAlert" class="hidden"></div>
+
+        <!-- Role Modules List with Individual Completion Percentage & Status -->
         <div id="audienceCardsGrid" class="space-y-3"></div>
       </div>
     </div>
@@ -1777,7 +1797,7 @@
     }
 
     // ==================== INITIALIZATION & CTRL+SHIFT+Y ====================
-    window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', async () => {
       setInterval(enforceNoTranslateBanner, 400);
 
       const savedLang = localStorage.getItem('ihfb_ui_lang') || 'es';
@@ -1795,8 +1815,10 @@
         }
       });
 
-      initGoogleIdentityServices();
       onRegRoleChange();
+
+      const handledOAuth = await handleOAuthRedirectCallbackIfPresent();
+      if (handledOAuth) return;
 
       const savedSession = JSON.parse(localStorage.getItem('ihfb_user_session_v4') || 'null');
       if (savedSession && savedSession.email) {
@@ -1848,12 +1870,32 @@
       const pass = document.getElementById('adminPassInput').value;
       const passHash = await computeSha256Hex(pass);
 
-      const emailValid = ADMIN_AUTHORIZED_EMAILS.includes(email);
-      // Accept SHA-256 hash match for "IHFB@Admin2026!" or "ihfb2026"
-      const legacyHash = await computeSha256Hex("ihfb2026");
-      const passValid = (passHash === ADMIN_PASSWORD_SHA256 || passHash === legacyHash);
+      // 1. Check Supabase `admin_access` table first (real-time backend admin directory)
+      let remoteAdminMatch = false;
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/admin_access?email=eq.${encodeURIComponent(email)}&select=*`, {
+          headers: {
+            "apikey": TRAINING_SUPABASE_KEY,
+            "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`
+          }
+        });
+        if (res.ok) {
+          const rows = await res.json();
+          if (Array.isArray(rows) && rows.length > 0) {
+            const adm = rows[0];
+            if (adm.active !== false && (adm.password === pass || adm.password === passHash)) {
+              remoteAdminMatch = true;
+            }
+          }
+        }
+      } catch (err) {}
 
-      if (!emailValid || !passValid) {
+      // 2. Local fallback check
+      const emailValid = ADMIN_AUTHORIZED_EMAILS.includes(email);
+      const legacyHash = await computeSha256Hex("ihfb2026");
+      const passValid = remoteAdminMatch || (emailValid && (passHash === ADMIN_PASSWORD_SHA256 || passHash === legacyHash));
+
+      if (!passValid) {
         adminFailedAttempts++;
         if (adminFailedAttempts >= 3) {
           adminLockUntil = Date.now() + 60000;
@@ -1935,7 +1977,6 @@
         viewL.classList.add('hidden');
         onRegRoleChange();
       }
-      initGoogleIdentityServices();
     }
 
     function validateRegistrationForm() {
@@ -1971,6 +2012,157 @@
         notice.classList.remove('hidden');
         box.classList.add('hidden');
         box.classList.remove('flex');
+      }
+    }
+
+    function launchFullWindowGoogleAuth(mode) {
+      if (mode === 'register') {
+        const draftReg = {
+          name: document.getElementById('regUserName').value.trim(),
+          email: document.getElementById('regUserEmail').value.trim().toLowerCase(),
+          role: document.getElementById('regUserRole').value,
+          schoolCode: document.getElementById('regSchoolCode').value.trim(),
+          schoolName: document.getElementById('regSchoolName').value.trim(),
+          municipality: document.getElementById('regSchoolMunicipality').value.trim(),
+          code: document.getElementById('regUserCode').value.trim(),
+          org: document.getElementById('regUserOrg').value.trim(),
+          region: document.getElementById('regUserRegion').value.trim()
+        };
+        sessionStorage.setItem('ihfb_pending_reg_draft', JSON.stringify(draftReg));
+      } else {
+        sessionStorage.removeItem('ihfb_pending_reg_draft');
+      }
+      sessionStorage.setItem('ihfb_oauth_mode', mode);
+      const redirectUri = window.location.origin + window.location.pathname;
+      const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${encodeURIComponent('openid email profile')}&prompt=select_account`;
+      window.location.href = oauthUrl;
+    }
+
+    async function handleOAuthRedirectCallbackIfPresent() {
+      if (!window.location.hash || !window.location.hash.includes('access_token=')) return false;
+      const params = new URLSearchParams(window.location.hash.substring(1));
+      const accessToken = params.get('access_token');
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (!accessToken) return false;
+
+      try {
+        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        if (!res.ok) return false;
+        const info = await res.json();
+        const googleEmail = String(info.email || '').trim().toLowerCase();
+        if (!googleEmail) return false;
+
+        const mode = sessionStorage.getItem('ihfb_oauth_mode') || 'login';
+        const draftRaw = sessionStorage.getItem('ihfb_pending_reg_draft');
+        sessionStorage.removeItem('ihfb_oauth_mode');
+        sessionStorage.removeItem('ihfb_pending_reg_draft');
+
+        await finalizeAuthenticatedGoogleEmail(googleEmail, info.name || '', mode, draftRaw ? JSON.parse(draftRaw) : null);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    async function hydrateUserFromSupabase(email) {
+      if (!TRAINING_SUPABASE_URL || !TRAINING_SUPABASE_KEY || !email) return null;
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/training_progress?email=eq.${encodeURIComponent(email.toLowerCase())}&select=*`, {
+          headers: {
+            "apikey": TRAINING_SUPABASE_KEY,
+            "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`
+          }
+        });
+        if (res.ok) {
+          const rows = await res.json();
+          if (Array.isArray(rows) && rows.length > 0) return rows[0];
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    async function finalizeAuthenticatedGoogleEmail(googleEmail, googleDisplayName, mode, regDraft) {
+      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v4') || '[]');
+      let existing = db.find(u => u.email.toLowerCase() === googleEmail);
+
+      // Also check Supabase in case the user registered from another browser/device
+      const remoteRecord = await hydrateUserFromSupabase(googleEmail);
+      if (!existing && remoteRecord && remoteRecord.email) {
+        existing = {
+          email: remoteRecord.email.toLowerCase(),
+          name: remoteRecord.name || googleDisplayName || googleEmail,
+          role: remoteRecord.role || 'Docente',
+          code: remoteRecord.code || '',
+          schoolCode: remoteRecord.code || '',
+          org: remoteRecord.org || '',
+          schoolName: remoteRecord.org || '',
+          region: remoteRecord.region || '',
+          municipality: remoteRecord.region || '',
+          date: new Date().toLocaleDateString('es-ES'),
+          audienceConfirmed: false
+        };
+        db.push(existing);
+        localStorage.setItem('ihfb_participants_db_v4', JSON.stringify(db));
+      }
+
+      if (mode === 'register') {
+        const draft = regDraft || {
+          name: document.getElementById('regUserName').value.trim(),
+          email: document.getElementById('regUserEmail').value.trim().toLowerCase(),
+          role: document.getElementById('regUserRole').value,
+          schoolCode: document.getElementById('regSchoolCode').value.trim(),
+          schoolName: document.getElementById('regSchoolName').value.trim(),
+          municipality: document.getElementById('regSchoolMunicipality').value.trim(),
+          code: document.getElementById('regUserCode').value.trim(),
+          org: document.getElementById('regUserOrg').value.trim(),
+          region: document.getElementById('regUserRegion').value.trim()
+        };
+        if (draft.email && draft.email !== googleEmail) {
+          showProAlert("Correo Institucional No Coincide", `Digitaste "${draft.email}" en el formulario, pero seleccionaste "${googleEmail}" en Google. Ambos correos deben coincidir.`, false);
+          return;
+        }
+        if (existing) {
+          showProAlert("Expediente Ya Existente", `La cuenta (${googleEmail}) ya está registrada como ${existing.role}. Usa la pestaña "Iniciar Sesión".`, false);
+          setAuthTab('login');
+          return;
+        }
+        const role = draft.role || 'Docente';
+        const isDoc = role === 'Docente';
+        const newUser = {
+          email: googleEmail,
+          name: draft.name || googleDisplayName || googleEmail,
+          role: role,
+          schoolCode: isDoc ? draft.schoolCode : '',
+          schoolName: isDoc ? draft.schoolName : '',
+          municipality: isDoc ? draft.municipality : '',
+          code: isDoc ? draft.schoolCode : draft.code,
+          org: isDoc ? draft.schoolName : draft.org,
+          region: isDoc ? draft.municipality : draft.region,
+          date: new Date().toLocaleDateString('es-ES'),
+          audienceConfirmed: false
+        };
+        db.push(newUser);
+        localStorage.setItem('ihfb_participants_db_v4', JSON.stringify(db));
+        currentUser = newUser;
+        loadProgressMap(currentUser.email);
+        localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
+        syncToGoogleSheetsWebhook(currentUser, "Registro Inicial");
+        enterAudienceGate();
+      } else {
+        if (!existing) {
+          showProAlert("Cuenta No Registrada", `El correo (${googleEmail}) aún no tiene expediente. Completa el formulario en "Crear Expediente" para registrarte.`, false);
+          setAuthTab('register');
+          document.getElementById('regUserEmail').value = googleEmail;
+          validateRegistrationForm();
+          return;
+        }
+        currentUser = Object.assign({}, existing, { audienceConfirmed: false });
+        loadProgressMap(currentUser.email);
+        localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
+        syncToGoogleSheetsWebhook(currentUser, "Inicio de Sesión");
+        enterAudienceGate();
       }
     }
 
@@ -2063,7 +2255,7 @@
       }
     }
 
-    // ==================== STAGE 2: EXECUTIVE AUDIENCE DIRECTORY ====================
+    // ==================== STAGE 2: ACADEMIC PROFILE & ROLE MODULES ROADMAP ====================
     function enterAudienceGate() {
       document.getElementById('authGateScreen').classList.add('hidden');
       document.getElementById('workspaceShell').classList.add('hidden');
@@ -2071,51 +2263,94 @@
       document.getElementById('audienceGateScreen').classList.remove('hidden');
       document.getElementById('audienceGateScreen').classList.add('flex');
 
-      document.getElementById('audWelcomeName').textContent = currentUser.name.split(' ')[0];
-      document.getElementById('audRegisteredRoleHint').textContent = `Rol registrado: ${currentUser.role}`;
+      document.getElementById('audWelcomeName').textContent = currentUser.name;
+      document.getElementById('audRegisteredRoleHint').textContent = currentUser.role;
       const emailPill = document.getElementById('audUserEmailPill');
       emailPill.textContent = currentUser.email;
       emailPill.classList.remove('hidden');
-      document.getElementById('audienceMismatchAlert').classList.add('hidden');
+
+      const orgTxt = currentUser.role === 'Docente'
+        ? (currentUser.schoolName || currentUser.org || 'Centro Escolar')
+        : (currentUser.org || 'Institución');
+      const codeTxt = currentUser.role === 'Docente'
+        ? `${currentUser.schoolCode || currentUser.code || '—'} • ${currentUser.municipality || currentUser.region || ''}`
+        : `${currentUser.code || '—'} • ${currentUser.region || ''}`;
+
+      document.getElementById('audProfileOrgDisplay').textContent = orgTxt;
+      document.getElementById('audProfileCodeDisplay').textContent = codeTxt;
+      document.getElementById('audModulesHeaderTitle').textContent = `Módulos para ${currentUser.role}`;
+
+      const roleMods = getRoleModulesList(currentUser.role);
+      const completedCount = roleMods.filter(m => ensureProgressEntry(m.id).quizCompleted).length;
+      const globalPct = roleMods.length ? Math.round((completedCount / roleMods.length) * 100) : 0;
+
+      document.getElementById('audGlobalProgressPct').textContent = `${globalPct}%`;
+      document.getElementById('audGlobalProgressBar').style.width = `${globalPct}%`;
+      document.getElementById('audGlobalProgressSub').textContent = `${completedCount} de ${roleMods.length} módulos aprobados`;
 
       const grid = document.getElementById('audienceCardsGrid');
-      grid.innerHTML = AUDIENCE_CATALOG.map(aud => {
-        const isMatched = String(aud.role).toLowerCase() === String(currentUser.role).toLowerCase();
+      grid.innerHTML = roleMods.map(mod => {
+        const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
+        const p = ensureProgressEntry(mod.id);
+        const modPct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
+
+        let badgeHtml = '';
+        let barColor = 'bg-slate-300';
+        if (p.quizCompleted) {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">Completado • ${modPct}% ✓</span>`;
+          barColor = 'bg-[#10B981]';
+        } else if (modPct > 0) {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold">En progreso • ${modPct}%</span>`;
+          barColor = 'bg-amber-500';
+        } else if (unlocked) {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-blue-50 text-[#1A64FF] border border-blue-200 text-[11px] font-bold">Disponible • 0%</span>`;
+          barColor = 'bg-[#1A64FF]';
+        } else {
+          badgeHtml = `<span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-400 border border-slate-200 text-[11px] font-semibold"><i class="fa-solid fa-lock mr-1"></i>Bloqueado • 0%</span>`;
+        }
+
         return `
-        <div onclick="selectAudienceCard('${aud.role}')" class="p-4 sm:p-5 rounded-2xl bg-white border ${isMatched ? 'border-[#1A64FF] ring-2 ring-[#1A64FF]/15' : 'border-slate-200 hover:border-slate-400'} shadow-2xs hover:shadow-md transition-all cursor-pointer group flex items-center justify-between gap-4">
-          <div class="flex items-center gap-4 min-w-0">
-            <div class="w-12 h-12 rounded-2xl ${isMatched ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700 group-hover:bg-[#0B0F17] group-hover:text-white'} flex items-center justify-center text-lg shrink-0 transition">
-              <i class="fa-solid ${aud.icon}"></i>
-            </div>
-            <div class="min-w-0">
-              <div class="flex items-center gap-2 flex-wrap">
-                <h4 class="text-sm sm:text-base font-extrabold text-slate-900">${aud.title}</h4>
-                <span class="font-mono text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700">${aud.modules.length} módulos</span>
-                ${isMatched ? '<span class="px-2 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[10.5px] font-extrabold uppercase tracking-wider">Tu Rol</span>' : ''}
+        <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 sm:p-5 rounded-2xl bg-white border ${p.quizCompleted ? 'border-emerald-200' : (unlocked ? 'border-slate-200 hover:border-[#1A64FF]' : 'border-slate-200/70 opacity-65')} shadow-2xs hover:shadow-md transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-3">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-11 h-11 rounded-2xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (unlocked ? 'bg-[#0B0F17] text-white group-hover:bg-[#1A64FF]' : 'bg-slate-100 text-slate-400')} font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">
+                ${mod.code}
               </div>
-              <p class="text-xs text-slate-500 truncate mt-0.5">${aud.desc}</p>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h4 class="text-sm sm:text-[15px] font-extrabold text-slate-900 truncate">${mod.title}</h4>
+                  ${badgeHtml}
+                </div>
+                <p class="text-xs text-slate-500 truncate mt-0.5">${mod.desc}</p>
+              </div>
+            </div>
+            <div class="w-8 h-8 rounded-xl ${unlocked ? 'bg-slate-100 text-slate-700 group-hover:bg-[#1A64FF] group-hover:text-white' : 'bg-slate-50 text-slate-300'} flex items-center justify-center shrink-0 transition">
+              <i class="fa-solid ${unlocked ? 'fa-chevron-right' : 'fa-lock'} text-xs"></i>
             </div>
           </div>
-          <div class="w-9 h-9 rounded-xl ${isMatched ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-[#0B0F17] group-hover:text-white'} flex items-center justify-center shrink-0 transition">
-            <i class="fa-solid fa-chevron-right text-xs"></i>
+          <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+            <div class="h-full ${barColor} transition-all duration-300" style="width:${modPct}%"></div>
           </div>
         </div>
       `;}).join('');
     }
 
-    function selectAudienceCard(clickedRole) {
-      if (!currentUser) return;
-      if (String(clickedRole).toLowerCase() !== String(currentUser.role).toLowerCase() && !isAdminMode) {
-        const alertBox = document.getElementById('audienceMismatchAlert');
-        document.getElementById('audMismatchTitle').textContent = `No estás registrado para la audiencia "${clickedRole}"`;
-        document.getElementById('audMismatchBody').innerHTML = `Tu expediente está vinculado oficialmente al rol <strong>${currentUser.role}</strong>. Haz clic en la tarjeta <strong>${currentUser.role}</strong> para ingresar, o cambia tu rol en <strong>Editar Perfil</strong>.`;
-        alertBox.classList.remove('hidden');
-        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
-      }
+    function openSpecificModuleFromRoadmap(modId) {
+      currentSelectedModuleId = modId;
       currentUser.audienceConfirmed = true;
       localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
       enterWorkspaceShell();
+      const p = ensureProgressEntry(modId);
+      if (!p.materialConfirmed) switchTab('modulos');
+      else if (!p.practiceCompleted) goToModulePractice(modId);
+      else goToModuleQuiz(modId);
+    }
+
+    function enterWorkspaceFromRoadmap() {
+      currentUser.audienceConfirmed = true;
+      localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
+      enterWorkspaceShell();
+      continueWhereLeftOff();
     }
 
     function returnToAudienceGate() {
@@ -3385,7 +3620,7 @@
       `).join('');
     }
 
-    function addAuthorizedAdminEmail() {
+    async function addAuthorizedAdminEmail() {
       const inp = document.getElementById('cmsNewAdminEmailInput');
       const em = inp.value.trim().toLowerCase();
       if (!em || !em.includes('@')) return showProAlert("Correo Inválido", "Ingresa un correo institucional válido.", false);
@@ -3393,9 +3628,27 @@
         ADMIN_AUTHORIZED_EMAILS.push(em);
         saveAdminSecurityConfig();
       }
+      try {
+        await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/admin_access?on_conflict=email`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": TRAINING_SUPABASE_KEY,
+            "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`,
+            "Prefer": "resolution=merge-duplicates"
+          },
+          body: JSON.stringify({
+            email: em,
+            name: em.split('@')[0],
+            password: ADMIN_PASSWORD_SHA256,
+            role: 'Supervisor',
+            active: true
+          })
+        });
+      } catch (e) {}
       inp.value = '';
       renderCmsSecurityPanel();
-      showProAlert("Acceso Agregado", `Se autorizó a ${em} como Supervisor/Administrador.`);
+      showProAlert("Acceso Agregado", `Se autorizó a ${em} en la tabla admin_access de Supabase.`);
     }
 
     function removeAuthorizedAdminEmail(idx) {
@@ -3979,28 +4232,53 @@
         }).catch(() => {});
       }
 
-      // 3. Real-time Upsert to Supabase REST API (`training_progress` table, conflict target `email`)
+      // 3. Real-time Upsert to Supabase REST API (`training_progress` master + role-specific table `progress_<rol>`)
       if (TRAINING_SUPABASE_URL && TRAINING_SUPABASE_KEY) {
+        const sbHeaders = {
+          "Content-Type": "application/json",
+          "apikey": TRAINING_SUPABASE_KEY,
+          "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`,
+          "Prefer": "resolution=merge-duplicates"
+        };
+        const moduleScoresSummary = roleMods.map(m => {
+          const mp = ensureProgressEntry(m.id);
+          return `${m.code}:${mp.quizCompleted ? (mp.score + '%') : (mp.practiceCompleted ? '67%' : (mp.materialConfirmed ? '33%' : '0%'))}`;
+        }).join(' | ');
+
+        const basePayload = {
+          email: user.email.toLowerCase(),
+          name: user.name,
+          role: user.role,
+          code: user.code || '',
+          org: user.org || '',
+          region: user.region || '',
+          progress: pct,
+          completed_modules: `${done}/${roleMods.length}`,
+          last_event: eventType,
+          updated_at: updatedRecord.updatedAt
+        };
+
+        // Master table upsert
         fetch(`${TRAINING_SUPABASE_URL}/rest/v1/training_progress?on_conflict=email`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": TRAINING_SUPABASE_KEY,
-            "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`,
-            "Prefer": "resolution=merge-duplicates"
-          },
-          body: JSON.stringify({
-            email: user.email.toLowerCase(),
-            name: user.name,
-            role: user.role,
-            code: user.code || '',
-            org: user.org || '',
-            region: user.region || '',
-            progress: pct,
-            completed_modules: `${done}/${roleMods.length}`,
-            last_event: eventType,
-            updated_at: updatedRecord.updatedAt
-          })
+          headers: sbHeaders,
+          body: JSON.stringify(basePayload)
+        }).catch(() => {});
+
+        // Audience-specific table upsert (progress_docente, progress_tutor, progress_facilitador, progress_monitor, progress_supervisor, progress_auditor)
+        const roleSlug = String(user.role || 'docente')
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[̀-ͯ]/g, "")
+          .replace(/[^a-z0-9]/g, "");
+        const roleTableName = `progress_${roleSlug || 'docente'}`;
+
+        fetch(`${TRAINING_SUPABASE_URL}/rest/v1/${roleTableName}?on_conflict=email`, {
+          method: "POST",
+          headers: sbHeaders,
+          body: JSON.stringify(Object.assign({}, basePayload, {
+            modules_detail: moduleScoresSummary
+          }))
         }).catch(() => {});
       }
     }
