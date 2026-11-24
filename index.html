@@ -187,9 +187,9 @@
         <div class="flex-1 bg-[#10B981]"></div>
       </div>
 
-      <!-- Translucent Online Training Background Image + Obsidian Depth Overlay -->
-      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1600&q=85" alt="Capacitación Online" class="absolute inset-0 w-full h-full object-cover opacity-[0.42] scale-105 pointer-events-none">
-      <div class="absolute inset-0 bg-gradient-to-br from-[#0A0A0B]/88 via-[#0A0A0B]/68 to-[#0F172A]/82 pointer-events-none"></div>
+      <!-- Translucent Desk Workstation Background + Obsidian Depth Overlay -->
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=85" alt="Estación de Capacitación" class="absolute inset-0 w-full h-full object-cover opacity-[0.22] scale-105 pointer-events-none">
+      <div class="absolute inset-0 bg-gradient-to-br from-[#0A0A0B]/92 via-[#0A0A0B]/82 to-[#0F172A]/90 pointer-events-none"></div>
 
       <!-- Ambient Brand Glows -->
       <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#1A64FF]/20 blur-3xl pointer-events-none"></div>
@@ -214,19 +214,75 @@
       </div>
 
       <!-- Hero Editorial Content -->
-      <div class="relative z-10 my-auto py-10 lg:py-12 max-w-xl space-y-7">
-        <div class="space-y-3.5">
+      <div class="relative z-10 my-auto py-8 lg:py-10 max-w-xl space-y-6">
+        <div class="space-y-3">
           <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-white/10 text-[#60A5FA] border border-white/15 backdrop-blur-sm">
             <i class="fa-solid fa-award text-[#10B981]"></i>
             <span>Programa Oficial de Acreditación Operativa</span>
           </span>
-          <h1 class="text-3xl sm:text-4xl xl:text-[44px] font-extrabold text-white tracking-tight leading-[1.12]">
+          <h1 class="text-3xl sm:text-4xl xl:text-[42px] font-extrabold text-white tracking-tight leading-[1.12]">
             Formación práctica.<br>
             <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#F472B6] to-[#34D399]">Certificación verificable.</span>
           </h1>
-          <p class="text-sm sm:text-[15px] text-slate-200 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
             Domina cada módulo operativo de la plataforma educativa mediante guías estándar, simuladores interactivos reales y evaluaciones acreditadas por rol.
           </p>
+        </div>
+
+        <!-- Workstation Monitor + Laptop Preview displaying the Actual IHFB Platform Screen -->
+        <div class="relative pt-1 pb-2">
+          <!-- Main Studio Monitor Bezel -->
+          <div class="rounded-2xl bg-[#18181B] p-2.5 border border-white/15 shadow-2xl max-w-[460px]">
+            <div class="bg-[#F4F5F7] rounded-xl overflow-hidden grid grid-cols-12 border border-slate-200">
+              <!-- Left side of Monitor Screen: "Aprender sin fronteras. Crecer juntos" + 4 Mascots -->
+              <div class="col-span-7 p-3.5 sm:p-4 flex flex-col justify-between bg-[#F4F5F7]">
+                <div>
+                  <div class="text-[8px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
+                  <div class="text-xs sm:text-sm font-extrabold text-slate-900 leading-tight mt-0.5">Aprender sin fronteras.<br>Crecer juntos</div>
+                  <div class="text-[9px] text-slate-500 mt-0.5">Juntos, en cada paso del camino.</div>
+                </div>
+                <div class="pt-2 flex justify-center">
+                  <img id="heroMonitorMascotsImg" src="" alt="Plataforma Educativa IHFB" class="h-20 sm:h-24 w-auto object-contain">
+                </div>
+              </div>
+              <!-- Right side of Monitor Screen: Platform Login Preview -->
+              <div class="col-span-5 bg-white p-3 sm:p-3.5 border-l border-slate-200/80 flex flex-col justify-center space-y-2">
+                <div class="w-5 h-5 rounded-md bg-slate-900 text-white mx-auto flex items-center justify-center text-[8px]">
+                  <i class="fa-solid fa-sparkles"></i>
+                </div>
+                <div class="text-[10px] font-extrabold text-slate-900 text-center">¡Comencemos!</div>
+                <div class="py-1 px-1.5 rounded border border-slate-200 text-[7.5px] font-semibold text-slate-700 text-center flex items-center justify-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-[#1A64FF]"></span> Iniciar con Google
+                </div>
+                <div class="space-y-1">
+                  <div class="h-3.5 rounded bg-slate-100 border border-slate-200/80"></div>
+                  <div class="h-3.5 rounded bg-slate-100 border border-slate-200/80"></div>
+                  <div class="py-1 rounded bg-[#18181B] text-white text-[7.5px] font-bold text-center">Iniciar sesión</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Monitor Stand Base -->
+          <div class="w-20 h-3 bg-gradient-to-b from-slate-600 to-slate-800 mx-auto rounded-b-lg"></div>
+          <div class="w-32 h-1.5 bg-slate-700/80 mx-auto rounded-full"></div>
+
+          <!-- Secondary Companion Laptop Card (Bottom-Right Overlap like Workstation Reference) -->
+          <div class="hidden sm:block absolute -bottom-1 right-2 w-44 rounded-xl bg-[#0F172A] p-1.5 border border-white/20 shadow-xl">
+            <div class="rounded-lg bg-[#1E293B] p-2 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[8px] font-bold text-[#34D399]">6A Matemática</span>
+                <span class="px-1.5 py-0.5 rounded bg-[#10B981]/20 text-[#34D399] text-[7px] font-bold">En vivo</span>
+              </div>
+              <div class="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
+                <div class="h-full w-4/5 bg-[#1A64FF] rounded-full"></div>
+              </div>
+              <div class="grid grid-cols-3 gap-1 pt-0.5">
+                <div class="h-4 rounded bg-white/10"></div>
+                <div class="h-4 rounded bg-white/10"></div>
+                <div class="h-4 rounded bg-white/10"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 3 High-Contrast Architectural Step Cards -->
@@ -1799,6 +1855,8 @@
     // ==================== INITIALIZATION & CTRL+SHIFT+Y ====================
     window.addEventListener('DOMContentLoaded', async () => {
       setInterval(enforceNoTranslateBanner, 400);
+      const heroMascotEl = document.getElementById('heroMonitorMascotsImg');
+      if (heroMascotEl) heroMascotEl.src = PLATFORM_MASCOTS_IMG;
 
       const savedLang = localStorage.getItem('ihfb_ui_lang') || 'es';
       const langSel = document.getElementById('bottomLangSelect');
