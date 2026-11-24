@@ -1407,8 +1407,8 @@
     const OFFICIAL_GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1w_6bR1rGZ2pNWapXuqdzTG3Wjo4_U4nGxrAeG3RojvQ/edit?gid=0#gid=0";
 
     // Real-Time Database Endpoint (Supabase) + High-Security Admin Credentials
-    const TRAINING_SUPABASE_URL = "https://fncbrbiuhdbzhfisqwol.supabase.co";
-    const TRAINING_SUPABASE_KEY = "sb_publishable_79cBmxTDG8V-aQBEYT9dnQ_frAVuUiQ";
+    const TRAINING_SUPABASE_URL = "https://tcrzqkdcigiewsxglkjg.supabase.co";
+    const TRAINING_SUPABASE_KEY = "sb_publishable_WEMqrRRUw0X-pGX0ZTe33g_OGg6Z3lx";
 
     const DEFAULT_ADMIN_EMAILS = [
       "rebecacallejas1995@ihateflyingbugs.com",
@@ -2058,6 +2058,7 @@
         currentUser = Object.assign({}, existing, { audienceConfirmed: false });
         loadProgressMap(currentUser.email);
         localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
+        syncToGoogleSheetsWebhook(currentUser, "Inicio de Sesión");
         enterAudienceGate();
       }
     }
@@ -3719,9 +3720,25 @@
       refreshAllWorkspaceUI();
     }
 
-    function renderCmsParticipantsTable() {
-      const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v4') || '[]');
-      document.getElementById('cmsParticipantsTableBody').innerHTML = db.map(u => `
+    async function renderCmsParticipantsTable() {
+      const tbody = document.getElementById('cmsParticipantsTableBody');
+      let db = JSON.parse(localStorage.getItem('ihfb_participants_db_v4') || '[]');
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/training_progress?select=*&order=updated_at.desc`, {
+          headers: {
+            "apikey": TRAINING_SUPABASE_KEY,
+            "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`
+          }
+        });
+        if (res.ok) {
+          const remoteRows = await res.json();
+          if (Array.isArray(remoteRows) && remoteRows.length > 0) {
+            db = remoteRows;
+          }
+        }
+      } catch (e) {}
+
+      tbody.innerHTML = db.map(u => `
         <tr>
           <td class="px-4 py-3 font-bold text-slate-900">${u.name}</td>
           <td class="px-4 py-3 font-mono text-[11px]">${u.email}</td>
