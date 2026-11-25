@@ -618,7 +618,7 @@
               </button>
               <button type="button" onclick="switchTab('modulos')" id="nav-modulos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
                 <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-photo-film text-xs"></i></span>
-                <span class="sb-hide truncate">Manuales y videos</span>
+                <span class="sb-hide truncate">Módulos y Videos</span>
               </button>
               <button type="button" onclick="switchTab('practicas')" id="nav-practicas" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
                 <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-laptop-code text-xs"></i></span>
@@ -630,7 +630,7 @@
               </button>
               <button type="button" onclick="switchTab('progreso')" id="nav-progreso" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
                 <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-award text-xs"></i></span>
-                <span class="sb-hide truncate">Progreso</span>
+                <span class="sb-hide truncate">Progreso y Diploma</span>
               </button>
               <button type="button" onclick="switchTab('faq')" id="nav-faq" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
                 <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-headset text-xs"></i></span>
@@ -642,7 +642,7 @@
           <div class="pt-3 border-t border-slate-800/80 space-y-1">
             <button type="button" onclick="returnToAudienceGate()" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition text-xs cursor-pointer">
               <span class="w-7 h-7 rounded-lg bg-[#EC4899]/15 text-[#F472B6] flex items-center justify-center shrink-0"><i class="fa-solid fa-id-card text-xs"></i></span>
-              <span class="sb-hide truncate">Módulos</span>
+              <span class="sb-hide truncate">Mi Expediente y Ruta</span>
             </button>
           </div>
         </div>
@@ -679,194 +679,205 @@
       <main class="flex-1 p-5 sm:p-8 w-full space-y-6">
 
         <!-- ================================================================ -->
-        <!-- VIEW 0: INICIO E INDUCCIÓN (SLIM BANNER + BALANCED RULES LEFT / VIDEO RIGHT) -->
-        <section id="section-dashboard" class="tab-content space-y-5">
-          <!-- Slim & Subtle Executive Welcome Header -->
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#111827] to-[#1E293B] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 relative overflow-hidden">
-            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-              <div class="space-y-0.5 min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Inicio e Inducción</span>
-                  <span id="dashRoleTag" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-white/10 text-[#34D399]">Audiencia: Docente</span>
-                  <span id="dashOrgTag" class="text-[11px] text-slate-400 font-mono truncate"></span>
+        <!-- VIEW 0: INICIO E INDUCCIÓN (CLEAN — NO REDUNDANT MODULE LIST)    -->
+        <!-- ================================================================ -->
+        <section id="section-dashboard" class="tab-content space-y-6">
+          <!-- Stylish Section Hero Banner -->
+          <div class="pro-card bg-gradient-to-br from-[#0B0F17] via-[#111827] to-[#172033] text-white p-6 sm:p-8 border-slate-800 relative overflow-hidden">
+            <div class="absolute right-0 top-0 bottom-0 w-72 bg-[radial-gradient(circle_at_center,#1A64FF33_0%,transparent_70%)] pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+              <div class="space-y-2 max-w-3xl">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <span class="px-3 py-1 rounded-lg text-[10.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA] border border-[#1A64FF]/30">Inicio e Inducción</span>
+                  <span id="dashRoleTag" class="px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider bg-white/10 text-[#34D399]">Audiencia: Docente</span>
+                  <span id="dashOrgTag" class="text-xs text-slate-400 font-mono"></span>
                 </div>
-                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">Bienvenido, <span id="dashUserGreetingName">Participante</span></h2>
+                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Bienvenido, <span id="dashUserGreetingName">Participante</span></h2>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Avanza paso a paso por tu ruta de formación: revisa el video de inducción y continúa directamente en tu siguiente actividad pendiente.
+                </p>
               </div>
-              <div class="flex items-center gap-2 shrink-0">
-                <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition flex items-center gap-1.5 cursor-pointer">
+              <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                <button type="button" onclick="openProfileEditModal()" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition flex items-center gap-2 cursor-pointer">
                   <i class="fa-solid fa-user-gear text-[#60A5FA]"></i>
                   <span>Mi Perfil</span>
                 </button>
-                <button type="button" onclick="continueWhereLeftOff()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white font-bold text-xs shadow flex items-center gap-2 transition cursor-pointer">
-                  <span id="btnContinueStepLabel">Continuar</span>
+                <button type="button" onclick="continueWhereLeftOff()" class="px-5 py-3 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white font-bold text-xs shadow-lg flex items-center gap-2.5 transition cursor-pointer">
+                  <span id="btnContinueStepLabel">Continuar en Paso 1</span>
                   <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
             </div>
           </div>
 
-          <!-- 3 Compact Executive KPI Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div class="pro-card p-4 flex items-center justify-between">
+          <!-- 3 Executive KPI Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="pro-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Progreso de tu Rol</span>
-                <div id="dashMetricProgress" class="font-mono text-2xl font-extrabold text-slate-900 mt-0.5">0%</div>
-                <p class="text-[11px] text-slate-500">Mínimo para diploma: 80%</p>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Progreso de tu Rol</span>
+                <div id="dashMetricProgress" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0%</div>
+                <p class="text-xs text-slate-500 mt-0.5">Mínimo para diploma: 80%</p>
               </div>
-              <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-base">
+              <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-lg">
                 <i class="fa-solid fa-chart-pie"></i>
               </div>
             </div>
 
-            <div class="pro-card p-4 flex items-center justify-between">
+            <div class="pro-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Módulos Aprobados</span>
-                <div id="dashMetricModules" class="font-mono text-2xl font-extrabold text-slate-900 mt-0.5">0 de 6</div>
-                <p class="text-[11px] text-slate-500">Asignados a tu perfil</p>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Módulos Aprobados</span>
+                <div id="dashMetricModules" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0 de 6</div>
+                <p class="text-xs text-slate-500 mt-0.5">Asignados a tu perfil</p>
               </div>
-              <div class="w-10 h-10 rounded-xl bg-emerald-50 text-[#10B981] flex items-center justify-center text-base">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#10B981] flex items-center justify-center text-lg">
                 <i class="fa-solid fa-award"></i>
               </div>
             </div>
 
-            <div class="pro-card p-4 flex items-center justify-between">
+            <div class="pro-card p-5 flex items-center justify-between">
               <div class="min-w-0 pr-3">
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Siguiente Actividad</span>
-                <div id="dashNextStepLabel" class="text-xs sm:text-sm font-extrabold text-slate-900 mt-1 truncate">M1: Manuales y videos</div>
-                <button type="button" onclick="continueWhereLeftOff()" class="text-[11px] text-[#1A64FF] hover:underline font-semibold mt-0.5 inline-flex items-center gap-1 cursor-pointer">
-                  <span>Continuar ahora</span> <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Siguiente Actividad</span>
+                <div id="dashNextStepLabel" class="text-sm font-extrabold text-slate-900 mt-1.5 truncate">M1: Videos y Manuales</div>
+                <button type="button" onclick="continueWhereLeftOff()" class="text-xs text-[#1A64FF] hover:underline font-semibold mt-1 inline-flex items-center gap-1 cursor-pointer">
+                  <span>Continuar ahora</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
                 </button>
               </div>
-              <div class="w-10 h-10 rounded-xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-base shrink-0">
+              <div class="w-12 h-12 rounded-2xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-lg shrink-0">
                 <i class="fa-solid fa-compass"></i>
               </div>
             </div>
           </div>
 
-          <!-- Balanced 12-Col Layout: LEFT = Reglas de Acreditación (5) | RIGHT = Video de Inducción (7) -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            <div class="lg:col-span-5 pro-card p-5 flex flex-col justify-between space-y-4">
-              <div class="space-y-3">
-                <div class="border-b border-slate-100 pb-2.5">
-                  <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#EC4899]">Metodología Secuencial</span>
-                  <h4 class="text-base font-extrabold text-slate-900 mt-0.5">Reglas de Acreditación</h4>
-                </div>
-                <div class="space-y-2.5">
-                  <div class="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200/80 flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-lg bg-[#1A64FF] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">01</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Manuales y Videos</div>
-                      <p class="text-slate-600 mt-0.5 leading-relaxed">Consulta el video tutorial y el manual PDF de cada módulo y confirma tu revisión.</p>
-                    </div>
-                  </div>
-                  <div class="p-3.5 rounded-xl bg-pink-50/60 border border-pink-200/80 flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-lg bg-[#EC4899] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">02</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Práctica en Vivo (100%)</div>
-                      <p class="text-slate-600 mt-0.5 leading-relaxed">Completa las tareas operativas en el simulador fiel de la plataforma.</p>
-                    </div>
-                  </div>
-                  <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/80 flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-lg bg-[#10B981] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">03</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Evaluación y Refuerzo</div>
-                      <p class="text-slate-600 mt-0.5 leading-relaxed">Aprueba con ≥80%. Si obtienes menos de 60%, realizarás un <strong>Módulo de Refuerzo</strong>.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="switchTab('modulos')" class="w-full py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
-                <span>Ir a Manuales y videos</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-
-            <div class="lg:col-span-7 pro-card p-5 flex flex-col justify-between space-y-3">
+          <!-- Induction Video + 3-Step Methodology Guide (Zero Redundant Module List) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <div class="lg:col-span-7 pro-card p-6 space-y-4">
               <div class="flex items-center justify-between">
-                <div>
-                  <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Inducción al Portal</span>
-                  <h4 class="text-base font-extrabold text-slate-900">¿Cómo funciona este portal?</h4>
-                </div>
-                <span class="font-mono text-xs text-slate-400 bg-slate-100 px-2.5 py-1 rounded-lg">2 min 40s</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Inducción al Portal</span>
+                <span class="font-mono text-xs text-slate-400">2 min 40s</span>
               </div>
-              <div id="inlineIntroPlayerContainer" class="relative w-full aspect-[16/8.6] bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 flex items-center justify-center">
+              <div>
+                <h4 class="text-lg font-extrabold text-slate-900">¿Cómo funciona este portal?</h4>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Conoce en pocos minutos cómo navegar por los módulos, revisar los videos y manuales, completar tus prácticas y obtener tu diploma oficial.
+                </p>
+              </div>
+              <div id="inlineIntroPlayerContainer" class="relative w-full aspect-video bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 flex items-center justify-center">
                 <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop" alt="Inducción" class="absolute inset-0 w-full h-full object-cover opacity-45">
-                <button type="button" onclick="playInlineIntroVideo()" class="relative z-10 w-14 h-14 rounded-full bg-[#1A64FF] hover:bg-blue-500 text-white flex items-center justify-center shadow-xl transition transform hover:scale-105 cursor-pointer">
-                  <i class="fa-solid fa-play text-lg ml-0.5"></i>
+                <button type="button" onclick="playInlineIntroVideo()" class="relative z-10 w-16 h-16 rounded-full bg-[#1A64FF] hover:bg-blue-500 text-white flex items-center justify-center shadow-xl transition transform hover:scale-105 cursor-pointer">
+                  <i class="fa-solid fa-play text-xl ml-0.5"></i>
                 </button>
-                <div class="absolute bottom-3 left-3 right-3 bg-[#0B0F17]/90 backdrop-blur-sm px-4 py-2 rounded-xl text-white text-xs flex items-center justify-between">
+                <div class="absolute bottom-3 left-3 right-3 bg-[#0B0F17]/90 backdrop-blur-sm px-4 py-2.5 rounded-xl text-white text-xs flex items-center justify-between">
                   <span class="font-medium">Guía rápida de navegación del portal</span>
                   <span class="text-[#34D399] font-semibold">Reproducir</span>
                 </div>
               </div>
             </div>
+
+            <div class="lg:col-span-5 pro-card p-6 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <div class="border-b border-slate-100 pb-3">
+                  <span class="text-[11px] font-bold uppercase tracking-wider text-[#EC4899]">Metodología Secuencial</span>
+                  <h4 class="text-lg font-extrabold text-slate-900 mt-0.5">Reglas de Acreditación</h4>
+                </div>
+                <div class="space-y-3">
+                  <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-200/80 flex items-start gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-[#1A64FF] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">01</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Estudio de Videos y Manuales</div>
+                      <p class="text-slate-600 mt-0.5">Revisa el material audiovisual y las guías ilustradas de cada módulo y confirma tu lectura.</p>
+                    </div>
+                  </div>
+                  <div class="p-4 rounded-xl bg-pink-50/60 border border-pink-200/80 flex items-start gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-[#EC4899] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">02</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Práctica Interactiva al 100%</div>
+                      <p class="text-slate-600 mt-0.5">Ejecuta cada acción en el simulador en vivo hasta completar el 100%.</p>
+                    </div>
+                  </div>
+                  <div class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200/80 flex items-start gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-[#10B981] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">03</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Evaluación y Refuerzo</div>
+                      <p class="text-slate-600 mt-0.5">Aprueba con ≥80%. Si obtienes menos de 60%, se habilitará un <strong>Módulo de Refuerzo</strong> obligatorio.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="switchTab('modulos')" class="w-full py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
+                <span>Ir a Módulos y Videos</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
           </div>
         </section>
 
-        <!-- VIEW 1: MANUALES Y VIDEOS (BANNER TOP + SMALL ICON SQUARE CARDS + STEPPER + DUAL STUDIO) -->
-        <section id="section-modulos" class="tab-content hidden space-y-5">
-          <!-- Slim Top Banner -->
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#131B2E] to-[#1E293B] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <!-- ================================================================ -->
+        <!-- VIEW 1: MÓDULOS Y VIDEOS (TOP SQUARE CARDS + STEPPER + PRO SPLIT)-->
+        <!-- ================================================================ -->
+        <section id="section-modulos" class="tab-content hidden space-y-6">
+          <!-- Stylish Section Banner -->
+          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#131B2E] to-[#1E293B] text-white px-6 py-5 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Paso 1 de 3 • Manuales y videos</span>
+                <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Paso 1 de 3</span>
                 <span id="modulesCompletedCount" class="font-mono text-xs font-bold text-[#34D399]">0 / 6 aprobados</span>
               </div>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Manuales y Videos Tutoriales</h2>
+              <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight mt-1">Módulos y Recursos Audiovisuales</h2>
+              <p class="text-xs text-slate-300 mt-0.5">Selecciona un módulo superior, estudia su video y manual ilustrado y confirma tu lectura.</p>
             </div>
-            <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 shrink-0 cursor-pointer">
+            <button type="button" onclick="openProfileEditModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 shrink-0 cursor-pointer">
               <i class="fa-solid fa-user-gear text-[#60A5FA] mr-1.5"></i> Mi Perfil
             </button>
           </div>
 
-          <!-- COMPACT CENTERED-ICON SQUARE MODULE CARDS -->
-          <div id="moduleSquareCardsRow" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-2.5"></div>
+          <!-- TOP HORIZONTAL SQUARE CARDS SELECTOR (Replacing Left Vertical List) -->
+          <div id="moduleSquareCardsRow" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-3.5"></div>
 
-          <!-- CONNECTED CIRCLE STEPPER BAR -->
-          <div id="moduleStepTrackerBanner" class="pro-card p-5 bg-white"></div>
+          <!-- CONNECTED CIRCLE STEPPER BAR (`image_829b12.png`) -->
+          <div id="moduleStepTrackerBanner" class="pro-card p-6 bg-white"></div>
 
-          <!-- DUAL STUDIO VIEW (`image_8ef47c.png` & `image_8ef761.jpg`): LESSON CARD + SIDE-BY-SIDE VIDEO & PDF MANUAL VIEWER -->
-          <div id="activeModuleProSplitContainer" class="space-y-5"></div>
+          <!-- ULTRA-PRO SPLIT WORKSPACE: LEFT (Module Info & Key Points) | RIGHT (Video & Manual Thumbnails) -->
+          <div id="activeModuleProSplitContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- VIEW 2: PRÁCTICAS INTERACTIVAS (BANNER TOP + STEPPER + HIGH SIM)  -->
+        <!-- VIEW 2: PRÁCTICAS INTERACTIVAS                                   -->
         <!-- ================================================================ -->
         <section id="section-practicas" class="tab-content hidden space-y-5">
-          <!-- Top Banner (Same Hierarchy as Step 1) -->
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#131B2E] to-[#1E293B] text-white px-5 py-3.5 sm:px-6 sm:py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+          <div id="practiceStepTrackerBanner" class="pro-card p-6 bg-white"></div>
+
+          <div class="pro-card bg-gradient-to-r from-[#0B0F17] to-[#1E293B] text-white px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#EC4899]/25 text-[#F472B6]">Paso 2 de 3 • Práctica Interactiva</span>
-              <h2 class="text-lg sm:text-xl font-extrabold mt-0.5">Entorno Práctico de Plataforma</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#F472B6]">Paso 2 • Práctica Interactiva</span>
+              <h2 class="text-xl font-extrabold">Entorno Práctico de Plataforma</h2>
+              <p class="text-xs text-slate-300">Sigue las indicaciones paso a paso hasta completar el 100% y habilitar el Quiz.</p>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
-              <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="pro-input px-3.5 py-1.5 text-xs font-bold text-slate-900"></select>
+              <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
             </div>
           </div>
 
-          <div id="practiceStepTrackerBanner" class="pro-card p-5 bg-white"></div>
-
-          <div id="practiceContentContainer" class="pro-card p-5 sm:p-6 space-y-4 w-full"></div>
+          <div id="practiceContentContainer" class="pro-card p-5 sm:p-7 space-y-5 w-full"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- VIEW 3: EVALUACIONES (QUIZZES — BANNER TOP + STEPPER)            -->
+        <!-- VIEW 3: EVALUACIONES (QUIZZES — NO RETRY + MULTIPLE TEMPLATES)   -->
         <!-- ================================================================ -->
-        <section id="section-quizzes" class="tab-content hidden space-y-5">
-          <!-- Top Banner (Same Hierarchy as Step 1) -->
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#131B2E] to-[#1E293B] text-white px-5 py-3.5 sm:px-6 sm:py-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+        <section id="section-quizzes" class="tab-content hidden space-y-6">
+          <div id="quizStepTrackerBanner" class="pro-card p-6 bg-white"></div>
+
+          <div class="pro-card bg-gradient-to-r from-[#0B0F17] to-[#1E293B] text-white px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#10B981]/25 text-[#34D399]">Paso 3 de 3 • Validación de Conocimientos</span>
-              <h2 class="text-lg sm:text-xl font-extrabold mt-0.5">Evaluación Modular (Quiz)</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#34D399]">Paso 3 • Validación de Conocimientos</span>
+              <h2 class="text-xl font-extrabold">Evaluación Modular (Quiz)</h2>
+              <p class="text-xs text-slate-300">Intento único registrado. Si obtienes menos de 60%, se habilitará un Módulo de Refuerzo obligatorio.</p>
             </div>
             <div class="flex items-center gap-2.5">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
-              <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="pro-input px-3.5 py-1.5 text-xs font-bold text-slate-900"></select>
+              <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
             </div>
           </div>
-
-          <div id="quizStepTrackerBanner" class="pro-card p-5 bg-white"></div>
 
           <div class="pro-card p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
             <div class="border-b border-slate-100 pb-4 flex items-center justify-between flex-wrap gap-2">
@@ -892,6 +903,7 @@
           </div>
         </section>
 
+        <!-- ================================================================ -->
         <!-- VIEW 4: PROGRESO Y DIPLOMA VERTICAL (UNLOCKED ONLY AT >= 80%)    -->
         <!-- ================================================================ -->
         <section id="section-progreso" class="tab-content hidden space-y-6">
@@ -1979,17 +1991,9 @@
       localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
       enterWorkspaceShell();
       const p = ensureProgressEntry(modId);
-      if (p.quizCompleted && !p.needsReinforcement) {
-        switchTab('progreso');
-      } else if (p.needsReinforcement && !p.reinforcementCompleted) {
-        goToModuleQuiz(modId);
-      } else if (!p.materialConfirmed) {
-        switchTab('modulos');
-      } else if (!p.practiceCompleted) {
-        goToModulePractice(modId);
-      } else {
-        goToModuleQuiz(modId);
-      }
+      if (!p.materialConfirmed) switchTab('modulos');
+      else if (!p.practiceCompleted) goToModulePractice(modId);
+      else goToModuleQuiz(modId);
     }
 
     function enterWorkspaceFromRoadmap() {
@@ -2072,7 +2076,7 @@
 
       const nextMod = roleMods.find(m => !ensureProgressEntry(m.id).quizCompleted) || roleMods[roleMods.length - 1];
       const nextProg = ensureProgressEntry(nextMod.id);
-      let stepLabel = `${nextMod.code}: Manuales y videos`;
+      let stepLabel = `${nextMod.code}: Videos y Manuales`;
       if (nextProg.quizCompleted) stepLabel = "¡Ruta 100% Completada!";
       else if (nextProg.needsReinforcement && !nextProg.reinforcementCompleted) stepLabel = `${nextMod.code}: Módulo de Refuerzo`;
       else if (nextProg.practiceCompleted) stepLabel = `${nextMod.code}: Evaluación (Quiz)`;
@@ -2111,7 +2115,7 @@
       const s4 = p.quizCompleted && !p.needsReinforcement;
 
       const steps = [
-        { num: 1, label: "Manuales y videos", sub: s1 ? "Completado" : "Estudio", done: s1, active: activeStepNum === 1, action: `currentSelectedModuleId='${mod.id}'; switchTab('modulos')` },
+        { num: 1, label: "Videos y Manuales", sub: s1 ? "Completado" : "Estudio", done: s1, active: activeStepNum === 1, action: `currentSelectedModuleId='${mod.id}'; switchTab('modulos')` },
         { num: 2, label: "Práctica en Vivo", sub: s2 ? "100% Lista" : "Simulador", done: s2, active: activeStepNum === 2, action: s1 ? `goToModulePractice('${mod.id}')` : `showProAlert('Paso 1 Requerido', 'Confirma primero los videos y manuales del Paso 1.', false)` },
         { num: 3, label: "Evaluación (Quiz)", sub: s3 ? `Nota: ${p.score}%` : "Intento Único", done: s3, active: activeStepNum === 3, action: s2 ? `goToModuleQuiz('${mod.id}')` : `showProAlert('Paso 2 Requerido', 'Completa primero la Práctica al 100%.', false)` },
         { num: 4, label: "Acreditación", sub: s4 ? "Aprobado" : (p.needsReinforcement ? "Refuerzo" : "Meta ≥80%"), done: s4, active: false, action: `switchTab('progreso')` }
@@ -2164,7 +2168,7 @@
       `;
     }
 
-    // ==================== COMPACT CENTERED-ICON SQUARE CARDS + DUAL VIDEO/MANUAL VIEW ====================
+    // ==================== TOP SQUARE CARDS SELECTOR + PRO SPLIT MODULE VIEW ====================
     function renderModuleSquareCards() {
       const roleMods = getRoleModulesList(currentUser.role);
       const row = document.getElementById('moduleSquareCardsRow');
@@ -2178,20 +2182,16 @@
 
         return `
           <div onclick="${unlocked ? `currentSelectedModuleId='${mod.id}'; renderModuleSquareCards(); renderActiveModuleView('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
-               title="${mod.code}: ${mod.title}"
-               class="p-2.5 rounded-2xl border transition-all flex flex-col items-center justify-between text-center min-h-[104px] ${isCurrent ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/30 shadow-md' : (unlocked ? 'bg-white text-slate-900 border-slate-200 hover:border-[#1A64FF] shadow-2xs' : 'bg-slate-100/80 text-slate-400 border-slate-200/70 opacity-60')} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'}">
-            <div class="w-full flex items-center justify-between text-[10px] font-mono font-extrabold">
-              <span class="${isCurrent ? 'text-[#60A5FA]' : 'text-slate-500'}">${mod.code}</span>
-              <span class="${p.quizCompleted ? 'text-[#10B981]' : (isCurrent ? 'text-slate-300' : 'text-slate-400')}">${pct}%</span>
+               class="p-3.5 rounded-2xl border transition-all flex flex-col justify-between aspect-[1.15/1] ${isCurrent ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/25 shadow-lg' : (unlocked ? 'bg-white text-slate-900 border-slate-200 hover:border-[#1A64FF] shadow-2xs' : 'bg-slate-100/80 text-slate-400 border-slate-200/70 opacity-65')} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'}">
+            <div class="flex items-center justify-between gap-2">
+              <span class="w-9 h-9 rounded-xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (isCurrent ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700')} flex items-center justify-center text-sm shrink-0">
+                <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
+              </span>
+              <span class="font-mono text-[11px] font-extrabold ${p.quizCompleted ? 'text-[#10B981]' : (isCurrent ? 'text-[#60A5FA]' : 'text-slate-500')}">${pct}%</span>
             </div>
-
-            <!-- Centered Icon -->
-            <div class="w-9 h-9 rounded-xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (isCurrent ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700')} flex items-center justify-center text-sm my-1 shrink-0">
-              <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
-            </div>
-
-            <div class="w-full space-y-1">
-              <div class="text-[10.5px] font-bold leading-tight truncate px-0.5">${mod.title}</div>
+            <div class="space-y-1.5 pt-2">
+              <div class="font-mono text-[10px] font-bold uppercase tracking-wider ${isCurrent ? 'text-slate-400' : 'text-slate-400'}">${mod.code}</div>
+              <div class="text-xs font-extrabold leading-snug line-clamp-2">${mod.title}</div>
               <div class="w-full h-1.5 rounded-full ${isCurrent ? 'bg-white/15' : 'bg-slate-100'} overflow-hidden">
                 <div class="h-full ${p.quizCompleted ? 'bg-[#10B981]' : 'bg-[#1A64FF]'} transition-all" style="width:${pct}%"></div>
               </div>
@@ -2201,161 +2201,131 @@
       }).join('');
     }
 
-    let activeInlineLessonIdx = 0;
-
-    function formatManualPdfEmbedUrl(rawUrl) {
-      if (!rawUrl) return "";
-      if (rawUrl.includes("drive.google.com/file/d/")) {
-        return `https://drive.google.com/file/d/${rawUrl.split("/file/d/")[1].split("/")[0]}/preview`;
-      }
-      if (rawUrl.includes("drive.google.com/open?id=")) {
-        return `https://drive.google.com/file/d/${rawUrl.split("open?id=")[1].split("&")[0]}/preview`;
-      }
-      return rawUrl;
-    }
-
     function renderActiveModuleView(modId) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
       const p = ensureProgressEntry(mod.id);
-      if (activeInlineLessonIdx >= (mod.cards || []).length) activeInlineLessonIdx = 0;
 
       document.getElementById('moduleStepTrackerBanner').innerHTML = renderStepTrackerHTML(mod.id, 1);
 
-      const cards = mod.cards || [];
-      const activeCard = cards[activeInlineLessonIdx] || { title: mod.title, videoUrl: '', manualUrl: '', manual: 'Manual Operativo', points: [] };
-      const hasRealPdf = activeCard.manualUrl && activeCard.manualUrl !== 'https://drive.google.com';
+      const allPoints = (mod.cards || []).flatMap(c => c.points || []);
+      const primaryCard = (mod.cards && mod.cards[0]) || { title: mod.title, videoUrl: '', manualUrl: '', manual: 'Manual Operativo', points: [] };
+
+      const statusBadge = p.quizCompleted
+        ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Módulo Aprobado (${p.score}%) ✓</span>`
+        : (p.materialConfirmed
+          ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-[#1A64FF] border border-blue-200">Material Confirmado ✓</span>`
+          : `<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">Paso 1 • Estudio</span>`);
 
       const splitBox = document.getElementById('activeModuleProSplitContainer');
       splitBox.innerHTML = `
-        <!-- TOP LESSON CARDS ROW (`image_8ef47c.png` style) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${cards.map((c, idx) => {
-            const selected = idx === activeInlineLessonIdx;
-            return `
-              <div onclick="activeInlineLessonIdx=${idx}; renderActiveModuleView('${mod.id}')" class="pro-card p-5 transition-all cursor-pointer flex flex-col justify-between space-y-4 ${selected ? 'border-2 border-[#1A64FF] ring-2 ring-[#1A64FF]/15' : 'border-slate-200 hover:border-slate-300'}">
-                <div class="space-y-2.5">
-                  <div class="text-[11px] font-extrabold uppercase tracking-wider text-[#1A64FF]">VIDEO ${idx + 1} • ${mod.code}</div>
-                  <h4 class="text-base font-extrabold text-slate-900 leading-snug">${c.title}</h4>
-                  <ul class="space-y-1.5 text-xs text-slate-600 pt-1">
-                    ${(c.points || []).map(pt => `<li class="flex items-start gap-2"><span class="text-slate-400">•</span><span>${pt}</span></li>`).join('')}
-                  </ul>
-                </div>
-                <div class="pt-3 border-t border-slate-100 space-y-2.5">
-                  <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 bg-slate-50 text-[11px] font-semibold text-slate-700">
-                    <i class="fa-solid fa-book-open text-[#1A64FF]"></i>
-                    <span>Manual disponible (${mod.code}.${idx + 1})</span>
-                  </div>
-                  <div class="flex items-center gap-2 text-[#1A64FF] font-bold text-xs">
-                    <span class="w-6 h-6 rounded-full bg-[#1A64FF] text-white flex items-center justify-center text-[10px]"><i class="fa-solid fa-play ml-0.5"></i></span>
-                    <span>${selected ? 'Viendo ahora en estudio dual' : 'Abrir video y manual'}</span>
-                  </div>
-                </div>
+        <!-- LEFT 6 COLS: MODULE BRIEFING & KEY POINTS -->
+        <div class="lg:col-span-6 pro-card p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div class="space-y-5">
+            <div class="flex items-center justify-between gap-3 flex-wrap">
+              <div class="flex items-center gap-2.5">
+                <span class="w-10 h-10 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-base shadow-sm">
+                  <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
+                </span>
+                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800">${mod.code}</span>
               </div>
-            `;
-          }).join('')}
-        </div>
-
-        <!-- DUAL STUDIO VIEW (`image_8ef761.jpg` exact 50/50 Video Left + PDF Manual Right) -->
-        <div class="pro-card overflow-hidden border-slate-300 shadow-lg">
-          <!-- Studio Top Bar -->
-          <div class="px-5 py-3 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5 min-w-0">
-              <span class="font-mono text-xs font-extrabold uppercase tracking-wider text-[#1A64FF]">VIDEO ${activeInlineLessonIdx + 1}</span>
-              <span class="text-sm sm:text-base font-extrabold text-slate-900 truncate">${activeCard.title}</span>
+              ${statusBadge}
             </div>
-            <div class="flex items-center gap-2">
-              <button type="button" onclick="openModuleVideoModal('${mod.id}', ${activeInlineLessonIdx})" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer">
-                <i class="fa-solid fa-expand mr-1"></i> Pantalla Completa
-              </button>
+
+            <div class="space-y-2">
+              <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">${mod.code}: ${mod.title}</h3>
+              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${mod.desc}</p>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
+              <div class="text-[11px] font-bold uppercase tracking-widest text-[#1A64FF] flex items-center gap-2">
+                <i class="fa-solid fa-bullseye"></i>
+                <span>Puntos Clave del Módulo</span>
+              </div>
+              <ul class="space-y-2.5 text-xs sm:text-[13px] text-slate-700">
+                ${allPoints.map((pt, i) => `
+                  <li class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded-md bg-blue-100 text-[#1A64FF] font-mono text-[10.5px] font-bold flex items-center justify-center shrink-0 mt-0.5">0${i + 1}</span>
+                    <span class="leading-relaxed font-medium">${pt}</span>
+                  </li>
+                `).join('')}
+              </ul>
             </div>
           </div>
 
-          <!-- 50 / 50 Dual Split: Left = Video + VIDEO CONTENTS | Right = Related PDF Manual Reader -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 bg-white">
-            <!-- LEFT 6 COLS: VIDEO + VIDEO CONTENTS -->
-            <div class="lg:col-span-6 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 flex flex-col justify-between space-y-5">
-              <div class="space-y-4">
-                <div class="relative aspect-video w-full bg-[#0B0F17] rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-                  <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  <a href="${activeCard.videoUrl || '#'}" target="_blank" title="Abrir video externo" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-lg bg-slate-900/80 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                  </a>
-                </div>
-
-                <div class="space-y-2 pt-1">
-                  <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">CONTENIDO DEL VIDEO</div>
-                  <ul class="space-y-1.5 text-xs sm:text-[13px] text-slate-700">
-                    ${(activeCard.points || []).map((pt, i) => `
-                      <li class="flex items-start gap-2">
-                        <span class="font-mono text-xs font-bold text-[#1A64FF]">• ${activeInlineLessonIdx + 1}.${i + 1}</span>
-                        <span>${pt}</span>
-                      </li>
-                    `).join('')}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- RIGHT 6 COLS: MANUAL READER (`image_8ef761.jpg` right pane) -->
-            <div class="lg:col-span-6 bg-[#F8FAFC] flex flex-col justify-between min-h-[480px]">
-              <div class="px-5 py-3 bg-white border-b border-slate-200 flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF] shrink-0">${mod.code}.${activeInlineLessonIdx + 1}</span>
-                  <span class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${activeCard.manual || activeCard.title}</span>
-                </div>
-                <a href="${activeCard.manualUrl || '#'}" target="_blank" title="Abrir manual en nueva pestaña" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold shrink-0">
-                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </div>
-
-              <div class="flex-1 p-4 flex flex-col">
-                ${hasRealPdf ? `
-                  <iframe src="${formatManualPdfEmbedUrl(activeCard.manualUrl)}" class="w-full flex-1 min-h-[400px] rounded-xl border border-slate-200 bg-white" frameborder="0"></iframe>
-                ` : `
-                  <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex-1 flex flex-col">
-                    <div class="px-5 py-3 bg-[#10B981] text-white flex items-center justify-between">
-                      <span class="text-xs font-extrabold uppercase tracking-wider">${mod.code}.${activeInlineLessonIdx + 1} • ${activeCard.title}</span>
-                      <i class="fa-solid fa-book-open"></i>
-                    </div>
-                    <div class="p-5 space-y-3 text-xs text-slate-700 flex-1">
-                      <p class="text-slate-500">Guía estándar de procedimientos operativos para <strong>${mod.title}</strong>:</p>
-                      ${(activeCard.points || []).map((pt, i) => `
-                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
-                          <span class="w-6 h-6 rounded-lg bg-[#1A64FF] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
-                          <span class="font-medium leading-relaxed pt-0.5">${pt}</span>
-                        </div>
-                      `).join('')}
-                    </div>
-                  </div>
-                `}
-              </div>
-
-              <!-- Bottom Dark Pagination Bar like `image_8ef761.jpg` -->
-              <div class="px-5 py-2.5 bg-[#18181B] text-white flex items-center justify-between text-xs">
-                <button type="button" onclick="if(activeInlineLessonIdx>0){activeInlineLessonIdx--; renderActiveModuleView('${mod.id}');}" ${activeInlineLessonIdx <= 0 ? 'disabled' : ''} class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 disabled:opacity-40 cursor-pointer">‹ Anterior</button>
-                <span class="font-mono text-[11px]">Recurso ${activeInlineLessonIdx + 1} / ${cards.length}</span>
-                <button type="button" onclick="if(activeInlineLessonIdx<${cards.length - 1}){activeInlineLessonIdx++; renderActiveModuleView('${mod.id}');}" ${activeInlineLessonIdx >= cards.length - 1 ? 'disabled' : ''} class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 disabled:opacity-40 cursor-pointer">Siguiente ›</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Confirmation Footer Bar -->
-          <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="text-xs text-slate-600">
-              ${p.materialConfirmed
-                ? `<span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check mr-1.5"></i>Manuales y videos confirmados para ${mod.code}.</span>`
-                : `<span>Al finalizar la revisión del video y el manual, confirma tu lectura para habilitar la práctica.</span>`}
-            </div>
+          <!-- Confirmation / Next Step CTA -->
+          <div class="pt-4 border-t border-slate-100">
             ${p.materialConfirmed ? `
-              <button type="button" onclick="goToModulePractice('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition cursor-pointer shrink-0">
-                Ir a Práctica Interactiva (Paso 2) →
-              </button>
+              <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="text-xs text-emerald-950 font-semibold">
+                  <i class="fa-solid fa-circle-check text-[#10B981] mr-1.5"></i> Lectura confirmada. Continúa con la práctica interactiva.
+                </div>
+                <button type="button" onclick="goToModulePractice('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition shrink-0 cursor-pointer">
+                  Ir a Práctica (Paso 2) →
+                </button>
+              </div>
             ` : `
-              <button type="button" onclick="confirmModuleMaterialViewed()" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer shrink-0">
+              <button type="button" onclick="confirmModuleMaterialViewed()" class="w-full py-3.5 px-6 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2.5 cursor-pointer">
                 <i class="fa-solid fa-check-double"></i>
-                <span>Confirmar Lectura y Pasar a Práctica</span>
+                <span>Confirmar Revisión de Video y Manual → Habilitar Práctica</span>
               </button>
             `}
+          </div>
+        </div>
+
+        <!-- RIGHT 6 COLS: ELEVATED VIDEO THUMBNAIL + MANUAL THUMBNAIL SHOWCASE -->
+        <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
+          <!-- VIDEO THUMBNAIL CARD -->
+          <div onclick="openModuleVideoModal('${mod.id}', 0)" class="pro-card overflow-hidden group cursor-pointer border-slate-200 hover:border-[#1A64FF] transition-all flex flex-col justify-between">
+            <div class="relative aspect-[16/7.5] bg-[#0B0F17] overflow-hidden flex items-center justify-center">
+              <div class="absolute inset-0 bg-gradient-to-tr from-[#0B0F17] via-[#1E293B] to-[#1A64FF]/40"></div>
+              <div class="relative z-10 flex flex-col items-center gap-2 text-center px-4">
+                <div class="w-14 h-14 rounded-full bg-[#1A64FF] group-hover:scale-110 text-white flex items-center justify-center text-lg shadow-xl transition">
+                  <i class="fa-solid fa-play ml-0.5"></i>
+                </div>
+                <span class="text-[11px] font-bold uppercase tracking-widest text-white/90">Reproducir Video Tutorial</span>
+              </div>
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-white font-mono text-[10.5px] font-bold border border-white/15">
+                <i class="fa-solid fa-video text-[#60A5FA] mr-1"></i> VIDEO ${mod.code}
+              </span>
+              <span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-lg bg-white/15 backdrop-blur-sm text-white text-[10.5px] font-semibold">
+                ${mod.cards.length} lección(es)
+              </span>
+            </div>
+            <div class="p-4 bg-white flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <div class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Material Audiovisual</div>
+                <div class="text-sm font-extrabold text-slate-900 truncate">${primaryCard.title}</div>
+              </div>
+              <span class="px-3.5 py-2 rounded-xl bg-slate-900 group-hover:bg-[#1A64FF] text-white text-xs font-bold transition shrink-0">Ver Video</span>
+            </div>
+          </div>
+
+          <!-- MANUAL THUMBNAIL CARD -->
+          <div onclick="openModuleVideoModal('${mod.id}', 0)" class="pro-card overflow-hidden group cursor-pointer border-slate-200 hover:border-[#EC4899] transition-all flex flex-col justify-between">
+            <div class="relative aspect-[16/7.5] bg-gradient-to-br from-slate-100 via-pink-50/50 to-slate-200/70 p-5 flex items-center justify-center overflow-hidden">
+              <!-- Illustrated Document Mini-Preview -->
+              <div class="w-4/5 max-w-[280px] bg-white rounded-xl border border-slate-200 shadow-md p-3.5 space-y-2 transform group-hover:-translate-y-1 transition">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                  <span class="font-mono text-[10px] font-extrabold text-[#EC4899]">${mod.code} • GUÍA OFICIAL</span>
+                  <span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[9px] font-bold">PDF / Guía</span>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="h-2 w-4/5 bg-slate-800 rounded-full"></div>
+                  <div class="h-1.5 w-full bg-slate-200 rounded-full"></div>
+                  <div class="h-1.5 w-3/4 bg-slate-200 rounded-full"></div>
+                </div>
+              </div>
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-white/90 text-slate-800 font-mono text-[10.5px] font-bold border border-slate-200 shadow-2xs">
+                <i class="fa-solid fa-book-open text-[#EC4899] mr-1"></i> MANUAL ILUSTRADO
+              </span>
+            </div>
+            <div class="p-4 bg-white flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <div class="text-[10.5px] font-bold uppercase tracking-wider text-[#EC4899]">Documentación Estándar</div>
+                <div class="text-sm font-extrabold text-slate-900 truncate">${primaryCard.manual || primaryCard.title}</div>
+              </div>
+              <span class="px-3.5 py-2 rounded-xl border border-slate-300 group-hover:border-[#EC4899] group-hover:bg-[#EC4899] group-hover:text-white text-slate-800 text-xs font-bold transition shrink-0">Leer Manual</span>
+            </div>
           </div>
         </div>
       `;
@@ -2415,7 +2385,6 @@
       const mod = ALL_MODULES_MASTER.find(m => m.id === activeModalModId);
       if (!mod) return;
       const card = mod.cards[activeModalCardIdx] || mod.cards[0];
-      const hasRealPdf = card.manualUrl && card.manualUrl !== 'https://drive.google.com';
 
       document.getElementById('proModalTag').textContent = `VIDEO ${activeModalCardIdx + 1} • ${mod.code}`;
       document.getElementById('proModalHeaderTitle').textContent = `${card.title} (${mod.title})`;
@@ -2438,9 +2407,7 @@
       document.getElementById('btnBackToManualList').classList.toggle('hidden', mod.cards.length <= 1 || manualListViewMode);
 
       const viewport = document.getElementById('manualReaderViewport');
-      viewport.innerHTML = hasRealPdf
-        ? `<iframe src="${formatManualPdfEmbedUrl(card.manualUrl)}" class="w-full h-full min-h-[460px] rounded-xl border border-slate-200 bg-white" frameborder="0"></iframe>`
-        : `
+      viewport.innerHTML = `
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="px-5 py-3.5 bg-[#0B0F17] text-white flex items-center justify-between">
             <span class="text-xs font-extrabold uppercase tracking-wider">${mod.code}.${activeModalCardIdx + 1} • ${card.manual || card.title}</span>
@@ -2474,13 +2441,13 @@
       document.getElementById('proVideoManualModal').classList.add('hidden');
     }
 
-    // ==================== STEP 2: HIGH-FIDELITY CLONED SIMULATORS (TALLER + SUBTLE OBJECTIVES) ====================
+    // ==================== STEP 2: PRÁCTICAS INTERACTIVAS ====================
     function goToModulePractice(modId) {
       const p = ensureProgressEntry(modId);
       if (!p.materialConfirmed) {
         currentSelectedModuleId = modId;
         switchTab('modulos');
-        showProAlert("Paso 1 Requerido", "Debes confirmar primero que revisaste los manuales y videos antes de iniciar la práctica.", false);
+        showProAlert("Paso 1 Requerido", "Debes confirmar primero que revisaste los videos y manuales antes de iniciar la práctica.", false);
         return;
       }
       currentSelectedModuleId = modId;
@@ -2505,45 +2472,6 @@
       if (errBanner) errBanner.classList.add('hidden');
     }
 
-    // Subtle mission objectives per module (not giving away exact button clicks literally)
-    const SUBTLE_PRACTICE_MISSIONS = {
-      M1: [
-        "Autentícate utilizando el método institucional autorizado.",
-        "Valida tu identidad con tu cuenta vinculada.",
-        "Accede al aula correspondiente a Matemática de sexto grado."
-      ],
-      M2: [
-        "Verifica el resumen previo y el estado de los estudiantes en 'Clase de hoy'.",
-        "Identifica al estudiante que requiere observación en el tablero de desempeño.",
-        "Inicia la sesión de Lenguaje desde el panel principal."
-      ],
-      M3: [
-        "Habilita el registro automático de asistencia para el grupo.",
-        "Registra la incidencia técnica en el equipo de Luis Fernando Henríquez Portillo y añade una nota.",
-        "Cierra el cuadro de asistencia para continuar con la clase."
-      ],
-      M4: [
-        "Ingresa al entorno interactivo de Modo Clase.",
-        "Alinea las pantallas del grupo y realiza un bloqueo preventivo de atención.",
-        "Activa la pizarra o agrega un material de referencia de apoyo."
-      ],
-      M5: [
-        "Audita el estado de conexión y la matriz de respuestas en vivo.",
-        "Consulta el tablero analítico del grupo en 'Mi progreso'.",
-        "Envía actividades personalizadas de refuerzo al estudiante Cruz Hernández, Diego Alejandro."
-      ],
-      M6: [
-        "Habilita como pública la lección planificada en la lista de clases regulares.",
-        "Abre la lección en tiempo real, activa la asistencia e inicia el Modo Clase.",
-        "Sincroniza el contenido con los estudiantes."
-      ],
-      M7: [
-        "Consulta tanto los indicadores diarios como las estadísticas acumuladas de implementación.",
-        "Localiza el centro educativo CEIP Rosalía de Castro (10011) e inspecciona el grupo 3A Clase de Lenguaje.",
-        "Accede al tablero del grupo y revisa el desempeño individual de Gil Torres, Elena."
-      ]
-    };
-
     function loadPracticeByModule(modId) {
       currentSelectedModuleId = modId;
       const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
@@ -2554,10 +2482,10 @@
 
       if (!p.materialConfirmed) {
         container.innerHTML = `
-          <div class="p-10 text-center space-y-3">
+          <div class="p-8 text-center space-y-3">
             <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-lock"></i></div>
             <h4 class="text-base font-bold text-slate-900">Práctica Bloqueada (Completa el Paso 1)</h4>
-            <p class="text-xs text-slate-500 max-w-md mx-auto">Ve a Manuales y videos, revisa el material de ${mod.code} y confirma tu lectura.</p>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">Ve a Módulos y Videos, revisa el material de ${mod.code} y confirma tu lectura.</p>
             <button type="button" onclick="switchTab('modulos')" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Volver al Paso 1</button>
           </div>
         `;
@@ -2566,7 +2494,7 @@
 
       if (p.practiceCompleted) {
         container.innerHTML = `
-          <div class="p-10 sm:p-14 text-center space-y-5 max-w-xl mx-auto">
+          <div class="p-8 sm:p-12 text-center space-y-5 max-w-xl mx-auto">
             <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#10B981] mx-auto flex items-center justify-center text-3xl shadow-sm">
               <i class="fa-solid fa-circle-check"></i>
             </div>
@@ -2581,11 +2509,11 @@
             </div>
             <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
               <button type="button" onclick="switchTab('modulos')" class="px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold cursor-pointer">
-                Repasar Manuales y Videos
+                Repasar Videos y Manuales
               </button>
               ${p.quizCompleted
                 ? `<button type="button" onclick="continueWhereLeftOff()" class="px-6 py-3 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-md cursor-pointer">Ir al Siguiente Módulo →</button>`
-                : `<button type="button" onclick="goToModuleQuiz('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md flex items-center gap-2 cursor-pointer"><span>Ir a Evaluación (Paso 3)</span><i class="fa-solid fa-arrow-right"></i></button>`
+                : `<button type="button" onclick="goToModuleQuiz('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md flex items-center gap-2 cursor-pointer"><span>Ir a Quiz (Paso 3)</span><i class="fa-solid fa-arrow-right"></i></button>`
               }
             </div>
           </div>
@@ -2595,24 +2523,24 @@
 
       if (modId === "M1") { m1SimStep = 1; renderM1PlatformSimulator(container); return; }
       if (modId === "M2") { m2SimStep = 1; renderM2AttendanceSimulator(container); return; }
-      if (modId === "M3") { m3SimState = { listOpen: false, attendanceOn: false, deviceReported: false, noteWritten: false }; renderM3VisibilitySimulator(container); return; }
-      if (modId === "M4") { m4TaskState = { modeModal: false, modeActive: false, syncOn: false, lockOn: false, boardOn: false, refOpen: false }; renderM4TaskSimulator(container); return; }
-      if (modId === "M5") { m5SimState = { viewedSummary: false, viewedProgress: false, selectedStudent: false, sentAI: false }; renderM5ClassModeSimulator(container); return; }
-      if (modId === "M6") { m6SimState = { madePublic: false, openedLive: false, attendanceOn: false, modeOn: false, syncOn: false }; renderM6MonitoringSimulator(container); return; }
-      if (modId === "M7") { m7SimState = { viewedImpl: false, searchedSchool: false, openedGroup: false, selectedElena: false }; renderM7SupervisorSimulator(container); return; }
+      if (modId === "M3") { renderM3VisibilitySimulator(container); return; }
+      if (modId === "M4") { m4TaskState = { unitSelected: false, topicSelected: false, studentsSelected: false }; renderM4TaskSimulator(container); return; }
+      if (modId === "M5") { m5SimState = { modeActive: false, syncOn: false, lockOn: false }; renderM5ClassModeSimulator(container); return; }
+      if (modId === "M6") { m6SimState = { openedStudentDetail: false, openedProgressBoard: false }; renderM6MonitoringSimulator(container); return; }
+      if (modId === "M7") { m7SimState = { switchedToImpl: false, filteredAutomated: false }; renderM7SupervisorSimulator(container); return; }
 
       renderCustomModulePractice(container, mod);
     }
 
     function renderCustomModulePractice(container, mod) {
       const steps = mod.practiceSteps && mod.practiceSteps.length ? mod.practiceSteps : [
-        "Verifica los parámetros operativos del módulo.",
-        "Ejecuta la secuencia principal en la plataforma.",
-        "Confirma el registro de la actividad."
+        "Paso 1: Verifica los parámetros iniciales del módulo.",
+        "Paso 2: Ejecuta la operación principal en la plataforma.",
+        "Paso 3: Confirma el guardado y finaliza la práctica."
       ];
       const viewportHTML = `
-        <div class="p-8 bg-white min-h-[540px] space-y-4">
-          <div class="text-sm font-extrabold text-slate-900">Verificación Operativa — ${mod.title}</div>
+        <div class="p-6 sm:p-8 bg-white space-y-4">
+          <div class="text-sm font-extrabold text-slate-900">Checklist Operativo Paso a Paso — ${mod.title}</div>
           <div class="space-y-3">
             ${steps.map(st => `
               <label class="p-4 rounded-xl border border-slate-200 hover:border-[#1A64FF] bg-slate-50/60 flex items-center gap-3 cursor-pointer">
@@ -2623,7 +2551,7 @@
           </div>
         </div>
       `;
-      container.innerHTML = renderSimulatorShell(mod, 0, "https://aidt.app", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, 0, "https://global-aidt-base.vercel.app/#/", viewportHTML);
     }
 
     function checkCustomPracDone(modId, total) {
@@ -2637,33 +2565,33 @@
     }
 
     function renderSimulatorShell(mod, pct, urlText, innerHTML) {
-      const missions = SUBTLE_PRACTICE_MISSIONS[mod.id] || mod.practiceSteps || [mod.desc];
-      const stepsHTML = missions.map((s, idx) => `
+      const steps = (mod.practiceSteps && mod.practiceSteps.length) ? mod.practiceSteps : [mod.desc];
+      const stepsHTML = steps.map((s, idx) => `
         <div class="flex items-start gap-2.5 text-xs text-slate-200">
-          <span class="w-5 h-5 rounded-md bg-white/15 text-[#60A5FA] font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">0${idx + 1}</span>
+          <span class="w-5 h-5 rounded-md bg-white/15 text-[#60A5FA] font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
           <span class="leading-relaxed">${s}</span>
         </div>
       `).join('');
 
       return `
         <div class="space-y-4">
-          <div class="p-4 sm:p-5 rounded-2xl bg-[#0B0F17] text-white flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div class="space-y-2 flex-1">
-              <div class="text-[10.5px] font-bold uppercase tracking-widest text-[#60A5FA]">Objetivos de la Práctica (${mod.code})</div>
+          <div class="p-5 rounded-2xl bg-[#0B0F17] text-white flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+            <div class="space-y-2.5 flex-1">
+              <div class="text-[11px] font-bold uppercase tracking-widest text-[#60A5FA]">Indicaciones Paso a Paso (${mod.code})</div>
               <div class="space-y-1.5">${stepsHTML}</div>
             </div>
-            <div class="flex items-center gap-3 shrink-0 bg-white/10 px-4 py-2.5 rounded-xl border border-white/15">
-              <span class="text-xs text-slate-300 font-semibold">Progreso:</span>
+            <div class="flex items-center gap-3 shrink-0 bg-white/10 px-4 py-3 rounded-xl border border-white/15">
+              <span class="text-xs text-slate-300 font-semibold">Avance Práctica:</span>
               <span id="simLivePctText" class="font-mono text-base font-extrabold text-[#34D399]">${pct}%</span>
             </div>
           </div>
 
           <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold flex items-center gap-2.5">
             <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 font-extrabold">✗</span>
-            <span id="simMistakeText">Acción no válida en este contexto.</span>
+            <span id="simMistakeText">Acción incorrecta.</span>
           </div>
 
-          <div class="rounded-2xl border border-slate-300 overflow-hidden shadow-lg bg-white">
+          <div class="rounded-2xl border border-slate-300 overflow-hidden shadow-md bg-white">
             <div class="px-4 py-2.5 bg-slate-100 border-b border-slate-200 flex items-center gap-3">
               <div class="flex items-center gap-1.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
@@ -2680,13 +2608,12 @@
       `;
     }
 
-    // ==================== CLONED SIMULATORS (TALL `min-h-[580px]` + AUTHENTIC UI DETAILS) ====================
-    // --- M1: Acceso e Inicio de Sesión (`aidt.app` -> Google Account Chooser -> Lista de Aulas) ---
+    // Simulators M1 - M7
     function renderM1PlatformSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M1");
       const pctMap = { 1: 0, 2: 33, 3: 67, 4: 100 };
       const urlMap = {
-        1: "https://aidt.app",
+        1: "https://global-aidt-base.vercel.app/#/",
         2: "https://accounts.google.com/v3/signin/accountchooser",
         3: "https://aidt.app/class-room?year=2026",
         4: "https://aidt.app/class-room/6A-math/today"
@@ -2694,641 +2621,163 @@
       let viewportHTML = "";
       if (m1SimStep === 1) {
         viewportHTML = `
-          <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[580px] bg-white">
-            <div class="bg-[#F7F8FA] p-8 sm:p-12 flex flex-col justify-between">
-              <div class="space-y-2.5">
+          <div class="grid grid-cols-1 lg:grid-cols-2 min-h-[460px] bg-white">
+            <div class="bg-[#F4F5F7] p-8 flex flex-col justify-between">
+              <div class="space-y-2">
                 <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
-                <h4 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">Aprender sin fronteras.<br>Crecer juntos</h4>
+                <h4 class="text-3xl font-extrabold text-slate-900 leading-tight">Aprender sin fronteras.<br>Crecer juntos</h4>
                 <p class="text-sm text-slate-500">Juntos, en cada paso del camino.</p>
               </div>
               <div class="py-4 flex items-center justify-center">
-                <img src="${PLATFORM_MASCOTS_IMG}" alt="Personajes IHFB" class="max-h-56 w-auto object-contain">
+                <img src="${PLATFORM_MASCOTS_IMG}" alt="Personajes IHFB" class="max-h-48 w-auto object-contain">
               </div>
             </div>
-            <div class="p-8 sm:p-12 flex flex-col items-center justify-center bg-white">
-              <div class="w-full max-w-[330px] space-y-5">
-                <div class="text-center space-y-2">
-                  <div class="w-10 h-10 rounded-xl bg-[#27272A] text-white mx-auto flex items-center justify-center text-sm shadow">
-                    <i class="fa-solid fa-sparkles"></i>
-                  </div>
-                  <div class="text-2xl font-extrabold text-slate-900">¡Comencemos!</div>
-                </div>
+            <div class="p-8 flex flex-col items-center justify-center bg-white">
+              <div class="w-full max-w-[320px] space-y-4">
+                <div class="text-2xl font-extrabold text-slate-900 text-center">¡Comencemos!</div>
                 <button type="button" onclick="clearSimMistakeToast(); m1SimStep=2; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))" class="w-full py-3 px-4 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold flex items-center justify-center gap-2.5 shadow-2xs transition cursor-pointer">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
                   <span>Iniciar sesión con Google</span>
                 </button>
-                <div class="flex items-center gap-2"><div class="flex-1 h-px bg-slate-200"></div><span class="text-[11px] text-slate-400">O continúa con</span><div class="flex-1 h-px bg-slate-200"></div></div>
-                <div class="space-y-3">
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Correo electrónico <span class="text-rose-500">*</span></label>
-                    <input type="text" onfocus="showSimMistakeToast('✗ Utiliza el método de autenticación institucional vinculado a Google.')" placeholder="Ingresa tu correo electrónico" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs">
-                  </div>
-                  <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Contraseña <span class="text-rose-500">*</span></label>
-                    <input type="password" onfocus="showSimMistakeToast('✗ Utiliza el método de autenticación institucional vinculado a Google.')" placeholder="Ingresa tu contraseña" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs">
-                  </div>
-                  <button type="button" onclick="showSimMistakeToast('✗ Utiliza el método de autenticación institucional vinculado a Google.')" class="w-full py-3 rounded-xl bg-[#18181B] text-white text-xs font-bold cursor-pointer">Iniciar sesión</button>
-                </div>
+                <input type="text" onfocus="showSimMistakeToast('✗ Usa Iniciar sesión con Google.')" placeholder="Correo electrónico" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs">
+                <button type="button" onclick="showSimMistakeToast('✗ Usa Iniciar sesión con Google.')" class="w-full py-3 rounded-xl bg-[#18181B] text-white text-xs font-bold cursor-pointer">Iniciar sesión</button>
               </div>
             </div>
           </div>`;
       } else if (m1SimStep === 2) {
         viewportHTML = `
-          <div class="bg-[#F0F4F9] p-8 min-h-[580px] flex items-center justify-center">
-            <div class="bg-white rounded-[28px] border border-slate-200 shadow-lg max-w-2xl w-full p-8 sm:p-10 space-y-6">
-              <div class="flex items-center gap-2 text-xs font-semibold text-slate-600 border-b border-slate-100 pb-4">
-                <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
-                <span>Acceder con Google</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start py-4">
-                <div class="space-y-2">
-                  <h4 class="text-2xl font-normal text-slate-900">Elige una cuenta</h4>
-                  <p class="text-sm text-slate-600">Ir a <span class="text-[#1A64FF] font-semibold">schoolpt.info</span></p>
-                </div>
-                <div class="divide-y divide-slate-200 border-t border-b border-slate-200">
-                  <button type="button" onclick="clearSimMistakeToast(); m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))" class="w-full py-3.5 px-2 hover:bg-slate-50 flex items-center gap-3.5 text-left cursor-pointer">
-                    <span class="w-9 h-9 rounded-full bg-[#7C2D12] text-white font-bold text-xs flex items-center justify-center">${currentUser.name.charAt(0).toUpperCase()}</span>
-                    <div class="min-w-0"><div class="text-xs font-bold text-slate-900 truncate">${currentUser.name}</div><div class="text-[11px] text-slate-500 truncate">${currentUser.email}</div></div>
-                  </button>
-                  <button type="button" onclick="showSimMistakeToast('✗ Selecciona la cuenta institucional vinculada a tu perfil.')" class="w-full py-3.5 px-2 hover:bg-slate-50 flex items-center gap-3.5 text-left cursor-pointer">
-                    <span class="w-9 h-9 rounded-full bg-slate-500 text-white font-bold text-xs flex items-center justify-center">I</span>
-                    <div class="min-w-0"><div class="text-xs font-bold text-slate-900 truncate">Cuenta Personal Invitado</div><div class="text-[11px] text-slate-500 truncate">invitado.personal@gmail.com</div></div>
-                  </button>
-                </div>
-              </div>
+          <div class="bg-[#F0F4F9] p-8 min-h-[460px] flex items-center justify-center">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-lg max-w-lg w-full p-8 space-y-5">
+              <h4 class="text-xl font-bold text-slate-900">Elige una cuenta institucional</h4>
+              <button type="button" onclick="clearSimMistakeToast(); m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))" class="w-full p-3.5 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center gap-3 text-left cursor-pointer">
+                <span class="w-9 h-9 rounded-full bg-[#1A64FF] text-white font-bold text-xs flex items-center justify-center">${currentUser.name.charAt(0).toUpperCase()}</span>
+                <div><div class="text-xs font-bold">${currentUser.name}</div><div class="text-[11px] text-slate-500">${currentUser.email}</div></div>
+              </button>
             </div>
           </div>`;
       } else {
-        const aulas = [
-          { name: "6A Clase de Matemática", meta: "6 / - / - / A / Matemática / Clase", bg: "bg-rose-500", ok: true },
-          { name: "6A Clase de Lenguaje", meta: "6 / - / - / A / Lenguaje / Clase", bg: "bg-blue-500", ok: false },
-          { name: "2A Clase de Matemática", meta: "2 / - / - / A / Matemática / Clase", bg: "bg-rose-500", ok: false },
-          { name: "2A Clase de Lenguaje", meta: "2 / - / - / A / Lenguaje / Clase", bg: "bg-blue-500", ok: false }
-        ];
         viewportHTML = `
-          <div class="bg-white min-h-[580px] flex flex-col">
-            <div class="px-6 py-3.5 border-b border-slate-200 flex items-center justify-between text-xs bg-white">
-              <div class="flex items-center gap-2.5">
-                <span class="font-extrabold text-slate-900">Organización</span>
-                <span class="text-slate-400">Gestión de Aula /</span>
-                <span class="font-bold text-slate-900">Lista de Aulas</span>
-              </div>
-              <span class="w-8 h-8 rounded-full bg-[#1A64FF] text-white font-bold text-xs flex items-center justify-center">${currentUser.name.substring(0,2).toUpperCase()}</span>
+          <div class="bg-white min-h-[460px] p-6 sm:p-8 max-w-3xl mx-auto w-full space-y-4">
+            <div class="text-lg font-extrabold text-slate-900">Lista de Aulas</div>
+            <div class="p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+              <div class="font-bold text-sm">6A Clase de Matemática</div>
+              <button type="button" onclick="clearSimMistakeToast(); m1SimStep=4; completePracticeAndUnlockQuiz('M1')" class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-50 text-xs font-bold cursor-pointer">Ir al aula ›</button>
             </div>
-            <div class="p-6 sm:p-10 max-w-4xl mx-auto w-full space-y-5">
-              <div>
-                <div class="text-xs text-slate-400 font-bold">2026</div>
-                <div class="text-2xl font-extrabold text-slate-900">mar, 24 de noviembre</div>
-                <div class="flex items-center gap-4 border-b border-slate-200 mt-4 text-xs font-bold">
-                  <span class="pb-2 border-b-2 border-slate-900 text-slate-900">Aulas con clases 4</span>
-                  <span class="pb-2 text-slate-400">Todo 4</span>
-                </div>
-              </div>
-              <div class="space-y-3">
-                ${aulas.map(a => `
-                  <div class="p-4 rounded-2xl border border-slate-200 hover:border-slate-300 bg-white flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-3.5">
-                      <span class="w-10 h-10 rounded-xl ${a.bg} text-white font-bold text-sm flex items-center justify-center">÷×</span>
-                      <div>
-                        <div class="text-sm font-bold text-slate-900">${a.name}</div>
-                        <div class="text-[11px] text-slate-400">${a.meta}</div>
-                      </div>
-                    </div>
-                    <button type="button" onclick="${a.ok ? `clearSimMistakeToast(); m1SimStep=4; completePracticeAndUnlockQuiz('M1')` : `showSimMistakeToast('✗ Esa no es la asignatura solicitada en los objetivos de esta práctica.')`}" class="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold cursor-pointer">
-                      Ir al aula &nbsp;›
-                    </button>
-                  </div>
-                `).join('')}
-              </div>
+            <div class="p-4 rounded-2xl border border-slate-200 flex items-center justify-between">
+              <div class="font-bold text-sm">6A Clase de Lenguaje</div>
+              <button type="button" onclick="showSimMistakeToast('✗ Ingresa al grupo 6A Clase de Matemática.')" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold cursor-pointer">Ir al aula ›</button>
             </div>
           </div>`;
       }
       container.innerHTML = renderSimulatorShell(mod, pctMap[m1SimStep] || 0, urlMap[m1SimStep], viewportHTML);
     }
 
-    // --- M2: Clase de hoy & Desempeño de estudiantes (Cloned from `image_112` - `image_117`) ---
-    let m2CheckedPrev = false;
-    let m2CheckedObs = false;
     function renderM2AttendanceSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M2");
-      const scoreCount = (m2CheckedPrev ? 1 : 0) + (m2CheckedObs ? 1 : 0) + (m2SimStep >= 2 ? 1 : 0);
-      const simPct = Math.round((scoreCount / 3) * 100);
-
+      const pctMap = { 1: 0, 2: 50, 3: 100 };
       const viewportHTML = `
-        <div class="bg-[#F8FAFC] min-h-[580px] grid grid-cols-12">
-          <!-- Left Platform Sidebar -->
-          <div class="col-span-12 md:col-span-3 bg-white border-r border-slate-200 p-4 flex flex-col justify-between text-xs">
-            <div class="space-y-4">
-              <div class="font-extrabold text-slate-900 text-sm pb-2 border-b border-slate-100">6A Clase de Lenguaje</div>
-              <div class="space-y-1">
-                <div class="text-[10px] font-bold uppercase text-slate-400 px-2">Espacio de clase</div>
-                <div class="px-3 py-2 rounded-lg bg-slate-100 font-bold text-slate-900"><i class="fa-solid fa-bullhorn mr-2 text-[#1A64FF]"></i>Clase de hoy</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-display mr-2"></i>Clase regular en tiempo real</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-chart-line mr-2"></i>Mi progreso</div>
-              </div>
-              <div class="space-y-1">
-                <div class="text-[10px] font-bold uppercase text-slate-400 px-2">Gestión de clases</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-list mr-2"></i>Lista de clases regulares</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-folder-open mr-2"></i>Lista de tareas</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-circle-info mr-2"></i>Información del aula</div>
-                <div class="px-3 py-2 rounded-lg text-slate-600"><i class="fa-solid fa-user-check mr-2"></i>Control de asistencia</div>
-              </div>
-            </div>
-            <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-500"><i class="fa-solid fa-house mr-1.5"></i>Ir a Lista de Aulas</div>
+        <div class="bg-white min-h-[420px] flex flex-col">
+          <div class="px-5 py-3 border-b border-slate-200 flex items-center justify-between text-xs">
+            <span class="font-bold">6A Clase de Matemática</span>
+            <button type="button" onclick="clearSimMistakeToast(); m2SimStep=2; renderM2AttendanceSimulator(document.getElementById('practiceContentContainer'))" class="px-3.5 py-1.5 rounded-lg bg-[#1A64FF] text-white font-bold cursor-pointer">Pasar lista</button>
           </div>
-
-          <!-- Right Main Board ("Clase de hoy") -->
-          <div class="col-span-12 md:col-span-9 p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <span class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center text-xs">≡</span>
-                <div>
-                  <div class="text-sm font-extrabold text-slate-900">Clase de Lenguaje</div>
-                  <div class="text-[11px] text-slate-500">6° grado, sección "A"</div>
-                </div>
-              </div>
-              <span class="text-xs font-semibold text-slate-500">martes, 24 de nov de 2026</span>
-            </div>
-
-            <!-- Clase de hoy Card -->
-            <div class="p-5 rounded-2xl bg-white border-2 border-[#1A64FF]/40 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <span class="text-[11px] font-bold text-[#1A64FF]">• Clase de hoy • Repaso</span>
-                <div class="text-base font-extrabold text-slate-900 mt-0.5">(2) Las tablas de doble entrada</div>
-                <div class="text-[11px] text-slate-500 mt-0.5">Leer una tabla clave</div>
-              </div>
-              <button type="button" onclick="if(!m2CheckedPrev || !m2CheckedObs) return showSimMistakeToast('✗ Revisa primero el resumen previo y el estado de observación de los estudiantes antes de iniciar la clase.'); m2SimStep=2; completePracticeAndUnlockQuiz('M2');" class="px-5 py-2.5 rounded-xl bg-[#4F46E5] hover:bg-indigo-700 text-white text-xs font-bold shadow cursor-pointer shrink-0">
-                Iniciar clase &nbsp;›
-              </button>
-            </div>
-
-            <!-- Progreso General + Resumen de Clase Anterior -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-2">
-                <div class="text-xs font-extrabold text-slate-900">Progreso general</div>
-                <div class="text-[11px] text-slate-500">Clases Completadas a la fecha: 5 de 10</div>
-                <div class="flex items-center gap-4 pt-2">
-                  <div class="w-20 h-20 rounded-full border-8 border-[#1A64FF] flex items-center justify-center font-mono text-sm font-extrabold text-slate-900">80.1%</div>
-                  <div class="text-[11px] text-slate-600 space-y-1">
-                    <div>• Completadas: 5</div>
-                    <div>• Programadas: 10</div>
-                  </div>
-                </div>
-              </div>
-
-              <div onclick="clearSimMistakeToast(); m2CheckedPrev=true; renderM2AttendanceSimulator(document.getElementById('practiceContentContainer'))" class="p-4 rounded-2xl bg-white border ${m2CheckedPrev ? 'border-emerald-400 ring-2 ring-emerald-500/20' : 'border-slate-200 hover:border-[#1A64FF]'} space-y-2 cursor-pointer transition">
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-extrabold text-slate-900">Resumen de la clase anterior</span>
-                  <span class="px-2 py-0.5 rounded bg-amber-50 text-amber-800 text-[10px] font-bold">En curso: 60%</span>
-                </div>
-                <div class="text-xs font-bold text-slate-800">(1) Construcción - Producto: Un texto instructivo</div>
-                <div class="text-[11px] text-amber-700 font-semibold pt-1">Hay una clase anterior sin completar. ${m2CheckedPrev ? '✓ Revisado' : '(Haz clic para auditar)'}</div>
-              </div>
-            </div>
-
-            <!-- Desempeño de los estudiantes -->
-            <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="text-xs font-extrabold text-slate-900">Desempeño de los estudiantes • Últimos 5 días</div>
-                <div class="flex flex-wrap gap-1.5 text-[11px]">
-                  <button type="button" onclick="showSimMistakeToast('✗ En esta categoría aparecen 2 estudiantes en revisión inmediata.')" class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 font-bold cursor-pointer">Revisión inmediata 2</button>
-                  <button type="button" onclick="clearSimMistakeToast(); m2CheckedObs=true; renderM2AttendanceSimulator(document.getElementById('practiceContentContainer'))" class="px-2.5 py-1 rounded-lg ${m2CheckedObs ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-800'} font-bold cursor-pointer">Requiere observación 1</button>
-                </div>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs flex items-center justify-between">
-                ${m2CheckedObs
-                  ? `<span><strong class="text-slate-900">Cruz Hernández, Diego Alejandro</strong> (Asist. 60% • Aciertos 60%)</span><span class="text-emerald-700 font-bold">Identificado ✓</span>`
-                  : `<span class="text-slate-600"><strong>Hernández Aguilar, Carlos</strong> (Asist. 40% • Revisión inmediata)</span><span class="text-slate-400">Filtra por observación arriba</span>`}
-              </div>
-            </div>
+          <div class="p-6 flex-1 flex items-center justify-center">
+            ${m2SimStep === 1 ? `<p class="text-xs text-slate-600">Haz clic en <strong>Pasar lista</strong> arriba.</p>` : `
+              <button type="button" onclick="clearSimMistakeToast(); m2SimStep=3; completePracticeAndUnlockQuiz('M2')" class="px-5 py-3 rounded-xl bg-[#10B981] text-white text-xs font-bold cursor-pointer">Activar Pasar lista: ENCENDIDO</button>
+            `}
           </div>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/class-room/6A-lang/today", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, pctMap[m2SimStep] || 0, "https://aidt.app/class-room/6A-math/live", viewportHTML);
     }
 
-    // --- M3: Clase Regular en Tiempo Real & Pasar Lista + Reporte de Dispositivo (`image_125` - `image_133`) ---
-    let m3SimState = { listOpen: false, attendanceOn: false, deviceReported: false, noteWritten: false };
     function renderM3VisibilitySimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M3");
-      const count = (m3SimState.listOpen ? 1 : 0) + (m3SimState.attendanceOn ? 1 : 0) + (m3SimState.deviceReported ? 1 : 0) + (m3SimState.noteWritten ? 1 : 0);
-      const simPct = Math.round((count / 4) * 100);
-
-      const students = [
-        { n: 1, name: "Hernández Aguilar, Carlos", demo: true },
-        { n: 2, name: "Alvarado Guerrero, Jake Santiago" },
-        { n: 3, name: "Bonilla Castro, María Fernanda" },
-        { n: 4, name: "Cruz Hernández, Diego Alejandro" },
-        { n: 8, name: "Henríquez Portillo, Luis Fernando", target: true }
-      ];
-
+      const l2Public = m3Lessons.find(x => x.id === 'l2').status === 'En público';
       const viewportHTML = `
-        <div class="bg-[#F8FAFC] min-h-[580px] flex flex-col relative">
-          <!-- Top Bar -->
-          <div class="px-5 py-3 bg-white border-b border-slate-200 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2 font-bold text-slate-900">
-              <span>6A Clase de Matemática</span>
-              <span class="px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF]">Profesor</span>
-              <span class="text-slate-400">/ Clase regular en tiempo real</span>
+        <div class="bg-white min-h-[420px] p-6 max-w-2xl mx-auto w-full space-y-4">
+          ${m3Lessons.map(les => `
+            <div class="p-3.5 rounded-xl border border-slate-200 flex items-center justify-between">
+              <span class="text-xs font-bold">${les.code} ${les.name}</span>
+              <button type="button" onclick="toggleM3LessonStatus('${les.id}')" class="px-3 py-1 rounded-lg text-xs font-bold ${les.status === 'En público' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'} cursor-pointer">${les.status}</button>
             </div>
-            <button type="button" onclick="clearSimMistakeToast(); m3SimState.listOpen=true; renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl bg-[#4F46E5] hover:bg-indigo-700 text-white font-bold shadow cursor-pointer">
-              Pasar lista
-            </button>
-          </div>
-
-          <!-- 3-Panel Classroom Layout -->
-          <div class="grid grid-cols-12 flex-1">
-            <!-- Left Structure Panel -->
-            <div class="col-span-3 bg-white border-r border-slate-200 p-4 space-y-2 text-xs hidden md:block">
-              <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold text-[10px]">En público</span>
-              <div class="font-extrabold text-slate-900">(1) 2.8.2.1 Comparemos la capacidad de recipientes</div>
-              <div class="p-2.5 rounded-lg bg-emerald-50/70 text-emerald-900 font-semibold">6/10 • T1</div>
-              <div class="p-2.5 rounded-lg text-slate-600">6/10 • T2</div>
-              <div class="p-2.5 rounded-lg text-slate-600">6/10 • T3</div>
-            </div>
-
-            <!-- Center Activity Preview -->
-            <div class="col-span-12 md:col-span-6 p-6 flex flex-col items-center justify-center text-center space-y-4">
-              <div class="text-sm font-extrabold text-slate-900">Elige el objeto que tiene mayor capacidad.</div>
-              <div class="grid grid-cols-2 gap-6">
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-2">
-                  <i class="fa-solid fa-bottle-water text-4xl text-[#1A64FF]"></i>
-                  <div class="text-xs font-bold">Opción A (9 huacales)</div>
-                </div>
-                <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-2">
-                  <i class="fa-solid fa-bath text-4xl text-cyan-600"></i>
-                  <div class="text-xs font-bold">Opción B (11 huacales)</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Right Student Detail Panel -->
-            <div class="col-span-3 bg-white border-l border-slate-200 p-4 space-y-3 text-xs hidden md:block">
-              <div class="font-extrabold text-slate-900">Detalle por estudiante 10</div>
-              <div class="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-slate-50">
-                <div><div class="text-[10px] text-slate-400">Finalización</div><div class="font-mono font-extrabold text-sm">60%</div></div>
-                <div><div class="text-[10px] text-slate-400">Aciertos</div><div class="font-mono font-extrabold text-sm text-[#10B981]">67%</div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Modal Overlay: Lista de asistencia (Cloned from `image_127` - `image_133`) -->
-          ${m3SimState.listOpen ? `
-            <div class="absolute inset-0 bg-slate-900/45 flex items-center justify-center p-4 z-20">
-              <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden">
-                <div class="p-4 border-b border-slate-200 flex items-center justify-between">
-                  <div>
-                    <div class="text-sm font-extrabold text-slate-900">Lista de asistencia</div>
-                    <div class="text-[11px] text-slate-400">24 de noviembre de 2026</div>
-                  </div>
-                  <button type="button" onclick="clearSimMistakeToast(); m3SimState.attendanceOn=true; renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'))" class="px-3.5 py-2 rounded-xl ${m3SimState.attendanceOn ? 'bg-[#10B981] text-white' : 'bg-[#1A64FF] text-white'} text-xs font-bold cursor-pointer">
-                    ${m3SimState.attendanceOn ? 'Pasar lista: ENCENDIDO' : 'Pasar lista: APAGADO'}
-                  </button>
-                </div>
-
-                <div class="divide-y divide-slate-100 text-xs max-h-60 overflow-y-auto">
-                  ${students.map(st => `
-                    <div class="px-4 py-2.5 flex items-center justify-between gap-2">
-                      <div class="font-semibold text-slate-800">${st.n}. ${st.name}</div>
-                      <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-1 rounded text-[11px] font-bold ${m3SimState.attendanceOn ? (st.demo ? 'bg-purple-50 text-purple-700' : 'bg-amber-50 text-amber-800') : 'bg-slate-100 text-slate-600'}">
-                          ${m3SimState.attendanceOn ? (st.demo ? 'Asistencia' : 'Ausente') : 'Comprobar'}
-                        </span>
-                        <button type="button" title="Reportar problema de dispositivo" onclick="${st.target ? `clearSimMistakeToast(); m3SimState.deviceReported=true; renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'))` : `showSimMistakeToast('✗ Verifica a qué estudiante corresponde reportar la incidencia de equipo.')`}" class="w-7 h-7 rounded-lg border ${st.target && m3SimState.deviceReported ? 'bg-rose-600 text-white border-rose-600' : 'border-slate-200 text-slate-500 hover:bg-slate-50'} flex items-center justify-center cursor-pointer">
-                          <i class="fa-solid fa-tablet-screen-button text-[11px]"></i>
-                        </button>
-                      </div>
-                    </div>
-                  `).join('')}
-                </div>
-
-                <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-2.5 text-xs">
-                  <div class="font-bold text-slate-700">Notas</div>
-                  <textarea id="m3NoteBox" oninput="m3SimState.noteWritten = (this.value.trim().length >= 5)" rows="2" placeholder="Escribe una observación sobre la incidencia..." class="pro-input w-full p-2.5 text-xs">${m3SimState.noteWritten ? 'Dispositivo con fallas de encendido; trabaja en pareja.' : ''}</textarea>
-                  <div class="flex justify-end">
-                    <button type="button" onclick="validateM3AttendanceClose()" class="px-5 py-2 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold cursor-pointer">Cerrar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ` : ''}
+          `).join('')}
+          <button type="button" onclick="validateM3Submission()" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Confirmar Configuración</button>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/class-room/6A-math/live", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, l2Public ? 100 : 0, "https://aidt.app/class-room/6A-math/regular-classes", viewportHTML);
     }
 
-    function validateM3AttendanceClose() {
-      if (!m3SimState.attendanceOn) return showSimMistakeToast('✗ Activa primero el registro automático de asistencia.');
-      if (!m3SimState.deviceReported) return showSimMistakeToast('✗ Reporta la incidencia en el dispositivo del estudiante indicado.');
-      if (!m3SimState.noteWritten) return showSimMistakeToast('✗ Agrega una breve observación en el campo de Notas antes de cerrar.');
+    function toggleM3LessonStatus(id) {
+      const it = m3Lessons.find(x => x.id === id);
+      if (it) it.status = (it.status === 'En público') ? 'Privado' : 'En público';
+      renderM3VisibilitySimulator(document.getElementById('practiceContentContainer'));
+    }
+
+    function validateM3Submission() {
+      if (m3Lessons.find(x => x.id === 'l2').status !== 'En público') return showSimMistakeToast('✗ Cambia la lección (2) a En público.');
       completePracticeAndUnlockQuiz('M3');
     }
 
-    // --- M4: Modo Clase y Herramientas en Vivo (`image_139` - `image_148`) ---
-    let m4TaskState = { modeModal: false, modeActive: false, syncOn: false, lockOn: false, boardOn: false, refOpen: false };
     function renderM4TaskSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M4");
-      const count = (m4TaskState.modeActive ? 1 : 0) + (m4TaskState.syncOn ? 1 : 0) + (m4TaskState.lockOn ? 1 : 0) + ((m4TaskState.boardOn || m4TaskState.refOpen) ? 1 : 0);
-      const simPct = Math.round((count / 4) * 100);
-
+      const count = (m4TaskState.unitSelected ? 1 : 0) + (m4TaskState.topicSelected ? 1 : 0) + (m4TaskState.studentsSelected ? 1 : 0);
       const viewportHTML = `
-        <div class="bg-white min-h-[580px] flex flex-col relative">
-          ${!m4TaskState.modeActive ? `
-            <!-- Pre-Class Mode Header -->
-            <div class="px-5 py-3 bg-white border-b border-slate-200 flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-900">6A Clase de Matemática • Clase regular en tiempo real</span>
-              <button type="button" onclick="clearSimMistakeToast(); m4TaskState.modeModal=true; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 font-bold text-slate-800 shadow-2xs cursor-pointer">
-                <i class="fa-solid fa-chalkboard mr-1.5 text-[#1A64FF]"></i> Modo Clase
-              </button>
-            </div>
-            <div class="flex-1 flex items-center justify-center p-8 text-center text-xs text-slate-500">
-              Entorno en vista previa. Abre el modo de sesión en vivo para utilizar las herramientas de aula.
-            </div>
-            ${m4TaskState.modeModal ? `
-              <div class="absolute inset-0 bg-slate-900/45 flex items-center justify-center p-4 z-20">
-                <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
-                  <h4 class="text-base font-extrabold text-slate-900">¿Deseas activar el Modo Clase?</h4>
-                  <p class="text-xs text-slate-600 leading-relaxed">Activa el Modo Clase al iniciar una sesión en tiempo real con tus estudiantes para registrar tu asistencia y la ejecución de la clase.</p>
-                  <div class="flex justify-center gap-2.5 pt-2">
-                    <button type="button" onclick="m4TaskState.modeModal=false; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-bold cursor-pointer">Cancelar</button>
-                    <button type="button" onclick="clearSimMistakeToast(); m4TaskState.modeModal=false; m4TaskState.modeActive=true; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-5 py-2 rounded-xl bg-[#1A64FF] text-white text-xs font-bold cursor-pointer">Activar Modo Clase</button>
-                  </div>
-                </div>
-              </div>
-            ` : ''}
-          ` : `
-            <!-- Live Class Mode Dark Toolbar (`image_141` - `image_148`) -->
-            <div class="bg-[#18181B] text-white px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
-              <div class="font-bold">Clase de Matemática 6° grado</div>
-              <div class="flex flex-wrap items-center gap-2">
-                <button type="button" onclick="clearSimMistakeToast(); m4TaskState.lockOn=!m4TaskState.lockOn; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg border ${m4TaskState.lockOn ? 'bg-emerald-600 border-emerald-400 text-white' : 'bg-white/10 border-white/15 text-slate-200'} font-semibold cursor-pointer">
-                  <i class="fa-solid fa-lock mr-1"></i> Bloqueo de pantalla:${m4TaskState.lockOn ? 'ON' : 'OFF'}
-                </button>
-                <button type="button" onclick="clearSimMistakeToast(); m4TaskState.syncOn=!m4TaskState.syncOn; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg border ${m4TaskState.syncOn ? 'bg-emerald-600 border-emerald-400 text-white' : 'bg-white/10 border-white/15 text-slate-200'} font-semibold cursor-pointer">
-                  <i class="fa-solid fa-rotate mr-1"></i> Sincronización:${m4TaskState.syncOn ? 'ON' : 'OFF'}
-                </button>
-                <button type="button" onclick="clearSimMistakeToast(); m4TaskState.boardOn=!m4TaskState.boardOn; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg border ${m4TaskState.boardOn ? 'bg-emerald-600 border-emerald-400 text-white' : 'bg-white/10 border-white/15 text-slate-200'} font-semibold cursor-pointer">
-                  <i class="fa-solid fa-pen mr-1"></i> Pizarra:${m4TaskState.boardOn ? 'ON' : 'OFF'}
-                </button>
-                <button type="button" title="Material de referencia" onclick="clearSimMistakeToast(); m4TaskState.refOpen=!m4TaskState.refOpen; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg border ${m4TaskState.refOpen ? 'bg-[#1A64FF] border-blue-400 text-white' : 'bg-white/10 border-white/15 text-slate-200'} font-semibold cursor-pointer">
-                  <i class="fa-solid fa-puzzle-piece"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Split Teacher vs Student Screen (`image_142`) -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 flex-1">
-              <div class="p-6 border-b lg:border-b-0 lg:border-r border-slate-200 space-y-4">
-                <div class="flex items-center justify-between">
-                  <span class="px-2.5 py-0.5 rounded bg-slate-100 text-slate-700 text-[11px] font-bold">Vista de docente • T4</span>
-                  ${m4TaskState.boardOn ? `<span class="px-2.5 py-0.5 rounded bg-rose-50 text-rose-700 text-[11px] font-bold"><i class="fa-solid fa-pen-nib mr-1"></i>Pizarra activa</span>` : ''}
-                </div>
-                <div class="text-sm font-extrabold text-slate-900">Escribe la capacidad de los objetos dados. Después, escribe cuál tiene mayor capacidad entre las opciones A o B.</div>
-                <div class="grid grid-cols-2 gap-4 pt-2">
-                  <div class="p-5 rounded-2xl border border-slate-200 text-center space-y-2"><i class="fa-solid fa-bottle-water text-3xl text-[#1A64FF]"></i><div class="text-xs font-bold">A: 21 picheles</div></div>
-                  <div class="p-5 rounded-2xl border ${m4TaskState.boardOn ? 'border-4 border-rose-500' : 'border-slate-200'} text-center space-y-2"><i class="fa-solid fa-jug-detergent text-3xl text-slate-500"></i><div class="text-xs font-bold">B: 24 picheles</div></div>
-                </div>
-                ${m4TaskState.refOpen ? `<div class="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-950 font-semibold"><i class="fa-solid fa-file-image mr-1.5 text-[#1A64FF]"></i>Material de referencia compartido: Volumen y capacidad</div>` : ''}
-              </div>
-
-              <div class="p-6 bg-slate-50 flex flex-col justify-between relative">
-                <div class="flex items-center justify-between">
-                  <span class="px-2.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 text-[11px] font-bold">Vista de estudiante</span>
-                  ${m4TaskState.syncOn ? `<span class="px-2.5 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-bold">• Modo de clase sincronizada</span>` : ''}
-                </div>
-                ${m4TaskState.lockOn ? `
-                  <div class="my-auto p-8 rounded-2xl bg-slate-900/90 text-white text-center space-y-2 shadow-xl">
-                    <i class="fa-solid fa-lock text-2xl text-amber-400"></i>
-                    <div class="text-sm font-extrabold">Pantalla bloqueada. Presta atención a la pantalla del profesor.</div>
-                  </div>
-                ` : `
-                  <div class="my-auto p-6 rounded-2xl bg-white border border-slate-200 text-center text-xs text-slate-500">
-                    Dispositivo del estudiante sincronizado con la actividad T4.
-                  </div>
-                `}
-                <div class="flex justify-end pt-3">
-                  <button type="button" onclick="validateM4LiveTools()" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold cursor-pointer">
-                    Finalizar Práctica de Herramientas
-                  </button>
-                </div>
-              </div>
-            </div>
-          `}
+        <div class="bg-white min-h-[420px] p-6 max-w-xl mx-auto space-y-4 text-xs">
+          <select onchange="m4TaskState.unitSelected=(this.value==='repaso'); renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="pro-input w-full px-3 py-2 font-bold">
+            <option value="">1. Selecciona unidad...</option>
+            <option value="repaso" ${m4TaskState.unitSelected ? 'selected' : ''}>Repaso</option>
+          </select>
+          <label class="p-3 rounded-xl border border-slate-200 flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" ${m4TaskState.topicSelected ? 'checked' : ''} onchange="m4TaskState.topicSelected=this.checked; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))">
+            <span>2. (1) 2.8.2.1 Comparemos la capacidad de recipientes</span>
+          </label>
+          <button type="button" onclick="m4TaskState.studentsSelected=true; renderM4TaskSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border ${m4TaskState.studentsSelected ? 'bg-[#0B0F17] text-white' : 'bg-slate-50'} font-bold cursor-pointer">3. Todos los estudiantes (10)</button>
+          <div><button type="button" onclick="validateM4Submission()" class="px-6 py-2.5 rounded-xl bg-[#1A64FF] text-white font-bold cursor-pointer">Enviar Tarea</button></div>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/class-room/6A-math/class-mode", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, Math.round((count / 3) * 100), "https://aidt.app/class-room/6A-math/tasks/send", viewportHTML);
     }
 
-    function validateM4LiveTools() {
-      if (!m4TaskState.syncOn) return showSimMistakeToast('✗ Asegúrate de probar la alineación de pantallas con tus estudiantes.');
-      if (!m4TaskState.lockOn) return showSimMistakeToast('✗ Prueba el bloqueo preventivo de atención en los dispositivos.');
-      if (!m4TaskState.boardOn && !m4TaskState.refOpen) return showSimMistakeToast('✗ Utiliza la pizarra o comparte un material de referencia.');
+    function validateM4Submission() {
+      if (!m4TaskState.unitSelected || !m4TaskState.topicSelected || !m4TaskState.studentsSelected) return showSimMistakeToast('✗ Completa los 3 pasos antes de enviar.');
       completePracticeAndUnlockQuiz('M4');
     }
 
-    // --- M5: Monitoreo y Métricas del Aula (`image_155` - `image_164`) ---
-    let m5SimState = { viewedSummary: false, viewedProgress: false, selectedStudent: false, sentAI: false };
     function renderM5ClassModeSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M5");
-      const count = (m5SimState.viewedSummary ? 1 : 0) + (m5SimState.viewedProgress ? 1 : 0) + (m5SimState.selectedStudent ? 1 : 0) + (m5SimState.sentAI ? 1 : 0);
-      const simPct = Math.round((count / 4) * 100);
-
+      const count = (m5SimState.modeActive ? 1 : 0) + (m5SimState.syncOn ? 1 : 0) + (m5SimState.lockOn ? 1 : 0);
       const viewportHTML = `
-        <div class="bg-[#F8FAFC] min-h-[580px] grid grid-cols-12">
-          <div class="col-span-12 md:col-span-3 bg-white border-r border-slate-200 p-4 space-y-2 text-xs">
-            <div class="font-extrabold text-slate-900 pb-2 border-b border-slate-100">6A Clase de Lenguaje</div>
-            <button type="button" onclick="clearSimMistakeToast(); m5SimState.viewedSummary=true; m5SimState.viewedProgress=false; renderM5ClassModeSimulator(document.getElementById('practiceContentContainer'))" class="w-full text-left px-3 py-2 rounded-lg ${m5SimState.viewedSummary && !m5SimState.viewedProgress ? 'bg-blue-50 text-[#1A64FF] font-bold' : 'text-slate-700 hover:bg-slate-50'} cursor-pointer">
-              <i class="fa-solid fa-table-cells mr-2"></i>Resumen de aprendizaje
-            </button>
-            <button type="button" onclick="clearSimMistakeToast(); m5SimState.viewedProgress=true; renderM5ClassModeSimulator(document.getElementById('practiceContentContainer'))" class="w-full text-left px-3 py-2 rounded-lg ${m5SimState.viewedProgress ? 'bg-blue-50 text-[#1A64FF] font-bold' : 'text-slate-700 hover:bg-slate-50'} cursor-pointer">
-              <i class="fa-solid fa-chart-pie mr-2"></i>Mi progreso
-            </button>
-          </div>
-
-          <div class="col-span-12 md:col-span-9 p-6 space-y-5">
-            ${!m5SimState.viewedProgress ? `
-              <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                  <h4 class="text-base font-extrabold text-slate-900">Resumen de aprendizaje en vivo</h4>
-                  <span class="text-xs text-slate-500">Semáforo: <span class="text-emerald-600 font-bold">● Activo</span> • <span class="text-amber-500 font-bold">● Otra pestaña</span></span>
-                </div>
-                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden text-xs">
-                  <div class="grid grid-cols-4 bg-slate-50 p-3 font-bold text-slate-600 border-b">
-                    <div>Estudiante</div><div>1.1</div><div>1.2</div><div>1.3</div>
-                  </div>
-                  <div class="grid grid-cols-4 p-3 border-b items-center">
-                    <div class="font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span>Hernández Aguilar, Carlos</div>
-                    <div class="text-[#1A64FF] font-bold">○</div><div class="text-emerald-600 font-bold">✓</div><div class="text-slate-400">◌</div>
-                  </div>
-                  <div class="grid grid-cols-4 p-3 items-center">
-                    <div class="font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Cruz Hernández, Diego Alejandro</div>
-                    <div class="text-[#1A64FF] font-bold">○</div><div class="text-emerald-600 font-bold">✓</div><div class="text-rose-600 font-bold">✗</div>
-                  </div>
-                </div>
-              </div>
-            ` : `
-              <div class="space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                  <div class="flex items-center gap-3">
-                    <h4 class="text-base font-extrabold text-slate-900">Tablero de Clase de Lenguaje</h4>
-                    <select onchange="clearSimMistakeToast(); m5SimState.selectedStudent=(this.value==='diego'); renderM5ClassModeSimulator(document.getElementById('practiceContentContainer'))" class="pro-input px-3 py-1.5 text-xs font-bold">
-                      <option value="all">Toda la clase</option>
-                      <option value="carlos">Hernández Aguilar, Carlos</option>
-                      <option value="diego" ${m5SimState.selectedStudent ? 'selected' : ''}>Cruz Hernández, Diego Alejandro</option>
-                    </select>
-                  </div>
-                  ${m5SimState.selectedStudent ? `
-                    <button type="button" onclick="clearSimMistakeToast(); m5SimState.sentAI=true; completePracticeAndUnlockQuiz('M5')" class="px-4 py-2 rounded-xl bg-[#4F46E5] hover:bg-indigo-700 text-white text-xs font-bold shadow cursor-pointer">
-                      <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Aprendizaje recomendado (IA)
-                    </button>
-                  ` : ''}
-                </div>
-
-                ${m5SimState.selectedStudent ? `
-                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                    <div class="p-4 rounded-2xl bg-white border border-slate-200">
-                      <div class="font-extrabold text-slate-900">Cruz Hernández, Diego Alejandro</div>
-                      <div class="text-slate-500 mt-1">Clases completadas: <strong>25.9%</strong></div>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white border border-slate-200">
-                      <div class="text-slate-400 font-bold uppercase text-[10px]">Promedio de aciertos</div>
-                      <div class="font-mono text-2xl font-extrabold text-slate-900 mt-1">78%</div>
-                    </div>
-                    <div class="p-4 rounded-2xl bg-white border border-slate-200">
-                      <div class="text-slate-400 font-bold uppercase text-[10px]">Estado de logro</div>
-                      <div class="font-mono text-2xl font-extrabold text-[#10B981] mt-1">50%</div>
-                    </div>
-                  </div>
-                ` : `
-                  <div class="p-5 rounded-2xl bg-white border border-slate-200 text-xs space-y-2">
-                    <div class="font-bold text-slate-800">Aciertos promedio de la clase: <span class="text-[#1A64FF] font-mono">76.8%</span> • Tasa de progreso: <span class="font-mono">50%</span></div>
-                    <p class="text-slate-500">Filtra por estudiante en el selector superior para analizar su desempeño individual.</p>
-                  </div>
-                `}
-              </div>
-            `}
-          </div>
+        <div class="bg-white min-h-[380px] p-6 flex flex-wrap items-center justify-center gap-3">
+          <button type="button" onclick="m5SimState.modeActive=true; renderM5ClassModeSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m5SimState.modeActive ? 'bg-[#10B981] text-white' : 'bg-[#1A64FF] text-white'} text-xs font-bold cursor-pointer">1. Activar Modo Clase</button>
+          <button type="button" onclick="if(!m5SimState.modeActive) return showSimMistakeToast('Activa Modo Clase primero'); m5SimState.syncOn=true; renderM5ClassModeSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m5SimState.syncOn ? 'bg-[#10B981] text-white' : 'bg-slate-200'} text-xs font-bold cursor-pointer">2. Sincronización: ON</button>
+          <button type="button" onclick="if(!m5SimState.modeActive) return showSimMistakeToast('Activa Modo Clase primero'); m5SimState.lockOn=true; completePracticeAndUnlockQuiz('M5')" class="px-4 py-2.5 rounded-xl ${m5SimState.lockOn ? 'bg-[#10B981] text-white' : 'bg-slate-200'} text-xs font-bold cursor-pointer">3. Bloqueo de pantalla: ON</button>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/class-room/6A-lang/progress", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, Math.round((count / 3) * 100), "https://aidt.app/class-room/6A-math/class-mode", viewportHTML);
     }
 
-    // --- M6: Flujo Completo de la Clase (`image_168` - `image_178`) ---
-    let m6SimState = { madePublic: false, openedLive: false, attendanceOn: false, modeOn: false, syncOn: false };
     function renderM6MonitoringSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M6");
-      const count = (m6SimState.madePublic ? 1 : 0) + (m6SimState.openedLive ? 1 : 0) + (m6SimState.attendanceOn ? 1 : 0) + (m6SimState.modeOn ? 1 : 0) + (m6SimState.syncOn ? 1 : 0);
-      const simPct = Math.round((count / 5) * 100);
-
+      const count = (m6SimState.openedStudentDetail ? 1 : 0) + (m6SimState.openedProgressBoard ? 1 : 0);
       const viewportHTML = `
-        <div class="bg-[#F8FAFC] min-h-[580px] flex flex-col">
-          <div class="px-5 py-3 bg-white border-b border-slate-200 flex items-center justify-between text-xs">
-            <span class="font-extrabold text-slate-900">6A Clase de Lenguaje • Flujo de Clase</span>
-            ${m6SimState.openedLive ? `
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="m6SimState.attendanceOn=true; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg ${m6SimState.attendanceOn ? 'bg-[#10B981] text-white' : 'bg-[#4F46E5] text-white'} font-bold cursor-pointer">
-                  ${m6SimState.attendanceOn ? 'Asistencia: ENCENDIDO ✓' : 'Pasar lista'}
-                </button>
-                <button type="button" onclick="if(!m6SimState.attendanceOn) return showSimMistakeToast('Registra primero la asistencia de la sesión.'); m6SimState.modeOn=true; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg ${m6SimState.modeOn ? 'bg-[#10B981] text-white' : 'bg-slate-900 text-white'} font-bold cursor-pointer">
-                  ${m6SimState.modeOn ? 'Modo Clase: ACTIVO' : 'Modo Clase'}
-                </button>
-                ${m6SimState.modeOn ? `
-                  <button type="button" onclick="m6SimState.syncOn=true; completePracticeAndUnlockQuiz('M6')" class="px-3 py-1.5 rounded-lg bg-[#1A64FF] text-white font-bold cursor-pointer">
-                    Sincronización: ON
-                  </button>
-                ` : ''}
-              </div>
-            ` : ''}
+        <div class="bg-white min-h-[380px] p-6 flex flex-col items-center justify-center gap-4">
+          <div class="flex gap-3">
+            <button type="button" onclick="m6SimState.openedStudentDetail=true; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m6SimState.openedStudentDetail ? 'bg-[#10B981] text-white' : 'bg-slate-100'} text-xs font-bold cursor-pointer">1. Resumen de aprendizaje</button>
+            <button type="button" onclick="m6SimState.openedProgressBoard=true; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m6SimState.openedProgressBoard ? 'bg-[#10B981] text-white' : 'bg-slate-100'} text-xs font-bold cursor-pointer">2. Tablero de Clase</button>
           </div>
-
-          <div class="p-6 sm:p-8 max-w-3xl mx-auto w-full space-y-4">
-            ${!m6SimState.openedLive ? `
-              <div class="text-sm font-extrabold text-slate-900">Lista de clases regulares • Unidad 01: Repaso</div>
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-3">
-                <div class="flex items-center justify-between">
-                  <button type="button" onclick="clearSimMistakeToast(); m6SimState.madePublic=!m6SimState.madePublic; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1 rounded-lg text-xs font-bold ${m6SimState.madePublic ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'} cursor-pointer">
-                    <i class="fa-solid ${m6SimState.madePublic ? 'fa-lock-open' : 'fa-lock'} mr-1"></i> ${m6SimState.madePublic ? 'En público ▾' : 'Privado ▾'}
-                  </button>
-                  <span class="text-[11px] text-slate-400">Visibilidad de lección</span>
-                </div>
-                <div onclick="if(!m6SimState.madePublic) return showSimMistakeToast('✗ Habilita primero la visibilidad de la lección para que los estudiantes puedan verla.'); m6SimState.openedLive=true; renderM6MonitoringSimulator(document.getElementById('practiceContentContainer'))" class="text-sm font-extrabold text-[#1A64FF] hover:underline cursor-pointer">
-                  (1) Construcción - Producto: Un texto instructivo →
-                </div>
-              </div>
-            ` : `
-              <div class="p-8 rounded-2xl bg-white border border-slate-200 text-center space-y-2">
-                <div class="text-base font-extrabold text-slate-900">(1) Construcción - Producto: Un texto instructivo</div>
-                <p class="text-xs text-slate-500">Utiliza los controles superiores para completar el flujo de la sesión en vivo.</p>
-              </div>
-            `}
-          </div>
+          <button type="button" onclick="if(!m6SimState.openedStudentDetail||!m6SimState.openedProgressBoard) return showSimMistakeToast('Abre ambas vistas'); completePracticeAndUnlockQuiz('M6')" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Confirmar Métricas</button>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/class-room/6A-lang/flow", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, Math.round((count / 2) * 100), "https://aidt.app/class-room/6A-lang/progress", viewportHTML);
     }
 
-    // --- M7: Supervisión y Seguimiento (`image_188` - `image_198`) ---
-    let m7SimState = { viewedImpl: false, searchedSchool: false, openedGroup: false, selectedElena: false };
     function renderM7SupervisorSimulator(container) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === "M7");
-      const count = (m7SimState.viewedImpl ? 1 : 0) + (m7SimState.searchedSchool ? 1 : 0) + (m7SimState.openedGroup ? 1 : 0) + (m7SimState.selectedElena ? 1 : 0);
-      const simPct = Math.round((count / 4) * 100);
-
+      const count = (m7SimState.switchedToImpl ? 1 : 0) + (m7SimState.filteredAutomated ? 1 : 0);
       const viewportHTML = `
-        <div class="bg-[#F8FAFC] min-h-[580px] grid grid-cols-12">
-          <div class="col-span-12 md:col-span-3 bg-white border-r border-slate-200 p-4 space-y-2 text-xs">
-            <div class="font-extrabold text-slate-900 pb-2 border-b border-slate-100">Portal de Supervisión</div>
-            <button type="button" onclick="m7SimState.viewedImpl=false; m7SimState.openedGroup=false; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="w-full text-left px-3 py-2 rounded-lg ${!m7SimState.viewedImpl ? 'bg-blue-50 text-[#1A64FF] font-bold' : 'text-slate-700'} cursor-pointer">
-              Gestión diaria
-            </button>
-            <button type="button" onclick="clearSimMistakeToast(); m7SimState.viewedImpl=true; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="w-full text-left px-3 py-2 rounded-lg ${m7SimState.viewedImpl ? 'bg-blue-50 text-[#1A64FF] font-bold' : 'text-slate-700'} cursor-pointer">
-              Gestión de implementación
-            </button>
+        <div class="bg-white min-h-[380px] p-6 flex flex-col items-center justify-center gap-4">
+          <div class="flex gap-3">
+            <button type="button" onclick="m7SimState.switchedToImpl=true; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m7SimState.switchedToImpl ? 'bg-[#1A64FF] text-white' : 'bg-slate-100'} text-xs font-bold cursor-pointer">1. Gestión de implementación</button>
+            <button type="button" onclick="m7SimState.filteredAutomated=true; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2.5 rounded-xl ${m7SimState.filteredAutomated ? 'bg-[#10B981] text-white' : 'bg-slate-100'} text-xs font-bold cursor-pointer">2. Automatizada (16)</button>
           </div>
-
-          <div class="col-span-12 md:col-span-9 p-6 space-y-4 text-xs">
-            ${m7SimState.viewedImpl && !m7SimState.openedGroup ? `
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-3">
-                <div class="text-sm font-extrabold text-slate-900">Gestión de implementación (Estadísticas Acumuladas)</div>
-                <div class="grid grid-cols-3 gap-3">
-                  <div class="p-3 rounded-xl bg-slate-50"><div class="text-[10px] text-slate-400">Escuelas</div><div class="font-mono text-lg font-extrabold">24</div></div>
-                  <div class="p-3 rounded-xl bg-slate-50"><div class="text-[10px] text-slate-400">Automatizadas</div><div class="font-mono text-lg font-extrabold text-[#10B981]">16</div></div>
-                  <div class="p-3 rounded-xl bg-slate-50"><div class="text-[10px] text-slate-400">Tasa de intentos</div><div class="font-mono text-lg font-extrabold text-[#1A64FF]">84%</div></div>
-                </div>
-                <button type="button" onclick="m7SimState.viewedImpl=false; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl bg-[#0B0F17] text-white font-bold cursor-pointer">Volver a Gestión diaria para auditar escuela</button>
-              </div>
-            ` : (!m7SimState.openedGroup ? `
-              <div class="space-y-3">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="text-sm font-extrabold text-slate-900">Gestión diaria • Detalle por escuela</div>
-                  <input type="text" oninput="m7SimState.searchedSchool = (this.value.toLowerCase().includes('10011') || this.value.toLowerCase().includes('rosal'))" placeholder="Buscar escuela o código..." class="pro-input px-3 py-1.5 text-xs w-56">
-                </div>
-                <div class="bg-white rounded-2xl border border-slate-200 divide-y">
-                  <div class="p-4 flex items-center justify-between">
-                    <div><div class="font-bold text-slate-900">CEIP Miguel de Cervantes (10002)</div><div class="text-[11px] text-slate-400">Asistencia: 92% • Automatizada</div></div>
-                    <button type="button" onclick="showSimMistakeToast('✗ Ubica el centro educativo específico indicado en los objetivos.')" class="px-3 py-1.5 rounded-lg border border-slate-200 font-bold cursor-pointer">Ver grupos</button>
-                  </div>
-                  <div class="p-4 flex items-center justify-between">
-                    <div><div class="font-bold text-slate-900">CEIP Rosalía de Castro (10011)</div><div class="text-[11px] text-slate-400">Asistencia: 88% • En implementación</div></div>
-                    <button type="button" onclick="clearSimMistakeToast(); m7SimState.searchedSchool=true; m7SimState.openedGroup=true; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-lg bg-[#1A64FF] text-white font-bold cursor-pointer">3A Clase de Lenguaje →</button>
-                  </div>
-                </div>
-              </div>
-            ` : `
-              <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <div class="text-sm font-extrabold text-slate-900">CEIP Rosalía de Castro (10011) • 3A Clase de Lenguaje</div>
-                    <div class="text-[11px] text-slate-500">Panel de grupo y seguimiento individual</div>
-                  </div>
-                  <select onchange="if(this.value==='elena'){m7SimState.selectedElena=true; completePracticeAndUnlockQuiz('M7');}" class="pro-input px-3 py-1.5 text-xs font-bold">
-                    <option value="">Toda la clase</option>
-                    <option value="elena">Gil Torres, Elena</option>
-                  </select>
-                </div>
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-slate-600">
-                  Selecciona a la estudiante indicada en el menú superior para inspeccionar su tablero individual y finalizar la auditoría.
-                </div>
-              </div>
-            `)}
-          </div>
+          <button type="button" onclick="if(!m7SimState.switchedToImpl||!m7SimState.filteredAutomated) return showSimMistakeToast('Completa ambos filtros'); completePracticeAndUnlockQuiz('M7')" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Finalizar Auditoría</button>
         </div>`;
-      container.innerHTML = renderSimulatorShell(mod, simPct, "https://aidt.app/supervisor", viewportHTML);
+      container.innerHTML = renderSimulatorShell(mod, Math.round((count / 2) * 100), "https://global-aidt-base.vercel.app/#/supervisor", viewportHTML);
     }
 
     function completePracticeAndUnlockQuiz(modId) {
