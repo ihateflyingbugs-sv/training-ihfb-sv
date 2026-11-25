@@ -679,134 +679,137 @@
       <main class="flex-1 p-5 sm:p-8 w-full space-y-6">
 
         <!-- ================================================================ -->
-        <!-- VIEW 0: INICIO E INDUCCIÓN (CLEAN — NO REDUNDANT MODULE LIST)    -->
+        <!-- VIEW 0: INICIO E INDUCCIÓN (SLIM HEADER + BALANCED LAYOUT)         -->
         <!-- ================================================================ -->
-        <section id="section-dashboard" class="tab-content space-y-6">
-          <!-- Stylish Section Hero Banner -->
-          <div class="pro-card bg-gradient-to-br from-[#0B0F17] via-[#111827] to-[#172033] text-white p-6 sm:p-8 border-slate-800 relative overflow-hidden">
-            <div class="absolute right-0 top-0 bottom-0 w-72 bg-[radial-gradient(circle_at_center,#1A64FF33_0%,transparent_70%)] pointer-events-none"></div>
-            <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-              <div class="space-y-2 max-w-3xl">
-                <div class="flex items-center gap-2.5 flex-wrap">
-                  <span class="px-3 py-1 rounded-lg text-[10.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA] border border-[#1A64FF]/30">Inicio e Inducción</span>
-                  <span id="dashRoleTag" class="px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider bg-white/10 text-[#34D399]">Audiencia: Docente</span>
-                  <span id="dashOrgTag" class="text-xs text-slate-400 font-mono"></span>
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">Bienvenido, <span id="dashUserGreetingName">Participante</span></h2>
-                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Avanza paso a paso por tu ruta de formación: revisa el video de inducción y continúa directamente en tu siguiente actividad pendiente.
-                </p>
+        <section id="section-dashboard" class="tab-content space-y-5">
+          <!-- Slim & Subtle Welcome Strip -->
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="min-w-0 space-y-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA] border border-[#1A64FF]/30">Inicio e Inducción</span>
+                <span id="dashRoleTag" class="px-2.5 py-0.5 rounded-md text-[10.5px] font-bold uppercase tracking-wider bg-white/10 text-[#34D399]">Audiencia: Docente</span>
+                <span id="dashOrgTag" class="text-[11px] text-slate-400 font-mono truncate"></span>
               </div>
-              <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-                <button type="button" onclick="openProfileEditModal()" class="px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition flex items-center gap-2 cursor-pointer">
-                  <i class="fa-solid fa-user-gear text-[#60A5FA]"></i>
-                  <span>Mi Perfil</span>
-                </button>
-                <button type="button" onclick="continueWhereLeftOff()" class="px-5 py-3 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white font-bold text-xs shadow-lg flex items-center gap-2.5 transition cursor-pointer">
-                  <span id="btnContinueStepLabel">Continuar en Paso 1</span>
-                  <i class="fa-solid fa-arrow-right"></i>
-                </button>
+              <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">Bienvenido, <span id="dashUserGreetingName">Participante</span></h2>
+                <span class="text-xs text-slate-400 hidden sm:inline">• Revisa la inducción y continúa en tu siguiente paso pendiente.</span>
               </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-user-gear text-[#60A5FA]"></i>
+                <span>Mi Perfil</span>
+              </button>
+              <button type="button" onclick="continueWhereLeftOff()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white font-bold text-xs shadow-md flex items-center gap-2 transition cursor-pointer">
+                <span id="btnContinueStepLabel">Continuar en Paso 1</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
             </div>
           </div>
 
-          <!-- 3 Executive KPI Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            <div class="pro-card p-5 flex items-center justify-between">
+          <!-- 3 Compact Executive KPI Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="pro-card p-4 sm:p-5 flex items-center justify-between">
               <div>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Progreso de tu Rol</span>
-                <div id="dashMetricProgress" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p class="text-xs text-slate-500 mt-0.5">Mínimo para diploma: 80%</p>
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Progreso de tu Rol</span>
+                <div id="dashMetricProgress" class="font-mono text-2xl sm:text-3xl font-extrabold text-slate-900 mt-0.5">0%</div>
+                <p class="text-[11px] text-slate-500 mt-0.5">Mínimo para diploma: 80%</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-2xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-base">
                 <i class="fa-solid fa-chart-pie"></i>
               </div>
             </div>
 
-            <div class="pro-card p-5 flex items-center justify-between">
+            <div class="pro-card p-4 sm:p-5 flex items-center justify-between">
               <div>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Módulos Aprobados</span>
-                <div id="dashMetricModules" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0 de 6</div>
-                <p class="text-xs text-slate-500 mt-0.5">Asignados a tu perfil</p>
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Módulos Aprobados</span>
+                <div id="dashMetricModules" class="font-mono text-2xl sm:text-3xl font-extrabold text-slate-900 mt-0.5">0 de 6</div>
+                <p class="text-[11px] text-slate-500 mt-0.5">Asignados a tu perfil</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#10B981] flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-[#10B981] flex items-center justify-center text-base">
                 <i class="fa-solid fa-award"></i>
               </div>
             </div>
 
-            <div class="pro-card p-5 flex items-center justify-between">
+            <div class="pro-card p-4 sm:p-5 flex items-center justify-between">
               <div class="min-w-0 pr-3">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Siguiente Actividad</span>
-                <div id="dashNextStepLabel" class="text-sm font-extrabold text-slate-900 mt-1.5 truncate">M1: Videos y Manuales</div>
-                <button type="button" onclick="continueWhereLeftOff()" class="text-xs text-[#1A64FF] hover:underline font-semibold mt-1 inline-flex items-center gap-1 cursor-pointer">
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Siguiente Actividad</span>
+                <div id="dashNextStepLabel" class="text-sm font-extrabold text-slate-900 mt-1 truncate">M1: Videos y Manuales</div>
+                <button type="button" onclick="continueWhereLeftOff()" class="text-xs text-[#1A64FF] hover:underline font-semibold mt-0.5 inline-flex items-center gap-1 cursor-pointer">
                   <span>Continuar ahora</span> <i class="fa-solid fa-chevron-right text-[10px]"></i>
                 </button>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-lg shrink-0">
+              <div class="w-11 h-11 rounded-2xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-base shrink-0">
                 <i class="fa-solid fa-compass"></i>
               </div>
             </div>
           </div>
 
-          <!-- Induction Video + 3-Step Methodology Guide (Zero Redundant Module List) -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            <div class="lg:col-span-7 pro-card p-6 space-y-4">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Inducción al Portal</span>
-                <span class="font-mono text-xs text-slate-400">2 min 40s</span>
+          <!-- Balanced 2-Column Layout: LEFT = Reglas de Acreditación (5 cols) | RIGHT = Video de Inducción (7 cols) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <!-- LEFT: Reglas de Acreditación -->
+            <div class="lg:col-span-5 pro-card p-5 sm:p-6 flex flex-col justify-between gap-4">
+              <div class="space-y-3.5">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <div>
+                    <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#EC4899]">Metodología Secuencial</span>
+                    <h4 class="text-base font-extrabold text-slate-900">Reglas de Acreditación</h4>
+                  </div>
+                  <span class="w-8 h-8 rounded-xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-xs"><i class="fa-solid fa-list-check"></i></span>
+                </div>
+
+                <div class="space-y-2.5">
+                  <div class="p-3.5 rounded-xl bg-blue-50/60 border border-blue-200/80 flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-lg bg-[#1A64FF] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">01</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Estudio de Videos y Manuales</div>
+                      <p class="text-slate-600 mt-0.5 leading-relaxed">Revisa el material audiovisual y las guías ilustradas de cada módulo y confirma tu lectura.</p>
+                    </div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-pink-50/60 border border-pink-200/80 flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-lg bg-[#EC4899] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">02</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Práctica Interactiva al 100%</div>
+                      <p class="text-slate-600 mt-0.5 leading-relaxed">Ejecuta cada acción en el simulador en vivo hasta completar el 100%.</p>
+                    </div>
+                  </div>
+                  <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200/80 flex items-start gap-3">
+                    <span class="w-6 h-6 rounded-lg bg-[#10B981] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">03</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Evaluación y Refuerzo</div>
+                      <p class="text-slate-600 mt-0.5 leading-relaxed">Aprueba con ≥80%. Si obtienes menos de 60%, se habilitará un <strong>Módulo de Refuerzo</strong> obligatorio.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 class="text-lg font-extrabold text-slate-900">¿Cómo funciona este portal?</h4>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                  Conoce en pocos minutos cómo navegar por los módulos, revisar los videos y manuales, completar tus prácticas y obtener tu diploma oficial.
-                </p>
+
+              <button type="button" onclick="switchTab('modulos')" class="w-full py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
+                <span>Ir a Módulos y Videos</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+
+            <!-- RIGHT: Video de Inducción (Proportioned & Compact) -->
+            <div class="lg:col-span-7 pro-card p-5 sm:p-6 flex flex-col justify-between gap-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Inducción al Portal</span>
+                  <h4 class="text-base font-extrabold text-slate-900">¿Cómo funciona este portal?</h4>
+                  <p class="text-xs text-slate-500 mt-0.5">Conoce cómo navegar por los módulos, completar prácticas y descargar tu diploma.</p>
+                </div>
+                <span class="font-mono text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 shrink-0">2 min 40s</span>
               </div>
-              <div id="inlineIntroPlayerContainer" class="relative w-full aspect-video bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 flex items-center justify-center">
+
+              <div id="inlineIntroPlayerContainer" class="relative w-full aspect-[16/8.2] bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 flex items-center justify-center my-auto">
                 <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop" alt="Inducción" class="absolute inset-0 w-full h-full object-cover opacity-45">
-                <button type="button" onclick="playInlineIntroVideo()" class="relative z-10 w-16 h-16 rounded-full bg-[#1A64FF] hover:bg-blue-500 text-white flex items-center justify-center shadow-xl transition transform hover:scale-105 cursor-pointer">
-                  <i class="fa-solid fa-play text-xl ml-0.5"></i>
+                <button type="button" onclick="playInlineIntroVideo()" class="relative z-10 w-14 h-14 rounded-full bg-[#1A64FF] hover:bg-blue-500 text-white flex items-center justify-center shadow-xl transition transform hover:scale-105 cursor-pointer">
+                  <i class="fa-solid fa-play text-lg ml-0.5"></i>
                 </button>
-                <div class="absolute bottom-3 left-3 right-3 bg-[#0B0F17]/90 backdrop-blur-sm px-4 py-2.5 rounded-xl text-white text-xs flex items-center justify-between">
+                <div class="absolute bottom-3 left-3 right-3 bg-[#0B0F17]/90 backdrop-blur-sm px-4 py-2 rounded-xl text-white text-xs flex items-center justify-between">
                   <span class="font-medium">Guía rápida de navegación del portal</span>
                   <span class="text-[#34D399] font-semibold">Reproducir</span>
                 </div>
               </div>
-            </div>
-
-            <div class="lg:col-span-5 pro-card p-6 flex flex-col justify-between space-y-4">
-              <div class="space-y-4">
-                <div class="border-b border-slate-100 pb-3">
-                  <span class="text-[11px] font-bold uppercase tracking-wider text-[#EC4899]">Metodología Secuencial</span>
-                  <h4 class="text-lg font-extrabold text-slate-900 mt-0.5">Reglas de Acreditación</h4>
-                </div>
-                <div class="space-y-3">
-                  <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-200/80 flex items-start gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-[#1A64FF] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">01</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Estudio de Videos y Manuales</div>
-                      <p class="text-slate-600 mt-0.5">Revisa el material audiovisual y las guías ilustradas de cada módulo y confirma tu lectura.</p>
-                    </div>
-                  </div>
-                  <div class="p-4 rounded-xl bg-pink-50/60 border border-pink-200/80 flex items-start gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-[#EC4899] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">02</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Práctica Interactiva al 100%</div>
-                      <p class="text-slate-600 mt-0.5">Ejecuta cada acción en el simulador en vivo hasta completar el 100%.</p>
-                    </div>
-                  </div>
-                  <div class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-200/80 flex items-start gap-3">
-                    <span class="w-7 h-7 rounded-lg bg-[#10B981] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">03</span>
-                    <div class="text-xs">
-                      <div class="font-extrabold text-slate-900">Evaluación y Refuerzo</div>
-                      <p class="text-slate-600 mt-0.5">Aprueba con ≥80%. Si obtienes menos de 60%, se habilitará un <strong>Módulo de Refuerzo</strong> obligatorio.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button type="button" onclick="switchTab('modulos')" class="w-full py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer">
-                <span>Ir a Módulos y Videos</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
             </div>
           </div>
         </section>
@@ -815,23 +818,22 @@
         <!-- VIEW 1: MÓDULOS Y VIDEOS (TOP SQUARE CARDS + STEPPER + PRO SPLIT)-->
         <!-- ================================================================ -->
         <section id="section-modulos" class="tab-content hidden space-y-6">
-          <!-- Stylish Section Banner -->
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] via-[#131B2E] to-[#1E293B] text-white px-6 py-5 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <!-- Slim Top Header Banner -->
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
               <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Paso 1 de 3</span>
-                <span id="modulesCompletedCount" class="font-mono text-xs font-bold text-[#34D399]">0 / 6 aprobados</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Paso 1 de 3</span>
+                <span id="modulesCompletedCount" class="font-mono text-[11px] font-bold text-[#34D399]">0 / 6 aprobados</span>
               </div>
-              <h2 class="text-xl sm:text-2xl font-extrabold tracking-tight mt-1">Módulos y Recursos Audiovisuales</h2>
-              <p class="text-xs text-slate-300 mt-0.5">Selecciona un módulo superior, estudia su video y manual ilustrado y confirma tu lectura.</p>
+              <h2 class="text-lg font-extrabold tracking-tight mt-0.5">Módulos y Recursos Audiovisuales</h2>
             </div>
-            <button type="button" onclick="openProfileEditModal()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 shrink-0 cursor-pointer">
+            <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 shrink-0 cursor-pointer">
               <i class="fa-solid fa-user-gear text-[#60A5FA] mr-1.5"></i> Mi Perfil
             </button>
           </div>
 
-          <!-- TOP HORIZONTAL SQUARE CARDS SELECTOR (Replacing Left Vertical List) -->
-          <div id="moduleSquareCardsRow" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-3.5"></div>
+          <!-- COMPACT SQUARE MODULE CARDS SELECTOR (Centered Icon + Progress Bar) -->
+          <div id="moduleSquareCardsRow" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2.5 max-w-5xl"></div>
 
           <!-- CONNECTED CIRCLE STEPPER BAR (`image_829b12.png`) -->
           <div id="moduleStepTrackerBanner" class="pro-card p-6 bg-white"></div>
@@ -844,19 +846,18 @@
         <!-- VIEW 2: PRÁCTICAS INTERACTIVAS                                   -->
         <!-- ================================================================ -->
         <section id="section-practicas" class="tab-content hidden space-y-5">
-          <div id="practiceStepTrackerBanner" class="pro-card p-6 bg-white"></div>
-
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] to-[#1E293B] text-white px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-[#F472B6]">Paso 2 • Práctica Interactiva</span>
-              <h2 class="text-xl font-extrabold">Entorno Práctico de Plataforma</h2>
-              <p class="text-xs text-slate-300">Sigue las indicaciones paso a paso hasta completar el 100% y habilitar el Quiz.</p>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#EC4899]/25 text-[#F472B6]">Paso 2 de 3 • Práctica Interactiva</span>
+              <h2 class="text-lg font-extrabold mt-0.5">Entorno Práctico de Plataforma</h2>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
-              <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
+              <select id="selectPracticeModule" onchange="loadPracticeByModule(this.value)" class="pro-input px-3 py-1.5 text-xs font-bold text-slate-900"></select>
             </div>
           </div>
+
+          <div id="practiceStepTrackerBanner" class="pro-card p-5 bg-white"></div>
 
           <div id="practiceContentContainer" class="pro-card p-5 sm:p-7 space-y-5 w-full"></div>
         </section>
@@ -864,20 +865,19 @@
         <!-- ================================================================ -->
         <!-- VIEW 3: EVALUACIONES (QUIZZES — NO RETRY + MULTIPLE TEMPLATES)   -->
         <!-- ================================================================ -->
-        <section id="section-quizzes" class="tab-content hidden space-y-6">
-          <div id="quizStepTrackerBanner" class="pro-card p-6 bg-white"></div>
-
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] to-[#1E293B] text-white px-6 py-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <section id="section-quizzes" class="tab-content hidden space-y-5">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-[#34D399]">Paso 3 • Validación de Conocimientos</span>
-              <h2 class="text-xl font-extrabold">Evaluación Modular (Quiz)</h2>
-              <p class="text-xs text-slate-300">Intento único registrado. Si obtienes menos de 60%, se habilitará un Módulo de Refuerzo obligatorio.</p>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest bg-[#10B981]/25 text-[#34D399]">Paso 3 de 3 • Evaluación Modular</span>
+              <h2 class="text-lg font-extrabold mt-0.5">Evaluación Modular (Quiz)</h2>
             </div>
             <div class="flex items-center gap-2.5">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
-              <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
+              <select id="selectQuizModule" onchange="loadQuizByModule(this.value)" class="pro-input px-3 py-1.5 text-xs font-bold text-slate-900"></select>
             </div>
           </div>
+
+          <div id="quizStepTrackerBanner" class="pro-card p-5 bg-white"></div>
 
           <div class="pro-card p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
             <div class="border-b border-slate-100 pb-4 flex items-center justify-between flex-wrap gap-2">
@@ -907,18 +907,17 @@
         <!-- VIEW 4: PROGRESO Y DIPLOMA VERTICAL (UNLOCKED ONLY AT >= 80%)    -->
         <!-- ================================================================ -->
         <section id="section-progreso" class="tab-content hidden space-y-6">
-          <div class="pro-card bg-gradient-to-r from-[#0B0F17] to-[#1E293B] text-white p-6 sm:p-7 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div class="space-y-1">
-              <span class="text-[11px] font-bold uppercase text-[#34D399] tracking-wider">Historial Académico y Acreditación</span>
-              <h2 class="text-2xl font-extrabold text-white">Progreso y Diploma Oficial</h2>
-              <p class="text-xs text-slate-300">El diploma vertical se desbloquea automáticamente al alcanzar un avance global igual o superior al <strong>80%</strong>.</p>
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase text-[#34D399] bg-[#10B981]/20 tracking-wider">Historial y Acreditación</span>
+              <h2 class="text-lg font-extrabold text-white mt-0.5">Progreso y Diploma Oficial</h2>
             </div>
-            <div class="flex items-center gap-4 bg-white/10 border border-white/15 px-5 py-3.5 rounded-2xl shrink-0">
+            <div class="flex items-center gap-3.5 bg-white/10 border border-white/15 px-4 py-2 rounded-xl shrink-0">
               <div>
-                <div id="progresoPorcentajeTotal" class="font-mono text-3xl font-extrabold text-white">0%</div>
-                <div class="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Avance Global</div>
+                <div id="progresoPorcentajeTotal" class="font-mono text-xl font-extrabold text-white">0%</div>
+                <div class="text-[9.5px] uppercase font-bold text-slate-300 tracking-wider">Avance Global (Mín. 80%)</div>
               </div>
-              <div class="w-24 h-2.5 bg-slate-800 rounded-full overflow-hidden">
+              <div class="w-20 h-2 bg-slate-800 rounded-full overflow-hidden">
                 <div id="progresoBarraGeneral" class="h-full bg-[#10B981] transition-all duration-500" style="width: 0%;"></div>
               </div>
             </div>
@@ -1991,9 +1990,15 @@
       localStorage.setItem('ihfb_user_session_v4', JSON.stringify(currentUser));
       enterWorkspaceShell();
       const p = ensureProgressEntry(modId);
-      if (!p.materialConfirmed) switchTab('modulos');
-      else if (!p.practiceCompleted) goToModulePractice(modId);
-      else goToModuleQuiz(modId);
+      if (p.quizCompleted && (!p.needsReinforcement || p.reinforcementCompleted)) {
+        switchTab('progreso');
+      } else if (!p.materialConfirmed) {
+        switchTab('modulos');
+      } else if (!p.practiceCompleted) {
+        goToModulePractice(modId);
+      } else {
+        goToModuleQuiz(modId);
+      }
     }
 
     function enterWorkspaceFromRoadmap() {
@@ -2182,17 +2187,20 @@
 
         return `
           <div onclick="${unlocked ? `currentSelectedModuleId='${mod.id}'; renderModuleSquareCards(); renderActiveModuleView('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
-               class="p-3.5 rounded-2xl border transition-all flex flex-col justify-between aspect-[1.15/1] ${isCurrent ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/25 shadow-lg' : (unlocked ? 'bg-white text-slate-900 border-slate-200 hover:border-[#1A64FF] shadow-2xs' : 'bg-slate-100/80 text-slate-400 border-slate-200/70 opacity-65')} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'}">
-            <div class="flex items-center justify-between gap-2">
-              <span class="w-9 h-9 rounded-xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (isCurrent ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700')} flex items-center justify-center text-sm shrink-0">
-                <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
-              </span>
-              <span class="font-mono text-[11px] font-extrabold ${p.quizCompleted ? 'text-[#10B981]' : (isCurrent ? 'text-[#60A5FA]' : 'text-slate-500')}">${pct}%</span>
+               title="${mod.code}: ${mod.title}"
+               class="p-2.5 rounded-xl border transition-all flex flex-col items-center justify-between text-center aspect-square max-w-[122px] w-full mx-auto ${isCurrent ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/25 shadow-md' : (unlocked ? 'bg-white text-slate-900 border-slate-200 hover:border-[#1A64FF] shadow-2xs' : 'bg-slate-100/80 text-slate-400 border-slate-200/70 opacity-60')} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'}">
+            <div class="w-full flex items-center justify-between text-[9.5px] font-mono font-extrabold">
+              <span class="${isCurrent ? 'text-slate-400' : 'text-slate-500'}">${mod.code}</span>
+              <span class="${p.quizCompleted ? 'text-[#10B981]' : (isCurrent ? 'text-[#60A5FA]' : 'text-slate-400')}">${pct}%</span>
             </div>
-            <div class="space-y-1.5 pt-2">
-              <div class="font-mono text-[10px] font-bold uppercase tracking-wider ${isCurrent ? 'text-slate-400' : 'text-slate-400'}">${mod.code}</div>
-              <div class="text-xs font-extrabold leading-snug line-clamp-2">${mod.title}</div>
-              <div class="w-full h-1.5 rounded-full ${isCurrent ? 'bg-white/15' : 'bg-slate-100'} overflow-hidden">
+
+            <div class="w-9 h-9 rounded-xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (isCurrent ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700')} flex items-center justify-center text-sm my-auto shadow-2xs">
+              <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
+            </div>
+
+            <div class="w-full space-y-1">
+              <div class="text-[10.5px] font-bold leading-tight truncate px-0.5">${mod.title}</div>
+              <div class="w-full h-1 rounded-full ${isCurrent ? 'bg-white/15' : 'bg-slate-100'} overflow-hidden">
                 <div class="h-full ${p.quizCompleted ? 'bg-[#10B981]' : 'bg-[#1A64FF]'} transition-all" style="width:${pct}%"></div>
               </div>
             </div>
