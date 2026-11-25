@@ -82,8 +82,8 @@
     }
 
     .tri-hairline {
-      height: 2px;
-      background: linear-gradient(90deg, #1A64FF 0%, #EC4899 50%, #10B981 100%);
+      height: 1px;
+      background: rgba(148, 163, 184, 0.28);
     }
 
     #appSidebar {
@@ -507,10 +507,10 @@
 
       <!-- Well-Distributed Middle Academic Dossier with Prominent Audience Icon (image_a95ce2.png) -->
       <div class="my-auto pt-8 pb-4 space-y-4 w-full max-w-md mx-auto">
-        <!-- Centered Audience Role Emblem -->
-        <div class="flex flex-col items-center justify-center pb-1">
-          <div class="w-20 h-20 rounded-full bg-white/[0.07] border-2 border-white/15 flex items-center justify-center shadow-xl">
-            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#1A64FF] via-[#EC4899] to-[#10B981] text-white flex items-center justify-center text-2xl shadow-inner">
+        <!-- Large Neutral Monochrome Audience Icon -->
+        <div class="flex flex-col items-center justify-center pb-2">
+          <div class="w-28 h-28 rounded-full bg-white/[0.05] border border-white/15 flex items-center justify-center shadow-xl">
+            <div class="w-22 h-22 w-[84px] h-[84px] rounded-full bg-white/[0.08] border border-white/10 text-slate-200 flex items-center justify-center text-4xl">
               <i id="audHeroRoleIcon" class="fa-solid fa-chalkboard-user"></i>
             </div>
           </div>
@@ -695,7 +695,7 @@
             </nav>
           </div>
 
-          <!-- MÓDULOS WITH HOVER FLYOUT SUB-MENU + COLLAPSED BALLOON -->
+          <!-- MÓDULOS WITH HOVER FLYOUT SUB-MENU ALIGNED RIGHT NEXT TO IT -->
           <div class="pt-3 border-t border-slate-800/80 space-y-1">
             <div class="nav-item-wrap modules-hover-wrap relative">
               <button type="button" onclick="returnToAudienceGate()" class="nav-btn w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition text-xs font-bold cursor-pointer">
@@ -706,13 +706,9 @@
                 <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 sb-hide"></i>
               </button>
 
-              <!-- Hover Flyout Sub-Tab Listing All Role Modules -->
-              <div class="modules-flyout-menu opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[4.85rem] lg:left-[16.1rem] bottom-16 z-50 w-72 bg-[#0B0F17] border border-slate-700/90 rounded-2xl shadow-2xl p-3 space-y-2 text-white">
-                <div class="px-2 py-1 border-b border-slate-800 flex items-center justify-between">
-                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">Lista de Módulos</span>
-                  <button type="button" onclick="returnToAudienceGate()" class="text-[10px] text-slate-400 hover:text-white underline cursor-pointer">Ver todos ↗</button>
-                </div>
-                <div id="sidebarModulesFlyoutList" class="space-y-1 max-h-64 overflow-y-auto custom-scroll"></div>
+              <!-- Hover Flyout Sub-Tab Aligned Directly Right Beside "Módulos" (Names Only) -->
+              <div class="modules-flyout-menu opacity-0 invisible -translate-x-1 transition-all duration-150 absolute left-full top-0 ml-2 z-50 w-64 bg-[#0B0F17] border border-slate-700/90 rounded-2xl shadow-2xl p-2.5 space-y-1 text-white">
+                <div id="sidebarModulesFlyoutList" class="space-y-0.5 max-h-64 overflow-y-auto custom-scroll"></div>
               </div>
             </div>
           </div>
@@ -2013,7 +2009,7 @@
       document.getElementById('audGlobalProgressBar').style.width = `${globalPct}%`;
       document.getElementById('audGlobalProgressSub').textContent = `${completedCount} de ${roleMods.length} módulos aprobados`;
 
-      // Dark Obsidian Cards (`bg-[#0B0F17]`) where ONLY the status label pill & progress bar carry status color!
+      // Clean Light Cards (`bg-white border-slate-200`) with black text & neutral icons; ONLY status pill & progress bar carry status color!
       const grid = document.getElementById('audienceCardsGrid');
       grid.innerHTML = roleMods.map(mod => {
         const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
@@ -2021,44 +2017,44 @@
         const modPct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
 
         let badgeHtml = '';
-        let barColor = 'bg-slate-700';
+        let barColor = 'bg-slate-200';
         if (p.needsReinforcement && !p.reinforcementCompleted) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold">Refuerzo Req. • ${p.score}%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-bold">Refuerzo Req. • ${p.score}%</span>`;
           barColor = 'bg-rose-500';
         } else if (p.quizCompleted) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-emerald-500/20 text-[#34D399] border border-emerald-500/40 text-[11px] font-bold">Completado • 100% ✓</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">Completado • 100% ✓</span>`;
           barColor = 'bg-[#10B981]';
         } else if (modPct > 0) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold">En progreso • ${modPct}%</span>`;
-          barColor = 'bg-amber-400';
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold">En progreso • ${modPct}%</span>`;
+          barColor = 'bg-amber-500';
         } else if (unlocked) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-[#1A64FF]/25 text-[#60A5FA] border border-[#1A64FF]/40 text-[11px] font-bold">Disponible • 0%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-blue-50 text-[#1A64FF] border border-blue-200 text-[11px] font-bold">Disponible • 0%</span>`;
           barColor = 'bg-[#1A64FF]';
         } else {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10 text-[11px] font-semibold"><i class="fa-solid fa-lock mr-1.5"></i>Bloqueado • 0%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-slate-100 text-slate-400 border border-slate-200 text-[11px] font-semibold"><i class="fa-solid fa-lock mr-1.5"></i>Bloqueado • 0%</span>`;
         }
 
         return `
-        <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 rounded-2xl bg-[#0B0F17] text-white border ${unlocked ? 'border-slate-800 hover:border-[#1A64FF]' : 'border-slate-800/60 opacity-70'} shadow-md hover:shadow-xl transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-2.5">
+        <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 rounded-2xl bg-white text-slate-900 border ${unlocked ? 'border-slate-200 hover:border-slate-400' : 'border-slate-200/70 opacity-65'} shadow-2xs hover:shadow-md transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-2.5">
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5">
-            <div class="w-11 h-11 rounded-2xl bg-white/10 border border-white/15 text-white group-hover:bg-[#1A64FF] text-sm flex items-center justify-center shrink-0 transition">
-              <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
+            <div class="w-11 h-11 rounded-2xl bg-slate-100 border border-slate-200/80 text-slate-800 text-sm flex items-center justify-center shrink-0 transition">
+              <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
             </div>
             <div class="min-w-0">
               <div class="flex items-center gap-2">
-                <span class="font-mono text-[10.5px] font-extrabold px-2 py-0.5 rounded bg-white/10 text-slate-200 shrink-0">${mod.code}</span>
-                <h4 class="text-sm font-extrabold text-white truncate">${mod.title}</h4>
+                <span class="font-mono text-[10.5px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-700 shrink-0">${mod.code}</span>
+                <h4 class="text-sm font-extrabold text-slate-900 truncate">${mod.title}</h4>
               </div>
-              <p class="text-xs text-slate-400 truncate mt-0.5">${mod.desc}</p>
+              <p class="text-xs text-slate-500 truncate mt-0.5">${mod.desc}</p>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               ${badgeHtml}
-              <div class="w-7 h-7 rounded-lg bg-white/10 text-slate-300 group-hover:bg-[#1A64FF] group-hover:text-white flex items-center justify-center transition">
+              <div class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center transition">
                 <i class="fa-solid ${unlocked ? 'fa-chevron-right' : 'fa-lock'} text-[10px]"></i>
               </div>
             </div>
           </div>
-          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
             <div class="h-full ${barColor} transition-all duration-300" style="width:${modPct}%"></div>
           </div>
         </div>
@@ -2196,7 +2192,7 @@
       else goToModuleQuiz(nextMod.id);
     }
 
-    // ==================== COMPACT LOW-HEIGHT STEPPER BAR (ALL VIEWS) ====================
+    // ==================== COMPACT LOW-HEIGHT STEPPER BAR (WITH ACTION CTA ON STEP 1) ====================
     function renderStepTrackerHTML(modId, activeStepNum) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
       const p = ensureProgressEntry(mod.id);
@@ -2214,19 +2210,25 @@
 
       const lineFillPct = s4 ? 100 : (s3 ? 75 : (s2 ? 50 : (s1 ? 25 : 0)));
 
+      const step1ActionBtn = (activeStepNum === 1)
+        ? (p.materialConfirmed
+          ? `<button type="button" onclick="goToModulePractice('${mod.id}')" class="px-4 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-xs transition cursor-pointer shrink-0">Ir a Práctica (Paso 2) →</button>`
+          : `<button type="button" onclick="confirmModuleMaterialViewed()" class="px-4 py-2 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-xs transition cursor-pointer shrink-0"><i class="fa-solid fa-check-double mr-1"></i> Confirmar Lectura → Paso 2</button>`)
+        : '';
+
       return `
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div class="flex items-center gap-2.5 shrink-0">
-            <span class="w-7 h-7 rounded-lg bg-[#0B0F17] text-white flex items-center justify-center text-xs"><i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i></span>
+            <span class="w-8 h-8 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-xs"><i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i></span>
             <div class="min-w-0">
               <div class="flex items-center gap-1.5">
-                <span class="font-mono text-[10.5px] font-extrabold text-[#1A64FF]">${mod.code}</span>
+                <span class="font-mono text-[11px] font-extrabold text-[#1A64FF]">${mod.code}</span>
                 <h4 class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${mod.title}</h4>
               </div>
             </div>
           </div>
 
-          <div class="relative flex-1 max-w-2xl mx-auto w-full py-0.5">
+          <div class="relative flex-1 max-w-xl mx-auto w-full py-0.5">
             <div class="absolute top-4 left-[12%] right-[12%] h-0.5 bg-slate-200 rounded-full">
               <div class="h-full bg-[#1A64FF] rounded-full transition-all duration-500" style="width:${lineFillPct}%"></div>
             </div>
@@ -2251,7 +2253,10 @@
             </div>
           </div>
 
-          <span class="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 shrink-0 self-start lg:self-center">Progreso: ${s3 ? '100%' : (s2 ? '67%' : (s1 ? '33%' : '0%'))}</span>
+          <div class="flex items-center gap-2.5 shrink-0 self-start lg:self-center">
+            <span class="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Progreso: ${s3 ? '100%' : (s2 ? '67%' : (s1 ? '33%' : '0%'))}</span>
+            ${step1ActionBtn}
+          </div>
         </div>
       `;
     }
@@ -2272,24 +2277,17 @@
     }
 
     function renderModuleSquareCards() {
-      // Populate sidebar hover flyout sub-tab for "Módulos"
+      // Populate sidebar hover flyout sub-tab for "Módulos" (Module Names ONLY)
       const flyout = document.getElementById('sidebarModulesFlyoutList');
       if (!flyout || !currentUser) return;
       const roleMods = getRoleModulesList(currentUser.role);
       flyout.innerHTML = roleMods.map(m => {
         const unlocked = isModuleUnlockedForRole(m.id, roleMods);
-        const p = ensureProgressEntry(m.id);
-        const pct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
         const isCurrent = m.id === currentSelectedModuleId;
         return `
           <button type="button" onclick="${unlocked ? `currentSelectedModuleId='${m.id}'; switchTab('modulos')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
-                  class="w-full px-2.5 py-2 rounded-xl flex items-center justify-between gap-2 text-left text-xs transition ${isCurrent ? 'bg-[#1A64FF] text-white font-bold' : (unlocked ? 'hover:bg-white/10 text-slate-200' : 'opacity-45 text-slate-500 cursor-not-allowed')} cursor-pointer">
-            <div class="flex items-center gap-2 min-w-0">
-              <i class="fa-solid ${unlocked ? (m.icon || 'fa-layer-group') : 'fa-lock'} text-[11px] shrink-0"></i>
-              <span class="font-mono text-[10.5px] font-bold shrink-0">${m.code}</span>
-              <span class="truncate">${m.title}</span>
-            </div>
-            <span class="font-mono text-[10px] font-extrabold ${pct === 100 ? 'text-[#34D399]' : 'text-slate-400'} shrink-0">${pct}%</span>
+                  class="w-full px-3 py-2 rounded-xl text-left text-xs transition truncate block ${isCurrent ? 'bg-[#1A64FF] text-white font-bold' : (unlocked ? 'hover:bg-white/10 text-slate-200 font-medium' : 'opacity-45 text-slate-500 cursor-not-allowed')} cursor-pointer">
+            ${m.title}
           </button>
         `;
       }).join('');
@@ -2302,6 +2300,18 @@
       renderActiveModuleView(currentSelectedModuleId);
     }
 
+    // Independent Manual Switching — updates ONLY the right Manual DOM column so the Video iframe NEVER reloads!
+    function openInlineManual(mIdx) {
+      inlineManualIdx = mIdx;
+      inlineManualExpanded = true;
+      updateInlineManualColumnOnly();
+    }
+
+    function closeInlineManualList() {
+      inlineManualExpanded = false;
+      updateInlineManualColumnOnly();
+    }
+
     function stepInlineManual(delta) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === currentSelectedModuleId) || ALL_MODULES_MASTER[0];
       const cards = mod.cards && mod.cards.length ? mod.cards : [];
@@ -2310,101 +2320,80 @@
       const next = inlineManualIdx + delta;
       if (next >= 0 && next < manuals.length) {
         inlineManualIdx = next;
-        renderActiveModuleView(currentSelectedModuleId);
+        updateInlineManualColumnOnly();
       }
     }
 
-    function renderActiveModuleView(modId) {
-      const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
-      const p = ensureProgressEntry(mod.id);
-
-      document.getElementById('moduleStepTrackerBanner').innerHTML = renderStepTrackerHTML(mod.id, 1);
-
-      const statusBadge = p.quizCompleted
-        ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Módulo Aprobado (${p.score}%) ✓</span>`
-        : (p.materialConfirmed
-          ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-[#1A64FF] border border-blue-200">Material Confirmado ✓</span>`
-          : `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">Paso 1 • Estudio</span>`);
-
-      const cards = mod.cards && mod.cards.length ? mod.cards : [{ title: mod.title, videoUrl: '', manuals: [{ title: 'Manual Operativo', url: '' }], points: [] }];
-      if (inlineLessonIdx >= cards.length) inlineLessonIdx = 0;
-      const activeCard = cards[inlineLessonIdx] || cards[0];
+    function buildInlineManualPanelHTML(mod, activeCard) {
       const manuals = getCardManualsList(activeCard);
       if (inlineManualIdx >= manuals.length) inlineManualIdx = 0;
       const activeManual = manuals[inlineManualIdx] || manuals[0];
-
-      const lessonSwitcherHtml = cards.length > 1 ? `
-        <div class="flex flex-wrap gap-2">
-          ${cards.map((c, idx) => `
-            <button type="button" onclick="selectInlineLesson(${idx})" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${idx === inlineLessonIdx ? 'bg-[#0B0F17] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:border-[#1A64FF]'}">
-              <i class="fa-solid fa-circle-play ${idx === inlineLessonIdx ? 'text-[#60A5FA]' : 'text-slate-400'}"></i>
-              <span>Video ${idx + 1}: ${c.title}</span>
-            </button>
-          `).join('')}
-        </div>
-      ` : '';
-
       const pdfEmbedUrl = formatManualPdfEmbedUrl(activeManual.url);
       const hasRealPdf = pdfEmbedUrl && pdfEmbedUrl !== "https://drive.google.com";
 
-      const rightManualPanelHtml = !inlineManualExpanded ? `
-        <div class="space-y-3.5">
-          <div class="text-[11px] font-extrabold uppercase tracking-widest text-[#1A64FF] border-b border-slate-200 pb-2.5 flex items-center justify-between">
-            <span><i class="fa-solid fa-book-open mr-1.5"></i>MANUALES RELACIONADOS (${manuals.length})</span>
-            <span class="font-mono text-[10px] text-slate-400">${mod.code}</span>
-          </div>
-          <div class="space-y-2.5">
-            ${manuals.map((mn, mIdx) => `
-              <div onclick="inlineManualIdx=${mIdx}; inlineManualExpanded=true; renderActiveModuleView('${mod.id}')" class="p-4 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] hover:shadow-md transition cursor-pointer flex items-center justify-between gap-3 group">
-                <div class="flex items-center gap-3 min-w-0">
-                  <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#1A64FF] font-mono text-xs font-extrabold flex items-center justify-center shrink-0">${mod.code}.${mIdx + 1}</span>
-                  <div class="min-w-0">
-                    <div class="text-xs sm:text-sm font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${mn.title}</div>
-                    <div class="text-[11px] text-slate-400">Clic para desplegar manual PDF</div>
+      if (!inlineManualExpanded) {
+        return `
+          <div class="space-y-3.5">
+            <div class="text-[11px] font-extrabold uppercase tracking-widest text-slate-700 border-b border-slate-200 pb-2.5 flex items-center justify-between">
+              <span><i class="fa-solid fa-book-open text-[#1A64FF] mr-1.5"></i>MANUALES RELACIONADOS (${manuals.length})</span>
+              <span class="font-mono text-[10px] text-slate-400">${mod.code}</span>
+            </div>
+            <div class="space-y-2.5">
+              ${manuals.map((mn, mIdx) => `
+                <div onclick="openInlineManual(${mIdx})" class="p-4 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] hover:shadow-md transition cursor-pointer flex items-center justify-between gap-3 group">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-blue-50 text-slate-700 group-hover:text-[#1A64FF] font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">${mod.code}.${mIdx + 1}</span>
+                    <div class="min-w-0">
+                      <div class="text-xs sm:text-sm font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${mn.title}</div>
+                      <div class="text-[11px] text-slate-400">Clic para desplegar manual PDF sin detener el video</div>
+                    </div>
                   </div>
+                  <span class="w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-[#1A64FF] text-slate-500 group-hover:text-white flex items-center justify-center shrink-0 transition">
+                    <i class="fa-solid fa-arrow-down text-xs"></i>
+                  </span>
                 </div>
-                <span class="w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-[#1A64FF] text-slate-500 group-hover:text-white flex items-center justify-center shrink-0 transition">
-                  <i class="fa-solid fa-arrow-down text-xs"></i>
-                </span>
-              </div>
-            `).join('')}
+              `).join('')}
+            </div>
           </div>
-        </div>
-      ` : `
+        `;
+      }
+
+      return `
         <div class="flex flex-col h-full space-y-3">
           <div class="flex items-center justify-between gap-2 flex-wrap">
-            <button type="button" onclick="inlineManualExpanded=false; renderActiveModuleView('${mod.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-[11px] font-bold text-slate-700 cursor-pointer shadow-2xs">
+            <button type="button" onclick="closeInlineManualList()" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-[11px] font-bold text-slate-700 cursor-pointer shadow-2xs">
               ← Volver a manuales (${manuals.length})
             </button>
             ${activeManual.url ? `<a href="${activeManual.url}" target="_blank" title="Abrir PDF en pestaña nueva" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-bold text-[#1A64FF] shadow-2xs"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Abrir PDF</a>` : ''}
           </div>
 
-          <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200">
-            <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF]">${mod.code}.${inlineManualIdx + 1}</span>
-            <span class="text-xs sm:text-[13px] font-extrabold text-slate-900 truncate">${activeManual.title}</span>
+          <div class="flex items-center justify-between gap-2 bg-white px-3.5 py-2 rounded-xl border border-slate-200">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-800 shrink-0">${mod.code}.${inlineManualIdx + 1}</span>
+              <span class="text-xs sm:text-[13px] font-extrabold text-slate-900 truncate">${activeManual.title}</span>
+            </div>
+            ${manuals.length > 1 ? `
+              <div class="flex items-center gap-1.5 shrink-0 text-xs">
+                <button type="button" onclick="stepInlineManual(-1)" ${inlineManualIdx <= 0 ? 'disabled' : ''} class="px-2 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">‹</button>
+                <span class="font-mono font-bold text-slate-600 px-1">${inlineManualIdx + 1}/${manuals.length}</span>
+                <button type="button" onclick="stepInlineManual(1)" ${inlineManualIdx >= manuals.length - 1 ? 'disabled' : ''} class="px-2 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">›</button>
+              </div>
+            ` : ''}
           </div>
 
-          ${manuals.length > 1 ? `
-            <div class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs">
-              <button type="button" onclick="stepInlineManual(-1)" ${inlineManualIdx <= 0 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">‹ Anterior</button>
-              <span class="font-mono font-bold text-slate-600">${inlineManualIdx + 1} / ${manuals.length}</span>
-              <button type="button" onclick="stepInlineManual(1)" ${inlineManualIdx >= manuals.length - 1 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">Siguiente ›</button>
-            </div>
-          ` : ''}
-
           ${hasRealPdf ? `
-            <div class="flex-1 min-h-[430px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-              <iframe src="${pdfEmbedUrl}" class="w-full h-full min-h-[430px]" frameborder="0"></iframe>
+            <div class="flex-1 min-h-[460px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+              <iframe src="${pdfEmbedUrl}" class="w-full h-full min-h-[460px]" frameborder="0"></iframe>
             </div>
           ` : `
             <div class="flex-1 bg-white rounded-xl border border-slate-200 p-5 space-y-3 overflow-y-auto shadow-xs">
               <div class="px-3.5 py-2 rounded-lg bg-[#0B0F17] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center justify-between">
                 <span>${mod.code}.${inlineManualIdx + 1} • ${activeManual.title}</span>
-                <span class="text-[#34D399] font-mono">GUÍA OFICIAL</span>
+                <span class="text-slate-300 font-mono">GUÍA OFICIAL</span>
               </div>
               ${(activeCard.points || []).map((pt, i) => `
                 <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-start gap-2.5 text-xs">
-                  <span class="w-5 h-5 rounded bg-[#1A64FF] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
+                  <span class="w-5 h-5 rounded bg-[#0B0F17] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
                   <span class="text-slate-800 font-medium leading-relaxed">${pt}</span>
                 </div>
               `).join('')}
@@ -2412,96 +2401,109 @@
           `}
         </div>
       `;
+    }
+
+    function updateInlineManualColumnOnly() {
+      const col = document.getElementById('inlineManualColumnContainer');
+      if (!col) return;
+      const mod = ALL_MODULES_MASTER.find(m => m.id === currentSelectedModuleId) || ALL_MODULES_MASTER[0];
+      const cards = mod.cards && mod.cards.length ? mod.cards : [];
+      const activeCard = cards[inlineLessonIdx] || cards[0] || { points: [] };
+      col.innerHTML = buildInlineManualPanelHTML(mod, activeCard);
+    }
+
+    function toggleInlineDescriptionOnly() {
+      inlineDescExpanded = !inlineDescExpanded;
+      const body = document.getElementById('inlineDescAccordionBody');
+      const icon = document.getElementById('inlineDescChevronIcon');
+      if (body) body.classList.toggle('hidden', !inlineDescExpanded);
+      if (icon) icon.className = `fa-solid ${inlineDescExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs text-slate-500`;
+    }
+
+    function renderActiveModuleView(modId) {
+      const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
+      document.getElementById('moduleStepTrackerBanner').innerHTML = renderStepTrackerHTML(mod.id, 1);
+
+      const cards = mod.cards && mod.cards.length ? mod.cards : [{ title: mod.title, videoUrl: '', manuals: [{ title: 'Manual Operativo', url: '' }], points: [] }];
+      if (inlineLessonIdx >= cards.length) inlineLessonIdx = 0;
+      const activeCard = cards[inlineLessonIdx] || cards[0];
+      const manuals = getCardManualsList(activeCard);
+
+      const lessonSwitcherHtml = cards.length > 1 ? `
+        <div class="flex flex-wrap gap-2">
+          ${cards.map((c, idx) => `
+            <button type="button" onclick="selectInlineLesson(${idx})" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${idx === inlineLessonIdx ? 'bg-[#0B0F17] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-400'}">
+              <i class="fa-solid fa-circle-play ${idx === inlineLessonIdx ? 'text-[#60A5FA]' : 'text-slate-400'}"></i>
+              <span>Video ${idx + 1}: ${c.title}</span>
+            </button>
+          `).join('')}
+        </div>
+      ` : '';
 
       const splitBox = document.getElementById('activeModuleProSplitContainer');
       splitBox.className = "space-y-4";
       splitBox.innerHTML = `
-        <!-- Module Header Card with COLLAPSIBLE Descripción Inside (Matching user request) -->
+        <!-- SLEEK COLLAPSIBLE DESCRIPTION CARD RIGHT BELOW PROGRESS STEPPER -->
         <div class="pro-card overflow-hidden">
-          <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="flex items-center gap-3.5 min-w-0">
-              <span class="w-11 h-11 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-base shrink-0 shadow-xs">
-                <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
+          <button type="button" onclick="toggleInlineDescriptionOnly()" class="w-full px-5 py-3.5 bg-white hover:bg-slate-50/80 flex items-center justify-between gap-3 text-left transition cursor-pointer">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-xs shrink-0">
+                <i class="fa-solid fa-align-left"></i>
               </span>
-              <div class="min-w-0">
-                <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-800">${mod.code}</span>
-                  <h3 class="text-base sm:text-lg font-extrabold text-slate-900 truncate">${mod.title}</h3>
-                  ${statusBadge}
-                </div>
-                <div class="flex items-center gap-3 mt-1">
-                  <button type="button" onclick="inlineDescExpanded=!inlineDescExpanded; renderActiveModuleView('${mod.id}')" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A64FF] hover:text-blue-700 cursor-pointer">
-                    <i class="fa-solid ${inlineDescExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
-                    <span>${inlineDescExpanded ? 'Ocultar descripción y objetivos' : 'Ver descripción y objetivos del módulo'}</span>
-                  </button>
-                </div>
-              </div>
+              <span class="text-xs sm:text-[13px] font-extrabold text-slate-900">Descripción y Objetivos del Módulo</span>
+              <span class="text-xs text-slate-400 truncate hidden sm:inline">— ${mod.desc}</span>
             </div>
+            <i id="inlineDescChevronIcon" class="fa-solid ${inlineDescExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs text-slate-500 shrink-0"></i>
+          </button>
 
-            <div class="shrink-0">
-              ${p.materialConfirmed ? `
-                <button type="button" onclick="goToModulePractice('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition cursor-pointer">
-                  Ir a Práctica (Paso 2) →
-                </button>
-              ` : `
-                <button type="button" onclick="confirmModuleMaterialViewed()" class="px-5 py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition cursor-pointer">
-                  <i class="fa-solid fa-check-double mr-1.5"></i> Confirmar Lectura → Paso 2
-                </button>
-              `}
+          <div id="inlineDescAccordionBody" class="${inlineDescExpanded ? '' : 'hidden'} px-5 pb-5 pt-3 border-t border-slate-100 bg-slate-50/60 space-y-3">
+            <p class="text-xs sm:text-[13px] text-slate-700 leading-relaxed">${mod.desc}</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              ${(activeCard.points || []).map((pt, i) => `
+                <div class="p-2.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-2.5 text-xs">
+                  <span class="w-5 h-5 rounded-md bg-slate-100 text-slate-800 font-mono text-[10.5px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
+                  <span class="text-slate-700 font-medium">${pt}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
-
-          <!-- Collapsible Description & Lesson Objectives Drawer -->
-          ${inlineDescExpanded ? `
-            <div class="px-5 pb-5 pt-3 border-t border-slate-100 bg-slate-50/70 space-y-3">
-              <p class="text-xs sm:text-[13px] text-slate-700 leading-relaxed">${mod.desc}</p>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                ${(activeCard.points || []).map((pt, i) => `
-                  <div class="p-2.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-2.5 text-xs">
-                    <span class="w-5 h-5 rounded-md bg-blue-50 text-[#1A64FF] font-mono text-[10.5px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
-                    <span class="text-slate-700 font-medium">${pt}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          ` : ''}
         </div>
 
         ${lessonSwitcherHtml}
 
-        <!-- ULTRA-PREMIUM FULL-WIDTH DUAL STUDIO (VIDEO ON LEFT + MANUALES PDF ON RIGHT) -->
-        <div class="pro-card overflow-hidden border-slate-200/90 shadow-lg">
-          <div class="px-6 py-3.5 bg-[#0B0F17] text-white flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3 min-w-0">
-              <span class="px-2.5 py-0.5 rounded-md bg-[#1A64FF] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider shrink-0">VIDEO ${inlineLessonIdx + 1}</span>
-              <span class="text-sm sm:text-base font-extrabold text-white truncate">${activeCard.title}</span>
+        <!-- ULTRA-PRO 50/50 DUAL STUDIO (CLEAN NEUTRAL HEADER + INDEPENDENT MANUAL VIEWER) -->
+        <div class="pro-card overflow-hidden border-slate-200 shadow-lg">
+          <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="px-2.5 py-0.5 rounded-md bg-[#0B0F17] text-white font-mono text-[11px] font-extrabold uppercase tracking-wider shrink-0">VIDEO ${inlineLessonIdx + 1}</span>
+              <span class="text-sm sm:text-base font-extrabold text-slate-900 truncate">${activeCard.title}</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 text-[11px] font-semibold text-slate-300">
-                <i class="fa-solid fa-book-open text-[#34D399]"></i> ${manuals.length} Manual(es)
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[11px] font-bold text-slate-700">
+                <i class="fa-solid fa-book-open text-slate-500"></i> ${manuals.length} Manual(es)
               </span>
               <span class="font-mono text-xs font-bold text-slate-400">${mod.code}</span>
             </div>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12">
-            <!-- LEFT 7 COLS: FULL UNOBSTRUCTED 16:9 VIDEO STUDIO -->
-            <div class="lg:col-span-7 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
+            <!-- LEFT 6 COLS: VIDEO PLAYER -->
+            <div class="lg:col-span-6 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
               <div class="space-y-4">
-                <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
                   <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
                 </div>
 
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
                   <div class="text-[11px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
-                    <i class="fa-solid fa-list-ul text-[#1A64FF]"></i>
+                    <i class="fa-solid fa-list-ul text-slate-700"></i>
                     <span>Contenido del Video</span>
                   </div>
                   <ul class="space-y-1.5 text-xs sm:text-[13px] text-slate-700">
                     ${(activeCard.points || []).map((pt, i) => `
                       <li class="flex items-start gap-2.5">
-                        <span class="font-mono text-xs font-bold text-[#1A64FF]">• ${inlineLessonIdx + 1}.${i + 1}</span>
+                        <span class="font-mono text-xs font-bold text-slate-800">• ${inlineLessonIdx + 1}.${i + 1}</span>
                         <span class="font-medium">${pt}</span>
                       </li>
                     `).join('')}
@@ -2510,9 +2512,9 @@
               </div>
             </div>
 
-            <!-- RIGHT 5 COLS: INTERACTIVE RELATED MANUALS & PDF VIEWER -->
-            <div class="lg:col-span-5 bg-[#F8FAFC] p-5 sm:p-6 flex flex-col justify-between">
-              ${rightManualPanelHtml}
+            <!-- RIGHT 6 COLS: WIDE INDEPENDENT MANUAL VIEWER -->
+            <div id="inlineManualColumnContainer" class="lg:col-span-6 bg-[#F8FAFC] p-5 sm:p-6 flex flex-col justify-between">
+              ${buildInlineManualPanelHTML(mod, activeCard)}
             </div>
           </div>
         </div>
