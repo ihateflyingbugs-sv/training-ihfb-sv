@@ -822,14 +822,11 @@
             </button>
           </div>
 
-          <!-- TOP HORIZONTAL SQUARE CARDS SELECTOR (Replacing Left Vertical List) -->
-          <div id="moduleSquareCardsRow" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-7 gap-3.5"></div>
+          <!-- COMPACT CONNECTED STEPPER BAR -->
+          <div id="moduleStepTrackerBanner" class="pro-card px-5 py-3.5 bg-white"></div>
 
-          <!-- CONNECTED CIRCLE STEPPER BAR (`image_829b12.png`) -->
-          <div id="moduleStepTrackerBanner" class="pro-card p-6 bg-white"></div>
-
-          <!-- ULTRA-PRO SPLIT WORKSPACE: LEFT (Module Info & Key Points) | RIGHT (Video & Manual Thumbnails) -->
-          <div id="activeModuleProSplitContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"></div>
+          <!-- INLINE DUAL STUDIO WORKSPACE (Matching image_a8d923.png) -->
+          <div id="activeModuleProSplitContainer" class="space-y-4"></div>
         </section>
 
         <!-- ================================================================ -->
@@ -848,7 +845,7 @@
             </div>
           </div>
 
-          <div id="practiceStepTrackerBanner" class="pro-card p-6 bg-white"></div>
+          <div id="practiceStepTrackerBanner" class="pro-card px-5 py-3.5 bg-white"></div>
 
           <div id="practiceContentContainer" class="pro-card p-5 sm:p-7 space-y-5 w-full"></div>
         </section>
@@ -869,7 +866,7 @@
             </div>
           </div>
 
-          <div id="quizStepTrackerBanner" class="pro-card p-6 bg-white"></div>
+          <div id="quizStepTrackerBanner" class="pro-card px-5 py-3.5 bg-white"></div>
 
           <div class="pro-card p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
             <div class="border-b border-slate-100 pb-4 flex items-center justify-between flex-wrap gap-2">
@@ -2103,7 +2100,7 @@
       else goToModuleQuiz(nextMod.id);
     }
 
-    // ==================== CONNECTED CIRCLE STEPPER BAR (`image_829b12.png`) ====================
+    // ==================== COMPACT LOW-HEIGHT STEPPER BAR (ALL VIEWS) ====================
     function renderStepTrackerHTML(modId, activeStepNum) {
       const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
       const p = ensureProgressEntry(mod.id);
@@ -2113,7 +2110,7 @@
       const s4 = p.quizCompleted && !p.needsReinforcement;
 
       const steps = [
-        { num: 1, label: "Videos y Manuales", sub: s1 ? "Completado" : "Estudio", done: s1, active: activeStepNum === 1, action: `currentSelectedModuleId='${mod.id}'; switchTab('modulos')` },
+        { num: 1, label: "Manuales y Videos", sub: s1 ? "Completado" : "Estudio", done: s1, active: activeStepNum === 1, action: `currentSelectedModuleId='${mod.id}'; switchTab('modulos')` },
         { num: 2, label: "Práctica en Vivo", sub: s2 ? "100% Lista" : "Simulador", done: s2, active: activeStepNum === 2, action: s1 ? `goToModulePractice('${mod.id}')` : `showProAlert('Paso 1 Requerido', 'Confirma primero los videos y manuales del Paso 1.', false)` },
         { num: 3, label: "Evaluación (Quiz)", sub: s3 ? `Nota: ${p.score}%` : "Intento Único", done: s3, active: activeStepNum === 3, action: s2 ? `goToModuleQuiz('${mod.id}')` : `showProAlert('Paso 2 Requerido', 'Completa primero la Práctica al 100%.', false)` },
         { num: 4, label: "Acreditación", sub: s4 ? "Aprobado" : (p.needsReinforcement ? "Refuerzo" : "Meta ≥80%"), done: s4, active: false, action: `switchTab('progreso')` }
@@ -2122,85 +2119,82 @@
       const lineFillPct = s4 ? 100 : (s3 ? 75 : (s2 ? 50 : (s1 ? 25 : 0)));
 
       return `
-        <div class="space-y-5">
-          <div class="flex items-center justify-between flex-wrap gap-2">
-            <div class="flex items-center gap-2.5">
-              <span class="w-8 h-8 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-xs"><i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i></span>
-              <div>
-                <span class="font-mono text-[11px] font-bold text-[#1A64FF]">${mod.code}</span>
-                <h4 class="text-sm font-extrabold text-slate-900 leading-tight">${mod.title}</h4>
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 shrink-0">
+            <span class="w-7 h-7 rounded-lg bg-[#0B0F17] text-white flex items-center justify-center text-xs"><i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i></span>
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="font-mono text-[10.5px] font-extrabold text-[#1A64FF]">${mod.code}</span>
+                <h4 class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${mod.title}</h4>
               </div>
             </div>
-            <span class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700">Avance del Módulo: ${s3 ? '100%' : (s2 ? '67%' : (s1 ? '33%' : '0%'))}</span>
           </div>
 
-          <div class="relative max-w-3xl mx-auto pt-2 pb-1">
-            <!-- Horizontal Connecting Line -->
-            <div class="absolute top-7 left-[12%] right-[12%] h-1 bg-slate-200 rounded-full">
+          <div class="relative flex-1 max-w-2xl mx-auto w-full py-0.5">
+            <div class="absolute top-4 left-[12%] right-[12%] h-0.5 bg-slate-200 rounded-full">
               <div class="h-full bg-[#1A64FF] rounded-full transition-all duration-500" style="width:${lineFillPct}%"></div>
             </div>
-
-            <div class="relative z-10 grid grid-cols-4 gap-2 text-center">
+            <div class="relative z-10 grid grid-cols-4 gap-1 text-center">
               ${steps.map(st => {
                 let circleHtml = '';
                 if (st.done) {
-                  circleHtml = `<div class="w-11 h-11 rounded-full bg-[#1A64FF] text-white mx-auto flex items-center justify-center text-sm font-extrabold shadow-md transition"><i class="fa-solid fa-check"></i></div>`;
+                  circleHtml = `<div class="w-7 h-7 rounded-full bg-[#1A64FF] text-white mx-auto flex items-center justify-center text-[11px] font-extrabold shadow-xs transition"><i class="fa-solid fa-check"></i></div>`;
                 } else if (st.active) {
-                  circleHtml = `<div class="w-11 h-11 rounded-full bg-[#1A64FF] text-white ring-4 ring-[#1A64FF]/25 mx-auto flex items-center justify-center font-mono text-sm font-extrabold shadow-md transition">${st.num}</div>`;
+                  circleHtml = `<div class="w-7 h-7 rounded-full bg-[#1A64FF] text-white ring-3 ring-[#1A64FF]/25 mx-auto flex items-center justify-center font-mono text-[11px] font-extrabold shadow-xs transition">${st.num}</div>`;
                 } else {
-                  circleHtml = `<div class="w-11 h-11 rounded-full bg-white border-2 border-[#1A64FF]/40 text-[#1A64FF] mx-auto flex items-center justify-center font-mono text-sm font-extrabold transition">${st.num}</div>`;
+                  circleHtml = `<div class="w-7 h-7 rounded-full bg-white border-2 border-[#1A64FF]/40 text-[#1A64FF] mx-auto flex items-center justify-center font-mono text-[11px] font-extrabold transition">${st.num}</div>`;
                 }
                 return `
-                  <div onclick="${st.action}" class="cursor-pointer group space-y-2">
+                  <div onclick="${st.action}" class="cursor-pointer group flex flex-col items-center">
                     ${circleHtml}
-                    <div>
-                      <div class="text-[11px] sm:text-xs font-extrabold ${st.active || st.done ? 'text-slate-900' : 'text-slate-500'} truncate">${st.label}</div>
-                      <div class="text-[10px] font-semibold ${st.done ? 'text-[#1A64FF]' : 'text-slate-400'}">${st.sub}</div>
-                    </div>
+                    <div class="text-[10px] sm:text-[11px] font-extrabold ${st.active || st.done ? 'text-slate-900' : 'text-slate-500'} truncate mt-1 leading-tight">${st.label}</div>
+                    <div class="text-[9px] font-semibold ${st.done ? 'text-[#1A64FF]' : 'text-slate-400'} leading-tight">${st.sub}</div>
                   </div>
                 `;
               }).join('')}
             </div>
           </div>
+
+          <span class="font-mono text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 shrink-0 self-start lg:self-center">Progreso: ${s3 ? '100%' : (s2 ? '67%' : (s1 ? '33%' : '0%'))}</span>
         </div>
       `;
     }
 
-    // ==================== TOP COMPACT SQUARE CARDS SELECTOR (CENTERED ICON + PROGRESS BAR) ====================
+    let inlineLessonIdx = 0;
+    let inlineManualIdx = 0;
+    let inlineManualExpanded = false;
+
+    function getCardManualsList(card) {
+      if (card && Array.isArray(card.manuals) && card.manuals.length > 0) {
+        return card.manuals;
+      }
+      if (card && (card.manual || card.manualUrl)) {
+        return [{ title: card.manual || card.title || 'Manual Operativo', url: card.manualUrl || '' }];
+      }
+      return [{ title: 'Manual Operativo', url: '' }];
+    }
+
     function renderModuleSquareCards() {
-      const roleMods = getRoleModulesList(currentUser.role);
-      const row = document.getElementById('moduleSquareCardsRow');
-      if (!row) return;
-      row.className = "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2.5";
+      // Top square cards removed per user request; module navigation lives cleanly in the sidebar "Módulos" view.
+    }
 
-      row.innerHTML = roleMods.map(mod => {
-        const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
-        const p = ensureProgressEntry(mod.id);
-        const isCurrent = mod.id === currentSelectedModuleId;
-        const pct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
+    function selectInlineLesson(idx) {
+      inlineLessonIdx = idx;
+      inlineManualIdx = 0;
+      inlineManualExpanded = false;
+      renderActiveModuleView(currentSelectedModuleId);
+    }
 
-        return `
-          <div onclick="${unlocked ? `currentSelectedModuleId='${mod.id}'; renderModuleSquareCards(); renderActiveModuleView('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
-               title="${mod.code}: ${mod.title}"
-               class="p-2.5 rounded-xl border transition-all flex flex-col items-center justify-between text-center min-h-[104px] ${isCurrent ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/25 shadow-md' : (unlocked ? 'bg-white text-slate-900 border-slate-200 hover:border-[#1A64FF] shadow-2xs' : 'bg-slate-100/80 text-slate-400 border-slate-200/70 opacity-65')} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'}">
-            <div class="w-full flex items-center justify-between text-[10px] font-mono font-extrabold">
-              <span class="${isCurrent ? 'text-slate-300' : 'text-slate-500'}">${mod.code}</span>
-              <span class="${p.quizCompleted ? 'text-[#10B981]' : (isCurrent ? 'text-[#60A5FA]' : 'text-slate-500')}">${pct}%</span>
-            </div>
-
-            <div class="my-1 w-9 h-9 rounded-xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (isCurrent ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-700')} flex items-center justify-center text-sm shrink-0">
-              <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
-            </div>
-
-            <div class="w-full space-y-1">
-              <div class="text-[10.5px] font-bold leading-tight truncate px-0.5">${mod.title}</div>
-              <div class="w-full h-1.5 rounded-full ${isCurrent ? 'bg-white/15' : 'bg-slate-100'} overflow-hidden">
-                <div class="h-full ${p.quizCompleted ? 'bg-[#10B981]' : 'bg-[#1A64FF]'} transition-all" style="width:${pct}%"></div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+    function stepInlineManual(delta) {
+      const mod = ALL_MODULES_MASTER.find(m => m.id === currentSelectedModuleId) || ALL_MODULES_MASTER[0];
+      const cards = mod.cards && mod.cards.length ? mod.cards : [];
+      const card = cards[inlineLessonIdx] || cards[0];
+      const manuals = getCardManualsList(card);
+      const next = inlineManualIdx + delta;
+      if (next >= 0 && next < manuals.length) {
+        inlineManualIdx = next;
+        renderActiveModuleView(currentSelectedModuleId);
+      }
     }
 
     function renderActiveModuleView(modId) {
@@ -2210,29 +2204,113 @@
       document.getElementById('moduleStepTrackerBanner').innerHTML = renderStepTrackerHTML(mod.id, 1);
 
       const statusBadge = p.quizCompleted
-        ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Módulo Aprobado (${p.score}%) ✓</span>`
+        ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Módulo Aprobado (${p.score}%) ✓</span>`
         : (p.materialConfirmed
-          ? `<span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-[#1A64FF] border border-blue-200">Material Confirmado ✓</span>`
-          : `<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200">Paso 1 • Estudio</span>`);
+          ? `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-50 text-[#1A64FF] border border-blue-200">Material Confirmado ✓</span>`
+          : `<span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">Paso 1 • Estudio</span>`);
 
-      const cards = mod.cards && mod.cards.length ? mod.cards : [{ title: mod.title, videoUrl: '', manualUrl: '', manual: 'Manual Operativo', points: [] }];
+      const cards = mod.cards && mod.cards.length ? mod.cards : [{ title: mod.title, videoUrl: '', manuals: [{ title: 'Manual Operativo', url: '' }], points: [] }];
+      if (inlineLessonIdx >= cards.length) inlineLessonIdx = 0;
+      const activeCard = cards[inlineLessonIdx] || cards[0];
+      const manuals = getCardManualsList(activeCard);
+      if (inlineManualIdx >= manuals.length) inlineManualIdx = 0;
+      const activeManual = manuals[inlineManualIdx] || manuals[0];
+
+      const lessonSwitcherHtml = cards.length > 1 ? `
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          ${cards.map((c, idx) => `
+            <button type="button" onclick="selectInlineLesson(${idx})" class="px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${idx === inlineLessonIdx ? 'bg-[#0B0F17] text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+              Video ${idx + 1}: ${c.title}
+            </button>
+          `).join('')}
+        </div>
+      ` : '';
+
+      const pdfEmbedUrl = formatManualPdfEmbedUrl(activeManual.url);
+      const hasRealPdf = pdfEmbedUrl && pdfEmbedUrl !== "https://drive.google.com";
+
+      const rightManualPanelHtml = !inlineManualExpanded ? `
+        <div class="space-y-3">
+          <div class="text-[11px] font-bold uppercase tracking-widest text-[#1A64FF] border-b border-slate-200 pb-2 flex items-center justify-between">
+            <span>MANUALES RELACIONADOS (${manuals.length})</span>
+            <span class="font-mono text-[10px] text-slate-400">${mod.code}</span>
+          </div>
+          <div class="space-y-2.5">
+            ${manuals.map((mn, mIdx) => `
+              <div onclick="inlineManualIdx=${mIdx}; inlineManualExpanded=true; renderActiveModuleView('${mod.id}')" class="p-3.5 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] hover:shadow-md transition cursor-pointer flex items-center justify-between gap-2.5 group">
+                <div class="flex items-center gap-2.5 min-w-0">
+                  <span class="font-mono text-xs font-extrabold text-[#1A64FF] shrink-0">${mod.code}.${mIdx + 1}</span>
+                  <span class="text-xs sm:text-[13px] font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${mn.title}</span>
+                </div>
+                <span class="w-7 h-7 rounded-lg bg-slate-50 group-hover:bg-blue-50 text-slate-500 group-hover:text-[#1A64FF] flex items-center justify-center shrink-0 transition">
+                  <i class="fa-solid fa-arrow-down text-[11px]"></i>
+                </span>
+              </div>
+            `).join('')}
+          </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed pt-1">
+            Haz clic en un manual arriba para desplegar el PDF completo aquí mismo a la par del video.
+          </p>
+        </div>
+      ` : `
+        <div class="flex flex-col h-full space-y-2.5">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <button type="button" onclick="inlineManualExpanded=false; renderActiveModuleView('${mod.id}')" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-[11px] font-bold text-slate-700 cursor-pointer">
+              ← Volver a manuales (${manuals.length})
+            </button>
+            ${activeManual.url ? `<a href="${activeManual.url}" target="_blank" title="Abrir PDF en pestaña nueva" class="px-2.5 py-1 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-bold text-[#1A64FF]"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Abrir PDF</a>` : ''}
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF]">${mod.code}.${inlineManualIdx + 1}</span>
+            <span class="text-xs font-extrabold text-slate-900 truncate">${activeManual.title}</span>
+          </div>
+
+          ${manuals.length > 1 ? `
+            <div class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 flex items-center justify-between text-[11px]">
+              <button type="button" onclick="stepInlineManual(-1)" ${inlineManualIdx <= 0 ? 'disabled' : ''} class="px-2 py-0.5 rounded border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer">‹ Manual anterior</button>
+              <span class="font-mono font-bold text-slate-600">${inlineManualIdx + 1} / ${manuals.length}</span>
+              <button type="button" onclick="stepInlineManual(1)" ${inlineManualIdx >= manuals.length - 1 ? 'disabled' : ''} class="px-2 py-0.5 rounded border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer">Siguiente manual ›</button>
+            </div>
+          ` : ''}
+
+          ${hasRealPdf ? `
+            <div class="flex-1 min-h-[380px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+              <iframe src="${pdfEmbedUrl}" class="w-full h-full min-h-[380px]" frameborder="0"></iframe>
+            </div>
+          ` : `
+            <div class="flex-1 bg-white rounded-xl border border-slate-200 p-4 space-y-2.5 overflow-y-auto">
+              <div class="px-3.5 py-2 rounded-lg bg-[#0B0F17] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center justify-between">
+                <span>${mod.code}.${inlineManualIdx + 1} • ${activeManual.title}</span>
+                <span class="text-[#34D399] font-mono">GUÍA OFICIAL</span>
+              </div>
+              ${(activeCard.points || []).map((pt, i) => `
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-start gap-2.5 text-xs">
+                  <span class="w-5 h-5 rounded bg-[#1A64FF] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
+                  <span class="text-slate-800 font-medium leading-relaxed">${pt}</span>
+                </div>
+              `).join('')}
+            </div>
+          `}
+        </div>
+      `;
 
       const splitBox = document.getElementById('activeModuleProSplitContainer');
-      splitBox.className = "space-y-5";
+      splitBox.className = "space-y-4";
       splitBox.innerHTML = `
-        <!-- Module Summary Header Bar -->
-        <div class="pro-card p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div class="flex items-start gap-3.5">
-            <span class="w-11 h-11 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-base shrink-0">
+        <!-- Module Summary Strip (Matching image_a8d923.png) -->
+        <div class="pro-card px-5 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="w-10 h-10 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-sm shrink-0">
               <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
             </span>
-            <div>
+            <div class="min-w-0">
               <div class="flex items-center gap-2 flex-wrap">
-                <span class="font-mono text-xs font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-800">${mod.code}</span>
-                <h3 class="text-base sm:text-lg font-extrabold text-slate-900">${mod.title}</h3>
+                <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-800">${mod.code}</span>
+                <h3 class="text-sm sm:text-base font-extrabold text-slate-900 truncate">${mod.title}</h3>
                 ${statusBadge}
               </div>
-              <p class="text-xs text-slate-600 mt-1">${mod.desc}</p>
+              <p class="text-xs text-slate-500 truncate mt-0.5">${mod.desc}</p>
             </div>
           </div>
           <div class="shrink-0">
@@ -2248,37 +2326,77 @@
           </div>
         </div>
 
-        <!-- Clean Video & Manual Cards Grid (Matching image_9dff61.png) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          ${cards.map((c, idx) => `
-            <div onclick="openModuleVideoModal('${mod.id}', ${idx})" class="pro-card p-6 flex flex-col justify-between hover:border-[#1A64FF] hover:shadow-lg transition-all cursor-pointer group min-h-[290px]">
-              <div class="space-y-4">
-                <div class="font-mono text-xs font-extrabold uppercase tracking-wider text-[#1A64FF]">VIDEO ${idx + 1}</div>
-                <h4 class="text-lg font-extrabold text-slate-900 leading-snug group-hover:text-[#1A64FF] transition">${c.title}</h4>
-                <ul class="space-y-2 text-xs sm:text-[13px] text-slate-600">
-                  ${(c.points || []).map(pt => `
-                    <li class="flex items-start gap-2.5">
-                      <span class="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0"></span>
-                      <span class="leading-relaxed">${pt}</span>
-                    </li>
-                  `).join('')}
-                </ul>
+        ${lessonSwitcherHtml}
+
+        <!-- DUAL WORKSPACE SPLIT (Exact proportions from image_a8d923.png):
+             LEFT 4 COLS = Descripción & Puntos Clave
+             RIGHT 8 COLS = Inline Video Player (Left) + Manuales PDF Relacionados (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+          <!-- LEFT 4 COLS: DESCRIPCIÓN -->
+          <div class="lg:col-span-4 pro-card p-5 sm:p-6 flex flex-col justify-between space-y-5">
+            <div class="space-y-4">
+              <div>
+                <span class="text-[10.5px] font-bold uppercase tracking-widest text-[#1A64FF]">Descripción</span>
+                <h4 class="text-lg font-extrabold text-slate-900 mt-0.5 leading-snug">${activeCard.title}</h4>
               </div>
 
-              <div class="pt-5 mt-5 border-t border-slate-100 space-y-3.5">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 bg-slate-50/80 text-xs font-semibold text-slate-700">
-                  <i class="fa-solid fa-book-open text-[#1A64FF]"></i>
-                  <span>Manual disponible</span>
-                </div>
-                <div class="flex items-center gap-2.5 text-[#1A64FF] font-extrabold text-sm">
-                  <span class="w-8 h-8 rounded-full bg-[#1A64FF] group-hover:scale-105 text-white flex items-center justify-center text-xs shadow-sm transition">
-                    <i class="fa-solid fa-play ml-0.5"></i>
-                  </span>
-                  <span>Ver video y manual</span>
+              <ul class="space-y-2.5 text-xs sm:text-[13px] text-slate-600">
+                ${(activeCard.points || []).map(pt => `
+                  <li class="flex items-start gap-2.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400 mt-1.5 shrink-0"></span>
+                    <span class="leading-relaxed">${pt}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 space-y-2">
+              <div class="text-[11px] font-bold text-slate-500">Manuales incluidos en esta lección: <span class="text-slate-900 font-mono">${manuals.length}</span></div>
+              <button type="button" onclick="inlineManualExpanded=!inlineManualExpanded; renderActiveModuleView('${mod.id}')" class="inline-flex items-center gap-2 text-xs font-extrabold text-[#1A64FF] hover:underline cursor-pointer">
+                <i class="fa-solid fa-book-open"></i>
+                <span>${inlineManualExpanded ? 'Ocultar visor de manual' : 'Desplegar manual relacionado'}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT 8 COLS: DUAL STUDIO PANEL (VIDEO + MANUALES) -->
+          <div class="lg:col-span-8 pro-card overflow-hidden flex flex-col">
+            <div class="px-5 py-3 bg-white border-b border-slate-200 flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="font-mono text-[11px] font-extrabold uppercase tracking-wider text-[#1A64FF]">VIDEO ${inlineLessonIdx + 1}</span>
+                <span class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${activeCard.title}</span>
+              </div>
+              <span class="font-mono text-[10.5px] text-slate-400 shrink-0">${mod.code}</span>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-12 flex-1">
+              <!-- Video Column (7 cols) -->
+              <div class="xl:col-span-7 p-4 sm:p-5 border-b xl:border-b-0 xl:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
+                <div class="space-y-3">
+                  <div class="relative aspect-video w-full bg-[#0B0F17] rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+                    <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-2.5 right-2.5 w-7 h-7 rounded-lg bg-slate-900/80 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+                  </div>
+                  <div class="space-y-1.5 pt-1">
+                    <div class="text-[10.5px] font-bold uppercase tracking-widest text-slate-400">CONTENIDO DEL VIDEO</div>
+                    <ul class="space-y-1.5 text-xs text-slate-700">
+                      ${(activeCard.points || []).map((pt, i) => `
+                        <li class="flex items-start gap-2">
+                          <span class="font-mono text-[11px] font-bold text-[#1A64FF]">• ${inlineLessonIdx + 1}.${i + 1}</span>
+                          <span>${pt}</span>
+                        </li>
+                      `).join('')}
+                    </ul>
+                  </div>
                 </div>
               </div>
+
+              <!-- Related Manuals Column (5 cols) -->
+              <div class="xl:col-span-5 bg-[#F8FAFC] p-4 sm:p-5 flex flex-col justify-between">
+                ${rightManualPanelHtml}
+              </div>
             </div>
-          `).join('')}
+          </div>
         </div>
       `;
     }
@@ -2322,130 +2440,11 @@
       document.getElementById('inlineIntroPlayerContainer').innerHTML = `<iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
     }
 
-    let activeModalModId = "M1";
-    let activeModalCardIdx = 0;
-    let manualPdfExpandedMode = false;
-
-    function openModuleVideoModal(modId, cardIdx = 0) {
-      activeModalModId = modId;
-      activeModalCardIdx = cardIdx;
-      manualPdfExpandedMode = false;
-      renderVideoManualModalContent();
-      document.getElementById('proVideoManualModal').classList.remove('hidden');
-    }
-
-    function stepManualCard(delta) {
-      const mod = ALL_MODULES_MASTER.find(m => m.id === activeModalModId);
-      if (!mod) return;
-      const nextIdx = activeModalCardIdx + delta;
-      if (nextIdx >= 0 && nextIdx < mod.cards.length) {
-        activeModalCardIdx = nextIdx;
-        manualPdfExpandedMode = false;
-        renderVideoManualModalContent();
-      }
-    }
-
-    function toggleManualListMode(showRelatedList) {
-      manualPdfExpandedMode = !showRelatedList;
-      renderVideoManualModalContent();
-    }
-
-    function renderVideoManualModalContent() {
-      const mod = ALL_MODULES_MASTER.find(m => m.id === activeModalModId);
-      if (!mod) return;
-      const card = mod.cards[activeModalCardIdx] || mod.cards[0];
-
-      document.getElementById('proModalTag').textContent = `VIDEO ${activeModalCardIdx + 1}`;
-      document.getElementById('proModalHeaderTitle').textContent = card.title;
-      document.getElementById('proVideoIframe').src = formatVideoEmbedUrl(card.videoUrl);
-      document.getElementById('btnExternalVideoLink').href = card.videoUrl || '#';
-      document.getElementById('btnExternalManualLink').href = card.manualUrl || '#';
-
-      document.getElementById('proVideoPointsList').innerHTML = (card.points || []).map((pt, i) => `
-        <li class="flex items-start gap-2.5">
-          <span class="font-mono text-xs font-bold text-[#1A64FF]">• ${activeModalCardIdx + 1}.${i + 1}</span>
-          <span>${pt}</span>
-        </li>
-      `).join('');
-
-      document.getElementById('proManualCodeBadge').textContent = `${mod.code}.${activeModalCardIdx + 1}`;
-      document.getElementById('proManualName').textContent = card.manual || card.title;
-      document.getElementById('manualPageCounter').textContent = `${activeModalCardIdx + 1} / ${mod.cards.length}`;
-      document.getElementById('btnPrevManualCard').disabled = (activeModalCardIdx <= 0);
-      document.getElementById('btnNextManualCard').disabled = (activeModalCardIdx >= mod.cards.length - 1);
-
-      const backBtn = document.getElementById('btnBackToManualList');
-      const pagBar = document.getElementById('manualPaginationBar');
-      const viewport = document.getElementById('manualReaderViewport');
-
-      if (!manualPdfExpandedMode) {
-        // EXACT VIEW FROM image_9e51b9.png: "MANUAL RELACIONADO" + clickable item row with down-arrow
-        backBtn.classList.add('hidden');
-        pagBar.classList.add('hidden');
-        viewport.innerHTML = `
-          <div class="space-y-4">
-            <div class="text-[11px] font-bold uppercase tracking-widest text-[#1A64FF] border-b border-slate-200 pb-2.5">
-              MANUAL RELACIONADO
-            </div>
-
-            <div onclick="manualPdfExpandedMode=true; renderVideoManualModalContent()" class="p-4 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] hover:shadow-md transition cursor-pointer flex items-center justify-between gap-3 group">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="font-mono text-xs font-extrabold text-[#1A64FF] shrink-0">${mod.code}.${activeModalCardIdx + 1}</span>
-                <span class="text-sm sm:text-base font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${card.manual || card.title}</span>
-              </div>
-              <span class="w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-blue-50 text-slate-500 group-hover:text-[#1A64FF] flex items-center justify-center shrink-0 transition">
-                <i class="fa-solid fa-arrow-down text-xs"></i>
-              </span>
-            </div>
-
-            <p class="text-xs text-slate-500 leading-relaxed px-1">
-              Haz clic sobre el manual relacionado arriba para desplegar el documento PDF completo aquí mismo a la par del video.
-            </p>
-          </div>
-        `;
-      } else {
-        // EXACT VIEW FROM image_9e51dd.jpg: "← Volver a manual relacionado" + Embedded PDF/Drive Viewer
-        backBtn.classList.remove('hidden');
-        backBtn.textContent = "← Volver a manual relacionado";
-        pagBar.classList.toggle('hidden', mod.cards.length <= 1);
-
-        const pdfEmbed = formatManualPdfEmbedUrl(card.manualUrl);
-        if (pdfEmbed && pdfEmbed !== "https://drive.google.com") {
-          viewport.innerHTML = `
-            <div class="w-full h-full min-h-[430px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm flex flex-col">
-              <iframe src="${pdfEmbed}" class="w-full flex-1 min-h-[430px]" frameborder="0"></iframe>
-            </div>
-          `;
-        } else {
-          viewport.innerHTML = `
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-              <div class="px-5 py-3.5 bg-[#0B0F17] text-white flex items-center justify-between">
-                <span class="text-xs font-extrabold uppercase tracking-wider">${mod.code}.${activeModalCardIdx + 1} • ${card.manual || card.title}</span>
-                <span class="font-mono text-[11px] text-[#34D399]">MANUAL OPERATIVO</span>
-              </div>
-              <div class="p-6 space-y-3">
-                ${(card.points || []).map((pt, i) => `
-                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-start gap-3">
-                    <span class="w-6 h-6 rounded-lg bg-[#1A64FF] text-white font-mono text-xs font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
-                    <div class="text-xs sm:text-sm text-slate-800 font-medium leading-relaxed">${pt}</div>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          `;
-        }
-      }
-
-      document.getElementById('btnModalConfirmAndPractice').onclick = () => {
-        closeProVideoModal();
-        currentSelectedModuleId = mod.id;
-        confirmModuleMaterialViewed();
-      };
-    }
-
     function closeProVideoModal() {
-      document.getElementById('proVideoIframe').src = "";
-      document.getElementById('proVideoManualModal').classList.add('hidden');
+      const ifr = document.getElementById('proVideoIframe');
+      if (ifr) ifr.src = "";
+      const m = document.getElementById('proVideoManualModal');
+      if (m) m.classList.add('hidden');
     }
 
     // ==================== STEP 2: PRÁCTICAS INTERACTIVAS ====================
