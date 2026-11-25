@@ -152,6 +152,7 @@
       }, 'google_translate_element');
     }
   </script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body class="bg-[#F4F6F9] text-slate-900 antialiased min-h-screen flex flex-col selection:bg-[#1A64FF] selection:text-white relative">
@@ -328,7 +329,7 @@
       </div>
 
       <div class="relative z-10 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/10 pt-3 pl-28 sm:pl-32 shrink-0">
-        <span>© 2026 IHFB Self-Learning Training Portal • v17</span>
+        <span>© 2026 IHFB Self-Learning Training Portal • v18</span>
       </div>
     </div>
 
@@ -375,11 +376,14 @@
               </div>
             </div>
 
-            <button type="button" onclick="launchFullWindowGoogleAuth('login')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
-              <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
-              <span>Continuar con Google</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
-            </button>
+            <div class="space-y-2.5">
+              <div id="gsi_login_button" class="w-full flex justify-center min-h-[44px]"></div>
+              <button type="button" onclick="triggerGooglePopupOrRedirect('login')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
+                <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
+                <span>Continuar con Google</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
 
             <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11.5px] text-slate-700 flex items-start gap-2.5">
               <i class="fa-solid fa-circle-info text-[#1A64FF] mt-0.5"></i>
@@ -445,7 +449,8 @@
                 <span>Completa todos los campos obligatorios para continuar</span>
               </div>
               <div id="regGoogleActiveBox" class="hidden flex-col items-center gap-2 w-full">
-                <button type="button" onclick="launchFullWindowGoogleAuth('register')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
+                <div id="gsi_register_button" class="w-full flex justify-center"></div>
+                <button type="button" onclick="triggerGooglePopupOrRedirect('register')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
                   <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
                   <span>Registrarse con Google</span>
                 </button>
@@ -1568,6 +1573,7 @@
       if (langSel) langSel.value = savedLang;
 
       onRegRoleChange();
+      initGoogleIdentityServices();
 
       const hideBoot = () => {
         const bl = document.getElementById('trainingBootLoader');
@@ -1653,6 +1659,96 @@
         box.classList.add('hidden');
         box.classList.remove('flex');
       }
+    }
+
+    function parseJwtPayload(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    async function handleGoogleCredentialResponse(response) {
+      if (!response || !response.credential) return;
+      try {
+        const payload = parseJwtPayload(response.credential);
+        const googleEmail = String(payload.email || '').trim().toLowerCase();
+        if (!googleEmail) return;
+        const draftReg = authMode === 'register' ? {
+          name: document.getElementById('regUserName').value.trim(),
+          email: document.getElementById('regUserEmail').value.trim().toLowerCase(),
+          role: document.getElementById('regUserRole').value,
+          schoolCode: document.getElementById('regSchoolCode').value.trim(),
+          schoolName: document.getElementById('regSchoolName').value.trim(),
+          municipality: document.getElementById('regSchoolMunicipality').value.trim()
+        } : null;
+        await finalizeAuthenticatedGoogleEmail(googleEmail, payload.name || '', authMode, draftReg);
+      } catch (e) {
+        showProAlert("Error de Verificación Google", "No se pudo leer la credencial de Google. Inténtalo nuevamente.", false);
+      }
+    }
+
+    function initGoogleIdentityServices() {
+      if (window.google && google.accounts && google.accounts.id) {
+        try {
+          google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredentialResponse,
+            auto_select: false
+          });
+          const lBox = document.getElementById("gsi_login_button");
+          if (lBox) {
+            lBox.innerHTML = "";
+            google.accounts.id.renderButton(lBox, { theme: "outline", size: "large", width: "380", text: "signin_with", shape: "rectangular" });
+          }
+          const rBox = document.getElementById("gsi_register_button");
+          if (rBox) {
+            rBox.innerHTML = "";
+            google.accounts.id.renderButton(rBox, { theme: "outline", size: "large", width: "380", text: "signup_with", shape: "rectangular" });
+          }
+        } catch (e) {}
+      } else {
+        setTimeout(initGoogleIdentityServices, 350);
+      }
+    }
+
+    function triggerGooglePopupOrRedirect(mode) {
+      authMode = mode;
+      const draftReg = mode === 'register' ? {
+        name: document.getElementById('regUserName').value.trim(),
+        email: document.getElementById('regUserEmail').value.trim().toLowerCase(),
+        role: document.getElementById('regUserRole').value,
+        schoolCode: document.getElementById('regSchoolCode').value.trim(),
+        schoolName: document.getElementById('regSchoolName').value.trim(),
+        municipality: document.getElementById('regSchoolMunicipality').value.trim()
+      } : null;
+
+      if (window.google && google.accounts && google.accounts.oauth2) {
+        try {
+          const tokenClient = google.accounts.oauth2.initTokenClient({
+            client_id: GOOGLE_CLIENT_ID,
+            scope: 'openid email profile',
+            prompt: 'select_account',
+            callback: async (tokenResponse) => {
+              if (!tokenResponse || !tokenResponse.access_token) {
+                if (tokenResponse && tokenResponse.error) {
+                  showProAlert("Autenticación Google", `No se completó el acceso (${tokenResponse.error}).`, false);
+                }
+                return;
+              }
+              const info = await fetchGoogleUserProfileWithFallback(tokenResponse.access_token);
+              if (!info || !info.email) {
+                showProAlert("Error al obtener perfil", "Google no devolvió el correo electrónico de la cuenta.", false);
+                return;
+              }
+              await finalizeAuthenticatedGoogleEmail(String(info.email).trim().toLowerCase(), info.name || '', mode, draftReg);
+            }
+          });
+          tokenClient.requestAccessToken();
+          return;
+        } catch (err) {}
+      }
+      launchFullWindowGoogleAuth(mode);
     }
 
     function getCleanOAuthRedirectUri() {
