@@ -105,6 +105,18 @@
       padding-left: 0.65rem !important;
       padding-right: 0.65rem !important;
     }
+    /* Floating Tooltip Balloons ("globos") when sidebar is collapsed */
+    #appSidebar.sidebar-collapsed .nav-item-wrap:hover .sb-balloon {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateX(0) !important;
+    }
+    /* Hover flyout sub-tab for Modules list */
+    .modules-hover-wrap:hover .modules-flyout-menu {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateX(0) !important;
+    }
 
     @keyframes simErrorShake {
       0%, 100% { transform: translateX(0); }
@@ -113,51 +125,6 @@
     }
     .sim-shake {
       animation: simErrorShake 0.35s ease-in-out;
-    }
-
-    /* Collapsed Sidebar Floating Tooltips ("Globos") */
-    #appSidebar.sidebar-collapsed .nav-btn {
-      position: relative;
-    }
-    #appSidebar.sidebar-collapsed .nav-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      left: calc(100% + 12px);
-      top: 50%;
-      transform: translateY(-50%) translateX(-4px);
-      background: #0B0F17;
-      color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: 6px 11px;
-      border-radius: 10px;
-      font-size: 11.5px;
-      font-weight: 700;
-      white-space: nowrap;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.16s ease, transform 0.16s ease;
-      z-index: 90;
-    }
-    #appSidebar.sidebar-collapsed .nav-btn:hover::after {
-      opacity: 1;
-      transform: translateY(-50%) translateX(0);
-    }
-
-    /* Sidebar "Módulos" Hover Submenu Flyout */
-    #sbModulesHoverWrapper:hover #sbModulesFlyout,
-    #sbModulesFlyout:hover {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0);
-      pointer-events: auto;
-    }
-    #sbModulesFlyout {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(-6px);
-      pointer-events: none;
-      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
     }
 
     /* Suppress Google Translate Top Banner */
@@ -538,16 +505,15 @@
         </div>
       </div>
 
-      <!-- Centered Role-Based Audience Emblem + Lowered Academic Dossier (`image_a95ce2.png`) -->
-      <div class="mt-auto mb-4 pt-4 space-y-5 w-full max-w-md mx-auto">
-        <!-- Role-Based Audience Icon Badge -->
-        <div class="flex flex-col items-center justify-center text-center space-y-2">
-          <div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#1A64FF]/25 via-[#EC4899]/20 to-[#10B981]/25 border-2 border-white/20 shadow-[0_12px_32px_rgba(26,100,255,0.28)] flex items-center justify-center relative">
-            <div class="w-15 h-15 rounded-full bg-white text-[#0B0F17] w-14 h-14 flex items-center justify-center text-2xl shadow-inner">
+      <!-- Well-Distributed Middle Academic Dossier with Prominent Audience Icon (image_a95ce2.png) -->
+      <div class="my-auto pt-8 pb-4 space-y-4 w-full max-w-md mx-auto">
+        <!-- Centered Audience Role Emblem -->
+        <div class="flex flex-col items-center justify-center pb-1">
+          <div class="w-20 h-20 rounded-full bg-white/[0.07] border-2 border-white/15 flex items-center justify-center shadow-xl">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#1A64FF] via-[#EC4899] to-[#10B981] text-white flex items-center justify-center text-2xl shadow-inner">
               <i id="audHeroRoleIcon" class="fa-solid fa-chalkboard-user"></i>
             </div>
           </div>
-          <span id="audHeroRoleCaption" class="text-[10.5px] font-bold uppercase tracking-widest text-slate-400">Perfil Institucional</span>
         </div>
 
         <!-- Identity Card -->
@@ -667,50 +633,87 @@
           <div>
             <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Ruta de Aprendizaje</div>
             <nav class="space-y-1.5 text-[13px] font-medium">
-              <button type="button" onclick="switchTab('dashboard')" id="nav-dashboard" data-tooltip="Inicio e Inducción" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-white/10 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-[#1A64FF]/20 text-[#60A5FA] flex items-center justify-center shrink-0"><i class="fa-solid fa-compass text-xs"></i></span>
-                <span class="sb-hide truncate">Inicio e Inducción</span>
-              </button>
-              <button type="button" onclick="switchTab('modulos')" id="nav-modulos" data-tooltip="Manuales y Videos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-photo-film text-xs"></i></span>
-                <span class="sb-hide truncate">Manuales y Videos</span>
-              </button>
-              <button type="button" onclick="switchTab('practicas')" id="nav-practicas" data-tooltip="Práctica Interactiva" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-laptop-code text-xs"></i></span>
-                <span class="sb-hide truncate">Práctica Interactiva</span>
-              </button>
-              <button type="button" onclick="switchTab('quizzes')" id="nav-quizzes" data-tooltip="Evaluación (Quiz)" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-file-circle-check text-xs"></i></span>
-                <span class="sb-hide truncate">Evaluación (Quiz)</span>
-              </button>
-              <button type="button" onclick="switchTab('progreso')" id="nav-progreso" data-tooltip="Progreso" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-award text-xs"></i></span>
-                <span class="sb-hide truncate">Progreso</span>
-              </button>
-              <button type="button" onclick="switchTab('faq')" id="nav-faq" data-tooltip="Ayuda y Soporte" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-headset text-xs"></i></span>
-                <span class="sb-hide truncate">Ayuda y Soporte</span>
-              </button>
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-white/10 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-[#1A64FF]/20 text-[#60A5FA] flex items-center justify-center shrink-0"><i class="fa-solid fa-compass text-xs"></i></span>
+                  <span class="sb-hide truncate">Inicio e Inducción</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Inicio e Inducción
+                </div>
+              </div>
+
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('modulos')" id="nav-modulos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-photo-film text-xs"></i></span>
+                  <span class="sb-hide truncate">Manuales y Videos</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Manuales y Videos
+                </div>
+              </div>
+
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('practicas')" id="nav-practicas" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-laptop-code text-xs"></i></span>
+                  <span class="sb-hide truncate">Práctica Interactiva</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Práctica Interactiva
+                </div>
+              </div>
+
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('quizzes')" id="nav-quizzes" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-file-circle-check text-xs"></i></span>
+                  <span class="sb-hide truncate">Evaluación (Quiz)</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Evaluación (Quiz)
+                </div>
+              </div>
+
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('progreso')" id="nav-progreso" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-award text-xs"></i></span>
+                  <span class="sb-hide truncate">Progreso</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Progreso
+                </div>
+              </div>
+
+              <div class="nav-item-wrap relative">
+                <button type="button" onclick="switchTab('faq')" id="nav-faq" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-headset text-xs"></i></span>
+                  <span class="sb-hide truncate">Ayuda y Soporte</span>
+                </button>
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  Ayuda y Soporte
+                </div>
+              </div>
             </nav>
           </div>
 
-          <!-- Módulos Button with Hover Submenu Flyout -->
-          <div id="sbModulesHoverWrapper" class="pt-3 border-t border-slate-800/80 relative">
-            <button type="button" onclick="returnToAudienceGate()" data-tooltip="Módulos Asignados" class="nav-btn w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition text-xs font-semibold cursor-pointer">
-              <div class="flex items-center gap-3 min-w-0">
-                <span class="w-7 h-7 rounded-lg bg-[#EC4899]/20 text-[#F472B6] flex items-center justify-center shrink-0"><i class="fa-solid fa-layer-group text-xs"></i></span>
-                <span class="sb-hide truncate">Módulos</span>
-              </div>
-              <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 sb-hide"></i>
-            </button>
+          <!-- MÓDULOS WITH HOVER FLYOUT SUB-MENU + COLLAPSED BALLOON -->
+          <div class="pt-3 border-t border-slate-800/80 space-y-1">
+            <div class="nav-item-wrap modules-hover-wrap relative">
+              <button type="button" onclick="returnToAudienceGate()" class="nav-btn w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition text-xs font-bold cursor-pointer">
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class="w-7 h-7 rounded-lg bg-[#EC4899]/20 text-[#F472B6] flex items-center justify-center shrink-0"><i class="fa-solid fa-layer-group text-xs"></i></span>
+                  <span class="sb-hide truncate">Módulos</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-500 sb-hide"></i>
+              </button>
 
-            <!-- Hover Flyout Submenu with Role Modules List -->
-            <div id="sbModulesFlyout" class="fixed lg:absolute left-16 lg:left-[calc(100%+10px)] bottom-0 w-72 bg-[#0B0F17] border border-slate-700/90 rounded-2xl shadow-2xl p-3 z-50 space-y-2">
-              <div class="px-2.5 py-1.5 border-b border-slate-800 flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">Módulos de tu Ruta</span>
-                <button type="button" onclick="returnToAudienceGate()" class="text-[10.5px] font-bold text-[#34D399] hover:underline cursor-pointer">Ver todos ↗</button>
+              <!-- Hover Flyout Sub-Tab Listing All Role Modules -->
+              <div class="modules-flyout-menu opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[4.85rem] lg:left-[16.1rem] bottom-16 z-50 w-72 bg-[#0B0F17] border border-slate-700/90 rounded-2xl shadow-2xl p-3 space-y-2 text-white">
+                <div class="px-2 py-1 border-b border-slate-800 flex items-center justify-between">
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">Lista de Módulos</span>
+                  <button type="button" onclick="returnToAudienceGate()" class="text-[10px] text-slate-400 hover:text-white underline cursor-pointer">Ver todos ↗</button>
+                </div>
+                <div id="sidebarModulesFlyoutList" class="space-y-1 max-h-64 overflow-y-auto custom-scroll"></div>
               </div>
-              <div id="sbModulesFlyoutList" class="space-y-1 max-h-72 overflow-y-auto custom-scroll"></div>
             </div>
           </div>
         </div>
@@ -820,26 +823,43 @@
                 <h4 class="text-base font-extrabold text-slate-900 mt-0.5">Reglas de Acreditación</h4>
               </div>
               <div class="flex-1 flex flex-col justify-between gap-3">
-                <div class="p-4 rounded-xl bg-blue-50/65 border border-blue-200/80 flex flex-col items-center justify-center text-center gap-1.5 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-xs">
+                <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200/80 flex items-center justify-between gap-3.5 flex-1">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-8 h-8 rounded-xl bg-[#1A64FF] text-white font-mono text-xs font-extrabold flex items-center justify-center shrink-0 shadow-2xs">01</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Estudio de Manuales y Videos</div>
+                      <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">Revisa el material audiovisual y los manuales PDF de cada módulo y confirma tu lectura.</p>
+                    </div>
+                  </div>
+                  <div class="w-10 h-10 rounded-xl bg-white border border-blue-200/80 text-[#1A64FF] flex items-center justify-center text-base shrink-0 shadow-2xs">
                     <i class="fa-solid fa-photo-film"></i>
                   </div>
-                  <div class="text-xs font-extrabold text-slate-900">01. Estudio de Manuales y Videos</div>
-                  <p class="text-[11.5px] text-slate-600 leading-relaxed max-w-sm">Revisa el material audiovisual y los manuales PDF de cada módulo y confirma tu lectura.</p>
                 </div>
-                <div class="p-4 rounded-xl bg-pink-50/65 border border-pink-200/80 flex flex-col items-center justify-center text-center gap-1.5 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-[#EC4899] text-white flex items-center justify-center text-xs shadow-xs">
+
+                <div class="p-4 rounded-xl bg-pink-50/70 border border-pink-200/80 flex items-center justify-between gap-3.5 flex-1">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-8 h-8 rounded-xl bg-[#EC4899] text-white font-mono text-xs font-extrabold flex items-center justify-center shrink-0 shadow-2xs">02</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Práctica Interactiva al 100%</div>
+                      <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">Ejecuta cada acción en el simulador en vivo hasta completar el 100%.</p>
+                    </div>
+                  </div>
+                  <div class="w-10 h-10 rounded-xl bg-white border border-pink-200/80 text-[#EC4899] flex items-center justify-center text-base shrink-0 shadow-2xs">
                     <i class="fa-solid fa-laptop-code"></i>
                   </div>
-                  <div class="text-xs font-extrabold text-slate-900">02. Práctica Interactiva al 100%</div>
-                  <p class="text-[11.5px] text-slate-600 leading-relaxed max-w-sm">Ejecuta cada acción en el simulador en vivo hasta completar el 100%.</p>
                 </div>
-                <div class="p-4 rounded-xl bg-emerald-50/65 border border-emerald-200/80 flex flex-col items-center justify-center text-center gap-1.5 flex-1">
-                  <div class="w-8 h-8 rounded-xl bg-[#10B981] text-white flex items-center justify-center text-xs shadow-xs">
+
+                <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 flex items-center justify-between gap-3.5 flex-1">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-8 h-8 rounded-xl bg-[#10B981] text-white font-mono text-xs font-extrabold flex items-center justify-center shrink-0 shadow-2xs">03</span>
+                    <div class="text-xs">
+                      <div class="font-extrabold text-slate-900">Evaluación y Refuerzo</div>
+                      <p class="text-[11.5px] text-slate-600 mt-0.5 leading-relaxed">Aprueba con ≥80%. Si obtienes menos de 60%, se habilitará un <strong>Módulo de Refuerzo</strong> obligatorio.</p>
+                    </div>
+                  </div>
+                  <div class="w-10 h-10 rounded-xl bg-white border border-emerald-200/80 text-[#10B981] flex items-center justify-center text-base shrink-0 shadow-2xs">
                     <i class="fa-solid fa-award"></i>
                   </div>
-                  <div class="text-xs font-extrabold text-slate-900">03. Evaluación y Refuerzo</div>
-                  <p class="text-[11.5px] text-slate-600 leading-relaxed max-w-sm">Aprueba con ≥80%. Si obtienes menos de 60%, se habilitará un <strong>Módulo de Refuerzo</strong> obligatorio.</p>
                 </div>
               </div>
               <button type="button" onclick="switchTab('modulos')" class="w-full py-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center justify-center gap-2 cursor-pointer shrink-0">
@@ -1965,14 +1985,11 @@
       document.getElementById('audienceGateScreen').classList.remove('hidden');
       document.getElementById('audienceGateScreen').classList.add('flex');
 
-      const audMeta = AUDIENCE_CATALOG.find(a => a.role.toLowerCase() === String(currentUser.role || '').toLowerCase()) || AUDIENCE_CATALOG[0];
-      const heroRoleIc = document.getElementById('audHeroRoleIcon');
-      if (heroRoleIc && audMeta) heroRoleIc.className = `fa-solid ${audMeta.icon || 'fa-user-graduate'}`;
-      const heroRoleCap = document.getElementById('audHeroRoleCaption');
-      if (heroRoleCap && audMeta) heroRoleCap.textContent = audMeta.title || currentUser.role;
-
       const avEl = document.getElementById('audProfileAvatar');
       if (avEl) avEl.textContent = (currentUser.name || 'U').trim().charAt(0).toUpperCase();
+      const audMeta = AUDIENCE_CATALOG.find(a => a.role.toLowerCase() === String(currentUser.role || '').toLowerCase()) || AUDIENCE_CATALOG[0];
+      const heroIc = document.getElementById('audHeroRoleIcon');
+      if (heroIc && audMeta) heroIc.className = `fa-solid ${audMeta.icon || 'fa-user-graduate'}`;
       document.getElementById('audWelcomeName').textContent = currentUser.name;
       document.getElementById('audRegisteredRoleHint').textContent = currentUser.role;
       const emailPill = document.getElementById('audUserEmailPill');
@@ -1996,7 +2013,7 @@
       document.getElementById('audGlobalProgressBar').style.width = `${globalPct}%`;
       document.getElementById('audGlobalProgressSub').textContent = `${completedCount} de ${roleMods.length} módulos aprobados`;
 
-      // Fixed-column grid (`grid-cols-[auto_1fr_auto]`) so all progress pills align in a crisp vertical column!
+      // Dark Obsidian Cards (`bg-[#0B0F17]`) where ONLY the status label pill & progress bar carry status color!
       const grid = document.getElementById('audienceCardsGrid');
       grid.innerHTML = roleMods.map(mod => {
         const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
@@ -2004,44 +2021,44 @@
         const modPct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
 
         let badgeHtml = '';
-        let barColor = 'bg-slate-200';
+        let barColor = 'bg-slate-700';
         if (p.needsReinforcement && !p.reinforcementCompleted) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-bold">Refuerzo Req. • ${p.score}%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[11px] font-bold">Refuerzo Req. • ${p.score}%</span>`;
           barColor = 'bg-rose-500';
         } else if (p.quizCompleted) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">Completado • 100% ✓</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-emerald-500/20 text-[#34D399] border border-emerald-500/40 text-[11px] font-bold">Completado • 100% ✓</span>`;
           barColor = 'bg-[#10B981]';
         } else if (modPct > 0) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 text-[11px] font-bold">En progreso • ${modPct}%</span>`;
-          barColor = 'bg-amber-500';
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold">En progreso • ${modPct}%</span>`;
+          barColor = 'bg-amber-400';
         } else if (unlocked) {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-blue-50 text-[#1A64FF] border border-blue-200 text-[11px] font-bold">Disponible • 0%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-[#1A64FF]/25 text-[#60A5FA] border border-[#1A64FF]/40 text-[11px] font-bold">Disponible • 0%</span>`;
           barColor = 'bg-[#1A64FF]';
         } else {
-          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-slate-100 text-slate-400 border border-slate-200 text-[11px] font-semibold"><i class="fa-solid fa-lock mr-1.5"></i>Bloqueado • 0%</span>`;
+          badgeHtml = `<span class="inline-flex items-center justify-center w-36 py-1 rounded-lg bg-white/5 text-slate-400 border border-white/10 text-[11px] font-semibold"><i class="fa-solid fa-lock mr-1.5"></i>Bloqueado • 0%</span>`;
         }
 
         return `
-        <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 rounded-2xl bg-white border ${p.quizCompleted ? 'border-emerald-200' : (unlocked ? 'border-slate-200 hover:border-[#1A64FF]' : 'border-slate-200/70 opacity-65')} shadow-2xs hover:shadow-md transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-2.5">
+        <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 rounded-2xl bg-[#0B0F17] text-white border ${unlocked ? 'border-slate-800 hover:border-[#1A64FF]' : 'border-slate-800/60 opacity-70'} shadow-md hover:shadow-xl transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-2.5">
           <div class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5">
-            <div class="w-11 h-11 rounded-2xl ${unlocked ? 'bg-[#0B0F17] text-white group-hover:bg-[#1A64FF]' : 'bg-[#0B0F17]/55 text-slate-300'} text-sm flex items-center justify-center shrink-0 transition shadow-xs">
+            <div class="w-11 h-11 rounded-2xl bg-white/10 border border-white/15 text-white group-hover:bg-[#1A64FF] text-sm flex items-center justify-center shrink-0 transition">
               <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
             </div>
             <div class="min-w-0">
               <div class="flex items-center gap-2">
-                <span class="font-mono text-[10.5px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-700 shrink-0">${mod.code}</span>
-                <h4 class="text-sm font-extrabold text-slate-900 truncate">${mod.title}</h4>
+                <span class="font-mono text-[10.5px] font-extrabold px-2 py-0.5 rounded bg-white/10 text-slate-200 shrink-0">${mod.code}</span>
+                <h4 class="text-sm font-extrabold text-white truncate">${mod.title}</h4>
               </div>
-              <p class="text-xs text-slate-500 truncate mt-0.5">${mod.desc}</p>
+              <p class="text-xs text-slate-400 truncate mt-0.5">${mod.desc}</p>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               ${badgeHtml}
-              <div class="w-7 h-7 rounded-lg ${unlocked ? 'bg-slate-100 text-slate-700 group-hover:bg-[#1A64FF] group-hover:text-white' : 'bg-slate-50 text-slate-300'} flex items-center justify-center transition">
+              <div class="w-7 h-7 rounded-lg bg-white/10 text-slate-300 group-hover:bg-[#1A64FF] group-hover:text-white flex items-center justify-center transition">
                 <i class="fa-solid ${unlocked ? 'fa-chevron-right' : 'fa-lock'} text-[10px]"></i>
               </div>
             </div>
           </div>
-          <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
             <div class="h-full ${barColor} transition-all duration-300" style="width:${modPct}%"></div>
           </div>
         </div>
@@ -2122,15 +2139,13 @@
       document.getElementById('supEmail').value = currentUser.email;
 
       populateRoleModuleSelectors();
-      const savedRoute = loadActiveRouteState();
-      if (savedRoute && savedRoute.modId && roleMods.some(m => m.id === savedRoute.modId)) {
-        currentSelectedModuleId = savedRoute.modId;
+      const savedMod = sessionStorage.getItem('ihfb_active_mod_id');
+      if (savedMod && roleMods.some(m => m.id === savedMod)) {
+        currentSelectedModuleId = savedMod;
       }
+      const savedTab = sessionStorage.getItem('ihfb_active_tab') || 'dashboard';
       refreshAllWorkspaceUI();
-      const targetTab = (savedRoute && savedRoute.tab && ['dashboard', 'modulos', 'practicas', 'quizzes', 'progreso', 'faq'].includes(savedRoute.tab))
-        ? savedRoute.tab
-        : 'dashboard';
-      switchTab(targetTab, true);
+      switchTab(savedTab);
     }
 
     function populateRoleModuleSelectors() {
@@ -2244,7 +2259,7 @@
     let inlineLessonIdx = 0;
     let inlineManualIdx = 0;
     let inlineManualExpanded = false;
-    let inlineDescriptionExpanded = false;
+    let inlineDescExpanded = false;
 
     function getCardManualsList(card) {
       if (card && Array.isArray(card.manuals) && card.manuals.length > 0) {
@@ -2257,50 +2272,27 @@
     }
 
     function renderModuleSquareCards() {
-      // Render the hover flyout submenu list inside the sidebar "Módulos" button
-      const flyoutList = document.getElementById('sbModulesFlyoutList');
-      if (!flyoutList || !currentUser) return;
+      // Populate sidebar hover flyout sub-tab for "Módulos"
+      const flyout = document.getElementById('sidebarModulesFlyoutList');
+      if (!flyout || !currentUser) return;
       const roleMods = getRoleModulesList(currentUser.role);
-      flyoutList.innerHTML = roleMods.map(mod => {
-        const unlocked = isModuleUnlockedForRole(mod.id, roleMods);
-        const p = ensureProgressEntry(mod.id);
-        const isCurrent = mod.id === currentSelectedModuleId;
+      flyout.innerHTML = roleMods.map(m => {
+        const unlocked = isModuleUnlockedForRole(m.id, roleMods);
+        const p = ensureProgressEntry(m.id);
         const pct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
+        const isCurrent = m.id === currentSelectedModuleId;
         return `
-          <button type="button"
-                  onclick="${unlocked ? `jumpToModuleFromFlyout('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
-                  class="w-full p-2 rounded-xl text-left flex items-center justify-between gap-2 transition cursor-pointer ${isCurrent ? 'bg-[#1A64FF]/20 text-white border border-[#1A64FF]/40' : (unlocked ? 'text-slate-300 hover:bg-white/10 hover:text-white' : 'text-slate-500 opacity-60')}">
+          <button type="button" onclick="${unlocked ? `currentSelectedModuleId='${m.id}'; switchTab('modulos')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80%.', false)`}"
+                  class="w-full px-2.5 py-2 rounded-xl flex items-center justify-between gap-2 text-left text-xs transition ${isCurrent ? 'bg-[#1A64FF] text-white font-bold' : (unlocked ? 'hover:bg-white/10 text-slate-200' : 'opacity-45 text-slate-500 cursor-not-allowed')} cursor-pointer">
             <div class="flex items-center gap-2 min-w-0">
-              <span class="w-6 h-6 rounded-lg bg-white/10 text-white text-[10px] flex items-center justify-center shrink-0">
-                <i class="fa-solid ${unlocked ? (mod.icon || 'fa-layer-group') : 'fa-lock'}"></i>
-              </span>
-              <div class="min-w-0">
-                <div class="text-[11px] font-bold truncate"><span class="font-mono text-[#60A5FA] mr-1">${mod.code}</span>${mod.title}</div>
-              </div>
+              <i class="fa-solid ${unlocked ? (m.icon || 'fa-layer-group') : 'fa-lock'} text-[11px] shrink-0"></i>
+              <span class="font-mono text-[10.5px] font-bold shrink-0">${m.code}</span>
+              <span class="truncate">${m.title}</span>
             </div>
-            <span class="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded ${p.quizCompleted ? 'bg-emerald-500/20 text-[#34D399]' : 'bg-white/10 text-slate-300'} shrink-0">${pct}%</span>
+            <span class="font-mono text-[10px] font-extrabold ${pct === 100 ? 'text-[#34D399]' : 'text-slate-400'} shrink-0">${pct}%</span>
           </button>
         `;
       }).join('');
-    }
-
-    function jumpToModuleFromFlyout(modId) {
-      currentSelectedModuleId = modId;
-      inlineLessonIdx = 0;
-      inlineManualIdx = 0;
-      inlineManualExpanded = false;
-      inlineDescriptionExpanded = false;
-      saveActiveRouteState(currentTabKey, modId);
-      const p = ensureProgressEntry(modId);
-      if (p.quizCompleted) {
-        switchTab('modulos');
-      } else if (!p.materialConfirmed) {
-        switchTab('modulos');
-      } else if (!p.practiceCompleted) {
-        goToModulePractice(modId);
-      } else {
-        goToModuleQuiz(modId);
-      }
     }
 
     function selectInlineLesson(idx) {
@@ -2342,12 +2334,11 @@
       const activeManual = manuals[inlineManualIdx] || manuals[0];
 
       const lessonSwitcherHtml = cards.length > 1 ? `
-        <div class="flex flex-wrap items-center gap-2">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">Lecciones del Módulo:</span>
+        <div class="flex flex-wrap gap-2">
           ${cards.map((c, idx) => `
-            <button type="button" onclick="selectInlineLesson(${idx})" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-2 ${idx === inlineLessonIdx ? 'bg-[#0B0F17] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:border-[#1A64FF]'}">
-              <span class="w-4 h-4 rounded-full ${idx === inlineLessonIdx ? 'bg-[#1A64FF] text-white' : 'bg-slate-100 text-slate-600'} font-mono text-[10px] flex items-center justify-center">${idx + 1}</span>
-              <span>${c.title}</span>
+            <button type="button" onclick="selectInlineLesson(${idx})" class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${idx === inlineLessonIdx ? 'bg-[#0B0F17] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:border-[#1A64FF]'}">
+              <i class="fa-solid fa-circle-play ${idx === inlineLessonIdx ? 'text-[#60A5FA]' : 'text-slate-400'}"></i>
+              <span>Video ${idx + 1}: ${c.title}</span>
             </button>
           `).join('')}
         </div>
@@ -2357,76 +2348,64 @@
       const hasRealPdf = pdfEmbedUrl && pdfEmbedUrl !== "https://drive.google.com";
 
       const rightManualPanelHtml = !inlineManualExpanded ? `
-        <div class="space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-[#1A64FF]">Documentación Oficial</span>
-              <h5 class="text-sm font-extrabold text-slate-900 mt-0.5">Manuales Relacionados (${manuals.length})</h5>
-            </div>
-            <span class="font-mono text-[11px] font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-[#1A64FF]">${mod.code}</span>
+        <div class="space-y-3.5">
+          <div class="text-[11px] font-extrabold uppercase tracking-widest text-[#1A64FF] border-b border-slate-200 pb-2.5 flex items-center justify-between">
+            <span><i class="fa-solid fa-book-open mr-1.5"></i>MANUALES RELACIONADOS (${manuals.length})</span>
+            <span class="font-mono text-[10px] text-slate-400">${mod.code}</span>
           </div>
-
           <div class="space-y-2.5">
             ${manuals.map((mn, mIdx) => `
-              <div onclick="inlineManualIdx=${mIdx}; inlineManualExpanded=true; renderActiveModuleView('${mod.id}')" class="p-4 rounded-2xl bg-white border border-slate-200/90 hover:border-[#1A64FF] hover:shadow-md transition-all cursor-pointer flex items-center justify-between gap-3 group">
+              <div onclick="inlineManualIdx=${mIdx}; inlineManualExpanded=true; renderActiveModuleView('${mod.id}')" class="p-4 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] hover:shadow-md transition cursor-pointer flex items-center justify-between gap-3 group">
                 <div class="flex items-center gap-3 min-w-0">
-                  <div class="w-9 h-9 rounded-xl bg-blue-50 text-[#1A64FF] group-hover:bg-[#1A64FF] group-hover:text-white font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">
-                    <i class="fa-solid fa-file-pdf"></i>
-                  </div>
+                  <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#1A64FF] font-mono text-xs font-extrabold flex items-center justify-center shrink-0">${mod.code}.${mIdx + 1}</span>
                   <div class="min-w-0">
-                    <div class="font-mono text-[10.5px] font-bold text-[#1A64FF]">${mod.code}.${mIdx + 1}</div>
-                    <div class="text-xs sm:text-[13px] font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${mn.title}</div>
+                    <div class="text-xs sm:text-sm font-extrabold text-slate-900 group-hover:text-[#1A64FF] truncate">${mn.title}</div>
+                    <div class="text-[11px] text-slate-400">Clic para desplegar manual PDF</div>
                   </div>
                 </div>
-                <span class="w-8 h-8 rounded-xl bg-slate-100 group-hover:bg-[#1A64FF] text-slate-600 group-hover:text-white flex items-center justify-center shrink-0 transition">
-                  <i class="fa-solid fa-chevron-right text-[11px]"></i>
+                <span class="w-8 h-8 rounded-lg bg-slate-50 group-hover:bg-[#1A64FF] text-slate-500 group-hover:text-white flex items-center justify-center shrink-0 transition">
+                  <i class="fa-solid fa-arrow-down text-xs"></i>
                 </span>
               </div>
             `).join('')}
           </div>
-
-          <div class="p-3.5 rounded-xl bg-blue-50/60 border border-blue-100 text-[11.5px] text-slate-600 flex items-start gap-2.5">
-            <i class="fa-solid fa-circle-info text-[#1A64FF] mt-0.5"></i>
-            <span>Selecciona cualquier manual de la lista para visualizar el documento PDF completo a la par del video tutorial.</span>
-          </div>
         </div>
       ` : `
         <div class="flex flex-col h-full space-y-3">
-          <div class="flex items-center justify-between gap-2 flex-wrap border-b border-slate-200 pb-2.5">
-            <button type="button" onclick="inlineManualExpanded=false; renderActiveModuleView('${mod.id}')" class="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-xs font-bold text-slate-700 cursor-pointer flex items-center gap-1.5 shadow-2xs">
-              <i class="fa-solid fa-arrow-left text-[10px]"></i>
-              <span>Manuales (${manuals.length})</span>
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <button type="button" onclick="inlineManualExpanded=false; renderActiveModuleView('${mod.id}')" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-[11px] font-bold text-slate-700 cursor-pointer shadow-2xs">
+              ← Volver a manuales (${manuals.length})
             </button>
-            ${activeManual.url ? `<a href="${activeManual.url}" target="_blank" title="Abrir PDF en pestaña nueva" class="px-3 py-1.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold transition flex items-center gap-1.5"><i class="fa-solid fa-up-right-from-square text-[10px]"></i><span>Abrir PDF</span></a>` : ''}
+            ${activeManual.url ? `<a href="${activeManual.url}" target="_blank" title="Abrir PDF en pestaña nueva" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-[11px] font-bold text-[#1A64FF] shadow-2xs"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Abrir PDF</a>` : ''}
           </div>
 
-          <div class="flex items-center gap-2">
-            <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-[#1A64FF] text-white">${mod.code}.${inlineManualIdx + 1}</span>
-            <span class="text-xs sm:text-sm font-extrabold text-slate-900 truncate">${activeManual.title}</span>
+          <div class="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200">
+            <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF]">${mod.code}.${inlineManualIdx + 1}</span>
+            <span class="text-xs sm:text-[13px] font-extrabold text-slate-900 truncate">${activeManual.title}</span>
           </div>
 
           ${manuals.length > 1 ? `
-            <div class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs shadow-2xs">
-              <button type="button" onclick="stepInlineManual(-1)" ${inlineManualIdx <= 0 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg hover:bg-slate-100 font-bold text-slate-700 disabled:opacity-35 cursor-pointer">‹ Anterior</button>
-              <span class="font-mono text-xs font-extrabold text-[#1A64FF]">Manual ${inlineManualIdx + 1} de ${manuals.length}</span>
-              <button type="button" onclick="stepInlineManual(1)" ${inlineManualIdx >= manuals.length - 1 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg hover:bg-slate-100 font-bold text-slate-700 disabled:opacity-35 cursor-pointer">Siguiente ›</button>
+            <div class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs">
+              <button type="button" onclick="stepInlineManual(-1)" ${inlineManualIdx <= 0 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">‹ Anterior</button>
+              <span class="font-mono font-bold text-slate-600">${inlineManualIdx + 1} / ${manuals.length}</span>
+              <button type="button" onclick="stepInlineManual(1)" ${inlineManualIdx >= manuals.length - 1 ? 'disabled' : ''} class="px-2.5 py-1 rounded-lg border border-slate-200 font-semibold disabled:opacity-40 cursor-pointer hover:bg-slate-50">Siguiente ›</button>
             </div>
           ` : ''}
 
           ${hasRealPdf ? `
-            <div class="flex-1 min-h-[430px] bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            <div class="flex-1 min-h-[430px] bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
               <iframe src="${pdfEmbedUrl}" class="w-full h-full min-h-[430px]" frameborder="0"></iframe>
             </div>
           ` : `
-            <div class="flex-1 bg-white rounded-2xl border border-slate-200 p-5 space-y-3 overflow-y-auto shadow-sm">
-              <div class="px-4 py-2.5 rounded-xl bg-[#0B0F17] text-white text-xs font-extrabold uppercase tracking-wider flex items-center justify-between">
+            <div class="flex-1 bg-white rounded-xl border border-slate-200 p-5 space-y-3 overflow-y-auto shadow-xs">
+              <div class="px-3.5 py-2 rounded-lg bg-[#0B0F17] text-white text-[11px] font-extrabold uppercase tracking-wider flex items-center justify-between">
                 <span>${mod.code}.${inlineManualIdx + 1} • ${activeManual.title}</span>
-                <span class="text-[#34D399] font-mono text-[10.5px]">GUÍA OFICIAL</span>
+                <span class="text-[#34D399] font-mono">GUÍA OFICIAL</span>
               </div>
               ${(activeCard.points || []).map((pt, i) => `
-                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3 text-xs">
-                  <span class="w-6 h-6 rounded-lg bg-[#1A64FF] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
-                  <span class="text-slate-800 font-medium leading-relaxed pt-0.5">${pt}</span>
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-start gap-2.5 text-xs">
+                  <span class="w-5 h-5 rounded bg-[#1A64FF] text-white font-mono text-[10px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
+                  <span class="text-slate-800 font-medium leading-relaxed">${pt}</span>
                 </div>
               `).join('')}
             </div>
@@ -2435,32 +2414,31 @@
       `;
 
       const splitBox = document.getElementById('activeModuleProSplitContainer');
-      splitBox.className = "space-y-5";
+      splitBox.className = "space-y-4";
       splitBox.innerHTML = `
-        <!-- UNIFIED MODULE TITLE BAR + COLLAPSIBLE DESCRIPTION DRAWER INSIDE (`image_a94a7b.jpg`) -->
-        <div class="pro-card overflow-hidden border-slate-200/90">
-          <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 bg-white">
+        <!-- Module Header Card with COLLAPSIBLE Descripción Inside (Matching user request) -->
+        <div class="pro-card overflow-hidden">
+          <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="flex items-center gap-3.5 min-w-0">
-              <span class="w-11 h-11 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-base shrink-0 shadow-sm">
+              <span class="w-11 h-11 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-base shrink-0 shadow-xs">
                 <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
               </span>
               <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
-                  <span class="font-mono text-[11px] font-extrabold px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800">${mod.code}</span>
+                  <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-800">${mod.code}</span>
                   <h3 class="text-base sm:text-lg font-extrabold text-slate-900 truncate">${mod.title}</h3>
                   ${statusBadge}
                 </div>
-                <p class="text-xs text-slate-500 truncate mt-0.5">${mod.desc}</p>
+                <div class="flex items-center gap-3 mt-1">
+                  <button type="button" onclick="inlineDescExpanded=!inlineDescExpanded; renderActiveModuleView('${mod.id}')" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A64FF] hover:text-blue-700 cursor-pointer">
+                    <i class="fa-solid ${inlineDescExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
+                    <span>${inlineDescExpanded ? 'Ocultar descripción y objetivos' : 'Ver descripción y objetivos del módulo'}</span>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div class="flex items-center gap-2.5 shrink-0">
-              <button type="button" onclick="inlineDescriptionExpanded=!inlineDescriptionExpanded; renderActiveModuleView('${mod.id}')" class="px-3.5 py-2.5 rounded-xl border ${inlineDescriptionExpanded ? 'border-[#1A64FF] bg-blue-50 text-[#1A64FF]' : 'border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700'} text-xs font-bold transition flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-align-left text-[11px]"></i>
-                <span>Descripción</span>
-                <i class="fa-solid ${inlineDescriptionExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
-              </button>
-
+            <div class="shrink-0">
               ${p.materialConfirmed ? `
                 <button type="button" onclick="goToModulePractice('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition cursor-pointer">
                   Ir a Práctica (Paso 2) →
@@ -2473,27 +2451,25 @@
             </div>
           </div>
 
-          <!-- Collapsible Description Panel Inside Module Header -->
-          <div class="${inlineDescriptionExpanded ? 'block' : 'hidden'} px-6 py-5 bg-slate-50/90 border-t border-slate-200/80 space-y-3">
-            <div class="flex items-center justify-between">
-              <span class="text-[11px] font-extrabold uppercase tracking-widest text-[#1A64FF]">Descripción y Objetivos • ${activeCard.title}</span>
-              <span class="text-[11px] font-bold text-slate-500">Manuales adjuntos: <strong class="font-mono text-slate-900">${manuals.length}</strong></span>
+          <!-- Collapsible Description & Lesson Objectives Drawer -->
+          ${inlineDescExpanded ? `
+            <div class="px-5 pb-5 pt-3 border-t border-slate-100 bg-slate-50/70 space-y-3">
+              <p class="text-xs sm:text-[13px] text-slate-700 leading-relaxed">${mod.desc}</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                ${(activeCard.points || []).map((pt, i) => `
+                  <div class="p-2.5 rounded-xl bg-white border border-slate-200/80 flex items-start gap-2.5 text-xs">
+                    <span class="w-5 h-5 rounded-md bg-blue-50 text-[#1A64FF] font-mono text-[10.5px] font-bold flex items-center justify-center shrink-0">0${i + 1}</span>
+                    <span class="text-slate-700 font-medium">${pt}</span>
+                  </div>
+                `).join('')}
+              </div>
             </div>
-            <p class="text-xs sm:text-[13px] text-slate-700 leading-relaxed">${mod.desc}</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
-              ${(activeCard.points || []).map((pt, idx) => `
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-start gap-2.5 text-xs">
-                  <span class="w-5 h-5 rounded-md bg-blue-50 text-[#1A64FF] font-mono text-[10.5px] font-bold flex items-center justify-center shrink-0">0${idx + 1}</span>
-                  <span class="text-slate-700 font-medium leading-relaxed">${pt}</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
+          ` : ''}
         </div>
 
         ${lessonSwitcherHtml}
 
-        <!-- FULL-WIDTH PREMIUM DUAL STUDIO WORKSPACE: VIDEO (LEFT 7 COLS) + RELATED PDF MANUALS (RIGHT 5 COLS) -->
+        <!-- ULTRA-PREMIUM FULL-WIDTH DUAL STUDIO (VIDEO ON LEFT + MANUALES PDF ON RIGHT) -->
         <div class="pro-card overflow-hidden border-slate-200/90 shadow-lg">
           <div class="px-6 py-3.5 bg-[#0B0F17] text-white flex items-center justify-between gap-3">
             <div class="flex items-center gap-3 min-w-0">
@@ -2501,32 +2477,32 @@
               <span class="text-sm sm:text-base font-extrabold text-white truncate">${activeCard.title}</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 text-[11px] font-semibold text-[#34D399]">
-                <i class="fa-solid fa-book-open"></i> ${manuals.length} Manual(es)
+              <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 text-[11px] font-semibold text-slate-300">
+                <i class="fa-solid fa-book-open text-[#34D399]"></i> ${manuals.length} Manual(es)
               </span>
               <span class="font-mono text-xs font-bold text-slate-400">${mod.code}</span>
             </div>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12">
-            <!-- LEFT 7 COLS: HIGH-DEFINITION VIDEO PLAYER + VIDEO CONTENTS -->
-            <div class="lg:col-span-7 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-5">
+            <!-- LEFT 7 COLS: FULL UNOBSTRUCTED 16:9 VIDEO STUDIO -->
+            <div class="lg:col-span-7 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
               <div class="space-y-4">
                 <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
                   <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
                 </div>
 
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
-                  <div class="text-[11px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                  <div class="text-[11px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
                     <i class="fa-solid fa-list-ul text-[#1A64FF]"></i>
                     <span>Contenido del Video</span>
                   </div>
-                  <ul class="space-y-2 text-xs sm:text-[13px] text-slate-700">
+                  <ul class="space-y-1.5 text-xs sm:text-[13px] text-slate-700">
                     ${(activeCard.points || []).map((pt, i) => `
                       <li class="flex items-start gap-2.5">
-                        <span class="font-mono text-xs font-extrabold text-[#1A64FF] shrink-0">${inlineLessonIdx + 1}.${i + 1}</span>
-                        <span class="font-medium leading-relaxed">${pt}</span>
+                        <span class="font-mono text-xs font-bold text-[#1A64FF]">• ${inlineLessonIdx + 1}.${i + 1}</span>
+                        <span class="font-medium">${pt}</span>
                       </li>
                     `).join('')}
                   </ul>
@@ -2534,8 +2510,8 @@
               </div>
             </div>
 
-            <!-- RIGHT 5 COLS: RELATED MANUALS & EMBEDDED PDF VIEWER -->
-            <div class="lg:col-span-5 bg-[#F8FAFC] p-5 sm:p-6 flex flex-col justify-between min-h-[520px]">
+            <!-- RIGHT 5 COLS: INTERACTIVE RELATED MANUALS & PDF VIEWER -->
+            <div class="lg:col-span-5 bg-[#F8FAFC] p-5 sm:p-6 flex flex-col justify-between">
               ${rightManualPanelHtml}
             </div>
           </div>
@@ -3336,33 +3312,16 @@
       else enterAudienceGate();
     }
 
-    // ==================== NAVIGATION, ROUTE PERSISTENCE & MODALS ====================
-    let currentTabKey = 'dashboard';
-
-    function saveActiveRouteState(tab, modId) {
-      if (!currentUser || !currentUser.email) return;
-      localStorage.setItem(`ihfb_route_v4_${currentUser.email.toLowerCase()}`, JSON.stringify({
-        tab: tab || currentTabKey,
-        modId: modId || currentSelectedModuleId
-      }));
-    }
-
-    function loadActiveRouteState() {
-      if (!currentUser || !currentUser.email) return null;
-      try {
-        return JSON.parse(localStorage.getItem(`ihfb_route_v4_${currentUser.email.toLowerCase()}`) || 'null');
-      } catch (e) {
-        return null;
-      }
-    }
-
+    // ==================== NAVIGATION & MODALS ====================
     function switchTab(tabKey, bypassQuizLock = false) {
       if (quizActiveLock && !bypassQuizLock && tabKey !== 'quizzes') {
         showProAlert("No Puedes Salir del Quiz", "Tienes una evaluación abierta en este momento. Responde todas las preguntas y presiona 'Calificar y Registrar'.", false);
         return;
       }
-      currentTabKey = tabKey;
-      saveActiveRouteState(tabKey, currentSelectedModuleId);
+      try {
+        sessionStorage.setItem('ihfb_active_tab', tabKey);
+        if (currentSelectedModuleId) sessionStorage.setItem('ihfb_active_mod_id', currentSelectedModuleId);
+      } catch (e) {}
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('text-white', 'bg-white/10');
