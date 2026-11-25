@@ -157,6 +157,40 @@
 </head>
 <body class="bg-[#F4F6F9] text-slate-900 antialiased min-h-screen flex flex-col selection:bg-[#1A64FF] selection:text-white relative">
 
+  <!-- ZERO-FLASH SESSION & OAUTH RESTORE OVERLAY -->
+  <div id="trainingBootLoader" class="fixed inset-0 z-[70] bg-[#0B0F17] hidden flex-col items-center justify-center gap-4 text-white">
+    <div class="w-12 h-12 rounded-2xl bg-white p-2 flex items-center justify-center shadow-lg">
+      <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
+    </div>
+    <div class="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-slate-300">
+      <span class="w-2 h-2 rounded-full bg-[#1A64FF] animate-ping"></span>
+      <span>Cargando Expediente...</span>
+    </div>
+  </div>
+  <script>
+    (function() {
+      try {
+        var hasSession = !!localStorage.getItem('ihfb_user_session_v4');
+        var hasOAuth = window.location.hash && window.location.hash.indexOf('access_token=') !== -1;
+        if (hasSession || hasOAuth) {
+          var bl = document.getElementById('trainingBootLoader');
+          if (bl) { bl.classList.remove('hidden'); bl.classList.add('flex'); }
+          setTimeout(function() {
+            var b = document.getElementById('trainingBootLoader');
+            if (b && !b.classList.contains('hidden')) {
+              b.classList.add('hidden');
+              b.classList.remove('flex');
+              var ag = document.getElementById('authGateScreen');
+              if (ag && document.getElementById('audienceGateScreen').classList.contains('hidden') && document.getElementById('workspaceShell').classList.contains('hidden')) {
+                ag.classList.remove('hidden');
+              }
+            }
+          }, 5000);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- DISCREET BOTTOM-LEFT LANGUAGE DROPDOWN -->
   <div id="discreetLangSwitcher" class="fixed bottom-4 left-4 z-40">
     <div class="flex items-center gap-2 bg-[#0B0F17]/90 backdrop-blur-md text-slate-200 border border-slate-700/70 rounded-xl px-3 py-1.5 shadow-lg hover:border-slate-500 transition">
@@ -178,6 +212,17 @@
   <!-- STAGE 1: HIGH-IMPACT SPLIT-SCREEN SIGN-IN & REGISTRATION GATE            -->
   <!-- ======================================================================== -->
   <div id="authGateScreen" class="min-h-screen flex flex-col lg:flex-row bg-[#0A0A0B]">
+  <script>
+    (function() {
+      try {
+        var hasSession = !!localStorage.getItem('ihfb_user_session_v4');
+        var hasOAuth = window.location.hash && window.location.hash.indexOf('access_token=') !== -1;
+        if (hasSession || hasOAuth) {
+          document.getElementById('authGateScreen').classList.add('hidden');
+        }
+      } catch (e) {}
+    })();
+  </script>
     <!-- Left High-Impact Obsidian Column with Translucent Online Training Photo -->
     <div class="lg:w-6/12 xl:w-[53%] bg-[#0A0A0B] text-white p-6 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden">
       <!-- Signature IHFB Tri-Color Top Bar -->
@@ -229,59 +274,60 @@
           </p>
         </div>
 
-        <!-- Workstation Monitor + Laptop Preview displaying the Actual IHFB Platform Screen -->
-        <div class="relative pt-1 pb-2">
-          <!-- Main Studio Monitor Bezel -->
-          <div class="rounded-2xl bg-[#18181B] p-2.5 border border-white/15 shadow-2xl max-w-[460px]">
-            <div class="bg-[#F4F5F7] rounded-xl overflow-hidden grid grid-cols-12 border border-slate-200">
-              <!-- Left side of Monitor Screen: "Aprender sin fronteras. Crecer juntos" + 4 Mascots -->
-              <div class="col-span-7 p-3.5 sm:p-4 flex flex-col justify-between bg-[#F4F5F7]">
+        <!-- Realistic Laptop Mockup displaying the Exact Cloned IHFB Platform Screen (`image_05c6a2.png`) -->
+        <div class="pt-1 pb-2 max-w-[500px] mx-auto lg:mx-0">
+          <!-- Laptop Lid & Dark Bezel -->
+          <div class="rounded-t-[18px] bg-[#14161B] p-2.5 pb-3 border-t border-x border-slate-600/60 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.85)] relative">
+            <!-- Laptop Top Camera Dot -->
+            <div class="w-1.5 h-1.5 rounded-full bg-slate-600 mx-auto mb-1.5"></div>
+            <!-- Exact Cloned Screen of Platform (`image_05c6a2.png`) -->
+            <div class="bg-white rounded-lg overflow-hidden grid grid-cols-12 border border-slate-300/80 aspect-[16/9.5]">
+              <!-- Left Half of Laptop Screen (#F7F8FA): "UN MUNDO POR DESCUBRIR / Aprender sin fronteras. Crecer juntos" + 4 IHFB Mascots -->
+              <div class="col-span-6 p-3.5 sm:p-4 flex flex-col justify-between bg-[#F7F8FA]">
                 <div>
-                  <div class="text-[8px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
-                  <div class="text-xs sm:text-sm font-extrabold text-slate-900 leading-tight mt-0.5">Aprender sin fronteras.<br>Crecer juntos</div>
-                  <div class="text-[9px] text-slate-500 mt-0.5">Juntos, en cada paso del camino.</div>
+                  <div class="text-[6.5px] font-bold uppercase tracking-widest text-slate-400">UN MUNDO POR DESCUBRIR</div>
+                  <div class="text-[11px] sm:text-[13px] font-extrabold text-slate-900 leading-[1.15] mt-1">Aprender sin fronteras.<br>Crecer juntos</div>
+                  <div class="text-[7.5px] text-slate-500 mt-1">Juntos, en cada paso del camino.</div>
                 </div>
-                <div class="pt-2 flex justify-center">
-                  <img id="heroMonitorMascotsImg" src="" alt="Plataforma Educativa IHFB" class="h-20 sm:h-24 w-auto object-contain">
+                <div class="pt-1 flex justify-center items-end">
+                  <img id="heroMonitorMascotsImg" src="" alt="Personajes Plataforma IHFB" class="h-20 sm:h-24 w-auto object-contain">
                 </div>
               </div>
-              <!-- Right side of Monitor Screen: Platform Login Preview -->
-              <div class="col-span-5 bg-white p-3 sm:p-3.5 border-l border-slate-200/80 flex flex-col justify-center space-y-2">
-                <div class="w-5 h-5 rounded-md bg-slate-900 text-white mx-auto flex items-center justify-center text-[8px]">
-                  <i class="fa-solid fa-sparkles"></i>
-                </div>
-                <div class="text-[10px] font-extrabold text-slate-900 text-center">¡Comencemos!</div>
-                <div class="py-1 px-1.5 rounded border border-slate-200 text-[7.5px] font-semibold text-slate-700 text-center flex items-center justify-center gap-1">
-                  <span class="w-2 h-2 rounded-full bg-[#1A64FF]"></span> Iniciar con Google
-                </div>
-                <div class="space-y-1">
-                  <div class="h-3.5 rounded bg-slate-100 border border-slate-200/80"></div>
-                  <div class="h-3.5 rounded bg-slate-100 border border-slate-200/80"></div>
-                  <div class="py-1 rounded bg-[#18181B] text-white text-[7.5px] font-bold text-center">Iniciar sesión</div>
+
+              <!-- Right Half of Laptop Screen (#FFFFFF): Exact Clone of "¡Comencemos!" Sign-In Form -->
+              <div class="col-span-6 bg-white p-3.5 sm:p-4 flex flex-col items-center justify-center">
+                <div class="w-full max-w-[165px] space-y-1.5">
+                  <div class="w-5 h-5 rounded-md bg-[#27272A] text-white mx-auto flex items-center justify-center text-[8px]">
+                    <i class="fa-solid fa-sparkles"></i>
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-900 text-center">¡Comencemos!</div>
+
+                  <!-- Google Sign-in Button inside Laptop Screen -->
+                  <div class="py-1 px-2 rounded border border-slate-200 bg-white text-[7px] font-semibold text-slate-700 flex items-center justify-center gap-1.5 shadow-2xs">
+                    <svg class="w-2.5 h-2.5 shrink-0" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
+                    <span>Iniciar sesión con Google</span>
+                  </div>
+
+                  <div class="flex items-center gap-1 py-0.5">
+                    <div class="flex-1 h-px bg-slate-200"></div>
+                    <span class="text-[5.5px] text-slate-400">O continúa con</span>
+                    <div class="flex-1 h-px bg-slate-200"></div>
+                  </div>
+
+                  <div class="space-y-1">
+                    <div class="text-[6px] font-semibold text-slate-700">Correo electrónico <span class="text-rose-500">*</span></div>
+                    <div class="px-1.5 py-0.5 rounded border border-slate-200 text-[6px] text-slate-400 bg-white">Ingresa tu correo electrónico</div>
+                    <div class="text-[6px] font-semibold text-slate-700">Contraseña <span class="text-rose-500">*</span></div>
+                    <div class="px-1.5 py-0.5 rounded border border-slate-200 text-[6px] text-slate-400 bg-white">Ingresa tu contraseña</div>
+                    <div class="mt-1 py-1 rounded bg-[#18181B] text-white text-[6.5px] font-bold text-center">Iniciar sesión</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Monitor Stand Base -->
-          <div class="w-20 h-3 bg-gradient-to-b from-slate-600 to-slate-800 mx-auto rounded-b-lg"></div>
-          <div class="w-32 h-1.5 bg-slate-700/80 mx-auto rounded-full"></div>
-
-          <!-- Secondary Companion Laptop Card (Bottom-Right Overlap like Workstation Reference) -->
-          <div class="hidden sm:block absolute -bottom-1 right-2 w-44 rounded-xl bg-[#0F172A] p-1.5 border border-white/20 shadow-xl">
-            <div class="rounded-lg bg-[#1E293B] p-2 space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[8px] font-bold text-[#34D399]">6A Matemática</span>
-                <span class="px-1.5 py-0.5 rounded bg-[#10B981]/20 text-[#34D399] text-[7px] font-bold">En vivo</span>
-              </div>
-              <div class="h-1.5 w-full bg-slate-700 rounded-full overflow-hidden">
-                <div class="h-full w-4/5 bg-[#1A64FF] rounded-full"></div>
-              </div>
-              <div class="grid grid-cols-3 gap-1 pt-0.5">
-                <div class="h-4 rounded bg-white/10"></div>
-                <div class="h-4 rounded bg-white/10"></div>
-                <div class="h-4 rounded bg-white/10"></div>
-              </div>
-            </div>
+          <!-- Realistic Aluminum Laptop Base & Trackpad Lip -->
+          <div class="h-3 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 rounded-b-xl mx-[-10px] shadow-lg flex items-start justify-center">
+            <div class="w-16 h-1 bg-slate-600/50 rounded-b-md"></div>
           </div>
         </div>
 
@@ -340,7 +386,7 @@
               <i class="fa-solid fa-right-to-bracket text-[11px]"></i> <span>Iniciar Sesión</span>
             </button>
             <button type="button" onclick="setAuthTab('register')" id="tabBtnRegister" class="py-2.5 px-3 text-xs font-bold rounded-lg transition text-slate-600 hover:text-slate-900 flex items-center justify-center gap-2 cursor-pointer">
-              <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Crear Expediente</span>
+              <i class="fa-solid fa-user-plus text-[11px]"></i> <span>Registrarse</span>
             </button>
           </div>
 
@@ -366,26 +412,27 @@
 
             <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11.5px] text-slate-700 flex items-start gap-2.5">
               <i class="fa-solid fa-circle-info text-[#1A64FF] mt-0.5"></i>
-              <span>¿Primera vez aquí? Selecciona <strong>Crear Expediente</strong> arriba para registrar tus datos institucionales antes de vincular Google.</span>
+              <span>¿Primera vez aquí? Selecciona <strong>Registrarse</strong> arriba para registrar tus datos institucionales antes de vincular Google.</span>
             </div>
           </div>
 
-          <!-- TAB 2: CREAR EXPEDIENTE COMPLETO -->
-          <div id="authViewRegister" class="space-y-3.5 hidden">
-            <div class="space-y-3">
+          <!-- TAB 2: REGISTRARSE (FORMATO EJECUTIVO LIMPIO) -->
+          <div id="authViewRegister" class="space-y-4 hidden">
+            <div class="space-y-3.5">
               <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">1. Nombre Completo Oficial <span class="text-rose-600">*</span></label>
-                <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Sofía Alejandra Ramírez" class="exec-input w-full px-3.5 py-2 font-medium">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">Nombre Completo Oficial <span class="text-rose-600">*</span></label>
+                <input type="text" id="regUserName" oninput="validateRegistrationForm()" placeholder="Ej. Sofía Alejandra Ramírez" class="pro-input w-full px-3.5 py-2.5 font-medium">
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">2. Correo Electrónico Institucional <span class="text-rose-600">*</span></label>
-                <input type="email" id="regUserEmail" oninput="validateRegistrationForm()" placeholder="nombre@institucion.edu" class="exec-input w-full px-3.5 py-2 font-mono text-xs">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">Correo Electrónico Institucional <span class="text-rose-600">*</span></label>
+                <input type="email" id="regUserEmail" oninput="validateRegistrationForm()" placeholder="nombre@institucion.edu" class="pro-input w-full px-3.5 py-2.5 font-mono text-xs">
               </div>
 
               <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">3. Audiencia / Rol <span class="text-rose-600">*</span></label>
-                <select id="regUserRole" onchange="onRegRoleChange()" class="exec-input w-full px-3.5 py-2 font-semibold">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">Audiencia / Rol <span class="text-rose-600">*</span></label>
+                <select id="regUserRole" onchange="onRegRoleChange()" class="pro-input w-full px-3.5 py-2.5 font-semibold text-slate-800">
+                  <option value="" selected disabled>Selecciona tu audiencia / rol...</option>
                   <option value="Docente">Docente</option>
                   <option value="Tutor">Tutor</option>
                   <option value="Facilitador">Facilitador</option>
@@ -395,48 +442,33 @@
                 </select>
               </div>
 
-              <!-- CAMPOS ESPECÍFICOS SI ES DOCENTE -->
-              <div id="regDocenteFieldsBox" class="p-3.5 rounded-xl bg-blue-50/50 border border-blue-200/80 space-y-3">
+              <!-- CAMPOS EXCLUSIVOS SOLO SI SELECCIONA ROL DOCENTE -->
+              <div id="regDocenteFieldsBox" class="hidden p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
                 <div class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF] flex items-center gap-1.5">
                   <i class="fa-solid fa-school"></i>
-                  <span>Datos del Centro Escolar (Requerido para Docente)</span>
+                  <span>Datos del Centro Escolar</span>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código del Centro Escolar <span class="text-rose-600">*</span></label>
-                    <input type="text" id="regSchoolCode" oninput="validateRegistrationForm()" placeholder="Ej. 10428" class="exec-input w-full px-3 py-2 font-mono text-xs">
+                    <input type="text" id="regSchoolCode" oninput="validateRegistrationForm()" placeholder="Ej. 10428" class="pro-input w-full px-3 py-2 font-mono text-xs">
                   </div>
                   <div>
                     <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Municipio <span class="text-rose-600">*</span></label>
-                    <input type="text" id="regSchoolMunicipality" oninput="validateRegistrationForm()" placeholder="Ej. Distrito Central" class="exec-input w-full px-3 py-2 font-medium">
+                    <input type="text" id="regSchoolMunicipality" oninput="validateRegistrationForm()" placeholder="Ej. Distrito Central" class="pro-input w-full px-3 py-2 font-medium">
                   </div>
                 </div>
                 <div>
                   <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Nombre del Centro Escolar <span class="text-rose-600">*</span></label>
-                  <input type="text" id="regSchoolName" oninput="validateRegistrationForm()" placeholder="Ej. Centro Escolar República de..." class="exec-input w-full px-3 py-2 font-medium">
+                  <input type="text" id="regSchoolName" oninput="validateRegistrationForm()" placeholder="Ej. Centro Escolar República de..." class="pro-input w-full px-3 py-2 font-medium">
                 </div>
               </div>
 
-              <!-- CAMPOS PARA OTROS ROLES -->
-              <div id="regOtherRoleFieldsBox" class="hidden p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-                <div class="text-[10.5px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
-                  <i class="fa-solid fa-building"></i>
-                  <span>Adscripción Operativa</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div>
-                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Código / ID Institucional <span class="text-rose-600">*</span></label>
-                    <input type="text" id="regUserCode" oninput="validateRegistrationForm()" placeholder="Ej. SUP-2026-01" class="exec-input w-full px-3 py-2 font-mono text-xs">
-                  </div>
-                  <div>
-                    <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Región / Jurisdicción <span class="text-rose-600">*</span></label>
-                    <input type="text" id="regUserRegion" oninput="validateRegistrationForm()" placeholder="Ej. Región Central" class="exec-input w-full px-3 py-2 font-medium">
-                  </div>
-                </div>
-                <div>
-                  <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-700 mb-1">Organización / Institución <span class="text-rose-600">*</span></label>
-                  <input type="text" id="regUserOrg" oninput="validateRegistrationForm()" placeholder="Nombre de la organización" class="exec-input w-full px-3 py-2 font-medium">
-                </div>
+              <!-- Hidden placeholders kept for compatibility -->
+              <div id="regOtherRoleFieldsBox" class="hidden">
+                <input type="hidden" id="regUserCode" value="">
+                <input type="hidden" id="regUserRegion" value="">
+                <input type="hidden" id="regUserOrg" value="">
               </div>
 
               <label class="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer text-[11.5px] text-slate-600">
@@ -452,7 +484,7 @@
                 <div id="regGoogleActiveBox" class="hidden flex-col items-center gap-2 w-full">
                   <button type="button" onclick="launchFullWindowGoogleAuth('register')" class="w-full py-3.5 px-4 rounded-xl bg-[#0A0A0B] hover:bg-[#1A64FF] text-white text-xs sm:text-[13px] font-bold flex items-center justify-center gap-3 shadow-md transition cursor-pointer">
                     <svg class="w-4 h-4 shrink-0 bg-white rounded-full p-0.5" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17Z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.11-6.72-4.96H1.29v3.14C3.26 21.3 7.31 24 12 24Z"/><path fill="#FBBC05" d="M5.28 14.24c-.24-.72-.38-1.49-.38-2.24s.14-1.52.38-2.24V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.99-3.14Z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.62l3.99 3.14c.95-2.85 3.6-4.96 6.72-4.96Z"/></svg>
-                    <span>Vincular Cuenta Google y Crear Expediente</span>
+                    <span>Registrarse con Google</span>
                   </button>
                 </div>
               </div>
@@ -487,53 +519,59 @@
         </div>
       </div>
 
-      <!-- Academic Profile Card -->
-      <div class="my-auto py-8 space-y-5 max-w-md">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-emerald-500/15 text-[#34D399] border border-emerald-500/30">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
-          <span>Perfil Académico Activo</span>
+      <!-- Well-Distributed Executive Academic Profile Dossier -->
+      <div class="my-auto py-6 space-y-6 w-full max-w-md">
+        <!-- Block 1: Identity Header with Avatar & Role Pill -->
+        <div class="flex items-center gap-4">
+          <div id="audProfileAvatar" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1A64FF] to-[#EC4899] text-white font-extrabold text-xl flex items-center justify-center shadow-lg shrink-0">
+            U
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-emerald-500/15 text-[#34D399] border border-emerald-500/30 mb-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
+              <span>Expediente Verificado</span>
+            </div>
+            <h2 id="audWelcomeName" class="text-xl sm:text-2xl font-extrabold text-white tracking-tight truncate">Participante</h2>
+            <p id="audUserEmailPill" class="font-mono text-xs text-slate-400 truncate mt-0.5"></p>
+          </div>
         </div>
 
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-            <span id="audWelcomeName" class="text-white">Participante</span>
-          </h2>
-          <p id="audUserEmailPill" class="font-mono text-xs text-slate-400 mt-1"></p>
-        </div>
-
-        <!-- Detailed Academic Dossier Card -->
+        <!-- Block 2: Role & Institutional Assignment Card -->
         <div class="p-5 rounded-2xl bg-white/[0.06] border border-white/10 space-y-4">
-          <div class="flex items-center justify-between border-b border-white/10 pb-3">
+          <div class="flex items-center justify-between gap-3">
             <div>
               <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Rol / Audiencia Asignada</div>
-              <div id="audRegisteredRoleHint" class="text-base font-extrabold text-[#34D399] mt-0.5">Docente</div>
+              <div id="audRegisteredRoleHint" class="text-lg font-extrabold text-[#34D399] mt-0.5">Docente</div>
             </div>
-            <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white text-slate-900 hover:bg-[#1A64FF] hover:text-white text-xs font-bold transition shrink-0 cursor-pointer">
+            <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white text-slate-900 hover:bg-[#1A64FF] hover:text-white text-xs font-bold transition shrink-0 cursor-pointer shadow-sm">
               <i class="fa-solid fa-pen-to-square mr-1"></i> Editar Perfil
             </button>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 text-xs">
-            <div class="p-3 rounded-xl bg-black/25 border border-white/5">
-              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Centro / Institución</div>
+          <div id="audDocenteDetailsGrid" class="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
+            <div class="p-3 rounded-xl bg-black/30 border border-white/5">
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Centro Escolar</div>
               <div id="audProfileOrgDisplay" class="font-semibold text-slate-100 truncate mt-0.5">—</div>
             </div>
-            <div class="p-3 rounded-xl bg-black/25 border border-white/5">
+            <div class="p-3 rounded-xl bg-black/30 border border-white/5">
               <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Código / Municipio</div>
               <div id="audProfileCodeDisplay" class="font-mono font-semibold text-slate-100 truncate mt-0.5">—</div>
             </div>
           </div>
+        </div>
 
-          <!-- Global Academic Progress Meter -->
-          <div class="space-y-1.5 pt-1">
-            <div class="flex items-center justify-between text-xs">
-              <span class="text-slate-300 font-semibold">Avance Global de Certificación</span>
-              <span id="audGlobalProgressPct" class="font-mono font-extrabold text-[#60A5FA]">0%</span>
-            </div>
-            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
-              <div id="audGlobalProgressBar" class="h-full bg-gradient-to-r from-[#1A64FF] via-[#EC4899] to-[#10B981] transition-all duration-500" style="width: 0%;"></div>
-            </div>
-            <div id="audGlobalProgressSub" class="text-[11px] text-slate-400">0 de 6 módulos aprobados</div>
+        <!-- Block 3: Dedicated Certification Progress Card -->
+        <div class="p-5 rounded-2xl bg-white/[0.06] border border-white/10 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-300">Progreso de Certificación</span>
+            <span id="audGlobalProgressPct" class="font-mono text-lg font-extrabold text-[#60A5FA]">0%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+            <div id="audGlobalProgressBar" class="h-full bg-gradient-to-r from-[#1A64FF] via-[#EC4899] to-[#10B981] transition-all duration-500" style="width: 0%;"></div>
+          </div>
+          <div class="flex items-center justify-between text-[11px] text-slate-400">
+            <span id="audGlobalProgressSub">0 de 6 módulos aprobados</span>
+            <span>Meta: 100%</span>
           </div>
         </div>
       </div>
@@ -1373,8 +1411,11 @@
       </div>
 
       <form onsubmit="saveUserProfile(event)" class="p-6 space-y-4 text-xs">
-        <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-emerald-950 text-[11.5px] leading-relaxed">
-          <strong>Protección de Progreso:</strong> Si cambias tu rol aquí, todos los módulos aprobados que formen parte de tu nuevo rol se conservarán intactos.
+        <div id="profileRoleOnceWarning" class="p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 text-[11.5px] leading-relaxed flex items-start gap-2.5">
+          <i class="fa-solid fa-triangle-exclamation text-amber-600 text-sm mt-0.5 shrink-0"></i>
+          <div>
+            <strong>Advertencia Importante:</strong> Solo puedes cambiar tu rol <strong>una única vez</strong>. Una vez que guardes el cambio de rol, ya no se podrá revertir ni volver a modificar.
+          </div>
         </div>
 
         <div>
@@ -1388,8 +1429,11 @@
         </div>
 
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Audiencia / Rol *</label>
-          <select id="profileRoleSelect" onchange="onProfileRoleSelectChange()" class="pro-input w-full px-3.5 py-2 font-semibold">
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700">Audiencia / Rol *</label>
+            <span id="profileRoleLockBadge" class="hidden text-[10.5px] font-bold text-rose-600"><i class="fa-solid fa-lock mr-1"></i>Cambio único ya utilizado (1/1)</span>
+          </div>
+          <select id="profileRoleSelect" onchange="onProfileRoleSelectChange()" class="pro-input w-full px-3.5 py-2 font-semibold disabled:bg-slate-100 disabled:text-slate-500 disabled:cursor-not-allowed">
             <option value="Docente">Docente</option>
             <option value="Tutor">Tutor</option>
             <option value="Facilitador">Facilitador</option>
@@ -1875,8 +1919,16 @@
 
       onRegRoleChange();
 
+      const hideBoot = () => {
+        const bl = document.getElementById('trainingBootLoader');
+        if (bl) { bl.classList.add('hidden'); bl.classList.remove('flex'); }
+      };
+
       const handledOAuth = await handleOAuthRedirectCallbackIfPresent();
-      if (handledOAuth) return;
+      if (handledOAuth) {
+        hideBoot();
+        return;
+      }
 
       const savedSession = JSON.parse(localStorage.getItem('ihfb_user_session_v4') || 'null');
       if (savedSession && savedSession.email) {
@@ -1892,7 +1944,10 @@
         } else {
           enterAudienceGate();
         }
+      } else {
+        document.getElementById('authGateScreen').classList.remove('hidden');
       }
+      hideBoot();
     });
 
     // ==================== HIGH-SECURITY ADMIN AUTHENTICATION ====================
@@ -1928,10 +1983,11 @@
       const pass = document.getElementById('adminPassInput').value;
       const passHash = await computeSha256Hex(pass);
 
-      // 1. Check Supabase `admin_access` table first (real-time backend admin directory)
+      // 1. Check Supabase `admin_access` table first (case-insensitive email lookup)
       let remoteAdminMatch = false;
+      let supabaseErrHint = '';
       try {
-        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/admin_access?email=eq.${encodeURIComponent(email)}&select=*`, {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/admin_access?email=ilike.${encodeURIComponent(email)}&select=*`, {
           headers: {
             "apikey": TRAINING_SUPABASE_KEY,
             "Authorization": `Bearer ${TRAINING_SUPABASE_KEY}`
@@ -1941,12 +1997,17 @@
           const rows = await res.json();
           if (Array.isArray(rows) && rows.length > 0) {
             const adm = rows[0];
-            if (adm.active !== false && (adm.password === pass || adm.password === passHash)) {
+            const dbPass = String(adm.password || '').trim();
+            if (adm.active !== false && (dbPass === pass.trim() || dbPass === passHash)) {
               remoteAdminMatch = true;
             }
           }
+        } else {
+          supabaseErrHint = ` (HTTP ${res.status} en admin_access)`;
         }
-      } catch (err) {}
+      } catch (err) {
+        supabaseErrHint = ' (Sin conexión con Supabase)';
+      }
 
       // 2. Local fallback check
       const emailValid = ADMIN_AUTHORIZED_EMAILS.includes(email);
@@ -1959,7 +2020,7 @@
           adminLockUntil = Date.now() + 60000;
           errBox.textContent = "Demasiados intentos fallidos. Acceso bloqueado durante 60 segundos.";
         } else {
-          errBox.textContent = `Credenciales de administrador inválidas (Intento ${adminFailedAttempts}/3).`;
+          errBox.textContent = `Credenciales inválidas${supabaseErrHint} (Intento ${adminFailedAttempts}/3). Verifica correo, contraseña y políticas RLS en admin_access.`;
         }
         errBox.classList.remove('hidden');
         return;
@@ -2012,7 +2073,6 @@
       const role = document.getElementById('regUserRole').value;
       const isDoc = role === 'Docente';
       document.getElementById('regDocenteFieldsBox').classList.toggle('hidden', !isDoc);
-      document.getElementById('regOtherRoleFieldsBox').classList.toggle('hidden', isDoc);
       validateRegistrationForm();
     }
 
@@ -2044,18 +2104,13 @@
       const confirmed = document.getElementById('regConfirmAccuracy').checked;
 
       const emailValid = email.includes('@') && email.includes('.');
-      let roleFieldsValid = false;
+      let roleFieldsValid = Boolean(role);
 
       if (role === 'Docente') {
         const sCode = document.getElementById('regSchoolCode').value.trim();
         const sName = document.getElementById('regSchoolName').value.trim();
         const sMuni = document.getElementById('regSchoolMunicipality').value.trim();
         roleFieldsValid = sCode.length >= 2 && sName.length >= 3 && sMuni.length >= 2;
-      } else {
-        const uCode = document.getElementById('regUserCode').value.trim();
-        const uOrg = document.getElementById('regUserOrg').value.trim();
-        const uReg = document.getElementById('regUserRegion').value.trim();
-        roleFieldsValid = uCode.length >= 2 && uOrg.length >= 2 && uReg.length >= 2;
       }
 
       const isValid = name.length >= 3 && emailValid && roleFieldsValid && confirmed;
@@ -2210,10 +2265,14 @@
         enterAudienceGate();
       } else {
         if (!existing) {
-          showProAlert("Cuenta No Registrada", `El correo (${googleEmail}) aún no tiene expediente. Completa el formulario en "Crear Expediente" para registrarte.`, false);
+          document.getElementById('authGateScreen').classList.remove('hidden');
           setAuthTab('register');
           document.getElementById('regUserEmail').value = googleEmail;
+          if (googleDisplayName && !document.getElementById('regUserName').value.trim()) {
+            document.getElementById('regUserName').value = googleDisplayName;
+          }
           validateRegistrationForm();
+          showProAlert("Completa tu Registro", `Tu correo (${googleEmail}) aún no está registrado. Selecciona tu rol y completa el formulario para crear tu cuenta.`, false);
           return;
         }
         currentUser = Object.assign({}, existing, { audienceConfirmed: false });
@@ -2299,7 +2358,7 @@
         enterAudienceGate();
       } else {
         if (!existing) {
-          showProAlert("Cuenta No Registrada", `El correo (${googleEmail}) aún no tiene expediente. Completa el formulario en "Crear Expediente" para registrarte.`, false);
+          showProAlert("Cuenta No Registrada", `El correo (${googleEmail}) aún no tiene expediente. Completa el formulario en "Registrarse" para crear tu cuenta.`, false);
           setAuthTab('register');
           document.getElementById('regUserEmail').value = googleEmail;
           validateRegistrationForm();
@@ -2321,21 +2380,22 @@
       document.getElementById('audienceGateScreen').classList.remove('hidden');
       document.getElementById('audienceGateScreen').classList.add('flex');
 
+      const avEl = document.getElementById('audProfileAvatar');
+      if (avEl) avEl.textContent = (currentUser.name || 'U').trim().charAt(0).toUpperCase();
       document.getElementById('audWelcomeName').textContent = currentUser.name;
       document.getElementById('audRegisteredRoleHint').textContent = currentUser.role;
       const emailPill = document.getElementById('audUserEmailPill');
       emailPill.textContent = currentUser.email;
       emailPill.classList.remove('hidden');
 
-      const orgTxt = currentUser.role === 'Docente'
-        ? (currentUser.schoolName || currentUser.org || 'Centro Escolar')
-        : (currentUser.org || 'Institución');
-      const codeTxt = currentUser.role === 'Docente'
-        ? `${currentUser.schoolCode || currentUser.code || '—'} • ${currentUser.municipality || currentUser.region || ''}`
-        : `${currentUser.code || '—'} • ${currentUser.region || ''}`;
-
-      document.getElementById('audProfileOrgDisplay').textContent = orgTxt;
-      document.getElementById('audProfileCodeDisplay').textContent = codeTxt;
+      const docGrid = document.getElementById('audDocenteDetailsGrid');
+      if (currentUser.role === 'Docente') {
+        if (docGrid) docGrid.classList.remove('hidden');
+        document.getElementById('audProfileOrgDisplay').textContent = currentUser.schoolName || currentUser.org || 'Centro Escolar';
+        document.getElementById('audProfileCodeDisplay').textContent = `${currentUser.schoolCode || currentUser.code || '—'} • ${currentUser.municipality || currentUser.region || ''}`;
+      } else {
+        if (docGrid) docGrid.classList.add('hidden');
+      }
       document.getElementById('audModulesHeaderTitle').textContent = `Módulos para ${currentUser.role}`;
 
       const roleMods = getRoleModulesList(currentUser.role);
@@ -2371,11 +2431,12 @@
         <div onclick="${unlocked ? `openSpecificModuleFromRoadmap('${mod.id}')` : `showProAlert('Módulo Bloqueado', 'Aprueba primero el módulo anterior con mínimo 80% para desbloquear ${mod.code}.', false)`}" class="p-4 sm:p-5 rounded-2xl bg-white border ${p.quizCompleted ? 'border-emerald-200' : (unlocked ? 'border-slate-200 hover:border-[#1A64FF]' : 'border-slate-200/70 opacity-65')} shadow-2xs hover:shadow-md transition-all ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed'} group space-y-3">
           <div class="flex items-center justify-between gap-4">
             <div class="flex items-center gap-3.5 min-w-0">
-              <div class="w-11 h-11 rounded-2xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (unlocked ? 'bg-[#0B0F17] text-white group-hover:bg-[#1A64FF]' : 'bg-slate-100 text-slate-400')} font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">
-                ${mod.code}
+              <div class="w-12 h-12 rounded-2xl ${p.quizCompleted ? 'bg-[#10B981] text-white' : (unlocked ? 'bg-[#0B0F17] text-white group-hover:bg-[#1A64FF]' : 'bg-slate-100 text-slate-400')} text-base flex items-center justify-center shrink-0 transition shadow-2xs">
+                <i class="fa-solid ${mod.icon || 'fa-layer-group'}"></i>
               </div>
               <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-mono text-[11px] font-extrabold px-2 py-0.5 rounded bg-slate-100 text-slate-700">${mod.code}</span>
                   <h4 class="text-sm sm:text-[15px] font-extrabold text-slate-900 truncate">${mod.title}</h4>
                   ${badgeHtml}
                 </div>
@@ -4075,7 +4136,7 @@
       const r = document.getElementById('profileRoleSelect').value;
       const isDoc = r === 'Docente';
       document.getElementById('profDocenteFieldsBox').classList.toggle('hidden', !isDoc);
-      document.getElementById('profOtherFieldsBox').classList.toggle('hidden', isDoc);
+      document.getElementById('profOtherFieldsBox').classList.add('hidden');
     }
 
     function openProfileEditModal() {
@@ -4086,15 +4147,27 @@
       }
       document.getElementById('profileEmailDisplay').value = currentUser.email;
       document.getElementById('profileNameInput').value = currentUser.name;
-      document.getElementById('profileRoleSelect').value = currentUser.role;
+
+      const roleSel = document.getElementById('profileRoleSelect');
+      const lockBadge = document.getElementById('profileRoleLockBadge');
+      const warnBox = document.getElementById('profileRoleOnceWarning');
+      roleSel.value = currentUser.role;
+
+      if (currentUser.roleChangedOnce && !isAdminMode) {
+        roleSel.disabled = true;
+        if (lockBadge) lockBadge.classList.remove('hidden');
+        if (warnBox) {
+          warnBox.className = "p-3.5 rounded-xl bg-slate-100 border border-slate-300 text-slate-700 text-[11.5px] leading-relaxed flex items-start gap-2.5";
+          warnBox.innerHTML = `<i class="fa-solid fa-lock text-slate-500 text-sm mt-0.5 shrink-0"></i><div><strong>Rol Bloqueado:</strong> Ya utilizaste tu único cambio de rol permitido. Tu audiencia actual (<strong>${currentUser.role}</strong>) es permanente.</div>`;
+        }
+      } else {
+        roleSel.disabled = false;
+        if (lockBadge) lockBadge.classList.add('hidden');
+      }
 
       document.getElementById('profSchoolCodeInput').value = currentUser.schoolCode || currentUser.code || '';
       document.getElementById('profSchoolNameInput').value = currentUser.schoolName || currentUser.org || '';
       document.getElementById('profSchoolMunicipalityInput').value = currentUser.municipality || currentUser.region || '';
-
-      document.getElementById('profileCodeInput').value = currentUser.code || '';
-      document.getElementById('profileOrgInput').value = currentUser.org || '';
-      document.getElementById('profileRegionInput').value = currentUser.region || '';
 
       onProfileRoleSelectChange();
       document.getElementById('profileEditModal').classList.remove('hidden');
@@ -4107,8 +4180,13 @@
     function saveUserProfile(e) {
       e.preventDefault();
       const oldRole = currentUser.role;
-      const newRole = document.getElementById('profileRoleSelect').value;
+      const roleSel = document.getElementById('profileRoleSelect');
+      const newRole = (currentUser.roleChangedOnce && !isAdminMode) ? oldRole : roleSel.value;
       const isDoc = newRole === 'Docente';
+
+      if (oldRole !== newRole) {
+        currentUser.roleChangedOnce = true;
+      }
 
       currentUser.name = document.getElementById('profileNameInput').value.trim();
       currentUser.role = newRole;
@@ -4120,9 +4198,12 @@
         currentUser.org = currentUser.schoolName;
         currentUser.region = currentUser.municipality;
       } else {
-        currentUser.code = document.getElementById('profileCodeInput').value.trim();
-        currentUser.org = document.getElementById('profileOrgInput').value.trim();
-        currentUser.region = document.getElementById('profileRegionInput').value.trim();
+        currentUser.schoolCode = '';
+        currentUser.schoolName = '';
+        currentUser.municipality = '';
+        currentUser.code = '';
+        currentUser.org = '';
+        currentUser.region = '';
       }
 
       const db = JSON.parse(localStorage.getItem('ihfb_participants_db_v4') || '[]');
