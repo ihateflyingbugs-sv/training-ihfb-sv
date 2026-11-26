@@ -40,7 +40,7 @@
       top: 0px !important;
       margin-top: 0px !important;
       position: static !important;
-      background-color: #F4F6F9;
+      background-color: #EBF0F7;
       color: #0F172A;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -166,7 +166,7 @@
   </script>
   <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
-<body class="bg-[#F4F6F9] text-slate-900 antialiased min-h-screen flex flex-col selection:bg-[#1A64FF] selection:text-white relative">
+<body class="bg-[#EBF0F7] text-slate-900 antialiased min-h-screen flex flex-col selection:bg-[#1A64FF] selection:text-white relative">
 
   <!-- ZERO-FLASH SESSION & OAUTH RESTORE OVERLAY -->
   <div id="trainingBootLoader" class="fixed inset-0 z-[70] bg-[#0B0F17] hidden flex-col items-center justify-center gap-4 text-white">
@@ -506,33 +506,29 @@
       </div>
 
       <!-- Compact Middle Academic Dossier with Ultra-Subtle Cards -->
-      <div class="my-auto py-4 space-y-3 w-full max-w-[360px] mx-auto">
-        <!-- Prominent Audience Emblem -->
-        <div class="flex flex-col items-center justify-center pb-1">
+      <div class="my-auto py-4 space-y-3.5 w-full max-w-[360px] mx-auto">
+        <!-- Prominent Audience Emblem + Participant Name Centered Below -->
+        <div class="flex flex-col items-center justify-center text-center space-y-2.5 pb-1">
           <div class="w-28 h-28 rounded-full bg-white/[0.035] border border-white/[0.08] flex items-center justify-center shadow-xl">
             <div class="w-20 h-20 rounded-full bg-[#1A64FF]/15 border border-[#1A64FF]/30 text-slate-100 flex items-center justify-center text-4xl">
               <i id="audHeroRoleIcon" class="fa-solid fa-chalkboard-user"></i>
             </div>
           </div>
+          <div class="space-y-1 max-w-full px-2">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9.5px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>Expediente Verificado</span>
+            </div>
+            <h2 id="audWelcomeName" class="text-lg sm:text-xl font-extrabold text-white tracking-tight truncate">Participante</h2>
+            <p id="audUserEmailPill" class="text-[11px] text-slate-400 truncate"></p>
+          </div>
         </div>
 
-        <!-- Compact Subtle Identity Card -->
+        <!-- Compact Subtle Identity Card (No Initial-Letter Avatar Box) -->
         <div class="p-4 rounded-2xl bg-white/[0.035] border border-white/[0.07] space-y-3">
-          <div class="flex items-center gap-3">
-            <div id="audProfileAvatar" class="w-10 h-10 rounded-xl bg-[#1A64FF] text-white font-extrabold text-base flex items-center justify-center shrink-0">
-              U
-            </div>
-            <div class="min-w-0 flex-1">
-              <div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9.5px] font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 mb-0.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                <span>Expediente Verificado</span>
-              </div>
-              <h2 id="audWelcomeName" class="text-base sm:text-lg font-extrabold text-white tracking-tight truncate">Participante</h2>
-              <p id="audUserEmailPill" class="text-[11px] text-slate-400 truncate"></p>
-            </div>
-          </div>
+          <div class="flex items-center justify-between gap-2.5">
 
-          <div class="pt-2.5 border-t border-white/[0.07] flex items-center justify-between gap-2.5">
+
             <div>
               <div class="text-[9.5px] font-semibold uppercase tracking-wider text-slate-400">Audiencia / Rol</div>
               <div id="audRegisteredRoleHint" class="text-sm font-extrabold text-emerald-300 mt-0.5">Docente</div>
@@ -581,7 +577,7 @@
     </div>
 
     <!-- Right Clean Architectural Panel: Responsive Balanced Grid (No Clipping on Small Screens, Balanced on Large Screens) -->
-    <div class="lg:w-7/12 xl:w-[63%] bg-[#F4F6F9] px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-8 flex flex-col justify-start lg:justify-center lg:h-screen lg:overflow-y-auto custom-scroll">
+    <div class="lg:w-7/12 xl:w-[63%] bg-[#EBF0F7] px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-8 flex flex-col justify-start lg:justify-center lg:h-screen lg:overflow-y-auto custom-scroll">
       <div class="max-w-5xl w-full mx-auto space-y-5">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 sm:px-6 sm:py-4 rounded-2xl border border-slate-200/80 shadow-2xs">
           <div>
@@ -743,7 +739,7 @@
         <button type="button" onclick="openProfileEditModal()" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-bold">Mi Perfil</button>
       </div>
 
-      <main class="flex-1 px-4 pt-3 pb-6 sm:px-6 sm:pt-4 sm:pb-8 w-full space-y-4">
+      <main class="flex-1 px-4 pt-2 pb-6 sm:px-6 sm:pt-3 sm:pb-8 w-full space-y-4">
 
         <!-- ================================================================ -->
         <!-- VIEW 0: INICIO E INDUCCIÓN (CLEAN — NO REDUNDANT MODULE LIST)    -->
@@ -899,7 +895,6 @@
                 <span id="modulesCompletedCount" class="font-mono text-[11px] font-bold text-[#34D399]">0 / 6 aprobados</span>
               </div>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Manuales y Videos</h2>
-              <p class="text-xs text-slate-300">Selecciona un módulo superior, revisa el video y despliega el manual PDF para confirmar tu lectura.</p>
             </div>
             <button type="button" onclick="openProfileEditModal()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 shrink-0 cursor-pointer">
               <i class="fa-solid fa-user-gear text-[#60A5FA] mr-1.5"></i> Mi Perfil
@@ -921,7 +916,6 @@
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#EC4899]/20 text-[#F472B6]">Paso 2 • Práctica Interactiva</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Entorno Práctico de Plataforma</h2>
-              <p class="text-xs text-slate-300">Sigue las indicaciones paso a paso hasta completar el 100% y habilitar el Quiz.</p>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
@@ -942,7 +936,6 @@
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/20 text-[#34D399]">Paso 3 • Validación de Conocimientos</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Evaluación Modular (Quiz)</h2>
-              <p class="text-xs text-slate-300">Intento único registrado. Si obtienes menos de 60%, se habilitará un Módulo de Refuerzo obligatorio.</p>
             </div>
             <div class="flex items-center gap-2.5 shrink-0">
               <label class="text-xs font-bold text-slate-300">Módulo:</label>
@@ -984,7 +977,6 @@
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/20 text-[#34D399]">Historial Académico y Acreditación</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Progreso y Certificación</h2>
-              <p class="text-xs text-slate-300">Monitoreo de avance por módulo, calificaciones obtenidas y diploma acreditado.</p>
             </div>
             <div class="flex flex-wrap items-center gap-2.5 shrink-0">
               <!-- Subtle Top Diploma Button (Ver / Descargar) -->
@@ -1158,7 +1150,6 @@
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800">
             <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA]">Centro de Asistencia • FAQ</span>
             <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Preguntas Frecuentes (FAQ)</h2>
-            <p class="text-xs text-slate-300">Haz clic sobre cualquier pregunta para desplegar su respuesta detallada.</p>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -2656,32 +2647,14 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12">
-            <!-- LEFT 6 COLS: VIDEO PLAYER + PUNTOS CLAVE + CONFIRMACIÓN DE VIDEO Y MANUAL -->
+            <!-- LEFT 6 COLS: VIDEO PLAYER + CONFIRMACIÓN DIRECTA DEBAJO DEL VIDEO -->
             <div class="lg:col-span-6 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
-              <div class="space-y-4">
-                <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                  <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                  ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
-                </div>
-
-                <!-- PUNTOS CLAVE DEL VIDEO -->
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
-                  <div class="text-[11px] font-extrabold uppercase tracking-widest text-[#1A64FF] flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-play"></i>
-                    <span>Puntos Clave del Video</span>
-                  </div>
-                  <div class="space-y-2">
-                    ${(activeCard.points || []).map((pt, i) => `
-                      <div class="p-2.5 rounded-xl bg-white border border-slate-200/70 flex items-start gap-2.5 text-xs sm:text-[13px] text-slate-700">
-                        <span class="px-2 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] font-mono text-[11px] font-extrabold shrink-0 mt-0.5">${inlineLessonIdx + 1}.${i + 1}</span>
-                        <span class="font-medium leading-relaxed">${pt}</span>
-                      </div>
-                    `).join('')}
-                  </div>
-                </div>
+              <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+                <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
               </div>
 
-              <!-- CONFIRMACIÓN DE VIDEO Y MANUAL DEBAJO DEL VIDEO -->
+              <!-- CONFIRMACIÓN DE VIDEO Y MANUAL DIRECTAMENTE DEBAJO DEL VIDEO (VISIBLE) -->
               ${(() => {
                 const mp = ensureProgressEntry(mod.id);
                 const vChk = mp.materialConfirmed || mp.videoWatched;
