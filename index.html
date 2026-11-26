@@ -1247,6 +1247,99 @@
   <!-- ======================================================================== -->
   <!-- LARGE STUDIO MODAL: VIDEO (LEFT) + INTERACTIVE MANUAL VIEWER (RIGHT)     -->
   <!-- ======================================================================== -->
+  <!-- ======================================================================== -->
+  <!-- FULL-SCREEN PRACTICE STUDIO MODAL: LEFT BRIEFING/FEEDBACK + RIGHT AIDT   -->
+  <!-- ======================================================================== -->
+  <div id="practiceFullStudioModal" class="fixed inset-0 bg-slate-950/85 modal-glass z-50 hidden flex-col p-2 sm:p-3.5">
+    <div class="bg-white rounded-2xl overflow-hidden w-full h-full shadow-2xl border border-slate-700/60 flex flex-col lg:flex-row">
+      <!-- LEFT EXECUTIVE GUIDE & LIVE ERROR/PROGRESS RAIL (~295px) -->
+      <div class="lg:w-[295px] xl:w-[315px] bg-[#0B0F17] text-white p-4 sm:p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-800 shrink-0 overflow-y-auto custom-scroll">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-3">
+            <div class="flex items-center gap-2 min-w-0">
+              <span id="studioModBadge" class="px-2 py-0.5 rounded bg-[#EC4899]/20 text-[#F472B6] font-mono text-[10.5px] font-extrabold shrink-0">M1</span>
+              <span class="text-xs font-extrabold text-white truncate">Laboratorio en Vivo</span>
+            </div>
+            <button type="button" onclick="closePracticeStudioModal()" title="Cerrar ventana de práctica" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center text-xs transition cursor-pointer shrink-0">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Module Title & Objective -->
+          <div class="space-y-1.5">
+            <h4 id="studioModTitle" class="text-sm sm:text-base font-extrabold text-white leading-snug">Acceso e inicio de sesión</h4>
+            <div class="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+              <i class="fa-regular fa-clock text-[#60A5FA]"></i>
+              <span id="studioModTime">3 - 5 min</span>
+            </div>
+          </div>
+
+          <!-- Non-Obvious Mission Briefing -->
+          <div class="p-3.5 rounded-xl bg-white/[0.05] border border-white/10 space-y-1.5">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">Consigna Operativa</div>
+            <p id="studioModMission" class="text-xs text-slate-200 leading-relaxed"></p>
+          </div>
+
+          <!-- Live Progress Bar inside Left Rail -->
+          <div class="p-3.5 rounded-xl bg-white/[0.05] border border-white/10 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-300 font-semibold">Progreso Práctica</span>
+              <span id="simLivePctText" class="font-mono text-sm font-extrabold text-[#34D399]">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="simLivePctBar" class="h-full bg-[#10B981] rounded-full transition-all duration-300" style="width:0%;"></div>
+            </div>
+          </div>
+
+          <!-- Live Mistake / Feedback Alert inside Left Rail (Appears dynamically on error) -->
+          <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-500/20 border border-rose-500/50 text-rose-100 text-xs space-y-1">
+            <div class="font-extrabold text-rose-300 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-exclamation"></i>
+              <span>Revisa tu acción</span>
+            </div>
+            <p id="simMistakeText" class="leading-relaxed text-[11.5px]"></p>
+          </div>
+        </div>
+
+        <!-- Bottom Studio Actions -->
+        <div class="pt-4 border-t border-slate-800 space-y-2 shrink-0 mt-4">
+          <button type="button" onclick="resetPracticeSimulator(currentSelectedModuleId)" class="w-full py-2 px-3 rounded-xl bg-white/10 hover:bg-white/15 text-slate-200 text-xs font-bold border border-white/10 transition flex items-center justify-center gap-2 cursor-pointer">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Reiniciar Simulación</span>
+          </button>
+          <button type="button" onclick="closePracticeStudioModal()" class="w-full py-2 px-3 rounded-xl bg-transparent hover:bg-white/10 text-slate-400 hover:text-white text-xs font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Volver a Vista Resumen</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT EXPANSIVE CLONED AIDT.APP BROWSER VIEWPORT -->
+      <div class="flex-1 min-w-0 bg-[#F1F3F4] flex flex-col h-full overflow-hidden">
+        <!-- Chrome Top Bar -->
+        <div id="studioBrowserChromeBar" class="px-4 py-2 bg-[#E8EAED] border-b border-slate-300 flex items-center gap-3 shrink-0">
+          <div class="flex items-center gap-1.5 shrink-0">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
+          </div>
+          <div class="flex items-center gap-2 text-slate-500 text-xs shrink-0">
+            <i class="fa-solid fa-arrow-left"></i>
+            <i class="fa-solid fa-arrow-right"></i>
+            <i class="fa-solid fa-rotate-right"></i>
+          </div>
+          <div class="flex-1 bg-white border border-slate-300/80 rounded-full px-3.5 py-1 font-mono text-[11.5px] text-slate-700 flex items-center gap-2 truncate shadow-2xs">
+            <i class="fa-solid fa-lock text-emerald-600 text-[10px]"></i>
+            <span id="studioBrowserUrlText" class="truncate">https://aidt.app</span>
+          </div>
+        </div>
+
+        <!-- Full-Height Cloned Platform Canvas -->
+        <div id="practiceStudioViewport" class="flex-1 overflow-y-auto custom-scroll bg-white"></div>
+      </div>
+    </div>
+  </div>
+
   <div id="proVideoManualModal" onclick="if(event.target===this) closeProVideoModal()" class="fixed inset-0 bg-slate-950/75 modal-glass z-50 flex items-center justify-center p-2 sm:p-5 hidden">
     <div class="bg-white rounded-2xl overflow-hidden w-[96vw] max-w-7xl h-[90vh] shadow-2xl border border-slate-200 flex flex-col">
       <div class="px-6 py-3.5 bg-white border-b border-slate-200 flex justify-between items-center shrink-0">
@@ -2841,7 +2934,7 @@
       if (m) m.classList.add('hidden');
     }
 
-    // ==================== STEP 2: PRÁCTICAS INTERACTIVAS (CLON 100% EXACTOS AIDT.APP) ====================
+    // ==================== STEP 2: PRÁCTICAS INTERACTIVAS (ESTUDIO AMPLIO + PANEL IZQUIERDO) ====================
     function goToModulePractice(modId) {
       const p = ensureProgressEntry(modId);
       if (!p.materialConfirmed) {
@@ -2872,6 +2965,46 @@
       if (errBanner) errBanner.classList.add('hidden');
     }
 
+    function openPracticeStudioModal(modId, forceReplay = false) {
+      currentSelectedModuleId = modId;
+      const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
+      const spec = PRACTICE_MISSION_SPECS[mod.id] || {
+        estTime: "5 min",
+        objective: mod.desc,
+        mission: mod.desc
+      };
+
+      document.getElementById('studioModBadge').textContent = mod.code;
+      document.getElementById('studioModTitle').textContent = mod.title;
+      document.getElementById('studioModTime').textContent = `Tiempo estimado: ${spec.estTime}`;
+      document.getElementById('studioModMission').textContent = spec.mission;
+      clearSimMistakeToast();
+
+      const modal = document.getElementById('practiceFullStudioModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      const viewport = document.getElementById('practiceStudioViewport');
+      if (modId === "M1") { if (!forceReplay) m1SimStep = 1; renderM1PlatformSimulator(viewport); return; }
+      if (modId === "M2") { if (!forceReplay) resetPracticeSimulator("M2"); else renderM2NavigationSimulator(viewport); return; }
+      if (modId === "M3") { if (!forceReplay) resetPracticeSimulator("M3"); else renderM3RealtimeAttendanceSimulator(viewport); return; }
+      if (modId === "M4") { if (!forceReplay) resetPracticeSimulator("M4"); else renderM4ClassModeToolsSimulator(viewport); return; }
+      if (modId === "M5") { if (!forceReplay) resetPracticeSimulator("M5"); else renderM5MonitoringMetricsSimulator(viewport); return; }
+      if (modId === "M6") { if (!forceReplay) resetPracticeSimulator("M6"); else renderM6ClassFlowSimulator(viewport); return; }
+      if (modId === "M7") { if (!forceReplay) resetPracticeSimulator("M7"); else renderM7SupervisorSimulator(viewport); return; }
+      renderCustomModulePractice(viewport, mod);
+    }
+
+    function closePracticeStudioModal() {
+      const modal = document.getElementById('practiceFullStudioModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      clearSimMistakeToast();
+      loadPracticeByModule(currentSelectedModuleId);
+    }
+
     function resetPracticeSimulator(modId) {
       if (modId === "M1") m1SimStep = 1;
       if (modId === "M2") m2SimState = { step: 1, checkedPrevClass: false, hoveredStudentTooltip: false, q1Answered: false, q2Answered: false, selectedObsTab: 'revisión' };
@@ -2880,7 +3013,7 @@
       if (modId === "M5") m5SimState = { step: 1, subView: 'detalle', selectedStudent: 'Toda la clase', aiModalOpen: false, aiSectionExpanded: false, aiCartSelected: false, aiSent: false };
       if (modId === "M6") m6SimState = { step: 1, visibilityMenuOpen: false, lessonPublic: false, attendanceModalOpen: false, attendanceOn: false, attendanceClosed: false, modeConfirmOpen: false, inClassMode: false, syncOn: false, slide3Selected: false, lockOn: false, detailPanelOpen: false, summaryChecked: false, q1Done: false, q2Done: false, q3Done: false, q4Done: false };
       if (modId === "M7") m7SimState = { step: 1, navTab: 'diaria', diariaSubTab: 'escuelas', visitedImpl: false, searchQuery: '', selectedSchool: null, classSearch: '', selectedGroup: null, inGroupPanel: false, panelStudent: 'Toda la clase', inspectedElena: false };
-      loadPracticeByModule(modId, true);
+      openPracticeStudioModal(modId, true);
     }
 
     function loadPracticeByModule(modId, forceReplay = false) {
@@ -2889,7 +3022,7 @@
       const p = ensureProgressEntry(mod.id);
       document.getElementById('practiceStepTrackerBanner').innerHTML = renderStepTrackerHTML(mod.id, 2);
 
-      const container = document.getElementById('practiceContentContainer');
+      const container = document.getElementById('practiceStudioViewport');
 
       if (!p.materialConfirmed) {
         container.innerHTML = `
@@ -2903,9 +3036,15 @@
         return;
       }
 
+      const spec = PRACTICE_MISSION_SPECS[mod.id] || {
+        estTime: "5 min",
+        objective: mod.desc,
+        mission: mod.desc
+      };
+
       if (p.practiceCompleted && !forceReplay) {
         container.innerHTML = `
-          <div class="p-8 sm:p-12 text-center space-y-5 max-w-xl mx-auto">
+          <div class="p-6 sm:p-10 text-center space-y-5 max-w-xl mx-auto">
             <div class="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 text-[#10B981] mx-auto flex items-center justify-center text-3xl shadow-sm">
               <i class="fa-solid fa-circle-check"></i>
             </div>
@@ -2920,7 +3059,7 @@
             </div>
             <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
               <button type="button" onclick="resetPracticeSimulator('${mod.id}')" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold cursor-pointer">
-                <i class="fa-solid fa-rotate-right mr-1"></i> Repetir Simulación
+                <i class="fa-solid fa-rotate-right mr-1"></i> Repetir en Ventana Amplia
               </button>
               ${p.quizCompleted
                 ? `<button type="button" onclick="continueWhereLeftOff()" class="px-6 py-3 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-md cursor-pointer">Ir al Siguiente Módulo →</button>`
@@ -2932,15 +3071,38 @@
         return;
       }
 
-      if (modId === "M1") { if (!forceReplay) m1SimStep = 1; renderM1PlatformSimulator(container); return; }
-      if (modId === "M2") { if (!forceReplay) resetPracticeSimulator("M2"); else renderM2NavigationSimulator(container); return; }
-      if (modId === "M3") { if (!forceReplay) resetPracticeSimulator("M3"); else renderM3RealtimeAttendanceSimulator(container); return; }
-      if (modId === "M4") { if (!forceReplay) resetPracticeSimulator("M4"); else renderM4ClassModeToolsSimulator(container); return; }
-      if (modId === "M5") { if (!forceReplay) resetPracticeSimulator("M5"); else renderM5MonitoringMetricsSimulator(container); return; }
-      if (modId === "M6") { if (!forceReplay) resetPracticeSimulator("M6"); else renderM6ClassFlowSimulator(container); return; }
-      if (modId === "M7") { if (!forceReplay) resetPracticeSimulator("M7"); else renderM7SupervisorSimulator(container); return; }
+      // Clean Executive Practice Launch Card (Opens the Full-Screen 2-Column Studio)
+      container.innerHTML = `
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-2 sm:p-4">
+          <div class="lg:col-span-8 space-y-4">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="px-2.5 py-1 rounded-lg bg-[#0B0F17] text-white font-mono text-xs font-extrabold">${mod.code}</span>
+              <span class="px-2.5 py-1 rounded-full bg-blue-50 text-[#1A64FF] text-[11px] font-bold"><i class="fa-regular fa-clock mr-1"></i>Tiempo estimado: ${spec.estTime}</span>
+              <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-bold">Entorno Interactivo aidt.app</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900">${mod.title}</h3>
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2 text-xs sm:text-[13px]">
+              <div class="text-slate-700"><strong class="text-slate-900">Objetivo:</strong> ${spec.objective}</div>
+              <div class="text-slate-700"><strong class="text-slate-900">Consigna:</strong> ${spec.mission}</div>
+            </div>
+          </div>
 
-      renderCustomModulePractice(container, mod);
+          <div class="lg:col-span-4 p-6 rounded-2xl bg-[#0B0F17] text-white flex flex-col items-center text-center justify-center space-y-4 shadow-lg">
+            <div class="w-14 h-14 rounded-2xl bg-[#1A64FF]/20 border border-[#1A64FF]/40 text-[#60A5FA] flex items-center justify-center text-2xl">
+              <i class="fa-solid fa-desktop"></i>
+            </div>
+            <div class="space-y-1">
+              <div class="text-sm font-extrabold">Laboratorio a Pantalla Amplia</div>
+              <p class="text-[11px] text-slate-400 leading-relaxed">Abre la ventana interactiva con las indicaciones al lado izquierdo y la plataforma completa a la derecha.</p>
+            </div>
+            <button type="button" onclick="openPracticeStudioModal('${mod.id}', ${forceReplay ? 'true' : 'false'})"
+                    class="w-full py-3.5 px-5 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs sm:text-[13px] font-extrabold shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-play"></i>
+              <span>Hacer Práctica</span>
+            </button>
+          </div>
+        </div>
+      `;
     }
 
     function renderCustomModulePractice(container, mod) {
@@ -3015,63 +3177,23 @@
     };
 
     function renderSimulatorShell(mod, pct, urlText, innerHTML, customMission) {
-      const spec = PRACTICE_MISSION_SPECS[mod.id] || {
-        estTime: "5 min",
-        objective: mod.desc,
-        mission: customMission || mod.desc
-      };
+      const pctTxt = document.getElementById('simLivePctText');
+      if (pctTxt) pctTxt.textContent = `${pct}%`;
+      const pctBar = document.getElementById('simLivePctBar');
+      if (pctBar) pctBar.style.width = `${pct}%`;
 
-      return `
-        <div class="space-y-4">
-          <!-- Subtle Executive Mission Briefing (Non-Obvious — No Step-by-Step Spoiling) -->
-          <div class="p-4 sm:p-5 rounded-2xl bg-[#0B0F17] text-white flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-slate-800">
-            <div class="space-y-1.5 flex-1 min-w-0">
-              <div class="flex items-center gap-2 flex-wrap">
-                <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#EC4899]/20 text-[#F472B6]">Simulador Interactivo • ${mod.code}</span>
-                <span class="font-mono text-[10.5px] text-slate-400"><i class="fa-regular fa-clock mr-1"></i>${spec.estTime}</span>
-              </div>
-              <p class="text-xs sm:text-[13px] text-slate-200 leading-relaxed"><strong class="text-white">Consigna:</strong> ${spec.mission}</p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <button type="button" onclick="resetPracticeSimulator('${mod.id}')" title="Reiniciar simulación" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-bold border border-white/15 transition cursor-pointer">
-                <i class="fa-solid fa-rotate-right"></i>
-              </button>
-              <div class="flex items-center gap-2.5 bg-white/10 px-4 py-2 rounded-xl border border-white/15">
-                <span class="text-[11px] text-slate-300 font-semibold">Avance:</span>
-                <span id="simLivePctText" class="font-mono text-sm font-extrabold text-[#34D399]">${pct}%</span>
-              </div>
-            </div>
-          </div>
+      const chromeBar = document.getElementById('studioBrowserChromeBar');
+      const urlEl = document.getElementById('studioBrowserUrlText');
+      if (chromeBar && urlEl) {
+        if (urlText) {
+          chromeBar.classList.remove('hidden');
+          urlEl.textContent = urlText;
+        } else {
+          chromeBar.classList.add('hidden');
+        }
+      }
 
-          <div id="simMistakeBanner" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold flex items-center gap-2.5">
-            <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 font-extrabold">!</span>
-            <span id="simMistakeText">Verifica la acción solicitada en la consigna.</span>
-          </div>
-
-          <!-- Cloned Window Frame -->
-          <div class="rounded-2xl border border-slate-300 overflow-hidden shadow-lg bg-white">
-            ${urlText ? `
-              <div class="px-4 py-2 bg-[#F1F3F4] border-b border-slate-200 flex items-center gap-3">
-                <div class="flex items-center gap-1.5 shrink-0">
-                  <span class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
-                </div>
-                <div class="flex items-center gap-2 text-slate-400 text-xs shrink-0">
-                  <i class="fa-solid fa-arrow-left"></i>
-                  <i class="fa-solid fa-arrow-right"></i>
-                  <i class="fa-solid fa-rotate-right"></i>
-                </div>
-                <div class="flex-1 bg-white border border-slate-200/90 rounded-full px-3.5 py-1 font-mono text-[11.5px] text-slate-700 flex items-center gap-2 truncate shadow-2xs">
-                  <i class="fa-solid fa-lock text-slate-400 text-[10px]"></i>
-                  <span class="truncate">${urlText}</span>
-                </div>
-              </div>
-            ` : ''}
-            ${innerHTML}
-          </div>
-        </div>
-      `;
+      return `<div class="min-h-full flex flex-col">${innerHTML}</div>`;
     }
 
     // ==================== SHARED CLONED SCREENS (WELCOME, GOOGLE CHOOSER, LISTA DE AULAS) ====================
@@ -3317,7 +3439,7 @@
           <div class="relative min-h-[490px] bg-gradient-to-br from-[#0F284E] via-[#1B427A] to-[#0B1C38] flex flex-col justify-between overflow-hidden select-none">
             <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_60%_40%,#60A5FA,transparent_60%)] pointer-events-none"></div>
             <div class="relative z-10 p-8 flex-1 flex items-center">
-              <button type="button" onclick="clearSimMistakeToast(); m1SimStep=2; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))"
+              <button type="button" onclick="clearSimMistakeToast(); m1SimStep=2; renderM1PlatformSimulator(document.getElementById('practiceStudioViewport'))"
                       class="group flex flex-col items-center gap-1.5 p-3 rounded-xl hover:bg-white/15 border border-transparent hover:border-white/25 transition cursor-pointer">
                 <div class="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center relative">
                   <svg class="w-8 h-8" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#fff"/><path fill="#EA4335" d="M24 2C15.1 2 7.4 7.3 4 15l9.4 16.3L24 24h20C41.7 11.5 33.8 2 24 2z"/><path fill="#34A853" d="M4 15C2.7 17.8 2 20.8 2 24c0 11.4 8.7 20.8 19.8 21.9l9.6-16.6L24 24 13.4 31.3 4 15z"/><path fill="#FBBC05" d="M24 24l7.4 5.3-9.6 16.6c.7.1 1.5.1 2.2.1 12.2 0 22-9.8 22-22 0-3.3-.7-6.4-2-9.2H24V24z"/><circle cx="24" cy="24" r="9.5" fill="#4285F4" stroke="#fff" stroke-width="2.5"/></svg>
@@ -3352,7 +3474,7 @@
                 <span class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></span>
                 <span class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></span>
               </div>
-              <form onsubmit="event.preventDefault(); const v=document.getElementById('m1ChromeUrlInput').value.trim().toLowerCase(); if(v.includes('aidt.app')){clearSimMistakeToast(); m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'));}else{showSimMistakeToast('Escribe el enlace oficial de la plataforma (aidt.app) en la barra de direcciones.');}" class="flex-1 flex items-center gap-2">
+              <form onsubmit="event.preventDefault(); const v=document.getElementById('m1ChromeUrlInput').value.trim().toLowerCase(); if(v.includes('aidt.app')){clearSimMistakeToast(); m1SimStep=3; renderM1PlatformSimulator(document.getElementById('practiceStudioViewport'));}else{showSimMistakeToast('Escribe el enlace oficial de la plataforma (aidt.app) en la barra de direcciones.');}" class="flex-1 flex items-center gap-2">
                 <div class="flex-1 bg-white border-2 border-[#1A64FF] rounded-full px-4 py-1.5 flex items-center gap-2 shadow-xs">
                   <i class="fa-brands fa-google text-xs text-slate-400"></i>
                   <input id="m1ChromeUrlInput" type="text" placeholder="Escribe la URL del portal (ej. aidt.app) y presiona Enter..." autofocus class="w-full text-xs font-mono text-slate-800 outline-none">
@@ -3372,9 +3494,9 @@
           </div>
         `;
       } else if (m1SimStep === 3) {
-        viewportHTML = renderSharedAidtLoginScreen("m1SimStep=4; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m1SimStep=4; renderM1PlatformSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m1SimStep === 4) {
-        viewportHTML = renderSharedGoogleAccountChooser("m1SimStep=5; renderM1PlatformSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m1SimStep=5; renderM1PlatformSimulator(document.getElementById('practiceStudioViewport'))");
       } else {
         viewportHTML = renderSharedListaDeAulas("6A-math", "completePracticeAndUnlockQuiz('M1')", "Ingresa únicamente al aula 6A Clase de Matemática.");
       }
@@ -3406,11 +3528,11 @@
 
       let viewportHTML = "";
       if (m2SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m2SimState.step=2; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m2SimState.step=2; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m2SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m2SimState.step=3; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m2SimState.step=3; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m2SimState.step === 3) {
-        viewportHTML = renderSharedListaDeAulas("6A-lang", "m2SimState.step=4; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))", "Para esta práctica debes ingresar al aula 6A Clase de Lenguaje.");
+        viewportHTML = renderSharedListaDeAulas("6A-lang", "m2SimState.step=4; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))", "Para esta práctica debes ingresar al aula 6A Clase de Lenguaje.");
       } else {
         // Exact Clone of Clase de Lenguaje — Clase de hoy (Pages 152–157)
         const scatterDots = [
@@ -3566,9 +3688,9 @@
                   </div>
                   <div class="flex items-center gap-2 flex-wrap border-b border-slate-200 pb-2 text-[10.5px] font-bold">
                     <span class="text-slate-500">Total 10</span>
-                    <button type="button" onclick="m2SimState.selectedObsTab='revisión'; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='revisión' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-rose-500 mr-1"></span>Revisión inmediata 2</button>
-                    <button type="button" onclick="m2SimState.selectedObsTab='atención'; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='atención' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-orange-500 mr-1"></span>Requiere atención 1</button>
-                    <button type="button" onclick="m2SimState.selectedObsTab='observación'; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='observación' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1"></span>Requiere observación 1</button>
+                    <button type="button" onclick="m2SimState.selectedObsTab='revisión'; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='revisión' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-rose-500 mr-1"></span>Revisión inmediata 2</button>
+                    <button type="button" onclick="m2SimState.selectedObsTab='atención'; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='atención' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-orange-500 mr-1"></span>Requiere atención 1</button>
+                    <button type="button" onclick="m2SimState.selectedObsTab='observación'; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))" class="px-2 py-1 rounded-lg ${m2SimState.selectedObsTab==='observación' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-100'} cursor-pointer"><span class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1"></span>Requiere observación 1</button>
                   </div>
                   ${obsRows[m2SimState.selectedObsTab]}
                 </div>
@@ -3581,13 +3703,13 @@
                   <div class="p-3 rounded-xl bg-white/10 space-y-1.5">
                     <div class="font-semibold">1. Según "Resumen de la clase anterior", ¿hay clases anteriores sin completar?</div>
                     <div class="flex gap-2">
-                      <button type="button" onclick="clearSimMistakeToast(); m2SimState.q1Answered=true; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1 rounded-lg ${m2SimState.q1Answered ? 'bg-[#10B981] text-white' : 'bg-white/15 hover:bg-white/25'} font-bold cursor-pointer">A. Sí</button>
+                      <button type="button" onclick="clearSimMistakeToast(); m2SimState.q1Answered=true; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'))" class="px-3 py-1 rounded-lg ${m2SimState.q1Answered ? 'bg-[#10B981] text-white' : 'bg-white/15 hover:bg-white/25'} font-bold cursor-pointer">A. Sí</button>
                       <button type="button" onclick="showSimMistakeToast('Revisa el recuadro Resumen de la clase anterior (En curso: 60%).')" class="px-3 py-1 rounded-lg bg-white/15 hover:bg-white/25 font-bold cursor-pointer">B. No</button>
                     </div>
                   </div>
                   <div class="p-3 rounded-xl bg-white/10 space-y-1.5">
                     <div class="font-semibold">2. Pasa el cursor por los puntos morados: ¿quién tiene el menor porcentaje de aciertos?</div>
-                    <select onchange="if(this.value==='Hernandez'){clearSimMistakeToast(); m2SimState.q2Answered=true; renderM2NavigationSimulator(document.getElementById('practiceContentContainer'));}else if(this.value){showSimMistakeToast('Pasa el puntero sobre el círculo morado inferior del gráfico.');}" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-white text-xs font-semibold">
+                    <select onchange="if(this.value==='Hernandez'){clearSimMistakeToast(); m2SimState.q2Answered=true; renderM2NavigationSimulator(document.getElementById('practiceStudioViewport'));}else if(this.value){showSimMistakeToast('Pasa el puntero sobre el círculo morado inferior del gráfico.');}" class="w-full px-2.5 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-white text-xs font-semibold">
                       <option value="">Selecciona estudiante...</option>
                       <option value="Hernandez" ${m2SimState.q2Answered ? 'selected' : ''}>A. Hernández Aguilar, Carlos (11%)</option>
                       <option value="Flores">B. Flores Ramírez, José Daniel</option>
@@ -3663,11 +3785,11 @@
 
       let viewportHTML = "";
       if (m3SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m3SimState.step=2; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m3SimState.step=2; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m3SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m3SimState.step=3; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m3SimState.step=3; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m3SimState.step === 3) {
-        viewportHTML = renderSharedListaDeAulas("6A-math", "m3SimState.step=4; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))", "Ingresa al aula 6A Clase de Matemática.");
+        viewportHTML = renderSharedListaDeAulas("6A-math", "m3SimState.step=4; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))", "Ingresa al aula 6A Clase de Matemática.");
       } else if (m3SimState.step === 4) {
         // Step 4: Preview Clase de hoy -> click Clase regular en tiempo real
         viewportHTML = `
@@ -3691,7 +3813,7 @@
                   <div class="text-lg font-extrabold text-slate-900 mt-1">(5) 2.9.1.3 Las horas del día</div>
                   <div class="text-[11px] text-slate-500 mt-0.5">a. m. y p. m.</div>
                 </div>
-                <button type="button" onclick="clearSimMistakeToast(); m3SimState.step=5; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))" class="px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-indigo-600 text-white text-xs font-bold cursor-pointer">Iniciar clase ›</button>
+                <button type="button" onclick="clearSimMistakeToast(); m3SimState.step=5; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))" class="px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-indigo-600 text-white text-xs font-bold cursor-pointer">Iniciar clase ›</button>
               </div>
               <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-slate-700">
                 Selecciona <strong>Clase regular en tiempo real</strong> en el menú lateral izquierdo (o presiona <strong>Iniciar clase</strong>) para abrir el entorno de previsualización y asistencia.
@@ -3712,7 +3834,7 @@
                   <span class="text-slate-400">Espacio de clase / <strong class="text-slate-800">Clase regular en tiempo real</strong></span>
                 </div>
                 <div class="flex items-center gap-2.5">
-                  <button type="button" onclick="clearSimMistakeToast(); m3SimState.attendanceModalOpen=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))"
+                  <button type="button" onclick="clearSimMistakeToast(); m3SimState.attendanceModalOpen=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))"
                           class="px-4 py-1.5 rounded-xl bg-[#6D28D9] hover:bg-purple-700 text-white text-xs font-bold shadow-xs transition cursor-pointer">
                     Pasar lista
                   </button>
@@ -3814,7 +3936,7 @@
                       <h4 class="text-base font-extrabold text-slate-900">Lista de asistencia</h4>
                       <div class="text-xs text-slate-500">24 de noviembre de 2026</div>
                     </div>
-                    <button type="button" onclick="clearSimMistakeToast(); m3SimState.attendanceOn=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'))"
+                    <button type="button" onclick="clearSimMistakeToast(); m3SimState.attendanceOn=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'))"
                             class="px-3.5 py-2 rounded-xl ${m3SimState.attendanceOn ? 'bg-[#10B981] text-white' : 'bg-[#1A64FF] hover:bg-blue-600 text-white'} text-xs font-bold shadow-xs flex items-center gap-1.5 transition cursor-pointer">
                       <i class="fa-solid fa-rotate"></i>
                       <span>${m3SimState.attendanceOn ? 'Pasar lista: ENCENDIDO' : 'Pasar lista: APAGADO'}</span>
@@ -3843,7 +3965,7 @@
                           </div>
                           <div class="flex items-center gap-2 shrink-0">
                             <span class="px-2.5 py-1 rounded-lg ${pillCls} text-[11px] font-bold">${statusLabel}</span>
-                            <button type="button" onclick="${st.targetDevice ? `if(!m3SimState.attendanceOn){showSimMistakeToast('Activa primero Pasar lista: ENCENDIDO.');}else{clearSimMistakeToast(); m3SimState.deviceReported=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'));}` : `showSimMistakeToast('Reporta la incidencia técnica en el dispositivo de Henríquez Portillo, Luis Fernando.');`}"
+                            <button type="button" onclick="${st.targetDevice ? `if(!m3SimState.attendanceOn){showSimMistakeToast('Activa primero Pasar lista: ENCENDIDO.');}else{clearSimMistakeToast(); m3SimState.deviceReported=true; renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'));}` : `showSimMistakeToast('Reporta la incidencia técnica en el dispositivo de Henríquez Portillo, Luis Fernando.');`}"
                                     title="Reportar dispositivo con problema"
                                     class="w-7 h-7 rounded-lg border ${isReported ? 'bg-rose-50 border-rose-400 text-rose-600' : 'border-slate-200 text-slate-400 hover:text-slate-700'} flex items-center justify-center transition cursor-pointer">
                               <i class="fa-solid fa-tablet-screen-button text-xs"></i>
@@ -3878,7 +4000,7 @@
       if (m3SimState.step === 4 && key === 'realtime') {
         clearSimMistakeToast();
         m3SimState.step = 5;
-        renderM3RealtimeAttendanceSimulator(document.getElementById('practiceContentContainer'));
+        renderM3RealtimeAttendanceSimulator(document.getElementById('practiceStudioViewport'));
       }
     }
 
@@ -3930,11 +4052,11 @@
 
       let viewportHTML = "";
       if (m4SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m4SimState.step=2; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m4SimState.step=2; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m4SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m4SimState.step=3; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m4SimState.step=3; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m4SimState.step === 3) {
-        viewportHTML = renderSharedListaDeAulas("6A-math", "m4SimState.step=4; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))", "Ingresa al aula 6A Clase de Matemática.");
+        viewportHTML = renderSharedListaDeAulas("6A-math", "m4SimState.step=4; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))", "Ingresa al aula 6A Clase de Matemática.");
       } else if (m4SimState.step === 4) {
         // Page 178: Clase de hoy -> Iniciar clase
         viewportHTML = `
@@ -3953,7 +4075,7 @@
                   <div class="text-[11px] font-bold text-[#1A64FF]">● Clase de hoy • Repaso</div>
                   <div class="text-lg font-extrabold text-slate-900 mt-1">(1) 2.8.2.1 Comparemos la capacidad de recipientes</div>
                 </div>
-                <button type="button" onclick="clearSimMistakeToast(); m4SimState.step=5; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-indigo-600 text-white text-xs font-bold cursor-pointer">Iniciar clase ›</button>
+                <button type="button" onclick="clearSimMistakeToast(); m4SimState.step=5; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="px-5 py-2.5 rounded-xl bg-[#6366F1] hover:bg-indigo-600 text-white text-xs font-bold cursor-pointer">Iniciar clase ›</button>
               </div>
             </div>
           </div>
@@ -3971,7 +4093,7 @@
               <div class="p-6 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                   <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-xs font-bold">Profesor</span>
-                  <button type="button" onclick="clearSimMistakeToast(); m4SimState.confirmModalOpen=true; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))"
+                  <button type="button" onclick="clearSimMistakeToast(); m4SimState.confirmModalOpen=true; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))"
                           class="px-4 py-2 rounded-xl border-2 border-[#1A64FF] bg-blue-50/60 hover:bg-[#1A64FF] text-[#1A64FF] hover:text-white text-xs font-extrabold transition cursor-pointer flex items-center gap-2">
                     <i class="fa-solid fa-up-right-from-square"></i>
                     <span>Modo Clase</span>
@@ -3989,14 +4111,14 @@
                 <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
                   <div class="flex items-center justify-between">
                     <h4 class="text-base font-extrabold text-slate-900">¿Deseas activar el Modo Clase?</h4>
-                    <button type="button" onclick="m4SimState.confirmModalOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
+                    <button type="button" onclick="m4SimState.confirmModalOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
                   </div>
                   <p class="text-xs text-slate-600 leading-relaxed">
                     Activa el Modo Clase al iniciar una sesión en tiempo real con tus estudiantes para registrar tu asistencia y la ejecución de la clase. Si continúas sin activarlo, la sesión no será registrada como impartida.
                   </p>
                   <div class="flex justify-end gap-2.5 pt-2">
-                    <button type="button" onclick="m4SimState.confirmModalOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-600 cursor-pointer">Cancelar</button>
-                    <button type="button" onclick="clearSimMistakeToast(); m4SimState.confirmModalOpen=false; m4SimState.step=6; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="px-5 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold shadow-sm cursor-pointer">Activar Modo Clase</button>
+                    <button type="button" onclick="m4SimState.confirmModalOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-600 cursor-pointer">Cancelar</button>
+                    <button type="button" onclick="clearSimMistakeToast(); m4SimState.confirmModalOpen=false; m4SimState.step=6; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="px-5 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold shadow-sm cursor-pointer">Activar Modo Clase</button>
                   </div>
                 </div>
               </div>
@@ -4042,12 +4164,12 @@
                 </button>
 
                 <!-- Pantalla completa -->
-                <button type="button" onclick="m4SimState.fullscreenOn=!m4SimState.fullscreenOn; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" title="Pantalla completa" class="w-8 h-8 rounded-lg ${m4SimState.fullscreenOn ? 'bg-white text-slate-900' : 'bg-white/10 hover:bg-white/20 text-slate-200'} flex items-center justify-center transition cursor-pointer">
+                <button type="button" onclick="m4SimState.fullscreenOn=!m4SimState.fullscreenOn; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" title="Pantalla completa" class="w-8 h-8 rounded-lg ${m4SimState.fullscreenOn ? 'bg-white text-slate-900' : 'bg-white/10 hover:bg-white/20 text-slate-200'} flex items-center justify-center transition cursor-pointer">
                   <i class="fa-solid fa-expand text-xs"></i>
                 </button>
 
                 <!-- Zoom -->
-                <button type="button" onclick="m4SimState.zoomLevel=(m4SimState.zoomLevel===100?150:100); renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="px-2.5 py-1.5 rounded-lg ${m4SimState.zoomLevel===150 ? 'bg-white text-slate-900 ring-2 ring-[#10B981]' : 'bg-white/10 hover:bg-white/20 text-slate-200'} font-mono font-bold flex items-center gap-1 transition cursor-pointer">
+                <button type="button" onclick="m4SimState.zoomLevel=(m4SimState.zoomLevel===100?150:100); renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="px-2.5 py-1.5 rounded-lg ${m4SimState.zoomLevel===150 ? 'bg-white text-slate-900 ring-2 ring-[#10B981]' : 'bg-white/10 hover:bg-white/20 text-slate-200'} font-mono font-bold flex items-center gap-1 transition cursor-pointer">
                   <i class="fa-solid fa-magnifying-glass-plus text-[10px]"></i>
                   <span>${m4SimState.zoomLevel}%</span>
                 </button>
@@ -4089,17 +4211,17 @@
                 ${m4SimState.whiteboardOn ? `
                   <div class="mx-auto mb-3 px-4 py-2 rounded-2xl bg-white border border-slate-200 shadow-xl flex flex-wrap items-center gap-3 z-10">
                     <div class="flex items-center gap-1.5 text-xs">
-                      <button type="button" onclick="m4SimState.wbTool='hand'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='hand'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-regular fa-hand"></i></button>
-                      <button type="button" onclick="m4SimState.wbTool='pointer'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='pointer'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-arrow-pointer"></i></button>
-                      <button type="button" onclick="m4SimState.wbTool='pencil'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='pencil'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-pencil"></i></button>
-                      <button type="button" onclick="m4SimState.wbTool='eraser'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='eraser'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-eraser"></i></button>
-                      <button type="button" onclick="m4SimState.wbTool='text'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='text'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer font-serif font-bold">T</button>
-                      <button type="button" onclick="m4SimState.wbTool='line'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='line'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer">╱</button>
+                      <button type="button" onclick="m4SimState.wbTool='hand'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='hand'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-regular fa-hand"></i></button>
+                      <button type="button" onclick="m4SimState.wbTool='pointer'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='pointer'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-arrow-pointer"></i></button>
+                      <button type="button" onclick="m4SimState.wbTool='pencil'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='pencil'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-pencil"></i></button>
+                      <button type="button" onclick="m4SimState.wbTool='eraser'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='eraser'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer"><i class="fa-solid fa-eraser"></i></button>
+                      <button type="button" onclick="m4SimState.wbTool='text'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='text'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer font-serif font-bold">T</button>
+                      <button type="button" onclick="m4SimState.wbTool='line'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-7 h-7 rounded-lg ${m4SimState.wbTool==='line'?'bg-slate-900 text-white':'text-slate-600 hover:bg-slate-100'} cursor-pointer">╱</button>
                     </div>
                     <div class="h-4 w-px bg-slate-200"></div>
                     <div class="flex items-center gap-1.5">
                       ${['#0F172A','#2563EB','#10B981','#F59E0B','#EF4444','#EC4899'].map(col => `
-                        <button type="button" onclick="m4SimState.wbColor='${col}'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="w-4 h-4 rounded-full cursor-pointer ${m4SimState.wbColor===col?'ring-2 ring-offset-1 ring-slate-900':''}" style="background:${col};"></button>
+                        <button type="button" onclick="m4SimState.wbColor='${col}'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="w-4 h-4 rounded-full cursor-pointer ${m4SimState.wbColor===col?'ring-2 ring-offset-1 ring-slate-900':''}" style="background:${col};"></button>
                       `).join('')}
                     </div>
                   </div>
@@ -4195,19 +4317,19 @@
                   <div class="space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                       <span class="text-xs font-extrabold text-slate-900">Material de referencia</span>
-                      <button type="button" onclick="m4SimState.refDrawerOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
+                      <button type="button" onclick="m4SimState.refDrawerOpen=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
                     </div>
                     <div class="text-[11px] font-bold text-slate-600">Mi material</div>
 
                     ${m4SimState.refAddingForm ? `
                       <div class="p-3 rounded-xl border border-slate-200 bg-slate-50 space-y-2.5 text-xs">
                         <input type="text" value="${m4SimState.refTitle}" oninput="m4SimState.refTitle=this.value" placeholder="Título (ej. Volumen y capacidad)" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white text-xs font-semibold">
-                        <button type="button" onclick="m4SimState.refImageAdded=true; if(!m4SimState.refTitle.trim()) m4SimState.refTitle='Volumen y capacidad'; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))"
+                        <button type="button" onclick="m4SimState.refImageAdded=true; if(!m4SimState.refTitle.trim()) m4SimState.refTitle='Volumen y capacidad'; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))"
                                 class="w-full py-2 px-2.5 rounded-lg border border-dashed ${m4SimState.refImageAdded ? 'border-emerald-400 bg-emerald-50 text-emerald-700' : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'} text-[11px] font-bold cursor-pointer">
                           <i class="fa-regular fa-image mr-1"></i> ${m4SimState.refImageAdded ? 'Volumen y capacidad.jpg ✓' : 'Añadir imagen'}
                         </button>
                         <div class="flex justify-end gap-1.5 pt-1">
-                          <button type="button" onclick="m4SimState.refAddingForm=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))" class="px-2.5 py-1 rounded-lg text-[11px] text-slate-500 cursor-pointer">Cancelar</button>
+                          <button type="button" onclick="m4SimState.refAddingForm=false; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))" class="px-2.5 py-1 rounded-lg text-[11px] text-slate-500 cursor-pointer">Cancelar</button>
                           <button type="button" onclick="saveM4RefMaterial()" class="px-3 py-1 rounded-lg bg-[#1A64FF] text-white text-[11px] font-bold cursor-pointer">Guardar</button>
                         </div>
                       </div>
@@ -4225,7 +4347,7 @@
                     `)}
                   </div>
 
-                  <button type="button" onclick="m4SimState.refAddingForm=true; renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'))"
+                  <button type="button" onclick="m4SimState.refAddingForm=true; renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'))"
                           class="w-full py-2.5 rounded-xl bg-[#181C24] hover:bg-[#1A64FF] text-white text-xs font-bold cursor-pointer">
                     + Agregar material de referencia
                   </button>
@@ -4243,13 +4365,13 @@
       clearSimMistakeToast();
       m4SimState.syncOn = !m4SimState.syncOn;
       if (m4SimState.syncOn) m4SimState.lockOn = false;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function selectM4Slide(sNum) {
       clearSimMistakeToast();
       m4SimState.selectedSlide = sNum;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function toggleM4Lock() {
@@ -4259,14 +4381,14 @@
         m4SimState.syncOn = false;
         m4SimState.whiteboardOn = false;
       }
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function toggleM4Whiteboard() {
       clearSimMistakeToast();
       m4SimState.whiteboardOn = !m4SimState.whiteboardOn;
       if (m4SimState.whiteboardOn) m4SimState.lockOn = false;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function handleM4BottleBClick() {
@@ -4276,14 +4398,14 @@
       }
       clearSimMistakeToast();
       m4SimState.wbCircleDrawn = true;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function toggleM4RefDrawer() {
       clearSimMistakeToast();
       m4SimState.whiteboardOn = false;
       m4SimState.refDrawerOpen = !m4SimState.refDrawerOpen;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function saveM4RefMaterial() {
@@ -4294,7 +4416,7 @@
       clearSimMistakeToast();
       m4SimState.refSaved = true;
       m4SimState.refAddingForm = false;
-      renderM4ClassModeToolsSimulator(document.getElementById('practiceContentContainer'));
+      renderM4ClassModeToolsSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function validateM4FinalComplete() {
@@ -4359,11 +4481,11 @@
 
       let viewportHTML = "";
       if (m5SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m5SimState.step=2; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m5SimState.step=2; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m5SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m5SimState.step=3; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m5SimState.step=3; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m5SimState.step === 3) {
-        viewportHTML = renderSharedListaDeAulas("6A-lang", "m5SimState.step=4; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))", "Ingresa al aula 6A Clase de Lenguaje.");
+        viewportHTML = renderSharedListaDeAulas("6A-lang", "m5SimState.step=4; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))", "Ingresa al aula 6A Clase de Lenguaje.");
       } else if (m5SimState.step === 4) {
         // Page 193: Clase de hoy -> Clase regular en tiempo real
         viewportHTML = `
@@ -4415,10 +4537,10 @@
                   <div class="font-extrabold text-slate-900">(2) Las tablas de doble entrada</div>
                   <div class="p-2.5 rounded-xl bg-white border border-slate-200 space-y-1 text-[11px]">
                     <div class="font-bold text-slate-800">Comprensión</div>
-                    <button type="button" onclick="m5SimState.subView='detalle'; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))" class="w-full text-left px-2 py-1.5 rounded-lg ${m5SimState.subView==='detalle' ? 'bg-emerald-50 text-emerald-900 font-bold' : 'text-slate-600'} cursor-pointer">6/10 · Detectives de información</button>
+                    <button type="button" onclick="m5SimState.subView='detalle'; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))" class="w-full text-left px-2 py-1.5 rounded-lg ${m5SimState.subView==='detalle' ? 'bg-emerald-50 text-emerald-900 font-bold' : 'text-slate-600'} cursor-pointer">6/10 · Detectives de información</button>
                     <div class="px-2 py-1 text-slate-500">6/10 · ¡Entendamos las tablas! (1)</div>
                     <div class="px-2 py-1 text-slate-500">6/10 · La tabla del recreo</div>
-                    <button type="button" onclick="clearSimMistakeToast(); m5SimState.subView='resumen'; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))"
+                    <button type="button" onclick="clearSimMistakeToast(); m5SimState.subView='resumen'; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))"
                             class="w-full text-left px-2.5 py-2 rounded-lg mt-2 border ${m5SimState.subView==='resumen' ? 'bg-emerald-50 border-emerald-300 text-emerald-900 font-extrabold' : 'bg-blue-50/60 border-blue-200 text-[#1A64FF] font-bold hover:bg-blue-100'} cursor-pointer">
                       Resumen de aprendizaje
                     </button>
@@ -4508,7 +4630,7 @@
                 <div class="flex items-center gap-3">
                   <div class="w-9 h-9 rounded-xl bg-[#65A30D] text-white flex items-center justify-center text-[10px] font-mono font-extrabold">○=<br>×≡</div>
                   <h4 class="text-base sm:text-lg font-extrabold text-slate-900">Tablero de Clase de Lenguaje</h4>
-                  <select onchange="m5SimState.selectedStudent=this.value; clearSimMistakeToast(); renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))"
+                  <select onchange="m5SimState.selectedStudent=this.value; clearSimMistakeToast(); renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))"
                           class="px-3.5 py-1.5 rounded-xl border-2 border-[#2563EB] bg-white text-xs font-bold text-slate-900 cursor-pointer">
                     <option value="Toda la clase" ${!isDiego ? 'selected' : ''}>Toda la clase</option>
                     <option value="Hernández Aguilar, Carlos">Hernández Aguilar, Carlos</option>
@@ -4520,7 +4642,7 @@
                 </div>
 
                 ${isDiego ? `
-                  <button type="button" onclick="clearSimMistakeToast(); m5SimState.aiModalOpen=true; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))"
+                  <button type="button" onclick="clearSimMistakeToast(); m5SimState.aiModalOpen=true; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))"
                           class="px-4 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold shadow-sm flex items-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-wand-magic-sparkles"></i>
                     <span>Aprendizaje recomendado</span>
@@ -4612,7 +4734,7 @@
                 <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
                   <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                     <h4 class="text-base font-extrabold text-slate-900">Enviar aprendizaje personalizado con IA</h4>
-                    <button type="button" onclick="m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
+                    <button type="button" onclick="m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))" class="text-slate-400 hover:text-slate-700 cursor-pointer">×</button>
                   </div>
 
                   <div class="space-y-2 text-xs">
@@ -4621,7 +4743,7 @@
                       <div class="divide-y divide-slate-200 bg-white rounded-lg border border-slate-200 px-3">
                         <div class="py-2 flex items-center justify-between">
                           <span><strong class="text-rose-500 mr-1.5">×</strong>Pregunta P1 (Narrador y punto de vista)</span>
-                          <button type="button" onclick="m5SimState.aiCartSelected=true; clearSimMistakeToast(); renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))"
+                          <button type="button" onclick="m5SimState.aiCartSelected=true; clearSimMistakeToast(); renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))"
                                   class="px-2.5 py-1 rounded-lg ${m5SimState.aiCartSelected ? 'bg-[#10B981] text-white' : 'bg-blue-50 text-[#1A64FF] hover:bg-blue-100'} text-[11px] font-bold cursor-pointer">
                             ${m5SimState.aiCartSelected ? 'Repaso ✓' : '+ Repaso'}
                           </button>
@@ -4635,8 +4757,8 @@
                   </div>
 
                   <div class="flex justify-end gap-2.5 pt-2">
-                    <button type="button" onclick="m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-600 cursor-pointer">Cancelar</button>
-                    <button type="button" onclick="clearSimMistakeToast(); m5SimState.aiSent=true; m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'))"
+                    <button type="button" onclick="m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold text-slate-600 cursor-pointer">Cancelar</button>
+                    <button type="button" onclick="clearSimMistakeToast(); m5SimState.aiSent=true; m5SimState.aiModalOpen=false; renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'))"
                             class="px-5 py-2.5 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold shadow-sm cursor-pointer">
                       AI · Enviar todo el aprendizaje recomendado de una vez
                     </button>
@@ -4655,14 +4777,14 @@
       clearSimMistakeToast();
       if (key === 'realtime') {
         m5SimState.step = 5;
-        renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'));
+        renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'));
       } else if (key === 'progreso') {
         if (m5SimState.step === 5 && m5SimState.subView !== 'resumen') {
           showSimMistakeToast('Revisa primero el "Resumen de aprendizaje" en el panel izquierdo antes de ir a Mi progreso.');
           return;
         }
         m5SimState.step = 6;
-        renderM5MonitoringMetricsSimulator(document.getElementById('practiceContentContainer'));
+        renderM5MonitoringMetricsSimulator(document.getElementById('practiceStudioViewport'));
       }
     }
 
@@ -4697,11 +4819,11 @@
 
       let viewportHTML = "";
       if (m6SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m6SimState.step=2; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m6SimState.step=2; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m6SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m6SimState.step=3; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m6SimState.step=3; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m6SimState.step === 3) {
-        viewportHTML = renderSharedListaDeAulas("6A-lang", "m6SimState.step=4; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))", "Ingresa al aula 6A Clase de Lenguaje.");
+        viewportHTML = renderSharedListaDeAulas("6A-lang", "m6SimState.step=4; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))", "Ingresa al aula 6A Clase de Lenguaje.");
       } else if (m6SimState.step === 4) {
         // Step 4: Clase de hoy -> go to Lista de clases regulares (Page 208)
         viewportHTML = `
@@ -4751,7 +4873,7 @@
                   <!-- Lesson 1: Toggle Privado -> En público -->
                   <div class="p-4 border-b border-slate-100 space-y-2 relative">
                     <div class="relative inline-block">
-                      <button type="button" onclick="clearSimMistakeToast(); m6SimState.visibilityMenuOpen=!m6SimState.visibilityMenuOpen; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                      <button type="button" onclick="clearSimMistakeToast(); m6SimState.visibilityMenuOpen=!m6SimState.visibilityMenuOpen; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                               class="px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1.5 cursor-pointer ${m6SimState.lessonPublic ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
                         <i class="fa-solid ${m6SimState.lessonPublic ? 'fa-lock-open' : 'fa-lock'} text-[10px]"></i>
                         <span>${m6SimState.lessonPublic ? 'En público' : 'Privado'} ▾</span>
@@ -4759,10 +4881,10 @@
 
                       ${m6SimState.visibilityMenuOpen ? `
                         <div class="absolute left-0 top-8 z-20 w-36 bg-white rounded-xl border border-slate-200 shadow-xl py-1 text-xs">
-                          <button type="button" onclick="clearSimMistakeToast(); m6SimState.lessonPublic=true; m6SimState.visibilityMenuOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))" class="w-full px-3 py-2 text-left hover:bg-emerald-50 text-emerald-700 font-bold flex items-center gap-2 cursor-pointer">
+                          <button type="button" onclick="clearSimMistakeToast(); m6SimState.lessonPublic=true; m6SimState.visibilityMenuOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))" class="w-full px-3 py-2 text-left hover:bg-emerald-50 text-emerald-700 font-bold flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-lock-open text-[10px]"></i> En público
                           </button>
-                          <button type="button" onclick="m6SimState.lessonPublic=false; m6SimState.visibilityMenuOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))" class="w-full px-3 py-2 text-left hover:bg-slate-50 text-slate-600 font-semibold flex items-center gap-2 cursor-pointer">
+                          <button type="button" onclick="m6SimState.lessonPublic=false; m6SimState.visibilityMenuOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))" class="w-full px-3 py-2 text-left hover:bg-slate-50 text-slate-600 font-semibold flex items-center gap-2 cursor-pointer">
                             <i class="fa-solid fa-lock text-[10px]"></i> Privado
                           </button>
                         </div>
@@ -4770,7 +4892,7 @@
                     </div>
 
                     <div>
-                      <button type="button" onclick="if(!m6SimState.lessonPublic){showSimMistakeToast('Cambia primero la visibilidad de Privado a En público antes de abrir la clase.');}else{clearSimMistakeToast(); m6SimState.step=6; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'));}"
+                      <button type="button" onclick="if(!m6SimState.lessonPublic){showSimMistakeToast('Cambia primero la visibilidad de Privado a En público antes de abrir la clase.');}else{clearSimMistakeToast(); m6SimState.step=6; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'));}"
                               class="text-sm font-extrabold ${m6SimState.lessonPublic ? 'text-[#2563EB] hover:underline' : 'text-slate-900'} cursor-pointer text-left">
                         (1) Construcción - Producto: Un texto instructivo
                       </button>
@@ -4795,7 +4917,7 @@
             <div class="flex-1 flex flex-col">
               <div class="px-5 py-2.5 border-b border-slate-200 flex items-center justify-between text-xs">
                 <span class="text-slate-500">Profesor / Espacio de clase / <strong class="text-slate-900">Clase regular en tiempo real</strong></span>
-                <button type="button" onclick="clearSimMistakeToast(); m6SimState.attendanceModalOpen=true; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                <button type="button" onclick="clearSimMistakeToast(); m6SimState.attendanceModalOpen=true; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                         class="px-4 py-1.5 rounded-xl bg-[#6D28D9] hover:bg-purple-700 text-white text-xs font-bold cursor-pointer">
                   Pasar lista ${m6SimState.attendanceOn ? '✓' : ''}
                 </button>
@@ -4803,7 +4925,7 @@
               <div class="p-6 flex-1 flex flex-col justify-between">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                   <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-xs font-bold">Profesor</span>
-                  <button type="button" onclick="if(!m6SimState.attendanceClosed){showSimMistakeToast('Registra primero la asistencia del grupo en Pasar lista.');}else{clearSimMistakeToast(); m6SimState.modeConfirmOpen=true; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'));}"
+                  <button type="button" onclick="if(!m6SimState.attendanceClosed){showSimMistakeToast('Registra primero la asistencia del grupo en Pasar lista.');}else{clearSimMistakeToast(); m6SimState.modeConfirmOpen=true; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'));}"
                           class="px-4 py-2 rounded-xl border-2 border-[#1A64FF] bg-blue-50/60 hover:bg-[#1A64FF] text-[#1A64FF] hover:text-white text-xs font-extrabold cursor-pointer">
                     Modo Clase
                   </button>
@@ -4820,7 +4942,7 @@
                 <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
                   <div class="flex items-center justify-between">
                     <h4 class="text-base font-extrabold text-slate-900">Lista de asistencia</h4>
-                    <button type="button" onclick="clearSimMistakeToast(); m6SimState.attendanceOn=true; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                    <button type="button" onclick="clearSimMistakeToast(); m6SimState.attendanceOn=true; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                             class="px-3.5 py-2 rounded-xl ${m6SimState.attendanceOn ? 'bg-[#10B981] text-white' : 'bg-[#1A64FF] text-white'} text-xs font-bold cursor-pointer">
                       ${m6SimState.attendanceOn ? 'Pasar lista: ENCENDIDO' : 'Pasar lista: APAGADO'}
                     </button>
@@ -4831,7 +4953,7 @@
                     <div class="py-2 flex justify-between"><span>3. Bonilla Castro, María Fernanda</span><span class="font-bold text-purple-700">${m6SimState.attendanceOn ? 'Asistencia' : 'Comprobar'}</span></div>
                   </div>
                   <div class="flex justify-end">
-                    <button type="button" onclick="if(!m6SimState.attendanceOn){showSimMistakeToast('Enciende Pasar lista antes de cerrar.');}else{clearSimMistakeToast(); m6SimState.attendanceModalOpen=false; m6SimState.attendanceClosed=true; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'));}"
+                    <button type="button" onclick="if(!m6SimState.attendanceOn){showSimMistakeToast('Enciende Pasar lista antes de cerrar.');}else{clearSimMistakeToast(); m6SimState.attendanceModalOpen=false; m6SimState.attendanceClosed=true; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'));}"
                             class="px-5 py-2 rounded-xl border border-slate-300 text-xs font-bold cursor-pointer">Cerrar</button>
                   </div>
                 </div>
@@ -4844,8 +4966,8 @@
                   <h4 class="text-base font-extrabold text-slate-900">¿Deseas activar el Modo Clase?</h4>
                   <p class="text-xs text-slate-600">Activa el Modo Clase al iniciar una sesión en tiempo real con tus estudiantes para registrar tu asistencia y la ejecución de la clase.</p>
                   <div class="flex justify-end gap-2">
-                    <button type="button" onclick="m6SimState.modeConfirmOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer">Cancelar</button>
-                    <button type="button" onclick="clearSimMistakeToast(); m6SimState.modeConfirmOpen=false; m6SimState.step=7; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))" class="px-5 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-bold cursor-pointer">Activar Modo Clase</button>
+                    <button type="button" onclick="m6SimState.modeConfirmOpen=false; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))" class="px-4 py-2 rounded-xl border border-slate-300 text-xs font-semibold cursor-pointer">Cancelar</button>
+                    <button type="button" onclick="clearSimMistakeToast(); m6SimState.modeConfirmOpen=false; m6SimState.step=7; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))" class="px-5 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-bold cursor-pointer">Activar Modo Clase</button>
                   </div>
                 </div>
               </div>
@@ -4860,16 +4982,16 @@
             <div class="px-4 py-2.5 bg-[#181C24] text-white flex flex-wrap items-center justify-between gap-2 text-[11px]">
               <div class="font-bold">Clase de Lenguaje</div>
               <div class="flex flex-wrap items-center gap-2">
-                <button type="button" onclick="clearSimMistakeToast(); m6SimState.lockOn=!m6SimState.lockOn; if(m6SimState.lockOn) m6SimState.syncOn=false; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                <button type="button" onclick="clearSimMistakeToast(); m6SimState.lockOn=!m6SimState.lockOn; if(m6SimState.lockOn) m6SimState.syncOn=false; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                         class="px-3 py-1.5 rounded-lg font-bold cursor-pointer ${m6SimState.lockOn ? 'bg-white text-slate-900 ring-2 ring-[#10B981]' : 'bg-white/10 text-slate-200'}">
                   🔒 Bloqueo de pantalla:${m6SimState.lockOn ? 'ON' : 'OFF'}
                 </button>
-                <button type="button" onclick="clearSimMistakeToast(); m6SimState.syncOn=!m6SimState.syncOn; if(m6SimState.syncOn) m6SimState.lockOn=false; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                <button type="button" onclick="clearSimMistakeToast(); m6SimState.syncOn=!m6SimState.syncOn; if(m6SimState.syncOn) m6SimState.lockOn=false; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                         class="px-3 py-1.5 rounded-lg font-bold cursor-pointer ${m6SimState.syncOn ? 'bg-white text-slate-900 ring-2 ring-[#10B981]' : 'bg-white/10 text-slate-200'}">
                   🔄 Sincronización:${m6SimState.syncOn ? 'ON' : 'OFF'}
                 </button>
               </div>
-              <button type="button" onclick="clearSimMistakeToast(); m6SimState.detailPanelOpen=!m6SimState.detailPanelOpen; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+              <button type="button" onclick="clearSimMistakeToast(); m6SimState.detailPanelOpen=!m6SimState.detailPanelOpen; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                       class="px-3 py-1.5 rounded-lg ${m6SimState.detailPanelOpen ? 'bg-[#10B981] text-white' : 'bg-white/15 hover:bg-white/25 text-white'} font-bold cursor-pointer">
                 <i class="fa-solid fa-user-group mr-1"></i>6/10
               </button>
@@ -4884,7 +5006,7 @@
                   { n: 2, title: "¡Entendamos las tablas! (1)" },
                   { n: 3, title: "¡Entendamos las tablas! (2)" }
                 ].map(sl => `
-                  <div onclick="clearSimMistakeToast(); if(sl.n===3) m6SimState.slide3Selected=true; renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'))"
+                  <div onclick="clearSimMistakeToast(); if(sl.n===3) m6SimState.slide3Selected=true; renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'))"
                        class="p-2 rounded-lg border-2 ${(sl.n===3 && m6SimState.slide3Selected) ? 'border-[#3B82F6] bg-white text-slate-900' : 'border-slate-700 bg-white/90 text-slate-700'} cursor-pointer">
                     <div class="text-[9.5px] font-bold">${sl.n} · 6/10</div>
                     <div class="text-[10px] font-extrabold mt-0.5 leading-tight">${sl.title}</div>
@@ -4983,7 +5105,7 @@
       clearSimMistakeToast();
       if (m6SimState.step === 4 && key === 'lista_clases') {
         m6SimState.step = 5;
-        renderM6ClassFlowSimulator(document.getElementById('practiceContentContainer'));
+        renderM6ClassFlowSimulator(document.getElementById('practiceStudioViewport'));
       }
     }
 
@@ -5035,9 +5157,9 @@
 
       let viewportHTML = "";
       if (m7SimState.step === 1) {
-        viewportHTML = renderSharedAidtLoginScreen("m7SimState.step=2; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedAidtLoginScreen("m7SimState.step=2; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))");
       } else if (m7SimState.step === 2) {
-        viewportHTML = renderSharedGoogleAccountChooser("m7SimState.step=3; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))");
+        viewportHTML = renderSharedGoogleAccountChooser("m7SimState.step=3; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))");
       } else {
         // Step 3: Exact Supervisor Console (Pages 228–238)
         const filteredSchools = schoolsList.filter(s =>
@@ -5054,11 +5176,11 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between flex-wrap gap-2">
                 <div class="flex items-center gap-2 text-xs">
-                  <button type="button" onclick="m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver al grupo 3A</button>
+                  <button type="button" onclick="m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver al grupo 3A</button>
                   <span class="text-slate-300">|</span>
                   <span class="font-extrabold text-slate-900">Tablero de Clase — 3A Clase de Lenguaje</span>
                 </div>
-                <select onchange="m7SimState.panelStudent=this.value; if(this.value==='Gil Torres, Elena'){m7SimState.inspectedElena=true; clearSimMistakeToast();} renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+                <select onchange="m7SimState.panelStudent=this.value; if(this.value==='Gil Torres, Elena'){m7SimState.inspectedElena=true; clearSimMistakeToast();} renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                         class="px-3.5 py-1.5 rounded-xl border-2 border-[#1A64FF] bg-white text-xs font-bold text-slate-900 cursor-pointer">
                   <option value="Toda la clase" ${!isElena ? 'selected' : ''}>Toda la clase</option>
                   <option value="Castro Morales, Mateo">Castro Morales, Mateo</option>
@@ -5103,10 +5225,10 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between flex-wrap gap-2">
                 <div>
-                  <button type="button" onclick="m7SimState.selectedGroup=null; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="text-xs text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver a CEIP Rosalía de Castro (10011)</button>
+                  <button type="button" onclick="m7SimState.selectedGroup=null; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="text-xs text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver a CEIP Rosalía de Castro (10011)</button>
                   <h4 class="text-base font-extrabold text-slate-900 mt-1">3A Clase de Lenguaje • Detalle por profesor y Lista de estudiantes</h4>
                 </div>
-                <button type="button" onclick="clearSimMistakeToast(); m7SimState.inGroupPanel=true; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+                <button type="button" onclick="clearSimMistakeToast(); m7SimState.inGroupPanel=true; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                         class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-600 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 cursor-pointer">
                   <i class="fa-solid fa-chart-column"></i>
                   <span>Panel</span>
@@ -5143,7 +5265,7 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between flex-wrap gap-2">
                 <div>
-                  <button type="button" onclick="m7SimState.selectedSchool=null; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="text-xs text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver a Gestión diaria</button>
+                  <button type="button" onclick="m7SimState.selectedSchool=null; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="text-xs text-slate-500 hover:text-slate-900 font-bold cursor-pointer">‹ Volver a Gestión diaria</button>
                   <h4 class="text-base font-extrabold text-slate-900 mt-1">CEIP Rosalía de Castro <span class="font-mono text-xs text-[#1A64FF]">(Código 10011)</span></h4>
                 </div>
                 <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">Estado: Automatizada</span>
@@ -5152,12 +5274,12 @@
               <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
                 <div class="flex items-center justify-between gap-3 flex-wrap">
                   <div class="text-xs font-extrabold text-slate-900">Clases del centro escolar</div>
-                  <input type="text" value="${m7SimState.classSearch}" oninput="m7SimState.classSearch=this.value; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+                  <input type="text" value="${m7SimState.classSearch}" oninput="m7SimState.classSearch=this.value; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                          placeholder="Buscar clase (ej. 3A Clase de Lenguaje)..." class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs w-64">
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                   ${groups.map(g => `
-                    <div onclick="if(g.id==='3A'){clearSimMistakeToast(); m7SimState.selectedGroup='3A'; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'));}else{showSimMistakeToast('Selecciona el grupo 3A Clase de Lenguaje.');}"
+                    <div onclick="if(g.id==='3A'){clearSimMistakeToast(); m7SimState.selectedGroup='3A'; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'));}else{showSimMistakeToast('Selecciona el grupo 3A Clase de Lenguaje.');}"
                          class="py-3 px-2 hover:bg-blue-50/60 flex items-center justify-between cursor-pointer transition">
                       <div>
                         <div class="font-extrabold text-slate-900">${g.name}</div>
@@ -5180,7 +5302,7 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between">
                 <h4 class="text-base font-extrabold text-slate-900">Gestión de implementación (Datos Acumulados)</h4>
-                <button type="button" onclick="m7SimState.navTab='diaria'; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-3.5 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Regresar a Gestión diaria ›</button>
+                <button type="button" onclick="m7SimState.navTab='diaria'; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="px-3.5 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold cursor-pointer">Regresar a Gestión diaria ›</button>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div class="p-4 rounded-2xl bg-white border border-slate-200"><div class="text-slate-500">Uso de Modo Clase</div><div class="text-2xl font-extrabold text-[#1A64FF] mt-1">86.4%</div></div>
@@ -5198,8 +5320,8 @@
             <div class="space-y-4">
               <div class="flex items-center justify-between flex-wrap gap-2">
                 <div class="flex items-center gap-2 text-xs font-bold">
-                  <button type="button" onclick="m7SimState.diariaSubTab='escuelas'; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-xl ${m7SimState.diariaSubTab==='escuelas' ? 'bg-[#0B0F17] text-white' : 'bg-white border border-slate-200 text-slate-600'} cursor-pointer">Escuelas en operación</button>
-                  <button type="button" onclick="m7SimState.diariaSubTab='aprendizaje'; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))" class="px-3 py-1.5 rounded-xl ${m7SimState.diariaSubTab==='aprendizaje' ? 'bg-[#0B0F17] text-white' : 'bg-white border border-slate-200 text-slate-600'} cursor-pointer">Estado de aprendizaje</button>
+                  <button type="button" onclick="m7SimState.diariaSubTab='escuelas'; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="px-3 py-1.5 rounded-xl ${m7SimState.diariaSubTab==='escuelas' ? 'bg-[#0B0F17] text-white' : 'bg-white border border-slate-200 text-slate-600'} cursor-pointer">Escuelas en operación</button>
+                  <button type="button" onclick="m7SimState.diariaSubTab='aprendizaje'; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))" class="px-3 py-1.5 rounded-xl ${m7SimState.diariaSubTab==='aprendizaje' ? 'bg-[#0B0F17] text-white' : 'bg-white border border-slate-200 text-slate-600'} cursor-pointer">Estado de aprendizaje</button>
                 </div>
                 <span class="text-xs font-mono text-slate-500">Fecha: 2026-11-24</span>
               </div>
@@ -5214,7 +5336,7 @@
               <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
                 <div class="flex items-center justify-between gap-3 flex-wrap">
                   <div class="text-xs font-extrabold text-slate-900">Detalle por escuela</div>
-                  <input type="text" value="${m7SimState.searchQuery}" oninput="m7SimState.searchQuery=this.value; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+                  <input type="text" value="${m7SimState.searchQuery}" oninput="m7SimState.searchQuery=this.value; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                          placeholder="Buscar por nombre o código (ej. 10011)..." class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs w-64">
                 </div>
                 <div class="overflow-x-auto">
@@ -5253,12 +5375,12 @@
             <!-- Left Supervisor Menu -->
             <div class="w-56 bg-[#F8F9FA] border-r border-slate-200 p-3.5 space-y-2 shrink-0">
               <div class="px-2 py-1 text-xs font-extrabold text-slate-900">Página de Supervisor</div>
-              <button type="button" onclick="clearSimMistakeToast(); m7SimState.navTab='diaria'; m7SimState.selectedSchool=null; m7SimState.selectedGroup=null; m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+              <button type="button" onclick="clearSimMistakeToast(); m7SimState.navTab='diaria'; m7SimState.selectedSchool=null; m7SimState.selectedGroup=null; m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                       class="w-full px-3 py-2 rounded-xl text-left text-xs font-bold flex items-center gap-2 cursor-pointer ${m7SimState.navTab==='diaria' ? 'bg-slate-200/80 text-slate-900' : 'text-slate-600 hover:bg-slate-200/40'}">
                 <i class="fa-solid fa-calendar-day text-[#1A64FF]"></i>
                 <span>Gestión diaria</span>
               </button>
-              <button type="button" onclick="clearSimMistakeToast(); m7SimState.navTab='implementacion'; m7SimState.visitedImpl=true; m7SimState.selectedSchool=null; m7SimState.selectedGroup=null; m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'))"
+              <button type="button" onclick="clearSimMistakeToast(); m7SimState.navTab='implementacion'; m7SimState.visitedImpl=true; m7SimState.selectedSchool=null; m7SimState.selectedGroup=null; m7SimState.inGroupPanel=false; renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'))"
                       class="w-full px-3 py-2 rounded-xl text-left text-xs font-bold flex items-center gap-2 cursor-pointer ${m7SimState.navTab==='implementacion' ? 'bg-slate-200/80 text-slate-900' : 'text-slate-600 hover:bg-slate-200/40'}">
                 <i class="fa-solid fa-chart-area text-[#10B981]"></i>
                 <span>Gestión de implementación</span>
@@ -5286,7 +5408,7 @@
       }
       clearSimMistakeToast();
       m7SimState.selectedSchool = '10011';
-      renderM7SupervisorSimulator(document.getElementById('practiceContentContainer'));
+      renderM7SupervisorSimulator(document.getElementById('practiceStudioViewport'));
     }
 
     function completePracticeAndUnlockQuiz(modId) {
@@ -5295,7 +5417,7 @@
       saveProgressMap();
       refreshAllWorkspaceUI();
       syncToGoogleSheetsWebhook(currentUser, `Práctica 100%: ${modId}`);
-      loadPracticeByModule(modId);
+      closePracticeStudioModal();
     }
 
     // ==================== STEP 3: QUIZZES (NO RETRY + <60% REINFORCEMENT + TEMPLATES) ====================
