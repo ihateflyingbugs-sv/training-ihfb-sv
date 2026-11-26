@@ -507,10 +507,10 @@
 
       <!-- Compact Middle Academic Dossier with Ultra-Subtle Cards -->
       <div class="my-auto py-4 space-y-3 w-full max-w-[360px] mx-auto">
-        <!-- Subtle Compact Audience Emblem -->
+        <!-- Prominent Audience Emblem -->
         <div class="flex flex-col items-center justify-center pb-1">
-          <div class="w-20 h-20 rounded-full bg-white/[0.03] border border-white/[0.07] flex items-center justify-center">
-            <div class="w-14 h-14 rounded-full bg-[#1A64FF]/15 border border-[#1A64FF]/25 text-slate-100 flex items-center justify-center text-2xl">
+          <div class="w-28 h-28 rounded-full bg-white/[0.035] border border-white/[0.08] flex items-center justify-center shadow-xl">
+            <div class="w-20 h-20 rounded-full bg-[#1A64FF]/15 border border-[#1A64FF]/30 text-slate-100 flex items-center justify-center text-4xl">
               <i id="audHeroRoleIcon" class="fa-solid fa-chalkboard-user"></i>
             </div>
           </div>
@@ -743,12 +743,12 @@
         <button type="button" onclick="openProfileEditModal()" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-bold">Mi Perfil</button>
       </div>
 
-      <main class="flex-1 p-5 sm:p-8 w-full space-y-6">
+      <main class="flex-1 px-4 pt-3 pb-6 sm:px-6 sm:pt-4 sm:pb-8 w-full space-y-4">
 
         <!-- ================================================================ -->
         <!-- VIEW 0: INICIO E INDUCCIÓN (CLEAN — NO REDUNDANT MODULE LIST)    -->
         <!-- ================================================================ -->
-        <section id="section-dashboard" class="tab-content space-y-6">
+        <section id="section-dashboard" class="tab-content space-y-4">
           <!-- Slim & Subtle Executive Welcome Header -->
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 relative overflow-hidden">
             <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -890,7 +890,7 @@
         <!-- ================================================================ -->
         <!-- VIEW 1: MÓDULOS Y VIDEOS (TOP SQUARE CARDS + STEPPER + PRO SPLIT)-->
         <!-- ================================================================ -->
-        <section id="section-modulos" class="tab-content hidden space-y-6">
+        <section id="section-modulos" class="tab-content hidden space-y-4">
           <!-- Uniform Slim Section Header -->
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -916,7 +916,7 @@
         <!-- ================================================================ -->
         <!-- VIEW 2: PRÁCTICAS INTERACTIVAS                                   -->
         <!-- ================================================================ -->
-        <section id="section-practicas" class="tab-content hidden space-y-5">
+        <section id="section-practicas" class="tab-content hidden space-y-4">
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#EC4899]/20 text-[#F472B6]">Paso 2 • Práctica Interactiva</span>
@@ -937,7 +937,7 @@
         <!-- ================================================================ -->
         <!-- VIEW 3: EVALUACIONES (QUIZZES — NO RETRY + MULTIPLE TEMPLATES)   -->
         <!-- ================================================================ -->
-        <section id="section-quizzes" class="tab-content hidden space-y-6">
+        <section id="section-quizzes" class="tab-content hidden space-y-4">
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/20 text-[#34D399]">Paso 3 • Validación de Conocimientos</span>
@@ -979,20 +979,28 @@
         <!-- ================================================================ -->
         <!-- VIEW 4: PROGRESO Y DIPLOMA VERTICAL (ULTRA-PRO ANALYTICS + COLLAPSIBLE DIPLOMA) -->
         <!-- ================================================================ -->
-        <section id="section-progreso" class="tab-content hidden space-y-6">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 sm:py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <section id="section-progreso" class="tab-content hidden space-y-4">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/20 text-[#34D399]">Historial Académico y Acreditación</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Progreso y Certificación</h2>
-              <p class="text-xs text-slate-300">Monitoreo ejecutivo de avance por módulo, calificaciones obtenidas y diploma verificable.</p>
+              <p class="text-xs text-slate-300">Monitoreo de avance por módulo, calificaciones obtenidas y diploma acreditado.</p>
             </div>
-            <div class="flex items-center gap-3.5 bg-white/10 border border-white/15 px-4 py-2.5 rounded-xl shrink-0">
-              <div>
-                <div id="progresoPorcentajeTotal" class="font-mono text-2xl font-extrabold text-white leading-none">0%</div>
-                <div class="text-[9.5px] uppercase font-bold text-slate-300 tracking-wider mt-0.5">Avance Global</div>
-              </div>
-              <div class="w-24 h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                <div id="progresoBarraGeneral" class="h-full bg-[#10B981] transition-all duration-500" style="width: 0%;"></div>
+            <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+              <!-- Subtle Top Diploma Button (Ver / Descargar) -->
+              <button type="button" id="btnTopDiplomaAction" onclick="handleTopDiplomaClick()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-slate-300 border border-white/15 text-xs font-bold transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-award text-sm text-slate-400" id="btnTopDiplomaIcon"></i>
+                <span id="btnTopDiplomaLabel">Diploma (Mín. 80%)</span>
+              </button>
+
+              <div class="flex items-center gap-3 bg-white/10 border border-white/15 px-3.5 py-2 rounded-xl shrink-0">
+                <div>
+                  <div id="progresoPorcentajeTotal" class="font-mono text-xl font-extrabold text-white leading-none">0%</div>
+                  <div class="text-[9px] uppercase font-bold text-slate-300 tracking-wider mt-0.5">Avance</div>
+                </div>
+                <div class="w-20 h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div id="progresoBarraGeneral" class="h-full bg-[#10B981] transition-all duration-500" style="width: 0%;"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -1033,48 +1041,32 @@
             </div>
           </div>
 
-          <!-- COLLAPSIBLE DIPLOMA DRAWER (COLLAPSED BY DEFAULT WHEN OBTAINED) -->
-          <div id="certificateLockedCard" class="pro-card p-6 text-center space-y-2 border-dashed border-2 border-slate-300">
-            <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 mx-auto flex items-center justify-center text-xl">
-              <i class="fa-solid fa-lock"></i>
-            </div>
-            <h3 class="text-base font-extrabold text-slate-900">Diploma Aún Bloqueado</h3>
-            <p id="certificateLockedSub" class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-              Completa al menos el <strong>80%</strong> de los módulos de tu rol para desbloquear y descargar tu Diploma Vertical junto con tu cuadro oficial de notas.
-            </p>
-          </div>
-
-          <div id="certificateUnlockedContainer" class="hidden pro-card overflow-hidden border-emerald-200 shadow-md">
-            <!-- Collapsible Header Bar (Starts Collapsed!) -->
-            <div onclick="toggleDiplomaDrawer()" class="px-6 py-4 bg-[#0B0F17] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer hover:bg-slate-900 transition">
-              <div class="flex items-center gap-3.5">
-                <div class="w-10 h-10 rounded-xl bg-[#10B981]/20 border border-[#10B981]/40 text-[#34D399] flex items-center justify-center text-lg shrink-0">
-                  <i class="fa-solid fa-award"></i>
-                </div>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <span class="px-2 py-0.5 rounded bg-[#10B981]/20 text-[#34D399] text-[10px] font-bold uppercase tracking-widest">Diploma Obtenido ✓</span>
-                    <span id="diplomaDrawerToggleHint" class="text-[11px] text-slate-400">Clic para desplegar diploma y notas</span>
+          <!-- SUBTLE COLLAPSIBLE DIPLOMA DRAWER (OPENED VIA TOP DIPLOMA BUTTON) -->
+          <div id="certificateLockedCard" class="hidden"></div>
+          <div id="certificateUnlockedContainer" class="hidden">
+            <div id="diplomaCollapsibleBody" class="hidden pro-card p-5 sm:p-7 bg-white border-slate-200 shadow-md space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-8 h-8 rounded-lg bg-emerald-50 text-[#10B981] flex items-center justify-center"><i class="fa-solid fa-award"></i></span>
+                  <div>
+                    <h4 class="text-sm font-extrabold text-slate-900">Diploma Oficial y Boletín de Notas</h4>
+                    <p class="text-[11px] text-slate-500">Vista previa verificada lista para descargar en PDF.</p>
                   </div>
-                  <h3 class="text-sm sm:text-base font-extrabold text-white mt-0.5">Diploma Vertical y Boletín Oficial de Calificaciones</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="btnPrintCertificate" onclick="downloadVerticalDiplomaPDF()" class="px-4 py-2 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                    <span>Descargar PDF</span>
+                  </button>
+                  <button type="button" onclick="toggleDiplomaDrawer()" class="w-8 h-8 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 flex items-center justify-center text-xs cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
                 </div>
               </div>
-              <div class="flex items-center gap-2.5 shrink-0">
-                <button type="button" id="btnPrintCertificate" onclick="event.stopPropagation(); downloadVerticalDiplomaPDF()" class="px-4 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white font-bold text-xs shadow transition flex items-center gap-1.5 cursor-pointer">
-                  <i class="fa-solid fa-file-arrow-down"></i>
-                  <span>Descargar PDF</span>
-                </button>
-                <span class="w-8 h-8 rounded-lg bg-white/10 text-white flex items-center justify-center text-xs">
-                  <i id="diplomaDrawerChevron" class="fa-solid fa-chevron-down"></i>
-                </span>
-              </div>
-            </div>
 
-            <!-- Collapsible Diploma Body (Hidden by default when obtained) -->
-            <div id="diplomaCollapsibleBody" class="hidden p-6 sm:p-8 bg-[#0B0F17]/95 border-t border-slate-800">
               <div id="printableDiplomaArea" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 <!-- LEFT 7 COLS: VERTICAL PORTRAIT DIPLOMA -->
-                <div class="lg:col-span-7 bg-white text-slate-900 rounded-2xl p-8 sm:p-10 border-[6px] border-double border-slate-900 shadow-2xl flex flex-col justify-between min-h-[560px] relative overflow-hidden">
+                <div class="lg:col-span-7 bg-white text-slate-900 rounded-2xl p-8 sm:p-10 border-[6px] border-double border-slate-900 shadow-lg flex flex-col justify-between min-h-[540px] relative overflow-hidden">
                   <div class="text-center space-y-4">
                     <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" class="w-14 h-14 object-contain rounded-xl border border-slate-200 p-1.5 mx-auto" alt="Logo">
                     <div class="text-xs font-extrabold tracking-widest uppercase text-slate-500">IHFB SELF-LEARNING TRAINING PORTAL</div>
@@ -1108,7 +1100,7 @@
                 </div>
 
                 <!-- RIGHT 5 COLS: MODULE SCORES & GLOBAL GRADE SUMMARY -->
-                <div class="lg:col-span-5 bg-white text-slate-900 rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xl flex flex-col justify-between space-y-5">
+                <div class="lg:col-span-5 bg-slate-50 text-slate-900 rounded-2xl p-6 sm:p-8 border border-slate-200 flex flex-col justify-between space-y-5">
                   <div class="space-y-4">
                     <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
                       <div>
@@ -1120,7 +1112,7 @@
                     <div id="certGradesBreakdownList" class="space-y-2.5 text-xs"></div>
                   </div>
 
-                  <div class="p-4 rounded-2xl bg-slate-900 text-white flex items-center justify-between">
+                  <div class="p-4 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-between">
                     <div>
                       <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Promedio Global Final</div>
                       <div class="text-xs text-emerald-400 font-semibold mt-0.5">Aprobado con Distinción</div>
@@ -1162,7 +1154,7 @@
 
         <!-- VIEW 5: AYUDA Y SOPORTE (INTERACTIVE COLLAPSIBLE FAQ ACCORDION BARS) -->
         <!-- ================================================================ -->
-        <section id="section-faq" class="tab-content hidden space-y-6">
+        <section id="section-faq" class="tab-content hidden space-y-4">
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-3.5 sm:px-6 sm:py-4 border-slate-800">
             <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/20 text-[#60A5FA]">Centro de Asistencia • FAQ</span>
             <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Preguntas Frecuentes (FAQ)</h2>
@@ -1742,7 +1734,17 @@
             M6: "Flujo de Clase",
             M7: "Supervisión y seguimiento"
           };
-          ALL_MODULES_MASTER.forEach(m => { if (canonicalTitles[m.id]) m.title = canonicalTitles[m.id]; });
+          ALL_MODULES_MASTER.forEach(m => {
+            if (canonicalTitles[m.id]) m.title = canonicalTitles[m.id];
+            const defMod = DEFAULT_MODULES_MASTER.find(dm => dm.id === m.id);
+            if (defMod && Array.isArray(m.cards)) {
+              m.cards.forEach((c, idx) => {
+                if (Array.isArray(c.points) && c.points.some(pt => /repliques|expediente de ruta|progreso y diploma/i.test(pt))) {
+                  c.points = (defMod.cards[idx] && defMod.cards[idx].points) ? defMod.cards[idx].points : defMod.cards[0].points;
+                }
+              });
+            }
+          });
           quizzesBank = savedCms.quizzes || JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
           return;
         }
@@ -2654,7 +2656,7 @@
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12">
-            <!-- LEFT 6 COLS: VIDEO PLAYER -->
+            <!-- LEFT 6 COLS: VIDEO PLAYER + PUNTOS CLAVE + CONFIRMACIÓN DE VIDEO Y MANUAL -->
             <div class="lg:col-span-6 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
               <div class="space-y-4">
                 <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
@@ -2662,6 +2664,7 @@
                   ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
                 </div>
 
+                <!-- PUNTOS CLAVE DEL VIDEO -->
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2.5">
                   <div class="text-[11px] font-extrabold uppercase tracking-widest text-[#1A64FF] flex items-center gap-1.5">
                     <i class="fa-solid fa-circle-play"></i>
@@ -2677,6 +2680,45 @@
                   </div>
                 </div>
               </div>
+
+              <!-- CONFIRMACIÓN DE VIDEO Y MANUAL DEBAJO DEL VIDEO -->
+              ${(() => {
+                const mp = ensureProgressEntry(mod.id);
+                const vChk = mp.materialConfirmed || mp.videoWatched;
+                const mChk = mp.materialConfirmed || mp.manualRead;
+                const bothReady = vChk && mChk;
+                return `
+                  <div class="p-4 rounded-2xl ${mp.materialConfirmed ? 'bg-emerald-50/70 border border-emerald-200' : 'bg-slate-50 border border-slate-200'} space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[11px] font-extrabold uppercase tracking-wider ${mp.materialConfirmed ? 'text-emerald-700' : 'text-slate-700'}">
+                        ${mp.materialConfirmed ? '<i class="fa-solid fa-circle-check mr-1"></i>Material Confirmado' : 'Confirmación de Revisión (Paso 1)'}
+                      </span>
+                      ${mp.materialConfirmed ? '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">Activo ✓</span>' : ''}
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-xs">
+                      <label class="flex items-center gap-2 cursor-pointer select-none font-semibold text-slate-800">
+                        <input type="checkbox" ${vChk ? 'checked' : ''} onchange="toggleVideoManualCheck('video', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
+                        <span>He visto el video</span>
+                      </label>
+                      <label class="flex items-center gap-2 cursor-pointer select-none font-semibold text-slate-800">
+                        <input type="checkbox" ${mChk ? 'checked' : ''} onchange="toggleVideoManualCheck('manual', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
+                        <span>He revisado el manual</span>
+                      </label>
+                    </div>
+                    <div class="pt-1">
+                      <button type="button" id="btnExplicitConfirmVideoManual" onclick="confirmModuleMaterialViewed()" ${bothReady ? '' : 'disabled'}
+                              class="${mp.materialConfirmed
+                                ? 'w-full py-2.5 px-4 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer'
+                                : (bothReady
+                                    ? 'w-full py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer'
+                                    : 'w-full py-2.5 px-4 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold flex items-center justify-center gap-2 cursor-not-allowed')}">
+                        <i class="fa-solid ${mp.materialConfirmed ? 'fa-circle-check' : 'fa-check-double'}"></i>
+                        <span>${mp.materialConfirmed ? 'Material Confirmado ✓ • Continuar a Práctica (Paso 2) →' : 'Confirmar Video y Manual'}</span>
+                      </button>
+                    </div>
+                  </div>
+                `;
+              })()}
             </div>
 
             <!-- RIGHT 6 COLS: WIDE INDEPENDENT MANUAL VIEWER -->
@@ -2684,33 +2726,6 @@
               ${buildInlineManualPanelHTML(mod, activeCard)}
             </div>
           </div>
-
-          <!-- EXPLICIT VIDEO + MANUAL CONFIRMATION FOOTER -->
-          ${(() => {
-            const mp = ensureProgressEntry(mod.id);
-            const vChk = mp.materialConfirmed || mp.videoWatched;
-            const mChk = mp.materialConfirmed || mp.manualRead;
-            const bothReady = vChk && mChk;
-            return `
-              <div class="px-5 py-4 bg-slate-50 border-t border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 text-xs">
-                  <label class="flex items-center gap-2.5 cursor-pointer select-none font-semibold text-slate-800">
-                    <input type="checkbox" ${vChk ? 'checked' : ''} onchange="toggleVideoManualCheck('video', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
-                    <span>He visto el video completo</span>
-                  </label>
-                  <label class="flex items-center gap-2.5 cursor-pointer select-none font-semibold text-slate-800">
-                    <input type="checkbox" ${mChk ? 'checked' : ''} onchange="toggleVideoManualCheck('manual', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
-                    <span>He leído el manual PDF</span>
-                  </label>
-                </div>
-                <button type="button" id="btnExplicitConfirmVideoManual" onclick="confirmModuleMaterialViewed()" ${bothReady ? '' : 'disabled'}
-                        class="${bothReady ? 'px-5 py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer shrink-0' : 'px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold flex items-center gap-2 cursor-not-allowed shrink-0'}">
-                  <i class="fa-solid fa-check-double"></i>
-                  <span>${mp.materialConfirmed ? 'Material Confirmado • Ir a Práctica (Paso 2) →' : 'Confirmar Video y Manual → Paso 2'}</span>
-                </button>
-              </div>
-            `;
-          })()}
         </div>
       `;
     }
@@ -2724,26 +2739,32 @@
       if (btn) {
         const ready = (p.videoWatched && p.manualRead) || p.materialConfirmed;
         btn.disabled = !ready;
-        btn.className = ready
-          ? "px-5 py-2.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer shrink-0"
-          : "px-5 py-2.5 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold flex items-center gap-2 cursor-not-allowed shrink-0";
+        btn.className = p.materialConfirmed
+          ? "w-full py-2.5 px-4 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
+          : (ready
+              ? "w-full py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center justify-center gap-2 cursor-pointer"
+              : "w-full py-2.5 px-4 rounded-xl bg-slate-200 text-slate-400 text-xs font-bold flex items-center justify-center gap-2 cursor-not-allowed");
       }
     }
 
     function confirmModuleMaterialViewed() {
       const p = ensureProgressEntry(currentSelectedModuleId);
       if (!p.materialConfirmed && (!p.videoWatched || !p.manualRead)) {
-        showProAlert("Confirmación Requerida", "Marca ambas casillas confirmando que viste el video y revisaste el manual antes de pasar a la práctica.", false);
+        showProAlert("Confirmación Requerida", "Marca ambas casillas confirmando que viste el video y revisaste el manual.", false);
         return;
       }
+      const wasAlreadyConfirmed = p.materialConfirmed;
       p.videoWatched = true;
       p.manualRead = true;
       p.materialConfirmed = true;
       saveProgressMap();
       refreshAllWorkspaceUI();
-      syncToGoogleSheetsWebhook(currentUser, `Video y Manual Confirmados: ${currentSelectedModuleId}`);
-      showProAlert("Paso 1 Completado", "Confirmaste la revisión del video y el manual. Se ha habilitado la Práctica Interactiva (Paso 2).");
-      goToModulePractice(currentSelectedModuleId);
+      if (!wasAlreadyConfirmed) {
+        syncToGoogleSheetsWebhook(currentUser, `Material Confirmado: ${currentSelectedModuleId}`);
+        showProAlert("Material Confirmado ✓", "Se ha activado 'Material Confirmado' y habilitado la Práctica Interactiva (Paso 2).");
+      } else {
+        goToModulePractice(currentSelectedModuleId);
+      }
     }
 
     function formatVideoEmbedUrl(rawUrl) {
@@ -3373,6 +3394,15 @@
     // ==================== PRO PROGRESS TABLE & COLLAPSIBLE DIPLOMA (>=80%) ====================
     let diplomaDrawerOpen = false;
 
+    function handleTopDiplomaClick() {
+      const topBtn = document.getElementById('btnTopDiplomaAction');
+      if (!topBtn || topBtn.dataset.unlocked !== '1') {
+        showProAlert('Diploma Aún Bloqueado', 'Completa al menos el 80% de los módulos de tu rol para ver y descargar tu diploma oficial.', false);
+        return;
+      }
+      toggleDiplomaDrawer();
+    }
+
     function toggleDiplomaDrawer() {
       diplomaDrawerOpen = !diplomaDrawerOpen;
       const body = document.getElementById('diplomaCollapsibleBody');
@@ -3458,14 +3488,31 @@
       const lockedCard = document.getElementById('certificateLockedCard');
       const unlockedCard = document.getElementById('certificateUnlockedContainer');
 
+      const topBtn = document.getElementById('btnTopDiplomaAction');
+      const topIcon = document.getElementById('btnTopDiplomaIcon');
+      const topLabel = document.getElementById('btnTopDiplomaLabel');
+
       if (!isUnlocked) {
-        lockedCard.classList.remove('hidden');
+        lockedCard.classList.add('hidden');
         unlockedCard.classList.add('hidden');
+        if (topBtn) {
+          topBtn.dataset.unlocked = '0';
+          topBtn.className = 'px-3.5 py-2 rounded-xl bg-white/5 text-slate-400 border border-white/10 text-xs font-semibold transition flex items-center gap-2 cursor-pointer';
+        }
+        if (topIcon) topIcon.className = 'fa-solid fa-award text-sm text-slate-500';
+        if (topLabel) topLabel.textContent = 'Diploma (Mín. 80%)';
         return;
       }
 
       lockedCard.classList.add('hidden');
       unlockedCard.classList.remove('hidden');
+      if (topBtn) {
+        topBtn.dataset.unlocked = '1';
+        topBtn.className = 'px-3.5 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/30 text-xs font-bold transition flex items-center gap-2 cursor-pointer';
+      }
+      if (topIcon) topIcon.className = 'fa-solid fa-award text-sm text-[#34D399]';
+      if (topLabel) topLabel.textContent = 'Ver y Descargar Diploma';
+
       // Keep diploma collapsed by default when obtained!
       const body = document.getElementById('diplomaCollapsibleBody');
       if (body && !diplomaDrawerOpen) body.classList.add('hidden');
