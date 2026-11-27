@@ -2854,8 +2854,18 @@
             <!-- LEFT 6 COLS: VIDEO PLAYER + CONFIRMACIÓN DIRECTA DEBAJO DEL VIDEO -->
             <div class="lg:col-span-6 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white flex flex-col justify-between space-y-4">
               <div class="relative aspect-video w-full bg-[#0B0F17] rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                <iframe class="w-full h-full" src="${formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+                <iframe id="inlineLessonVideoFrame" class="w-full h-full" src="${activeCard.thumbnailUrl ? '' : formatVideoEmbedUrl(activeCard.videoUrl)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                ${activeCard.thumbnailUrl ? `
+                  <div id="inlineLessonThumbnailCover" onclick="startInlineLessonWithThumb('${formatVideoEmbedUrl(activeCard.videoUrl)}')" class="absolute inset-0 z-10 cursor-pointer group bg-[#0B0F17]">
+                    <img src="${activeCard.thumbnailUrl}" alt="${activeCard.title}" class="w-full h-full object-cover group-hover:scale-[1.02] transition duration-300">
+                    <div class="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/20 transition flex items-center justify-center">
+                      <div class="w-16 h-16 rounded-full bg-[#1A64FF] group-hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition">
+                        <i class="fa-solid fa-play text-xl ml-1"></i>
+                      </div>
+                    </div>
+                  </div>
+                ` : ''}
+                ${activeCard.videoUrl ? `<a href="${activeCard.videoUrl}" target="_blank" title="Abrir video en pestaña nueva" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-xl bg-slate-900/85 hover:bg-[#1A64FF] text-white flex items-center justify-center text-xs shadow-md transition"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
               </div>
 
               <!-- CONFIRMACIÓN DE VIDEO Y MANUAL DIRECTAMENTE DEBAJO DEL VIDEO (VISIBLE) -->
@@ -2941,6 +2951,16 @@
         showProAlert("Material Confirmado ✓", "Se ha activado 'Material Confirmado' y habilitado la Práctica Interactiva (Paso 2).");
       } else {
         goToModulePractice(currentSelectedModuleId);
+      }
+    }
+
+    function startInlineLessonWithThumb(embedUrl) {
+      const cover = document.getElementById('inlineLessonThumbnailCover');
+      const frame = document.getElementById('inlineLessonVideoFrame');
+      if (cover) cover.remove();
+      if (frame && embedUrl) {
+        const sep = embedUrl.includes('?') ? '&' : '?';
+        frame.src = `${embedUrl}${sep}autoplay=1`;
       }
     }
 
