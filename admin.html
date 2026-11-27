@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IHFB Training Portal • Administración</title>
+  <title>IHFB Training Studio • Consola Ejecutiva de Administración</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,6 +19,14 @@
             sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
             display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            obsidian: '#090D16',
+            brand: {
+              DEFAULT: '#1A64FF',
+              hover: '#1554D6',
+              soft: '#EFF4FF'
+            }
           }
         }
       }
@@ -32,16 +40,17 @@
       width: 100%;
       min-height: 100vh;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #F4F6F9;
+      background-color: #F3F5F8;
       color: #0F172A;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
     html {
-      font-size: clamp(13.5px, 0.18vw + 12.8px, 15px);
+      font-size: clamp(13.5px, 0.18vw + 13px, 16px);
     }
     h1, h2, h3, h4, .font-display {
       font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      letter-spacing: -0.015em;
     }
 
     .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -50,846 +59,18 @@
     .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
     .modal-glass {
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
-    .pro-card {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      border-radius: 14px;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 4px 16px -4px rgba(15, 23, 42, 0.04);
-    }
-
-    .pro-input {
-      background: #FFFFFF;
-      border: 1px solid #CBD5E1;
-      border-radius: 10px;
-      font-size: 13px;
-      color: #0F172A;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-    .pro-input:focus {
-      outline: none;
-      border-color: #0F172A;
-      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
-    }
-
-    #admSidebar {
-      transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
-    }
-    #admSidebar.sidebar-collapsed {
-      width: 4.5rem;
-    }
-    #admSidebar.sidebar-collapsed .sb-hide {
-      display: none !important;
-    }
-    #admSidebar.sidebar-collapsed .sb-center {
-      justify-content: center !important;
-      padding-left: 0.5rem !important;
-      padding-right: 0.5rem !important;
-    }
-    #admSidebar.sidebar-collapsed .nav-btn {
-      justify-content: center !important;
-      padding-left: 0.65rem !important;
-      padding-right: 0.65rem !important;
-    }
-    #admSidebar.sidebar-collapsed .nav-item-wrap:hover .sb-balloon {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateX(0) !important;
-    }
-  </style>
-</head>
-<body class="bg-[#F4F6F9] text-slate-900 antialiased overflow-x-hidden">
-
-  <!-- TOAST NOTIFICATION -->
-  <div id="admToast" class="fixed bottom-5 right-5 z-[80] hidden items-center gap-3 px-4 py-3 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700">
-    <span id="admToastDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-    <span id="admToastText">Cambios guardados en tiempo real</span>
-  </div>
-
-  <!-- ======================================================================== -->
-  <!-- STAGE 1: CLEAN SPLIT-SCREEN ENTERPRISE AUTH GATE                         -->
-  <!-- ======================================================================== -->
-  <div id="adminLoginGate" class="fixed inset-0 z-50 flex flex-col lg:flex-row bg-[#0B0F17] overflow-y-auto lg:overflow-hidden">
-    <!-- Left Architectural Dark Slate Column -->
-    <div class="lg:w-6/12 xl:w-[54%] bg-[#0B0F17] text-white p-6 sm:p-10 lg:px-14 lg:py-10 flex flex-col justify-between relative overflow-hidden border-r border-slate-800/80">
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,#1E293B_0%,#0B0F17_70%)] pointer-events-none"></div>
-
-      <!-- Brand Header -->
-      <div class="relative z-10 flex items-center gap-3.5">
-        <div class="w-10 h-10 rounded-xl bg-white p-1.5 flex items-center justify-center shadow">
-          <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
-        </div>
-        <div>
-          <div class="text-base font-extrabold text-white tracking-tight">IHFB Training Administration</div>
-          <div class="text-[11px] font-medium text-slate-400">Plataforma de Gestión Curricular</div>
-        </div>
-      </div>
-
-      <!-- Center Value Proposition -->
-      <div class="relative z-10 my-auto py-8 max-w-xl space-y-6">
-        <div class="space-y-3">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-slate-200 border border-white/10">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span>Consola Corporativa</span>
-          </span>
-          <h1 class="text-3xl sm:text-4xl xl:text-[40px] font-extrabold text-white tracking-tight leading-[1.15]">
-            Administración centralizada de capacitación y desempeño.
-          </h1>
-          <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
-            Configura accesos administrativos, asigna rutas por audiencia, publica contenidos y evaluaciones, y supervisa el progreso real de toda la organización.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1.5">
-            <div class="text-xs font-bold text-white flex items-center gap-2"><i class="fa-solid fa-layer-group text-slate-300"></i> Currículo</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Publicación inmediata para todos los roles.</p>
-          </div>
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1.5">
-            <div class="text-xs font-bold text-white flex items-center gap-2"><i class="fa-solid fa-chart-simple text-slate-300"></i> Analítica</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Métricas en vivo de estudio, práctica y quiz.</p>
-          </div>
-          <div class="p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-1.5">
-            <div class="text-xs font-bold text-white flex items-center gap-2"><i class="fa-solid fa-users-viewfinder text-slate-300"></i> Auditoría</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Trazabilidad individual por audiencia.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="relative z-10 flex items-center justify-between text-[11px] text-slate-500 border-t border-white/10 pt-4">
-        <span>© 2026 IHFB Self-Learning Training Portal</span>
-        <span>Acceso Autorizado</span>
-      </div>
-    </div>
-
-    <!-- Right Login Card Column -->
-    <div class="lg:w-6/12 xl:w-[46%] bg-[#F4F6F9] p-6 sm:p-10 flex items-center justify-center">
-      <div class="w-full max-w-[440px] bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-        <div class="px-7 py-6 border-b border-slate-100 flex items-center justify-between">
-          <div>
-            <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Autenticación</span>
-            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Iniciar Sesión</h2>
-          </div>
-          <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-sm">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-        </div>
-
-        <form onsubmit="handleAdminLogin(event)" class="p-7 space-y-4 text-xs">
-          <div id="adminErrBox" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 font-semibold leading-relaxed"></div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1.5">Correo Institucional *</label>
-            <input type="email" id="admEmail" required placeholder="usuario@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2.5 font-medium">
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold text-slate-700 mb-1.5">Contraseña *</label>
-            <div class="relative">
-              <input type="password" id="admPass" required placeholder="••••••••••••" class="pro-input w-full px-3.5 py-2.5 pr-10">
-              <button type="button" onclick="toggleLoginPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer">
-                <i id="admPassEyeIcon" class="fa-regular fa-eye"></i>
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" id="btnAdmLogin" class="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-[13px] shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span>Ingresar al Panel Administrativo</span>
-          </button>
-
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-            <a href="./index.html" class="text-slate-600 hover:text-slate-900 font-semibold flex items-center gap-1.5">
-              <i class="fa-solid fa-arrow-left"></i>
-              <span>Portal de Capacitación</span>
-            </a>
-            <span class="text-emerald-600 font-semibold flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Conectado
-            </span>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- ======================================================================== -->
-  <!-- STAGE 2: ULTRA-PRO RESPONSIVE ENTERPRISE WORKSPACE (0% WASTED SPACE)     -->
-  <!-- ======================================================================== -->
-  <div id="adminConsoleApp" class="hidden w-full min-h-screen flex-col lg:flex-row bg-[#F4F6F9]">
-    <div id="mobileAdmBackdrop" onclick="toggleMobileAdmSidebar(false)" class="fixed inset-0 bg-slate-950/60 z-30 hidden lg:hidden"></div>
-
-    <!-- LEFT MINIMALIST OBSIDIAN SIDEBAR -->
-    <aside id="admSidebar" class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#0B0F17] text-slate-400 flex flex-col justify-between shrink-0 border-r border-slate-800 z-40 -translate-x-full lg:translate-x-0">
-      <div>
-        <!-- Brand Header -->
-        <div class="h-16 px-4 flex items-center justify-between gap-2 border-b border-slate-800/80 sb-center">
-          <div onclick="switchAdminTab('dashboard')" class="flex items-center gap-3 min-w-0 cursor-pointer">
-            <div class="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center shrink-0">
-              <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
-            </div>
-            <div class="min-w-0 sb-hide">
-              <div class="text-xs font-extrabold text-white tracking-tight leading-tight">IHFB Admin</div>
-              <div class="text-[10px] font-medium text-slate-400">Training Studio</div>
-            </div>
-          </div>
-          <button type="button" onclick="toggleDesktopAdmSidebar()" title="Contraer / Expandir" class="hidden lg:inline-flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition shrink-0 cursor-pointer">
-            <i id="admSbCollapseIcon" class="fa-solid fa-angles-left text-xs"></i>
-          </button>
-        </div>
-
-        <!-- Lateral Menu (Unified Monochrome Icons) -->
-        <div class="px-3 py-5 space-y-5">
-          <div>
-            <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Menú Principal</div>
-            <nav class="space-y-1 text-[13px] font-medium">
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('accesos')" id="navAdm-accesos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-key text-xs"></i></span>
-                  <span class="sb-hide truncate">1. Accesos</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  1. Accesos
-                </div>
-              </div>
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('asignaciones')" id="navAdm-asignaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-users-gear text-xs"></i></span>
-                  <span class="sb-hide truncate">2. Asignaciones</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  2. Asignaciones
-                </div>
-              </div>
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('modulos')" id="navAdm-modulos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-layer-group text-xs"></i></span>
-                  <span class="sb-hide truncate">3. Módulos</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  3. Módulos
-                </div>
-              </div>
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('evaluaciones')" id="navAdm-evaluaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-file-circle-check text-xs"></i></span>
-                  <span class="sb-hide truncate">4. Evaluaciones</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  4. Evaluaciones
-                </div>
-              </div>
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('dashboard')" id="navAdm-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-white/10 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/10 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-chart-pie text-xs"></i></span>
-                  <span class="sb-hide truncate">5. Dashboard</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  5. Dashboard
-                </div>
-              </div>
-
-              <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('informacion')" id="navAdm-informacion" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-table-list text-xs"></i></span>
-                  <span class="sb-hide truncate">6. Información general</span>
-                </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5rem] -mt-9 z-50 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-700 whitespace-nowrap">
-                  6. Información general
-                </div>
-              </div>
-
-            </nav>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800/80">
-            <a href="./index.html" target="_blank" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition text-xs font-semibold cursor-pointer">
-              <span class="w-7 h-7 rounded-lg bg-white/5 text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
-              <span class="sb-hide truncate">Ir al Portal</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Admin Dossier -->
-      <div class="p-3.5 border-t border-slate-800/80 bg-black/25">
-        <div class="flex items-center gap-3 sb-center">
-          <div id="admAvatarBadge" class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 text-white font-bold text-xs flex items-center justify-center shrink-0">A</div>
-          <div class="min-w-0 flex-1 sb-hide">
-            <div id="admLoggedUserName" class="text-xs font-semibold text-slate-100 truncate">Administrador</div>
-            <div id="admLoggedUserEmail" class="text-[10.5px] text-slate-400 truncate">admin@ihfb.com</div>
-          </div>
-          <button type="button" onclick="adminLogout()" title="Cerrar sesión" class="sb-hide text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
-            <i class="fa-solid fa-right-from-bracket text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- RIGHT FULL-BLEED RESPONSIVE WORKSPACE (NO WASTED MARGINS ON LARGE OR SMALL SCREENS) -->
-    <div class="flex-1 min-w-0 flex flex-col min-h-screen">
-      <!-- Mobile Drawer Bar -->
-      <div class="lg:hidden px-4 py-2.5 bg-[#0B0F17] text-white flex items-center justify-between border-b border-slate-800">
-        <button type="button" onclick="toggleMobileAdmSidebar(true)" class="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-        <span class="text-xs font-extrabold tracking-tight">IHFB Training Admin</span>
-        <button type="button" onclick="adminLogout()" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-semibold">Salir</button>
-      </div>
-
-      <main class="flex-1 p-3 sm:p-5 lg:p-6 w-full flex flex-col">
-
-        <!-- ================================================================ -->
-        <!-- SECTION 1: ACCESOS (FULL-HEIGHT PROPORTIONAL ENTERPRISE LAYOUT)  -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-accesos" class="adm-section hidden flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 1 • Seguridad y Permisos</div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Accesos de Administradores</h2>
-            </div>
-            <div class="flex flex-wrap items-center gap-2.5">
-              <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admAccessSearchInput" oninput="filterAdminAccessTable()" placeholder="Buscar por nombre o correo..." class="pro-input pl-8 pr-3 py-2 text-xs w-56">
-              </div>
-              <select id="admAccessStatusFilter" onchange="filterAdminAccessTable()" class="pro-input px-3 py-2 text-xs font-semibold text-slate-700">
-                <option value="ALL">Todos los estados</option>
-                <option value="ACTIVE">Activos</option>
-                <option value="INACTIVE">Inactivos</option>
-              </select>
-              <button type="button" onclick="loadAdminAccessTable(true)" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-rotate text-[11px]"></i>
-                <span>Actualizar</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            <!-- Left Form Panel -->
-            <div class="lg:col-span-4 pro-card p-5 sm:p-6 flex flex-col justify-between">
-              <div class="space-y-4">
-                <div class="border-b border-slate-100 pb-3.5 flex items-center justify-between">
-                  <div>
-                    <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Credenciales</span>
-                    <h3 id="admAccessFormTitle" class="text-base font-extrabold text-slate-900 mt-0.5">Otorgar Acceso Administrativo</h3>
-                  </div>
-                  <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xs">
-                    <i class="fa-solid fa-user-plus"></i>
-                  </div>
-                </div>
-
-                <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-3.5 text-xs">
-                  <div>
-                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Nombre Completo *</label>
-                    <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="pro-input w-full px-3.5 py-2.5 font-medium">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Correo Institucional *</label>
-                    <input type="email" id="newAdmEmail" required placeholder="nombre@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2.5 font-medium">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Departamento / Cargo</label>
-                    <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica" class="pro-input w-full px-3.5 py-2.5 font-medium">
-                  </div>
-                  <div>
-                    <label class="block text-[11px] font-semibold text-slate-700 mb-1">Contraseña de Acceso *</label>
-                    <input type="text" id="newAdmPassword" required placeholder="Contraseña segura" class="pro-input w-full px-3.5 py-2.5 font-medium">
-                  </div>
-                  <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <div>
-                      <div class="font-semibold text-slate-800">Estado de la cuenta</div>
-                      <div class="text-[11px] text-slate-500">Habilita el acceso inmediato</div>
-                    </div>
-                    <label class="inline-flex items-center gap-2 cursor-pointer font-semibold text-slate-800">
-                      <input type="checkbox" id="newAdmActive" checked class="w-4 h-4 accent-slate-900 rounded cursor-pointer">
-                      <span>Activa</span>
-                    </label>
-                  </div>
-                  <div class="flex gap-2.5 pt-2">
-                    <button type="button" onclick="resetAdminAccessForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer">Limpiar</button>
-                    <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold shadow-sm transition cursor-pointer">
-                      Guardar Acceso
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <!-- Right Directory Panel -->
-            <div class="lg:col-span-8 pro-card flex flex-col justify-between overflow-hidden">
-              <div>
-                <div class="px-5 py-4 bg-slate-50/70 border-b border-slate-200 flex items-center justify-between gap-3">
-                  <div>
-                    <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">Administradores Autorizados</h3>
-                    <p class="text-[11px] text-slate-500 mt-0.5">Cuentas con permisos de gestión curricular y supervisión.</p>
-                  </div>
-                  <span id="admAccessCountBadge" class="text-xs font-semibold px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">0 cuentas</span>
-                </div>
-                <div class="overflow-x-auto">
-                  <table class="w-full text-left text-xs text-slate-700">
-                    <thead class="bg-white text-slate-500 uppercase font-bold text-[10.5px] tracking-wider border-b border-slate-200">
-                      <tr>
-                        <th class="px-5 py-3.5">Administrador</th>
-                        <th class="px-4 py-3.5">Correo Institucional</th>
-                        <th class="px-4 py-3.5">Departamento / Cargo</th>
-                        <th class="px-4 py-3.5">Estado</th>
-                        <th class="px-5 py-3.5 text-right">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody id="admAccessTableBody" class="divide-y divide-slate-100"></tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div class="px-5 py-3.5 bg-slate-50/60 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
-                <span>Las credenciales se validan en tiempo real al iniciar sesión.</span>
-                <span class="font-medium text-slate-600">Sincronización activa</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- SECTION 2: ASIGNACIONES (CLEAN MONOCHROME CARDS + AUTO-SYNC)     -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-asignaciones" class="adm-section hidden flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 2 • Matriz Curricular</div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Asignación de Módulos por Audiencia</h2>
-            </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="assignAllModulesToAllAudiences()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-check-double text-[11px]"></i>
-                <span>Marcar Todos a Todas las Audiencias</span>
-              </button>
-              <button type="button" onclick="toggleExpandAllAudienceCards()" id="btnToggleExpandAllAud" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer">
-                <i class="fa-solid fa-angles-down mr-1"></i> Desplegar Módulos
-              </button>
-              <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer">
-                Restaurar
-              </button>
-              <button type="button" onclick="saveCmsState(true)" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs cursor-pointer">
-                Publicar Cambios
-              </button>
-            </div>
-          </div>
-
-          <!-- Filter Bar -->
-          <div class="pro-card px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex flex-wrap items-center gap-2.5">
-              <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="asigSearchInput" oninput="renderAdminAudienceMatrix()" placeholder="Filtrar audiencia o módulo..." class="pro-input pl-8 pr-3.5 py-2 text-xs w-60">
-              </div>
-              <select id="asigRoleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-semibold text-slate-700">
-                <option value="ALL">Todas las Audiencias</option>
-                <option value="Docente">Docente</option>
-                <option value="Tutor">Tutor</option>
-                <option value="Facilitador">Facilitador</option>
-                <option value="Monitor">Monitor</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Auditor">Auditor</option>
-              </select>
-              <select id="asigModuleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-semibold text-slate-700"></select>
-            </div>
-            <span class="text-xs text-slate-500">Despliega cada tarjeta para gestionar sus módulos asignados.</span>
-          </div>
-
-          <div id="admAudienceMatrixGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start"></div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- SECTION 3: MÓDULOS (CLEAN ENTERPRISE EDITOR + LIVE CASCADE)      -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-modulos" class="adm-section hidden flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 3 • Contenidos Curriculares</div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Gestión de Módulos</h2>
-            </div>
-            <div class="flex flex-wrap items-center gap-2.5">
-              <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admModSearchFilter" oninput="filterAdminModuleSelector()" placeholder="Filtrar módulo..." class="pro-input pl-8 pr-3 py-2 text-xs w-44">
-              </div>
-              <select id="admModSelect" onchange="renderAdminModuleEditor()" class="pro-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
-              <button type="button" onclick="openNewModuleModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs cursor-pointer">
-                <i class="fa-solid fa-plus mr-1"></i> Nuevo Módulo
-              </button>
-              <button type="button" id="btnToggleModVisibility" onclick="toggleSelectedModuleHidden()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer">
-                Ocultar
-              </button>
-              <button type="button" onclick="deleteSelectedModule()" class="px-3.5 py-2 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white text-xs font-semibold transition cursor-pointer">
-                Eliminar
-              </button>
-            </div>
-          </div>
-
-          <div id="admModuleEditorContainer" class="pro-card p-5 sm:p-7 space-y-6 flex-1"></div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- SECTION 4: EVALUACIONES (CLEAN FORM BUILDER)                     -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-evaluaciones" class="adm-section hidden flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 4 • Banco de Preguntas</div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Evaluaciones Modulares</h2>
-            </div>
-            <div class="flex flex-wrap items-center gap-2.5">
-              <select id="admQuizModSelect" onchange="renderAdminQuizEditor()" class="pro-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
-              <button type="button" id="btnToggleQuizHidden" onclick="toggleSelectedQuizHidden()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold cursor-pointer">
-                Ocultar Quiz
-              </button>
-              <button type="button" onclick="clearSelectedQuizQuestions()" class="px-3.5 py-2 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white text-xs font-semibold transition cursor-pointer">
-                Vaciar Quiz
-              </button>
-            </div>
-          </div>
-
-          <!-- Top Settings & Question Type Selector -->
-          <div class="pro-card p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex flex-wrap items-center gap-4 text-xs">
-              <div class="flex items-center gap-2">
-                <span class="font-semibold text-slate-700">Nota Mínima (%):</span>
-                <input type="number" id="admQuizMinPass" min="1" max="100" value="80" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="font-semibold text-slate-700">Puntaje Total:</span>
-                <input type="number" id="admQuizMaxScore" min="1" max="1000" value="100" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
-              </div>
-              <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admQuizSearchInput" oninput="renderAdminQuizEditor()" placeholder="Filtrar preguntas..." class="pro-input pl-8 pr-3 py-1.5 text-xs w-48">
-              </div>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2">
-              <select id="newQuizQuestionTypeSelect" class="pro-input px-3.5 py-2 text-xs font-semibold text-slate-800 bg-slate-50">
-                <optgroup label="Respuesta abierta">
-                  <option value="short">Respuesta corta</option>
-                  <option value="paragraph">Párrafo</option>
-                </optgroup>
-                <optgroup label="Selección">
-                  <option value="mcq" selected>Opción múltiple (Una respuesta)</option>
-                  <option value="checkboxes">Casillas (Varias respuestas)</option>
-                  <option value="dropdown">Desplegable</option>
-                </optgroup>
-                <optgroup label="Escalas y cuadrículas">
-                  <option value="linear_scale">Escala lineal</option>
-                  <option value="grid_radio">Cuadrícula de varias opciones</option>
-                  <option value="grid_checkbox">Cuadrícula de casillas</option>
-                </optgroup>
-                <optgroup label="Datos específicos y archivos">
-                  <option value="file_upload">Subir archivos</option>
-                  <option value="date_time">Fecha y Hora</option>
-                </optgroup>
-                <optgroup label="Respuestas cerradas">
-                  <option value="tf">Verdadero / Falso</option>
-                  <option value="match">Emparejamiento (Relación de columnas)</option>
-                  <option value="ordering">Ordenamiento / Secuencia</option>
-                  <option value="cloze">Rellenar espacios en blanco (Cloze)</option>
-                </optgroup>
-                <optgroup label="Interactivas / Multimedia">
-                  <option value="hotspot">Zonas activas (Hotspot)</option>
-                </optgroup>
-              </select>
-              <button type="button" onclick="addSelectedQuestionType()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold shadow-xs flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-plus"></i>
-                <span>Agregar Pregunta</span>
-              </button>
-            </div>
-          </div>
-
-          <div id="admQuizQuestionsList" class="w-full space-y-4"></div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- SECTION 5: DASHBOARD EN TIEMPO REAL                              -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-dashboard" class="adm-section flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 5 • Analítica Ejecutiva</span>
-                <span id="dashLiveSyncTimestamp" class="text-[11px] font-semibold text-emerald-700 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Sincronizado
-                </span>
-              </div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Dashboard de Capacitación y Desempeño</h2>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2.5">
-              <select id="dashAudienceFilter" onchange="renderRealtimeDashboardCharts()" class="pro-input px-3.5 py-2 text-xs font-semibold text-slate-800">
-                <option value="ALL">Todas las Audiencias</option>
-                <option value="Docente">Docente</option>
-                <option value="Tutor">Tutor</option>
-                <option value="Facilitador">Facilitador</option>
-                <option value="Monitor">Monitor</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Auditor">Auditor</option>
-              </select>
-              <button type="button" onclick="syncAllRealtimeData(true)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-rotate text-[11px]"></i>
-                <span>Actualizar Datos</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- 4 Clean KPI Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div class="pro-card p-5 flex items-center justify-between">
-              <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Participantes Activos</span>
-                <div id="dashKpiTotalUsers" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0</div>
-                <p id="dashKpiUsersSub" class="text-[11px] text-slate-500 mt-0.5">En audiencia seleccionada</p>
-              </div>
-              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-users"></i>
-              </div>
-            </div>
-
-            <div class="pro-card p-5 flex items-center justify-between">
-              <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Manuales y Videos</span>
-                <div id="dashKpiStep1Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p class="text-[11px] text-slate-500 mt-0.5">Lectura confirmada</p>
-              </div>
-              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-photo-film"></i>
-              </div>
-            </div>
-
-            <div class="pro-card p-5 flex items-center justify-between">
-              <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Práctica en Vivo</span>
-                <div id="dashKpiStep2Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p class="text-[11px] text-slate-500 mt-0.5">Simulaciones completadas</p>
-              </div>
-              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-laptop-code"></i>
-              </div>
-            </div>
-
-            <div class="pro-card p-5 flex items-center justify-between">
-              <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Evaluación Quiz</span>
-                <div id="dashKpiStep3Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p id="dashKpiCertifiedSub" class="text-[11px] text-emerald-700 font-semibold mt-0.5">0 certificados (≥80%)</p>
-              </div>
-              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
-                <i class="fa-solid fa-award"></i>
-              </div>
-            </div>
-          </div>
-
-          <!-- Row 1 Charts -->
-          <div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
-            <div class="xl:col-span-7 pro-card p-5 sm:p-6 space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                <div>
-                  <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Comparativa por Etapa</span>
-                  <h3 class="text-sm font-extrabold text-slate-900">Avance por Módulo: Manuales/Videos, Práctica y Quiz</h3>
-                </div>
-                <div class="flex items-center gap-3 text-[11px] font-semibold text-slate-600">
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#1A64FF]"></span>Manuales/Videos</span>
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#EC4899]"></span>Práctica</span>
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#10B981]"></span>Quiz</span>
-                </div>
-              </div>
-              <div id="chartThreeStageModulesBox" class="w-full"></div>
-            </div>
-
-            <div class="xl:col-span-5 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Distribución por Rol</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Participantes y Avance por Audiencia</h3>
-              </div>
-              <div id="chartAudienceBreakdownBox" class="space-y-3"></div>
-            </div>
-          </div>
-
-          <!-- Row 2 Charts -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            <div class="lg:col-span-5 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Acreditación</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Niveles de Competencia</h3>
-              </div>
-              <div class="flex flex-col sm:flex-row items-center gap-6 pt-2">
-                <div id="chartCompetenceDonutBox" class="shrink-0"></div>
-                <div id="chartCompetenceLegendBox" class="flex-1 w-full space-y-2.5"></div>
-              </div>
-            </div>
-
-            <div class="lg:col-span-7 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Diagnóstico Curricular</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Dominio y Brecha de Refuerzo por Módulo</h3>
-              </div>
-              <div id="chartLearningGapBox" class="space-y-3"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- SECTION 6: INFORMACIÓN GENERAL                                   -->
-        <!-- ================================================================ -->
-        <section id="viewAdm-informacion" class="adm-section hidden flex-1 flex-col gap-4">
-          <div class="pro-card px-5 py-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div>
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Sección 6 • Expedientes por Audiencia</div>
-              <h2 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight mt-0.5">Información General de Participantes</h2>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2.5">
-              <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="infoSearchInput" oninput="renderGeneralInformationTables()" placeholder="Buscar nombre, correo o centro..." class="pro-input pl-8 pr-3.5 py-2 text-xs w-64">
-              </div>
-              <select id="infoStatusFilter" onchange="renderGeneralInformationTables()" class="pro-input px-3 py-2 text-xs font-semibold text-slate-800">
-                <option value="ALL">Todos los Estados</option>
-                <option value="CERTIFIED">Acreditados (≥80%)</option>
-                <option value="IN_PROGRESS">En Progreso (1% - 79%)</option>
-                <option value="NOT_STARTED">Sin Iniciar (0%)</option>
-              </select>
-              <button type="button" onclick="exportGeneralInformationCSV()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-file-csv"></i>
-                <span>Exportar CSV</span>
-              </button>
-            </div>
-          </div>
-
-          <div id="infoAudienceTabsBar" class="flex flex-wrap gap-2"></div>
-          <div id="infoAudienceTablesContainer" class="space-y-5"></div>
-        </section>
-
-      </main>
-    </div>
-  </div>
-
-  <!-- ======================================================================== -->
-  <!-- MODAL: CREAR NUEVO MÓDULO (ESTÉTICO Y PROFESIONAL — SIN PROMPT NATIVO)   -->
-  <!-- ======================================================================== -->
-  <div id="newModuleModal" onclick="if(event.target===this) closeNewModuleModal()" class="fixed inset-0 bg-slate-950/65 modal-glass z-50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl border border-slate-200">
-      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nuevo Recurso Curricular</span>
-          <h4 class="text-base font-extrabold">Crear Módulo de Capacitación</h4>
-        </div>
-        <button type="button" onclick="closeNewModuleModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center cursor-pointer">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <form onsubmit="submitNewModuleModal(event)" class="p-6 space-y-4 text-xs">
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">Código del Módulo *</label>
-          <input type="text" id="newModModalCode" required placeholder="Ej. M9" class="pro-input w-full px-3.5 py-2.5 font-bold uppercase">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">Título Oficial del Módulo *</label>
-          <input type="text" id="newModModalTitle" required placeholder="Ej. Evaluación Formativa en el Aula" class="pro-input w-full px-3.5 py-2.5 font-semibold">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold text-slate-700 mb-1">Descripción / Objetivo</label>
-          <textarea id="newModModalDesc" rows="3" placeholder="Describe brevemente el objetivo operativo de este módulo..." class="pro-input w-full px-3.5 py-2.5"></textarea>
-        </div>
-        <div class="pt-2 flex justify-end gap-2 border-t border-slate-100">
-          <button type="button" onclick="closeNewModuleModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer">Cancelar</button>
-          <button type="submit" class="px-5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold cursor-pointer">Crear Módulo</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================== -->
-  <!-- MODAL: EXPEDIENTE INDIVIDUAL 1:1 DEL PARTICIPANTE                        -->
-  <!-- ======================================================================== -->
-  <div id="participantDetailModal" onclick="if(event.target===this) closeParticipantModal()" class="fixed inset-0 bg-slate-950/65 modal-glass z-50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-200 flex flex-col">
-      <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Expediente Individual</span>
-          <h4 id="modalPartTitle" class="text-base font-extrabold">Detalle del Participante</h4>
-        </div>
-        <button type="button" onclick="closeParticipantModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center cursor-pointer">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div id="modalPartBody" class="p-6 overflow-y-auto custom-scroll space-y-5 text-xs"></div>
-    </div>
-  </div>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
-          colors: {
-            obsidian: '#0B0F17',
-            ihfb: {
-              blue: '#1A64FF',
-              magenta: '#EC4899',
-              emerald: '#10B981'
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #EBF0F7;
-      color: #0F172A;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    html {
-      font-size: clamp(13.5px, 0.22vw + 12.6px, 15.5px);
-    }
-    h1, h2, h3, h4, .font-display {
-      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-    }
-
-    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
-    .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
-
-    .modal-glass {
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .pro-card {
+    .exec-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 16px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 6px 20px -8px rgba(15, 23, 42, 0.06);
     }
 
-    .pro-input {
+    .exec-input {
       background: #FFFFFF;
       border: 1px solid #CBD5E1;
       border-radius: 10px;
@@ -897,15 +78,32 @@
       color: #0F172A;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .pro-input:focus {
+    .exec-input:focus {
       outline: none;
       border-color: #1A64FF;
       box-shadow: 0 0 0 3px rgba(26, 100, 255, 0.12);
     }
 
-    .tri-hairline {
-      height: 3px;
-      background: linear-gradient(90deg, #1A64FF 0%, #EC4899 50%, #10B981 100%);
+    /* Proportional Adaptive Grids for Small Laptops up to 4K Ultrawide Monitors */
+    .adaptive-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.15rem;
+    }
+    .adaptive-audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.25rem;
+      align-items: start;
+    }
+    .adaptive-2col-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 1.25rem;
+    }
+    @media (max-width: 640px) {
+      .adaptive-2col-grid { grid-template-columns: 1fr; }
+      .adaptive-audience-grid { grid-template-columns: 1fr; }
     }
 
     #admSidebar {
@@ -934,129 +132,117 @@
     }
   </style>
 </head>
-<body class="bg-[#EBF0F7] text-slate-900 antialiased overflow-x-hidden">
+<body class="bg-[#F3F5F8] text-slate-900 antialiased overflow-x-hidden">
 
   <!-- TOAST NOTIFICATION -->
-  <div id="admToast" class="fixed bottom-5 right-5 z-[80] hidden items-center gap-3 px-4 py-3 rounded-2xl bg-[#0B0F17] text-white text-xs font-bold shadow-2xl border border-slate-700/80">
-    <span id="admToastDot" class="w-2.5 h-2.5 rounded-full bg-[#10B981]"></span>
-    <span id="admToastText">Cambios aplicados en tiempo real</span>
+  <div id="admToast" class="fixed bottom-5 right-5 z-[80] hidden items-center gap-3 px-4 py-3 rounded-xl bg-[#090D16] text-white text-xs font-semibold shadow-2xl border border-slate-700/80">
+    <span id="admToastDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="admToastText">Cambios aplicados globalmente</span>
   </div>
 
   <!-- ======================================================================== -->
-  <!-- STAGE 1: FULL-BLEED SPLIT-SCREEN ADMIN AUTH GATE (0% WASTED SPACE)       -->
+  <!-- STAGE 1: LUXURY MONOCHROME + COBALT EXECUTIVE SIGN-IN GATE               -->
   <!-- ======================================================================== -->
-  <div id="adminLoginGate" class="fixed inset-0 z-50 flex flex-col lg:flex-row bg-[#0A0A0B] overflow-y-auto lg:overflow-hidden">
+  <div id="adminLoginGate" class="fixed inset-0 z-50 flex flex-col lg:flex-row bg-[#090D16] overflow-y-auto lg:overflow-hidden">
     <!-- Left Architectural Obsidian Column -->
-    <div class="lg:w-6/12 xl:w-[54%] bg-[#0A0A0B] text-white p-6 sm:p-10 lg:px-14 lg:py-10 flex flex-col justify-between relative overflow-hidden">
-      <div class="tri-hairline absolute top-0 left-0 right-0 z-20"></div>
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,#162544_0%,#0A0A0B_68%)] pointer-events-none"></div>
-      <div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#1A64FF]/15 blur-3xl pointer-events-none"></div>
-      <div class="absolute bottom-8 right-0 w-80 h-80 rounded-full bg-[#EC4899]/10 blur-3xl pointer-events-none"></div>
+    <div class="lg:w-7/12 bg-[#090D16] text-white p-8 sm:p-12 lg:px-16 lg:py-12 flex flex-col justify-between relative overflow-hidden">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(26,100,255,0.14)_0%,transparent_55%)] pointer-events-none"></div>
 
       <!-- Brand Header -->
       <div class="relative z-10 flex items-center gap-3.5">
-        <div class="w-11 h-11 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-lg">
+        <div class="w-11 h-11 rounded-xl bg-white p-1.5 flex items-center justify-center shadow-md">
           <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
         </div>
         <div>
-          <div class="text-base font-extrabold text-white tracking-tight">IHFB Training Administration</div>
-          <div class="flex items-center gap-1.5 mt-0.5">
-            <span class="w-2.5 h-0.5 bg-[#1A64FF] rounded-full"></span>
-            <span class="w-2.5 h-0.5 bg-[#EC4899] rounded-full"></span>
-            <span class="w-2.5 h-0.5 bg-[#10B981] rounded-full"></span>
-            <span class="text-[10px] font-semibold uppercase tracking-widest text-slate-300 ml-1">Centro de Control Ejecutivo</span>
-          </div>
+          <div class="text-base font-extrabold text-white tracking-tight">IHFB Training Studio</div>
+          <div class="text-[11px] font-medium text-slate-400 tracking-wide">Plataforma Ejecutiva de Administración</div>
         </div>
       </div>
 
       <!-- Center Value Proposition -->
-      <div class="relative z-10 my-auto py-6 max-w-xl space-y-6">
-        <div class="space-y-3">
-          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10.5px] font-bold uppercase tracking-widest bg-white/10 text-[#60A5FA] border border-white/15">
-            <i class="fa-solid fa-shield-halved text-[#10B981]"></i>
-            <span>Gobernanza Curricular & Analítica en Vivo</span>
+      <div class="relative z-10 my-auto py-8 max-w-2xl space-y-8">
+        <div class="space-y-4">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/[0.06] text-slate-200 border border-white/10">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#1A64FF]"></span>
+            <span>Gobernanza Curricular & Sincronización Global</span>
           </span>
-          <h1 class="text-3xl sm:text-4xl xl:text-[42px] font-extrabold text-white tracking-tight leading-[1.12]">
-            Gestión integral.<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#60A5FA] via-[#F472B6] to-[#34D399]">Sincronización instantánea.</span>
+          <h1 class="text-3xl sm:text-4xl xl:text-5xl font-extrabold text-white tracking-tight leading-[1.12]">
+            Control centralizado.<br>
+            <span class="text-slate-400">Actualización instantánea en toda la red.</span>
           </h1>
-          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Administra permisos ejecutivos, diseña rutas por audiencia, actualiza videos, manuales y evaluaciones, y audita el avance real de cada participante en tiempo real.
+          <p class="text-sm text-slate-400 leading-relaxed max-w-xl">
+            Administra permisos ejecutivos, estructura rutas de aprendizaje por audiencia, publica recursos multimedia y supervisa el progreso real de cada participante desde una sola consola.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 space-y-1.5">
-            <div class="w-8 h-8 rounded-lg bg-[#1A64FF] text-white text-xs font-extrabold flex items-center justify-center"><i class="fa-solid fa-layer-group"></i></div>
-            <div class="text-xs font-bold text-white">Currículo Dinámico</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Edita módulos, manuales PDF y quizzes al instante.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+            <i class="fa-solid fa-layer-group text-[#1A64FF] text-base"></i>
+            <div class="text-xs font-bold text-white">Currículo Global</div>
+            <p class="text-[11.5px] text-slate-400 leading-relaxed">Módulos, manuales y evaluaciones publicados en tiempo real.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 space-y-1.5">
-            <div class="w-8 h-8 rounded-lg bg-[#EC4899] text-white text-xs font-extrabold flex items-center justify-center"><i class="fa-solid fa-chart-line"></i></div>
-            <div class="text-xs font-bold text-white">Analítica en Vivo</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Gráficas de estudio, práctica y evaluación por rol.</p>
+          <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+            <i class="fa-solid fa-chart-simple text-[#1A64FF] text-base"></i>
+            <div class="text-xs font-bold text-white">Analítica Precisa</div>
+            <p class="text-[11.5px] text-slate-400 leading-relaxed">Métricas consolidadas por estudio, práctica y evaluación.</p>
           </div>
-          <div class="p-4 rounded-2xl bg-white/[0.06] border border-white/10 space-y-1.5">
-            <div class="w-8 h-8 rounded-lg bg-[#10B981] text-white text-xs font-extrabold flex items-center justify-center"><i class="fa-solid fa-users-viewfinder"></i></div>
-            <div class="text-xs font-bold text-white">Auditoría 1:1</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed">Expedientes completos por audiencia y reinicio controlado.</p>
+          <div class="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-2">
+            <i class="fa-solid fa-users-viewfinder text-[#1A64FF] text-base"></i>
+            <div class="text-xs font-bold text-white">Auditoría por Rol</div>
+            <p class="text-[11.5px] text-slate-400 leading-relaxed">Seguimiento individualizado por cada audiencia activa.</p>
           </div>
         </div>
       </div>
 
-      <div class="relative z-10 flex items-center justify-between text-[11px] text-slate-400 border-t border-white/10 pt-3.5">
+      <div class="relative z-10 flex items-center justify-between text-xs text-slate-500 border-t border-white/10 pt-4">
         <span>© 2026 IHFB Self-Learning Training Portal</span>
-        <span>Acceso Restringido a Administradores</span>
+        <span>Acceso Restringido</span>
       </div>
     </div>
 
     <!-- Right Login Card Column -->
-    <div class="lg:w-6/12 xl:w-[46%] bg-[#EEF2F6] p-6 sm:p-10 flex items-center justify-center">
-      <div class="w-full max-w-[460px] bg-white rounded-3xl shadow-[0_24px_60px_-15px_rgba(15,23,42,0.18)] border border-slate-200/90 overflow-hidden">
-        <div class="bg-[#0A0A0B] text-white px-7 py-6 relative">
-          <div class="tri-hairline absolute top-0 left-0 right-0"></div>
-          <div class="flex items-center justify-between gap-3">
-            <div>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-[#34D399]">Autenticación Segura</span>
-              <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-0.5">Consola Administrativa</h2>
-              <p class="text-xs text-slate-400 mt-0.5">Ingresa tus credenciales autorizadas para continuar.</p>
-            </div>
-            <div class="w-11 h-11 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-lg text-[#60A5FA]">
-              <i class="fa-solid fa-user-shield"></i>
-            </div>
+    <div class="lg:w-5/12 bg-[#F3F5F8] p-6 sm:p-12 flex items-center justify-center">
+      <div class="w-full max-w-[440px] bg-white rounded-2xl shadow-[0_20px_50px_-12px_rgba(15,23,42,0.12)] border border-slate-200 overflow-hidden">
+        <div class="px-8 pt-8 pb-6 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Acceso Administrativo</span>
+            <h2 class="text-2xl font-extrabold text-slate-900 mt-1">Iniciar Sesión</h2>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center text-base">
+            <i class="fa-solid fa-shield-halved"></i>
           </div>
         </div>
 
-        <form onsubmit="handleAdminLogin(event)" class="p-7 space-y-4 text-xs">
+        <form onsubmit="handleAdminLogin(event)" class="p-8 space-y-5 text-xs">
           <div id="adminErrBox" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 font-semibold leading-relaxed"></div>
 
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">Correo Institucional de Administrador <span class="text-rose-600">*</span></label>
-            <input type="email" id="admEmail" required placeholder="usuario@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2.5 font-mono">
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Correo Institucional <span class="text-rose-600">*</span></label>
+            <input type="email" id="admEmail" required placeholder="nombre@ihateflyingbugs.com" class="exec-input w-full px-3.5 py-2.5 font-medium">
           </div>
 
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">Contraseña <span class="text-rose-600">*</span></label>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Contraseña <span class="text-rose-600">*</span></label>
             <div class="relative">
-              <input type="password" id="admPass" required placeholder="••••••••••••" class="pro-input w-full px-3.5 py-2.5 font-mono pr-10">
+              <input type="password" id="admPass" required placeholder="••••••••••••" class="exec-input w-full px-3.5 py-2.5 pr-10">
               <button type="button" onclick="toggleLoginPasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <i id="admPassEyeIcon" class="fa-regular fa-eye"></i>
               </button>
             </div>
           </div>
 
-          <button type="submit" id="btnAdmLogin" class="w-full py-3.5 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold text-xs sm:text-[13px] shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span>Ingresar al Panel Administrativo</span>
+          <button type="submit" id="btnAdmLogin" class="w-full py-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white font-bold text-xs sm:text-[13px] shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+            <span>Ingresar a la Consola</span>
+            <i class="fa-solid fa-arrow-right text-[11px]"></i>
           </button>
 
-          <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-            <a href="./index.html" class="text-slate-600 hover:text-[#1A64FF] font-bold flex items-center gap-1.5">
-              <i class="fa-solid fa-arrow-left"></i>
-              <span>Ir al Portal de Capacitación</span>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href="./index.html" class="text-slate-600 hover:text-[#1A64FF] font-semibold flex items-center gap-1.5">
+              <i class="fa-solid fa-arrow-left text-[11px]"></i>
+              <span>Portal de Capacitación</span>
             </a>
-            <span class="text-emerald-600 font-semibold flex items-center gap-1">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> En línea
+            <span class="text-slate-500 font-medium flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Conectado
             </span>
           </div>
         </form>
@@ -1065,28 +251,23 @@
   </div>
 
   <!-- ======================================================================== -->
-  <!-- STAGE 2: FULL-BLEED EXECUTIVE WORKSPACE SHELL (100VH / 100VW — 0 GAPS)   -->
+  <!-- STAGE 2: PROPORTIONAL ADAPTIVE EXECUTIVE WORKSPACE SHELL                 -->
   <!-- ======================================================================== -->
-  <div id="adminConsoleApp" class="hidden w-full min-h-screen flex-col lg:flex-row bg-[#EBF0F7]">
+  <div id="adminConsoleApp" class="hidden w-full min-h-screen flex-col lg:flex-row bg-[#F3F5F8]">
     <div id="mobileAdmBackdrop" onclick="toggleMobileAdmSidebar(false)" class="fixed inset-0 bg-slate-950/60 z-30 hidden lg:hidden"></div>
 
-    <!-- LEFT OBSIDIAN LATERAL SIDEBAR (6 REQUIRED SECTIONS) -->
-    <aside id="admSidebar" class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#0B0F17] text-slate-400 flex flex-col justify-between shrink-0 border-r border-slate-800/90 z-40 -translate-x-full lg:translate-x-0">
+    <!-- LEFT OBSIDIAN LATERAL SIDEBAR (MONOCHROME + COBALT ACCENT) -->
+    <aside id="admSidebar" class="fixed lg:sticky top-0 left-0 h-screen w-64 bg-[#090D16] text-slate-400 flex flex-col justify-between shrink-0 border-r border-slate-800/80 z-40 -translate-x-full lg:translate-x-0">
       <div>
         <!-- Brand Header -->
-        <div class="h-16 px-4 flex items-center justify-between gap-2 border-b border-slate-800/80 sb-center">
+        <div class="h-16 px-4 flex items-center justify-between gap-2 border-b border-white/[0.08] sb-center">
           <div onclick="switchAdminTab('dashboard')" class="flex items-center gap-3 min-w-0 cursor-pointer">
             <div class="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center shrink-0">
               <img src="https://media.licdn.com/dms/image/v2/D560BAQHrsJvCS4HReg/company-logo_200_200/B56ZZeRENuHsAI-/0/1745338254638/i_hate_flying_bugs_el_salvador_logo?e=2147483647&v=beta&t=VUkNwS3viEJLgTmRFggDn68u7IFRo8Xt_Gew89SP9x0" alt="IHFB" class="max-w-full max-h-full object-contain">
             </div>
             <div class="min-w-0 sb-hide">
               <div class="text-xs font-extrabold text-white tracking-tight leading-tight">IHFB Admin Studio</div>
-              <div class="flex items-center gap-1 mt-1">
-                <span class="w-2.5 h-0.5 bg-[#1A64FF] rounded-full"></span>
-                <span class="w-2.5 h-0.5 bg-[#EC4899] rounded-full"></span>
-                <span class="w-2.5 h-0.5 bg-[#10B981] rounded-full"></span>
-                <span class="text-[9px] font-medium text-slate-400 uppercase tracking-widest ml-1">Control</span>
-              </div>
+              <div class="text-[10px] font-medium text-slate-400 mt-0.5">Consola Ejecutiva</div>
             </div>
           </div>
           <button type="button" onclick="toggleDesktopAdmSidebar()" title="Contraer / Expandir" class="hidden lg:inline-flex p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition shrink-0 cursor-pointer">
@@ -1094,219 +275,208 @@
           </button>
         </div>
 
-        <!-- Lateral Menu (Exact 6 Sections Requested) -->
+        <!-- Lateral Menu (Exact 6 Sections Requested — Refined Neutral Palette) -->
         <div class="px-3 py-5 space-y-5">
           <div>
-            <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Administración</div>
-            <nav class="space-y-1.5 text-[13px] font-medium">
+            <div class="px-3 mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-500 sb-hide">Navegación</div>
+            <nav class="space-y-1 text-[13px] font-medium">
 
-              <!-- 1. Accesos -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('accesos')" id="navAdm-accesos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-[#60A5FA] flex items-center justify-center shrink-0"><i class="fa-solid fa-key text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('accesos')" id="navAdm-accesos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-key text-xs"></i></span>
                   <span class="sb-hide truncate">1. Accesos</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  1. Accesos Admin
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  1. Accesos
                 </div>
               </div>
 
-              <!-- 2. Asignaciones -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('asignaciones')" id="navAdm-asignaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-[#F472B6] flex items-center justify-center shrink-0"><i class="fa-solid fa-users-gear text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('asignaciones')" id="navAdm-asignaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-users-gear text-xs"></i></span>
                   <span class="sb-hide truncate">2. Asignaciones</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  2. Asignaciones por Audiencia
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  2. Asignaciones
                 </div>
               </div>
 
-              <!-- 3. Módulos -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('modulos')" id="navAdm-modulos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-amber-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-layer-group text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('modulos')" id="navAdm-modulos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-layer-group text-xs"></i></span>
                   <span class="sb-hide truncate">3. Módulos</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  3. Gestión de Módulos
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  3. Módulos
                 </div>
               </div>
 
-              <!-- 4. Evaluaciones -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('evaluaciones')" id="navAdm-evaluaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-[#34D399] flex items-center justify-center shrink-0"><i class="fa-solid fa-file-circle-check text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('evaluaciones')" id="navAdm-evaluaciones" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-file-circle-check text-xs"></i></span>
                   <span class="sb-hide truncate">4. Evaluaciones</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  4. Gestión de Evaluaciones
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  4. Evaluaciones
                 </div>
               </div>
 
-              <!-- 5. Dashboard -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('dashboard')" id="navAdm-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-white/10 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-[#1A64FF]/25 text-[#60A5FA] flex items-center justify-center shrink-0"><i class="fa-solid fa-chart-pie text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('dashboard')" id="navAdm-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-[#1A64FF] transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/15 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-chart-pie text-xs"></i></span>
                   <span class="sb-hide truncate">5. Dashboard</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  5. Dashboard en Tiempo Real
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  5. Dashboard
                 </div>
               </div>
 
-              <!-- 6. Información general -->
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('informacion')" id="navAdm-informacion" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer">
-                  <span class="w-7 h-7 rounded-lg bg-white/5 text-purple-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-table-list text-xs"></i></span>
+                <button type="button" onclick="switchAdminTab('informacion')" id="navAdm-informacion" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                  <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-table-list text-xs"></i></span>
                   <span class="sb-hide truncate">6. Información general</span>
                 </button>
-                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#0B0F17] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
-                  6. Información General por Audiencia
+                <div class="sb-balloon pointer-events-none opacity-0 invisible -translate-x-1 transition-all duration-150 fixed left-[5.25rem] -mt-9 z-50 px-3 py-1.5 rounded-xl bg-[#090D16] text-white text-xs font-bold shadow-xl border border-slate-700 whitespace-nowrap">
+                  6. Información general
                 </div>
               </div>
 
             </nav>
           </div>
 
-          <div class="pt-3 border-t border-slate-800/80 space-y-1.5">
-            <a href="./index.html" target="_blank" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition text-xs font-bold cursor-pointer">
-              <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-[#34D399] flex items-center justify-center shrink-0"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
-              <span class="sb-hide truncate">Abrir Portal Capacitación</span>
+          <div class="pt-4 border-t border-white/[0.08]">
+            <a href="./index.html" target="_blank" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/[0.06] transition text-xs font-semibold cursor-pointer">
+              <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
+              <span class="sb-hide truncate">Ver Portal Público</span>
             </a>
           </div>
         </div>
       </div>
 
       <!-- Bottom Admin Dossier -->
-      <div class="p-3.5 border-t border-slate-800/80 bg-black/25">
+      <div class="p-3.5 border-t border-white/[0.08] bg-black/20">
         <div class="flex items-center gap-3 sb-center">
-          <div id="admAvatarBadge" class="w-9 h-9 rounded-xl bg-[#1A64FF]/25 border border-[#1A64FF]/40 text-white font-bold text-xs flex items-center justify-center shrink-0">A</div>
+          <div id="admAvatarBadge" class="w-9 h-9 rounded-xl bg-white/10 text-white font-bold text-xs flex items-center justify-center shrink-0">A</div>
           <div class="min-w-0 flex-1 sb-hide">
             <div id="admLoggedUserName" class="text-[13px] font-semibold text-slate-100 truncate">Administrador</div>
-            <div id="admLoggedUserEmail" class="text-[10.5px] text-slate-400 font-mono truncate">admin@ihfb.com</div>
+            <div id="admLoggedUserEmail" class="text-[11px] text-slate-400 truncate">admin@ihfb.com</div>
           </div>
-          <button type="button" onclick="adminLogout()" title="Cerrar sesión" class="sb-hide text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
+          <button type="button" onclick="adminLogout()" title="Cerrar sesión" class="sb-hide text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
             <i class="fa-solid fa-right-from-bracket text-xs"></i>
           </button>
         </div>
       </div>
     </aside>
 
-    <!-- RIGHT EXPANSIVE CONTENT CANVAS (NO TOP/BOTTOM/SIDE EMPTY MARGINS) -->
+    <!-- RIGHT PROPORTIONAL WORKSPACE CANVAS (ADAPTS TO SMALL AND ULTRAWIDE SCREENS) -->
     <div class="flex-1 min-w-0 flex flex-col min-h-screen">
-      <div class="tri-hairline shrink-0"></div>
-
       <!-- Mobile Drawer Bar -->
-      <div class="lg:hidden px-4 py-2.5 bg-[#0B0F17] text-white flex items-center justify-between">
+      <div class="lg:hidden px-4 py-3 bg-[#090D16] text-white flex items-center justify-between">
         <button type="button" onclick="toggleMobileAdmSidebar(true)" class="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer">
           <i class="fa-solid fa-bars"></i>
         </button>
         <span class="text-xs font-extrabold tracking-tight">IHFB Admin Studio</span>
-        <button type="button" onclick="adminLogout()" class="px-2.5 py-1 rounded-lg bg-rose-600/30 text-xs font-bold">Salir</button>
+        <button type="button" onclick="adminLogout()" class="px-2.5 py-1 rounded-lg bg-white/10 text-xs font-semibold">Salir</button>
       </div>
 
-      <main class="flex-1 p-3 sm:p-5 lg:p-6 w-full space-y-5">
+      <main class="flex-1 p-4 sm:p-6 lg:p-8 w-full max-w-[1760px] mx-auto space-y-6">
 
         <!-- ================================================================ -->
-        <!-- SECTION 1: ACCESOS (GESTIÓN CORPORATIVA DE ADMINISTRADORES)      -->
+        <!-- SECTION 1: ACCESOS (CLEAN EXECUTIVE DIRECTORY)                   -->
         <!-- ================================================================ -->
-        <section id="viewAdm-accesos" class="adm-section hidden space-y-4">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <section id="viewAdm-accesos" class="adm-section hidden space-y-5">
+          <div class="exec-card px-6 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Sección 1 • Control de Seguridad y Permisos</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Accesos de Administradores</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Seguridad & Gobernanza</span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Accesos de Administradores</h2>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
               <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admAccessSearchInput" oninput="filterAdminAccessTable()" placeholder="Buscar administrador o correo..." class="pro-input pl-8 pr-3 py-2 text-xs text-slate-900 w-56">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="admAccessSearchInput" oninput="filterAdminAccessTable()" placeholder="Buscar administrador o correo..." class="exec-input pl-9 pr-3.5 py-2 text-xs w-60">
               </div>
-              <select id="admAccessStatusFilter" onchange="filterAdminAccessTable()" class="pro-input px-3 py-2 text-xs font-bold text-slate-900">
+              <select id="admAccessStatusFilter" onchange="filterAdminAccessTable()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-700">
                 <option value="ALL">Todos los estados</option>
                 <option value="ACTIVE">Activos</option>
                 <option value="INACTIVE">Inactivos</option>
               </select>
-              <button type="button" onclick="loadAdminAccessTable(true)" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-rotate text-[#34D399]"></i>
+              <button type="button" onclick="loadAdminAccessTable(true)" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-[#1A64FF] text-white text-xs font-semibold transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-rotate text-[11px]"></i>
                 <span>Sincronizar</span>
               </button>
             </div>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-            <!-- Left 4 Cols: Corporate Access Form -->
-            <div class="lg:col-span-4 pro-card p-5 sm:p-6 flex flex-col justify-between space-y-4">
-              <div class="space-y-4">
-                <div class="border-b border-slate-100 pb-3.5 flex items-center justify-between">
+            <!-- Left 4 Cols: Clean Executive Form -->
+            <div class="lg:col-span-4 exec-card p-6 flex flex-col justify-between">
+              <div class="space-y-5">
+                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
                   <div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#1A64FF]">Alta / Edición</span>
-                    <h3 id="admAccessFormTitle" class="text-base font-extrabold text-slate-900 mt-0.5">Otorgar Acceso Administrativo</h3>
+                    <h3 id="admAccessFormTitle" class="text-base font-extrabold text-slate-900">Otorgar Acceso</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Registra o actualiza credenciales administrativas.</p>
                   </div>
-                  <div class="w-10 h-10 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-sm shadow-sm">
-                    <i class="fa-solid fa-user-shield"></i>
+                  <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-user-plus"></i>
                   </div>
                 </div>
 
-                <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-3.5 text-xs">
+                <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-4 text-xs">
                   <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Nombre Completo del Administrador <span class="text-rose-600">*</span></label>
-                    <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="pro-input w-full px-3.5 py-2.5 font-semibold">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nombre Completo <span class="text-rose-600">*</span></label>
+                    <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="exec-input w-full px-3.5 py-2.5 font-medium">
                   </div>
                   <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Correo Institucional <span class="text-rose-600">*</span></label>
-                    <input type="email" id="newAdmEmail" required placeholder="nombre@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Correo Institucional <span class="text-rose-600">*</span></label>
+                    <input type="email" id="newAdmEmail" required placeholder="nombre@ihateflyingbugs.com" class="exec-input w-full px-3.5 py-2.5 font-medium">
                   </div>
                   <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Departamento / Cargo</label>
-                    <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica Regional" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Departamento / Cargo</label>
+                    <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica" class="exec-input w-full px-3.5 py-2.5 font-medium">
                   </div>
                   <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Contraseña de Acceso <span class="text-rose-600">*</span></label>
-                    <input type="text" id="newAdmPassword" required placeholder="Asigna una contraseña segura" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Contraseña de Acceso <span class="text-rose-600">*</span></label>
+                    <input type="text" id="newAdmPassword" required placeholder="Asigna una contraseña" class="exec-input w-full px-3.5 py-2.5 font-medium">
                   </div>
-                  <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/90">
+                  <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
                     <div>
-                      <div class="font-bold text-slate-800">Estado de Habilitación</div>
-                      <div class="text-[11px] text-slate-500">Permite el ingreso inmediato a la consola</div>
+                      <div class="font-semibold text-slate-800">Estado de la Cuenta</div>
+                      <div class="text-[11px] text-slate-500">Habilita el acceso inmediato</div>
                     </div>
-                    <label class="inline-flex items-center gap-2 cursor-pointer font-bold text-emerald-700">
-                      <input type="checkbox" id="newAdmActive" checked class="w-4 h-4 accent-[#10B981] rounded cursor-pointer">
+                    <label class="inline-flex items-center gap-2 cursor-pointer font-semibold text-slate-800">
+                      <input type="checkbox" id="newAdmActive" checked class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
                       <span>Activa</span>
                     </label>
                   </div>
                   <div class="flex gap-2.5 pt-2">
-                    <button type="button" onclick="resetAdminAccessForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-bold cursor-pointer">Limpiar</button>
-                    <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold shadow-sm transition cursor-pointer">
-                      <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar Credenciales
+                    <button type="button" onclick="resetAdminAccessForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer">Limpiar</button>
+                    <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white font-semibold shadow-sm transition cursor-pointer">
+                      Guardar Credenciales
                     </button>
                   </div>
                 </form>
               </div>
             </div>
 
-            <!-- Right 8 Cols: Full-Height Corporate Directory + Policy Footer -->
-            <div class="lg:col-span-8 pro-card flex flex-col justify-between overflow-hidden">
+            <!-- Right 8 Cols: Full-Height Corporate Directory -->
+            <div class="lg:col-span-8 exec-card flex flex-col justify-between overflow-hidden">
               <div>
-                <div class="px-5 py-4 bg-slate-50/90 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
-                  <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center text-xs"><i class="fa-solid fa-building-shield"></i></span>
-                    <div>
-                      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900">Directorio Corporativo de Administradores</h3>
-                      <p class="text-[11px] text-slate-500">Gestión centralizada de cuentas con privilegios de edición curricular.</p>
-                    </div>
+                <div class="px-6 py-4 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h3 class="text-sm font-extrabold text-slate-900">Directorio de Administradores</h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Cuentas autorizadas para gestionar el portal de capacitación.</p>
                   </div>
-                  <span id="admAccessCountBadge" class="text-xs font-bold px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">0 cuentas</span>
+                  <span id="admAccessCountBadge" class="text-xs font-semibold px-3 py-1 rounded-lg bg-slate-100 text-slate-700">0 cuentas</span>
                 </div>
                 <div class="overflow-x-auto">
                   <table class="w-full text-left text-xs text-slate-700">
-                    <thead class="bg-white text-slate-500 uppercase font-bold text-[10.5px] tracking-wider border-b border-slate-200">
+                    <thead class="bg-slate-50/70 text-slate-500 uppercase font-bold text-[10.5px] tracking-wider border-b border-slate-200/80">
                       <tr>
-                        <th class="px-5 py-3.5">Administrador</th>
+                        <th class="px-6 py-3.5">Administrador</th>
                         <th class="px-4 py-3.5">Correo Institucional</th>
                         <th class="px-4 py-3.5">Departamento / Cargo</th>
                         <th class="px-4 py-3.5">Estado</th>
-                        <th class="px-5 py-3.5 text-right">Acciones</th>
+                        <th class="px-6 py-3.5 text-right">Acciones</th>
                       </tr>
                     </thead>
                     <tbody id="admAccessTableBody" class="divide-y divide-slate-100"></tbody>
@@ -1314,156 +484,124 @@
                 </div>
               </div>
 
-              <!-- Balanced Corporate Security Summary Strip (Eliminates Empty White Space) -->
-              <div class="px-5 py-4 bg-slate-50/80 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11.5px]">
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
-                  <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0"><i class="fa-solid fa-bolt"></i></span>
-                  <div>
-                    <div class="font-bold text-slate-900">Activación Inmediata</div>
-                    <div class="text-slate-500 text-[10.5px]">Vigencia instantánea al guardar</div>
-                  </div>
-                </div>
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
-                  <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center shrink-0"><i class="fa-solid fa-lock"></i></span>
-                  <div>
-                    <div class="font-bold text-slate-900">Control de Permisos</div>
-                    <div class="text-slate-500 text-[10.5px]">Suspensión temporal o revocación</div>
-                  </div>
-                </div>
-                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
-                  <span class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0"><i class="fa-solid fa-clipboard-check"></i></span>
-                  <div>
-                    <div class="font-bold text-slate-900">Trazabilidad Total</div>
-                    <div class="text-slate-500 text-[10.5px]">Cambios auditables por cuenta</div>
-                  </div>
-                </div>
+              <div class="px-6 py-4 bg-slate-50/70 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+                <span>Los cambios de estado o contraseña aplican al instante en el próximo inicio de sesión.</span>
+                <span class="font-semibold text-slate-700">Sincronización en la nube activa</span>
               </div>
             </div>
           </div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 2: ASIGNACIONES (TARJETAS CUADRADAS + CONTRAÍBLES + FILTROS) -->
+        <!-- SECTION 2: ASIGNACIONES (ADAPTIVE PROPORTIONAL CARDS)            -->
         <!-- ================================================================ -->
-        <section id="viewAdm-asignaciones" class="adm-section hidden space-y-4">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <section id="viewAdm-asignaciones" class="adm-section hidden space-y-5">
+          <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#EC4899]/25 text-[#F472B6]">Sección 2 • Matriz Curricular por Rol</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Asignación de Módulos por Audiencia</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Matriz Curricular</span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Asignación de Módulos por Audiencia</h2>
             </div>
-            <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="assignAllModulesToAllAudiences()" class="px-3.5 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-check-double"></i>
-                <span>Marcar Todos a Todas las Audiencias</span>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <button type="button" onclick="assignAllModulesToAllAudiences()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-[#1554D6] text-white text-xs font-semibold shadow-sm transition cursor-pointer">
+                Marcar Todos a Todas las Audiencias
               </button>
-              <button type="button" onclick="toggleExpandAllAudienceCards()" id="btnToggleExpandAllAud" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 cursor-pointer">
-                <i class="fa-solid fa-angles-down mr-1"></i> Desplegar Módulos
+              <button type="button" onclick="toggleExpandAllAudienceCards()" id="btnToggleExpandAllAud" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
+                Desplegar Módulos
               </button>
-              <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-bold border border-white/15 cursor-pointer">
+              <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
                 Restaurar Predeterminados
               </button>
-              <button type="button" onclick="saveCmsState(true)" class="px-4 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow cursor-pointer">
-                <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publicar Cambios
+              <button type="button" onclick="saveCmsState(true)" class="px-4 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold shadow-sm transition cursor-pointer">
+                Publicar Cambios
               </button>
             </div>
           </div>
 
-          <!-- Filter & Search Bar for Assignments -->
-          <div class="pro-card p-4 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex flex-wrap items-center gap-2.5">
+          <!-- Clean Filter Strip -->
+          <div class="exec-card p-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-3">
               <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="asigSearchInput" oninput="renderAdminAudienceMatrix()" placeholder="Filtrar audiencia o módulo..." class="pro-input pl-8 pr-3.5 py-2 text-xs w-60">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="asigSearchInput" oninput="renderAdminAudienceMatrix()" placeholder="Filtrar audiencia o módulo..." class="exec-input pl-9 pr-3.5 py-2 text-xs w-64">
               </div>
-              <select id="asigRoleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-bold text-slate-800">
-                <option value="ALL">Todas las Audiencias</option>
-                <option value="Docente">Docente</option>
-                <option value="Tutor">Tutor</option>
-                <option value="Facilitador">Facilitador</option>
-                <option value="Monitor">Monitor</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Auditor">Auditor</option>
-              </select>
-              <select id="asigModuleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-bold text-slate-800"></select>
+              <select id="asigRoleFilter" onchange="renderAdminAudienceMatrix()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
+              <select id="asigModuleFilter" onchange="renderAdminAudienceMatrix()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
             </div>
-            <div class="text-xs text-slate-500 font-medium">
-              Haz clic en cada tarjeta para desplegar o contraer sus módulos asignables.
-            </div>
+            <span class="text-xs text-slate-500">Despliega cada tarjeta para gestionar sus módulos individualmente.</span>
           </div>
 
-          <div id="admAudienceMatrixGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 items-start"></div>
+          <div id="admAudienceMatrixGrid" class="adaptive-audience-grid"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 3: MÓDULOS (PERSONAJE POR MÓDULO + MINIATURAS + FILTROS) -->
+        <!-- SECTION 3: MÓDULOS (GLOBAL SYNC + CHARACTER + THUMBNAILS)        -->
         <!-- ================================================================ -->
-        <section id="viewAdm-modulos" class="adm-section hidden space-y-4">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <section id="viewAdm-modulos" class="adm-section hidden space-y-5">
+          <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-amber-500/25 text-amber-300">Sección 3 • Contenidos, Personajes, Videos y Miniaturas</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Gestión Integral de Módulos</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Arquitectura de Contenidos</span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Gestión de Módulos</h2>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
               <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admModSearchFilter" oninput="filterAdminModuleSelector()" placeholder="Filtrar módulo..." class="pro-input pl-8 pr-3 py-2 text-xs text-slate-900 w-44">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="admModSearchFilter" oninput="filterAdminModuleSelector()" placeholder="Filtrar módulo..." class="exec-input pl-9 pr-3.5 py-2 text-xs w-48">
               </div>
-              <select id="admModSelect" onchange="renderAdminModuleEditor()" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
-              <button type="button" onclick="createNewModulePrompt()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs font-bold shadow cursor-pointer">
-                <i class="fa-solid fa-plus mr-1"></i> Nuevo Módulo
+              <select id="admModSelect" onchange="renderAdminModuleEditor()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <button type="button" onclick="createNewModulePrompt()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-[#1554D6] text-white text-xs font-semibold shadow-sm transition cursor-pointer">
+                + Nuevo Módulo
               </button>
-              <button type="button" id="btnToggleModVisibility" onclick="toggleSelectedModuleHidden()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/15 text-xs font-bold cursor-pointer">
+              <button type="button" id="btnToggleModVisibility" onclick="toggleSelectedModuleHidden()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
                 Ocultar
               </button>
-              <button type="button" onclick="deleteSelectedModule()" class="px-3.5 py-2 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 hover:text-white border border-rose-500/40 text-xs font-bold cursor-pointer">
-                <i class="fa-solid fa-trash-can mr-1"></i> Eliminar
+              <button type="button" onclick="deleteSelectedModule()" class="px-3.5 py-2 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white text-xs font-semibold transition cursor-pointer">
+                Eliminar
               </button>
             </div>
           </div>
 
-          <div id="admModuleEditorContainer" class="pro-card p-5 sm:p-7 space-y-6"></div>
+          <div id="admModuleEditorContainer" class="exec-card p-6 sm:p-8 space-y-6"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 4: EVALUACIONES ESTILO GOOGLE FORMS (13 TIPOS DE PREGUNTA) -->
+        <!-- SECTION 4: EVALUACIONES (GOOGLE FORMS STYLE CLEAN BUILDER)       -->
         <!-- ================================================================ -->
-        <section id="viewAdm-evaluaciones" class="adm-section hidden space-y-4">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <section id="viewAdm-evaluaciones" class="adm-section hidden space-y-5">
+          <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/25 text-[#34D399]">Sección 4 • Constructor de Evaluaciones</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Evaluaciones Modulares (Quizzes)</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Evaluación & Acreditación</span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Evaluaciones Modulares</h2>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
-              <select id="admQuizModSelect" onchange="renderAdminQuizEditor()" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
-              <button type="button" id="btnToggleQuizHidden" onclick="toggleSelectedQuizHidden()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/15 text-xs font-bold cursor-pointer">
+              <select id="admQuizModSelect" onchange="renderAdminQuizEditor()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <button type="button" id="btnToggleQuizHidden" onclick="toggleSelectedQuizHidden()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
                 Ocultar Quiz
               </button>
-              <button type="button" onclick="clearSelectedQuizQuestions()" class="px-3.5 py-2 rounded-xl bg-rose-600/30 hover:bg-rose-600 text-rose-200 hover:text-white border border-rose-500/40 text-xs font-bold cursor-pointer">
-                <i class="fa-solid fa-trash-can mr-1"></i> Vaciar Quiz
+              <button type="button" onclick="clearSelectedQuizQuestions()" class="px-3.5 py-2 rounded-xl border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white text-xs font-semibold transition cursor-pointer">
+                Vaciar Quiz
               </button>
             </div>
           </div>
 
-          <!-- Google Forms Style Top Settings & Add Question Dropdown Bar -->
-          <div class="pro-card p-4 sm:p-5 border-t-4 border-t-[#1A64FF] flex flex-wrap items-center justify-between gap-4">
+          <!-- Form Configuration & Add Question Bar -->
+          <div class="exec-card p-5 border-t-4 border-t-[#1A64FF] flex flex-wrap items-center justify-between gap-4">
             <div class="flex flex-wrap items-center gap-4 text-xs">
               <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-700">Nota Mínima Aprobatoria (%):</span>
-                <input type="number" id="admQuizMinPass" min="1" max="100" value="80" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
+                <span class="font-semibold text-slate-700">Nota Mínima (%):</span>
+                <input type="number" id="admQuizMinPass" min="1" max="100" value="80" class="exec-input w-20 px-2.5 py-1.5 font-bold text-center">
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-700">Puntaje Total:</span>
-                <input type="number" id="admQuizMaxScore" min="1" max="1000" value="100" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
+                <span class="font-semibold text-slate-700">Puntaje Máximo:</span>
+                <input type="number" id="admQuizMaxScore" min="1" max="1000" value="100" class="exec-input w-20 px-2.5 py-1.5 font-bold text-center">
               </div>
               <div class="relative">
                 <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="admQuizSearchInput" oninput="renderAdminQuizEditor()" placeholder="Filtrar preguntas..." class="pro-input pl-8 pr-3 py-1.5 text-xs w-48">
+                <input type="text" id="admQuizSearchInput" oninput="renderAdminQuizEditor()" placeholder="Filtrar preguntas..." class="exec-input pl-8 pr-3 py-1.5 text-xs w-52">
               </div>
             </div>
 
-            <!-- Google Forms Style Question Type Selector + Add Button -->
-            <div class="flex flex-wrap items-center gap-2">
-              <select id="newQuizQuestionTypeSelect" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-800 bg-slate-50">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <select id="newQuizQuestionTypeSelect" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-800 bg-slate-50">
                 <optgroup label="Respuesta abierta">
                   <option value="short">Respuesta corta</option>
                   <option value="paragraph">Párrafo</option>
@@ -1492,128 +630,119 @@
                   <option value="hotspot">Zonas activas (Hotspot)</option>
                 </optgroup>
               </select>
-              <button type="button" onclick="addSelectedQuestionType()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-600 text-white text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-circle-plus"></i>
-                <span>Agregar Pregunta</span>
+              <button type="button" onclick="addSelectedQuestionType()" class="px-4 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold shadow-sm transition cursor-pointer">
+                + Agregar Pregunta
               </button>
             </div>
           </div>
 
-          <div id="admQuizQuestionsList" class="max-w-4xl mx-auto w-full space-y-4"></div>
+          <div id="admQuizQuestionsList" class="w-full max-w-5xl mx-auto space-y-4"></div>
         </section>
 
-        <!-- ================================================================ --><!-- SECTION 5: DASHBOARD EN TIEMPO REAL (MANUALES, PRÁCTICA Y QUIZ)  -->
+        <!-- ================================================================ -->
+        <!-- SECTION 5: DASHBOARD EN TIEMPO REAL (ADAPTIVE PROPORTIONAL GRID) -->
         <!-- ================================================================ -->
         <section id="viewAdm-dashboard" class="adm-section space-y-5">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div class="exec-card px-6 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Sección 5 • Analítica en Tiempo Real</span>
-                <span id="dashLiveSyncTimestamp" class="font-mono text-[10.5px] text-[#34D399] flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span> Sincronizado
+              <div class="flex items-center gap-2.5">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Analítica en Tiempo Real</span>
+                <span id="dashLiveSyncTimestamp" class="text-[11px] text-slate-500 font-medium flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Sincronizado
                 </span>
               </div>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Dashboard de Capacitación y Desempeño</h2>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Dashboard de Capacitación</h2>
             </div>
 
             <div class="flex flex-wrap items-center gap-2.5">
-              <select id="dashAudienceFilter" onchange="renderRealtimeDashboardCharts()" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900">
-                <option value="ALL">Todas las Audiencias</option>
-                <option value="Docente">Docente</option>
-                <option value="Tutor">Tutor</option>
-                <option value="Facilitador">Facilitador</option>
-                <option value="Monitor">Monitor</option>
-                <option value="Supervisor">Supervisor</option>
-                <option value="Auditor">Auditor</option>
-              </select>
-              <button type="button" onclick="syncAllRealtimeData(true)" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs font-bold shadow flex items-center gap-2 cursor-pointer">
-                <i class="fa-solid fa-rotate"></i>
+              <select id="dashAudienceFilter" onchange="renderRealtimeDashboardCharts()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <select id="dashModuleFilter" onchange="renderRealtimeDashboardCharts()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <button type="button" onclick="syncAllRealtimeData(true)" class="px-4 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-rotate text-[11px]"></i>
                 <span>Actualizar Datos</span>
               </button>
             </div>
           </div>
 
-          <!-- 4 Executive KPI Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div class="pro-card p-5 flex items-center justify-between ">
+          <!-- Adaptive 4 KPI Cards -->
+          <div class="adaptive-kpi-grid">
+            <div class="exec-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Participantes Activos</span>
-                <div id="dashKpiTotalUsers" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0</div>
-                <p id="dashKpiUsersSub" class="text-[11px] text-slate-500 mt-0.5">En audiencia seleccionada</p>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Participantes Activos</span>
+                <div id="dashKpiTotalUsers" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0</div>
+                <p id="dashKpiUsersSub" class="text-xs text-slate-500 mt-0.5">En audiencia seleccionada</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
                 <i class="fa-solid fa-users"></i>
               </div>
             </div>
 
-            <div class="pro-card p-5 flex items-center justify-between ">
+            <div class="exec-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Paso 1: Manuales y Videos</span>
-                <div id="dashKpiStep1Pct" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p class="text-[11px] text-slate-500 mt-0.5">Tasa promedio de lectura</p>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Paso 1: Manuales y Videos</span>
+                <div id="dashKpiStep1Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
+                <p class="text-xs text-slate-500 mt-0.5">Tasa de lectura confirmada</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-pink-50 text-[#EC4899] flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-base">
                 <i class="fa-solid fa-photo-film"></i>
               </div>
             </div>
 
-            <div class="pro-card p-5 flex items-center justify-between ">
+            <div class="exec-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Paso 2: Práctica en Vivo</span>
-                <div id="dashKpiStep2Pct" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p class="text-[11px] text-slate-500 mt-0.5">Simulaciones completadas</p>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Paso 2: Práctica en Vivo</span>
+                <div id="dashKpiStep2Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
+                <p class="text-xs text-slate-500 mt-0.5">Simulaciones completadas</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center text-base">
                 <i class="fa-solid fa-laptop-code"></i>
               </div>
             </div>
 
-            <div class="pro-card p-5 flex items-center justify-between ">
+            <div class="exec-card p-5 flex items-center justify-between">
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Paso 3: Evaluación Quiz</span>
-                <div id="dashKpiStep3Pct" class="font-mono text-3xl font-extrabold text-slate-900 mt-1">0%</div>
-                <p id="dashKpiCertifiedSub" class="text-[11px] text-emerald-700 font-semibold mt-0.5">0 certificados (≥80%)</p>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Paso 3: Evaluación Quiz</span>
+                <div id="dashKpiStep3Pct" class="font-display text-3xl font-extrabold text-slate-900 mt-1">0%</div>
+                <p id="dashKpiCertifiedSub" class="text-xs text-emerald-700 font-semibold mt-0.5">0 acreditados (≥80%)</p>
               </div>
-              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#10B981] flex items-center justify-center text-lg">
+              <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base">
                 <i class="fa-solid fa-award"></i>
               </div>
             </div>
           </div>
 
-          <!-- Row 1 Charts: Comparative 3-Stage Funnel by Module + Audience Distribution -->
-          <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
-            <!-- Left 7 Cols: 3-Stage Grouped Bar Chart per Module (Manuales/Videos vs Práctica vs Quiz) -->
-            <div class="xl:col-span-7 pro-card p-5 sm:p-6 space-y-4">
-              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <!-- Row 1 Adaptive Charts -->
+          <div class="adaptive-2col-grid">
+            <div class="exec-card p-6 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3.5">
                 <div>
-                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#1A64FF]">Comparativa por Etapa</span>
-                  <h3 class="text-sm font-extrabold text-slate-900">Avance por Módulo: Manuales/Videos, Práctica en Vivo y Quiz</h3>
+                  <h3 class="text-sm font-extrabold text-slate-900">Avance por Módulo y Etapa</h3>
+                  <p class="text-xs text-slate-500">Comparativa entre Manuales/Videos, Práctica en Vivo y Quiz.</p>
                 </div>
-                <div class="flex items-center gap-3 text-[11px] font-bold">
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#1A64FF]"></span>Manuales/Videos</span>
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#EC4899]"></span>Práctica</span>
-                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#10B981]"></span>Quiz</span>
+                <div class="flex items-center gap-3 text-[11px] font-semibold text-slate-600">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-[#1A64FF]"></span>Material</span>
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-slate-700"></span>Práctica</span>
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-600"></span>Quiz</span>
                 </div>
               </div>
               <div id="chartThreeStageModulesBox" class="w-full"></div>
             </div>
 
-            <!-- Right 5 Cols: Audience Volume & Global Completion -->
-            <div class="xl:col-span-5 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#EC4899]">Distribución por Rol</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Participantes y Avance Promedio por Audiencia</h3>
+            <div class="exec-card p-6 space-y-4">
+              <div class="border-b border-slate-100 pb-3.5">
+                <h3 class="text-sm font-extrabold text-slate-900">Participación y Progreso por Audiencia</h3>
+                <p class="text-xs text-slate-500">Distribución de usuarios inscritos y avance promedio por rol.</p>
               </div>
               <div id="chartAudienceBreakdownBox" class="space-y-3"></div>
             </div>
           </div>
 
-          <!-- Row 2 Charts: Accreditation Status Donut + Priority Reinforcement Modules -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
-            <div class="lg:col-span-5 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#10B981]">Estado de Acreditación</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Niveles de Competencia de Participantes</h3>
+          <!-- Row 2 Adaptive Charts -->
+          <div class="adaptive-2col-grid">
+            <div class="exec-card p-6 space-y-4">
+              <div class="border-b border-slate-100 pb-3.5">
+                <h3 class="text-sm font-extrabold text-slate-900">Niveles de Competencia</h3>
+                <p class="text-xs text-slate-500">Clasificación de participantes según cumplimiento curricular.</p>
               </div>
               <div class="flex flex-col sm:flex-row items-center gap-6 pt-2">
                 <div id="chartCompetenceDonutBox" class="shrink-0"></div>
@@ -1621,10 +750,10 @@
               </div>
             </div>
 
-            <div class="lg:col-span-7 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-amber-600">Diagnóstico de Brechas</span>
-                <h3 class="text-sm font-extrabold text-slate-900">Dominio y Brecha de Refuerzo por Módulo</h3>
+            <div class="exec-card p-6 space-y-4">
+              <div class="border-b border-slate-100 pb-3.5">
+                <h3 class="text-sm font-extrabold text-slate-900">Dominio y Brecha por Módulo</h3>
+                <p class="text-xs text-slate-500">Porcentaje de aprobación frente a brecha pendiente por módulo.</p>
               </div>
               <div id="chartLearningGapBox" class="space-y-3"></div>
             </div>
@@ -1632,28 +761,29 @@
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 6: INFORMACIÓN GENERAL (TABLAS POR AUDIENCIA Y PROGRESO) -->
+        <!-- SECTION 6: INFORMACIÓN GENERAL (TABLAS GLOBALES POR AUDIENCIA)   -->
         <!-- ================================================================ -->
         <section id="viewAdm-informacion" class="adm-section hidden space-y-5">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-purple-500/25 text-purple-300">Sección 6 • Expediente Completo y Tablas por Audiencia</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Información General de Participantes</h2>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-[#1A64FF]">Expediente Consolidado</span>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">Información General por Audiencia</h2>
             </div>
 
             <div class="flex flex-wrap items-center gap-2.5">
               <div class="relative">
-                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
-                <input type="text" id="infoSearchInput" oninput="renderGeneralInformationTables()" placeholder="Buscar nombre, correo o centro..." class="pro-input pl-8 pr-3.5 py-2 text-xs text-slate-900 w-64">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="infoSearchInput" oninput="renderGeneralInformationTables()" placeholder="Buscar nombre, correo o centro..." class="exec-input pl-9 pr-3.5 py-2 text-xs w-64">
               </div>
-              <select id="infoStatusFilter" onchange="renderGeneralInformationTables()" class="pro-input px-3 py-2 text-xs font-bold text-slate-900">
+              <select id="infoModuleFilter" onchange="renderGeneralInformationTables()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <select id="infoStatusFilter" onchange="renderGeneralInformationTables()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900">
                 <option value="ALL">Todos los Estados</option>
-                <option value="CERTIFIED">Certificados (≥80%)</option>
+                <option value="CERTIFIED">Acreditados (≥80%)</option>
                 <option value="IN_PROGRESS">En Progreso (1% - 79%)</option>
                 <option value="NOT_STARTED">Sin Iniciar (0%)</option>
               </select>
-              <button type="button" onclick="exportGeneralInformationCSV()" class="px-3.5 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-file-csv"></i>
+              <button type="button" onclick="exportGeneralInformationCSV()" class="px-4 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-file-csv text-[11px]"></i>
                 <span>Exportar CSV</span>
               </button>
             </div>
@@ -1662,7 +792,7 @@
           <!-- Audience Sub-Tabs Pill Bar -->
           <div id="infoAudienceTabsBar" class="flex flex-wrap gap-2"></div>
 
-          <!-- Dynamic Audience Tables Container (Shows segmented tables per audience with full detail) -->
+          <!-- Dynamic Audience Tables Container -->
           <div id="infoAudienceTablesContainer" class="space-y-6"></div>
         </section>
 
@@ -1673,12 +803,11 @@
   <!-- ======================================================================== -->
   <!-- MODAL: EXPEDIENTE INDIVIDUAL 1:1 DEL PARTICIPANTE                        -->
   <!-- ======================================================================== -->
-  <div id="participantDetailModal" onclick="if(event.target===this) closeParticipantModal()" class="fixed inset-0 bg-slate-950/75 modal-glass z-50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-200 flex flex-col">
-      <div class="tri-hairline"></div>
-      <div class="px-6 py-4 bg-[#0B0F17] text-white flex items-center justify-between">
+  <div id="participantDetailModal" onclick="if(event.target===this) closeParticipantModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden shadow-2xl border border-slate-200 flex flex-col">
+      <div class="px-6 py-4 bg-[#090D16] text-white flex items-center justify-between">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-widest text-[#60A5FA]">Auditoría Individual 1:1</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Auditoría Individual</span>
           <h4 id="modalPartTitle" class="text-base font-extrabold">Detalle del Participante</h4>
         </div>
         <button type="button" onclick="closeParticipantModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center cursor-pointer">
@@ -1690,7 +819,7 @@
   </div>
 
   <script>
-    const TRAINING_SUPABASE_URL = "https://tcrzqkdcigiewsxglkjg.supabase.co";
+const TRAINING_SUPABASE_URL = "https://tcrzqkdcigiewsxglkjg.supabase.co";
     const TRAINING_SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcnpxa2RjaWdpZXdzeGdsa2pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1NDY1NDAsImV4cCI6MjExMTEyMjU0MH0.6r0R6_yplAzAY_NPtbGH85zFkOqEvDHDfiG82pHOHI4";
 
     function getSbHeaders(extra) {
@@ -1969,6 +1098,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
     let realtimeParticipantsList = [];
     let selectedInfoAudienceTab = "ALL";
     let autoRefreshTimer = null;
+    let localCmsUpdatedAt = "";
+    let isSavingCmsNow = false;
 
     function escapeHtml(str) {
       return String(str || "")
@@ -1983,7 +1114,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       const t = document.getElementById('admToast');
       const dot = document.getElementById('admToastDot');
       document.getElementById('admToastText').textContent = msg;
-      dot.className = isError ? "w-2.5 h-2.5 rounded-full bg-rose-500" : "w-2.5 h-2.5 rounded-full bg-[#10B981]";
+      dot.className = isError ? "w-2 h-2 rounded-full bg-rose-500" : "w-2 h-2 rounded-full bg-emerald-400";
       t.classList.remove('hidden');
       t.classList.add('flex');
       clearTimeout(window._toastTimer);
@@ -2000,15 +1131,38 @@ const DEFAULT_AUDIENCE_CATALOG = [
           AUDIENCE_CATALOG = savedCms.audiences || JSON.parse(JSON.stringify(DEFAULT_AUDIENCE_CATALOG));
           ALL_MODULES_MASTER = savedCms.modules;
           quizzesBank = savedCms.quizzes || JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
+          localCmsUpdatedAt = savedCms.updatedAt || "";
           return;
         }
       } catch (e) {}
       AUDIENCE_CATALOG = JSON.parse(JSON.stringify(DEFAULT_AUDIENCE_CATALOG));
       ALL_MODULES_MASTER = JSON.parse(JSON.stringify(DEFAULT_MODULES_MASTER));
       quizzesBank = JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
+      localCmsUpdatedAt = "";
     }
 
-    async function hydrateCmsFromSupabase() {
+    function refreshAllAdminSelectorsAndViews(preserveSelection = true) {
+      const prevMod = preserveSelection ? (document.getElementById('admModSelect')?.value || '') : '';
+      const prevQuizMod = preserveSelection ? (document.getElementById('admQuizModSelect')?.value || '') : '';
+
+      populateAdmSelectors();
+
+      if (prevMod && ALL_MODULES_MASTER.some(m => m.id === prevMod)) {
+        document.getElementById('admModSelect').value = prevMod;
+      }
+      if (prevQuizMod && ALL_MODULES_MASTER.some(m => m.id === prevQuizMod)) {
+        document.getElementById('admQuizModSelect').value = prevQuizMod;
+      }
+
+      renderAdminAudienceMatrix();
+      renderAdminModuleEditor();
+      renderAdminQuizEditor();
+      renderRealtimeDashboardCharts();
+      renderGeneralInformationTables();
+    }
+
+    async function hydrateCmsFromSupabase(seedIfEmpty = false) {
+      if (isSavingCmsNow) return false;
       try {
         const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?id=eq.global&select=*`, {
           headers: getSbHeaders()
@@ -2017,18 +1171,24 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const rows = await res.json();
         if (Array.isArray(rows) && rows.length > 0 && Array.isArray(rows[0].modules) && rows[0].modules.length > 0) {
           const remote = rows[0];
-          AUDIENCE_CATALOG = Array.isArray(remote.audiences) && remote.audiences.length ? remote.audiences : AUDIENCE_CATALOG;
-          ALL_MODULES_MASTER = remote.modules;
-          quizzesBank = (remote.quizzes && typeof remote.quizzes === 'object') ? remote.quizzes : quizzesBank;
-          localStorage.setItem('ihfb_cms_data_v6', JSON.stringify({
-            audiences: AUDIENCE_CATALOG,
-            modules: ALL_MODULES_MASTER,
-            quizzes: quizzesBank,
-            updatedAt: remote.updated_at || new Date().toISOString()
-          }));
-          return true;
-        } else {
-          // Seed initial global configuration in Supabase so all accounts read from cloud immediately
+          const remoteTs = remote.updated_at ? new Date(remote.updated_at).getTime() : 0;
+          const localTs = localCmsUpdatedAt ? new Date(localCmsUpdatedAt).getTime() : 0;
+
+          // Only apply remote state if remote is genuinely newer than our last local edit!
+          if (!localTs || remoteTs > localTs) {
+            AUDIENCE_CATALOG = Array.isArray(remote.audiences) && remote.audiences.length ? remote.audiences : AUDIENCE_CATALOG;
+            ALL_MODULES_MASTER = remote.modules;
+            quizzesBank = (remote.quizzes && typeof remote.quizzes === 'object') ? remote.quizzes : quizzesBank;
+            localCmsUpdatedAt = remote.updated_at || new Date().toISOString();
+            localStorage.setItem('ihfb_cms_data_v6', JSON.stringify({
+              audiences: AUDIENCE_CATALOG,
+              modules: ALL_MODULES_MASTER,
+              quizzes: quizzesBank,
+              updatedAt: localCmsUpdatedAt
+            }));
+            return true;
+          }
+        } else if (seedIfEmpty) {
           await saveCmsState(false);
         }
       } catch (e) {}
@@ -2036,7 +1196,10 @@ const DEFAULT_AUDIENCE_CATALOG = [
     }
 
     async function saveCmsState(notify = false) {
+      isSavingCmsNow = true;
       const nowIso = new Date().toISOString();
+      localCmsUpdatedAt = nowIso;
+
       const payload = {
         audiences: AUDIENCE_CATALOG,
         modules: ALL_MODULES_MASTER,
@@ -2044,6 +1207,9 @@ const DEFAULT_AUDIENCE_CATALOG = [
         updatedAt: nowIso
       };
       localStorage.setItem('ihfb_cms_data_v6', JSON.stringify(payload));
+
+      // Update every dropdown, filter, matrix, chart & table in Admin immediately
+      refreshAllAdminSelectorsAndViews(true);
 
       try {
         if ('BroadcastChannel' in window) {
@@ -2053,28 +1219,49 @@ const DEFAULT_AUDIENCE_CATALOG = [
         }
       } catch (e) {}
 
-      // Persist globally to Supabase `portal_cms_config` so EVERY participant account & device updates immediately
+      // Persist globally to Supabase `portal_cms_config` (PATCH first, then UPSERT if row did not exist)
       try {
-        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?on_conflict=id`, {
-          method: 'POST',
-          headers: getSbHeaders({ 'Prefer': 'resolution=merge-duplicates' }),
-          body: JSON.stringify({
-            id: 'global',
-            audiences: AUDIENCE_CATALOG,
-            modules: ALL_MODULES_MASTER,
-            quizzes: quizzesBank,
-            updated_at: nowIso
-          })
+        const bodyData = JSON.stringify({
+          id: 'global',
+          audiences: AUDIENCE_CATALOG,
+          modules: ALL_MODULES_MASTER,
+          quizzes: quizzesBank,
+          updated_at: nowIso
         });
+
+        let ok = false;
+        const patchRes = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?id=eq.global`, {
+          method: 'PATCH',
+          headers: getSbHeaders({ 'Prefer': 'return=representation' }),
+          body: bodyData
+        });
+        if (patchRes.ok) {
+          const updatedRows = await patchRes.json();
+          if (Array.isArray(updatedRows) && updatedRows.length > 0) {
+            ok = true;
+          }
+        }
+
+        if (!ok) {
+          const postRes = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?on_conflict=id`, {
+            method: 'POST',
+            headers: getSbHeaders({ 'Prefer': 'resolution=merge-duplicates,return=representation' }),
+            body: bodyData
+          });
+          ok = postRes.ok;
+        }
+
         if (notify) {
-          if (res.ok) {
-            showAdmToast("Publicado en la nube para todas las cuentas y roles");
+          if (ok) {
+            showAdmToast("Cambios guardados y sincronizados globalmente");
           } else {
-            showAdmToast("Guardado local; verifica la tabla portal_cms_config en Supabase", true);
+            showAdmToast("Error al guardar en Supabase. Revisa la conexión o el tamaño de las imágenes.", true);
           }
         }
       } catch (err) {
-        if (notify) showAdmToast("Guardado local (sin conexión a la nube)", true);
+        if (notify) showAdmToast("Error de red al sincronizar con Supabase", true);
+      } finally {
+        isSavingCmsNow = false;
       }
     }
 
@@ -2193,19 +1380,20 @@ const DEFAULT_AUDIENCE_CATALOG = [
       document.getElementById('admAvatarBadge').textContent = name.charAt(0).toUpperCase();
 
       populateAdmSelectors();
-      hydrateCmsFromSupabase().then((updated) => {
+      hydrateCmsFromSupabase(true).then((updated) => {
         if (updated) {
-          populateAdmSelectors();
-          renderAdminAudienceMatrix();
-          renderAdminModuleEditor();
-          renderAdminQuizEditor();
+          refreshAllAdminSelectorsAndViews(true);
         }
       });
       syncAllRealtimeData(false);
       switchAdminTab('dashboard');
 
       if (autoRefreshTimer) clearInterval(autoRefreshTimer);
-      autoRefreshTimer = setInterval(() => syncAllRealtimeData(false), 15000);
+      autoRefreshTimer = setInterval(async () => {
+        const cmsChanged = await hydrateCmsFromSupabase(false);
+        if (cmsChanged) refreshAllAdminSelectorsAndViews(true);
+        syncAllRealtimeData(false);
+      }, 15000);
     }
 
     function switchAdminTab(tab) {
@@ -2217,8 +1405,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const btn = document.getElementById(`navAdm-${k}`);
         if (btn) {
           btn.className = (k === tab)
-            ? "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-white/10 transition cursor-pointer"
-            : "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/5 hover:text-slate-200 transition cursor-pointer";
+            ? "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-[#1A64FF] transition cursor-pointer"
+            : "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer";
         }
       });
 
@@ -2236,18 +1424,33 @@ const DEFAULT_AUDIENCE_CATALOG = [
         !searchQ || `${m.code} ${m.title}`.toLowerCase().includes(searchQ)
       );
       const listToUse = filteredMods.length ? filteredMods : ALL_MODULES_MASTER;
-      const opts = listToUse.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(OCULTO)' : ''}</option>`).join('');
+      const opts = listToUse.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(Oculto)' : ''}</option>`).join('');
+      const allModOpts = ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(Oculto)' : ''}</option>`).join('');
+      const allModFilterOpts = `<option value="ALL">Todos los Módulos</option>` + ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)}</option>`).join('');
+      const allAudFilterOpts = `<option value="ALL">Todas las Audiencias</option>` + AUDIENCE_CATALOG.map(a => `<option value="${escapeHtml(a.role)}">${escapeHtml(a.role)}</option>`).join('');
+
       const s1 = document.getElementById('admModSelect');
       const s2 = document.getElementById('admQuizModSelect');
       if (s1) s1.innerHTML = opts;
-      if (s2) s2.innerHTML = ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(OCULTO)' : ''}</option>`).join('');
+      if (s2) s2.innerHTML = allModOpts;
 
-      const asigModSel = document.getElementById('asigModuleFilter');
-      if (asigModSel) {
-        const prev = asigModSel.value || 'ALL';
-        asigModSel.innerHTML = `<option value="ALL">Todos los Módulos</option>` + ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)}</option>`).join('');
-        asigModSel.value = prev;
-      }
+      ['asigModuleFilter', 'dashModuleFilter', 'infoModuleFilter'].forEach(selId => {
+        const el = document.getElementById(selId);
+        if (el) {
+          const prev = el.value || 'ALL';
+          el.innerHTML = allModFilterOpts;
+          el.value = (prev === 'ALL' || ALL_MODULES_MASTER.some(m => m.id === prev)) ? prev : 'ALL';
+        }
+      });
+
+      ['asigRoleFilter', 'dashAudienceFilter'].forEach(selId => {
+        const el = document.getElementById(selId);
+        if (el) {
+          const prev = el.value || 'ALL';
+          el.innerHTML = allAudFilterOpts;
+          el.value = (prev === 'ALL' || AUDIENCE_CATALOG.some(a => a.role === prev)) ? prev : 'ALL';
+        }
+      });
     }
 
     function filterAdminModuleSelector() {
@@ -2303,7 +1506,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
           <tr class="hover:bg-slate-50/80 transition">
             <td class="px-5 py-3.5">
               <div class="flex items-center gap-3">
-                <span class="w-8 h-8 rounded-xl bg-[#0B0F17] text-white font-bold text-xs flex items-center justify-center shrink-0">${escapeHtml((a.name || a.email || 'A').charAt(0).toUpperCase())}</span>
+                <span class="w-8 h-8 rounded-xl bg-[#090D16] text-white font-bold text-xs flex items-center justify-center shrink-0">${escapeHtml((a.name || a.email || 'A').charAt(0).toUpperCase())}</span>
                 <div>
                   <div class="font-bold text-slate-900">${escapeHtml(a.name || 'Sin nombre')} ${isSelf ? '<span class="ml-1.5 px-2 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[10px] font-bold">Sesión actual</span>' : ''}</div>
                 </div>
@@ -2451,7 +1654,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       });
 
       if (!filteredAudiences.length) {
-        grid.innerHTML = '<div class="col-span-full pro-card p-8 text-center text-xs text-slate-400">No hay audiencias que coincidan con los filtros seleccionados.</div>';
+        grid.innerHTML = '<div class="col-span-full exec-card p-8 text-center text-xs text-slate-400">No hay audiencias que coincidan con los filtros seleccionados.</div>';
         return;
       }
 
@@ -2462,12 +1665,12 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const isExpanded = !!expandedAudienceCardsMap[aud.role];
 
         return `
-          <div class="pro-card p-5 flex flex-col justify-between space-y-4 transition hover:border-slate-300">
+          <div class="exec-card p-5 flex flex-col justify-between space-y-4 border-t-2 ${allSelected ? 'border-t-emerald-500' : 'border-t-[#1A64FF]'} transition">
             <!-- Square Header Summary (Always Visible with Icon & Audience Name) -->
             <div class="space-y-3">
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3">
-                  <div class="w-12 h-12 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-lg shadow-sm shrink-0">
+                  <div class="w-12 h-12 rounded-2xl bg-[#090D16] text-white flex items-center justify-center text-lg shadow-sm shrink-0">
                     <i class="fa-solid ${escapeHtml(aud.icon || 'fa-users')}"></i>
                   </div>
                   <div>
@@ -2501,7 +1704,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
               </label>
 
               <button type="button" onclick="toggleAudienceCardAccordion('${escapeHtml(aud.role)}')"
-                      class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#0B0F17] text-slate-800 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+                      class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
                 <span>${isExpanded ? 'Ocultar' : 'Módulos'}</span>
                 <i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
               </button>
@@ -2572,7 +1775,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const maxDim = 640;
+          const maxDim = 420;
           let w = img.width;
           let h = img.height;
           if (w > maxDim || h > maxDim) {
@@ -2647,16 +1850,16 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Código <span class="text-rose-600">*</span></label>
-                <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="pro-input w-full px-3.5 py-2.5 font-display font-extrabold text-slate-900">
+                <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="exec-input w-full px-3.5 py-2.5 font-display font-extrabold text-slate-900">
               </div>
               <div class="sm:col-span-3">
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
-                <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="pro-input w-full px-3.5 py-2.5 font-display font-bold text-slate-900">
+                <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="exec-input w-full px-3.5 py-2.5 font-display font-bold text-slate-900">
               </div>
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700 mb-1">Objetivo y Descripción Operativa</label>
-              <textarea id="edModDesc" rows="3" class="pro-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
+              <textarea id="edModDesc" rows="3" class="exec-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
             </div>
           </div>
 
@@ -2671,7 +1874,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
                 ? `<img src="${mod.characterImg}" alt="Personaje ${escapeHtml(mod.code)}" class="max-h-full max-w-full object-contain">`
                 : `<div class="text-center text-slate-400 space-y-1"><i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-2xl text-slate-300"></i><div class="text-[11px] font-medium">Sin imagen personalizada</div></div>`}
             </div>
-            <label class="w-full py-2 px-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+            <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
               <i class="fa-solid fa-cloud-arrow-up"></i>
               <span>Subir Imagen del Módulo</span>
               <input type="file" accept="image/*" onchange="uploadModuleCharacterImage('${mod.id}', this)" class="hidden">
@@ -2684,7 +1887,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
           <label class="block text-[11px] font-bold text-slate-700">Ícono Alternativo en Menú Lateral</label>
           <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
             ${ICON_CATALOG.map(ic => `
-              <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" class="p-2.5 rounded-xl border ${mod.icon === ic.cls ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/30' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-white'} flex flex-col items-center gap-1 text-xs cursor-pointer">
+              <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" class="p-2.5 rounded-xl border ${mod.icon === ic.cls ? 'bg-[#090D16] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/30' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-white'} flex flex-col items-center gap-1 text-xs cursor-pointer">
                 <i class="fa-solid ${ic.cls} text-sm"></i>
                 <span class="text-[10px] font-medium truncate w-full text-center">${ic.label}</span>
               </button>
@@ -2717,15 +1920,15 @@ const DEFAULT_AUDIENCE_CATALOG = [
                   <div class="lg:col-span-8 space-y-3">
                     <div>
                       <label class="block text-[11px] font-bold text-slate-700 mb-1">Título de la Lección</label>
-                      <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp pro-input w-full px-3.5 py-2 font-semibold">
+                      <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp exec-input w-full px-3.5 py-2 font-semibold">
                     </div>
                     <div>
                       <label class="block text-[11px] font-bold text-slate-700 mb-1">Enlace del Video (YouTube / Google Drive)</label>
-                      <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp pro-input w-full px-3.5 py-2 text-xs">
+                      <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp exec-input w-full px-3.5 py-2 text-xs">
                     </div>
                     <div>
                       <label class="block text-[11px] font-bold text-slate-700 mb-1">Puntos Clave del Video (uno por línea)</label>
-                      <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp pro-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
+                      <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
                     </div>
                   </div>
 
@@ -2752,16 +1955,16 @@ const DEFAULT_AUDIENCE_CATALOG = [
                 <div class="p-3.5 rounded-xl bg-white border border-slate-200 space-y-3">
                   <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#1A64FF]"><i class="fa-solid fa-book-open mr-1"></i> Manuales PDF Adjuntos (${manuals.length})</span>
-                    <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-3 py-1 rounded-lg bg-[#10B981] hover:bg-emerald-600 text-white text-[11px] font-bold cursor-pointer">+ Agregar Manual</button>
+                    <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-600 text-white text-[11px] font-bold cursor-pointer">+ Agregar Manual</button>
                   </div>
                   <div class="space-y-2">
                     ${manuals.map((mn, mIdx) => `
                       <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
                         <div class="md:col-span-5">
-                          <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp pro-input w-full px-3 py-1.5 text-xs font-semibold">
+                          <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs font-semibold">
                         </div>
                         <div class="md:col-span-6">
-                          <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp pro-input w-full px-3 py-1.5 text-xs">
+                          <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs">
                         </div>
                         <div class="md:col-span-1 text-right">
                           ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="px-2 py-1 rounded bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold cursor-pointer">✕</button>` : ''}
@@ -2776,7 +1979,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         </div>
 
         <div class="flex justify-end pt-3 border-t border-slate-100">
-          <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#0B0F17] hover:bg-[#10B981] text-white text-xs font-bold shadow-md transition cursor-pointer">
+          <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-emerald-600 text-white text-xs font-bold shadow-md transition cursor-pointer">
             <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar y Sincronizar Módulo
           </button>
         </div>
@@ -2822,42 +2025,17 @@ const DEFAULT_AUDIENCE_CATALOG = [
       if (!mod) return;
       mod.hidden = !mod.hidden;
       saveCmsState(true);
-      refreshAllCmsDependentViews();
+      populateAdmSelectors();
       document.getElementById('admModSelect').value = modId;
       renderAdminModuleEditor();
     }
 
-    function refreshAllCmsDependentViews() {
-      populateAdmSelectors();
-      renderAdminAudienceMatrix();
-      renderAdminQuizEditor();
-      renderRealtimeDashboardCharts();
-      renderGeneralInformationTables();
-    }
-
-    function openNewModuleModal() {
-      const nextNum = ALL_MODULES_MASTER.length + 1;
-      document.getElementById('newModModalCode').value = `M${nextNum}`;
-      document.getElementById('newModModalTitle').value = '';
-      document.getElementById('newModModalDesc').value = '';
-      const m = document.getElementById('newModuleModal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-      setTimeout(() => document.getElementById('newModModalTitle').focus(), 50);
-    }
-
-    function closeNewModuleModal() {
-      const m = document.getElementById('newModuleModal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
-    }
-
-    function submitNewModuleModal(e) {
-      e.preventDefault();
-      const cleanId = document.getElementById('newModModalCode').value.trim().toUpperCase();
-      const title = document.getElementById('newModModalTitle').value.trim();
-      const desc = document.getElementById('newModModalDesc').value.trim() || 'Descripción operativa del módulo.';
-      if (!cleanId || !title) return;
+    function createNewModulePrompt() {
+      const code = prompt('Código del nuevo módulo (ej. M8):', `M${ALL_MODULES_MASTER.length + 1}`);
+      if (!code) return;
+      const title = prompt('Título del nuevo módulo:');
+      if (!title) return;
+      const cleanId = code.trim().toUpperCase();
       if (ALL_MODULES_MASTER.some(m => m.id === cleanId)) {
         showAdmToast(`Ya existe un módulo con el código ${cleanId}`, true);
         return;
@@ -2865,25 +2043,24 @@ const DEFAULT_AUDIENCE_CATALOG = [
       ALL_MODULES_MASTER.push({
         id: cleanId,
         code: cleanId,
-        title: title,
+        title: title.trim(),
         icon: 'fa-graduation-cap',
         hidden: false,
-        desc: desc,
+        desc: 'Descripción operativa del módulo.',
         practiceSteps: ['Paso 1: Completa la actividad práctica del módulo.'],
         cards: [{
-          title: title,
-          videoUrl: '',
+          title: title.trim(),
+          videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
           thumbnailUrl: '',
-          manualUrl: '',
+          manualUrl: 'https://drive.google.com',
           manual: `Manual ${cleanId}`,
-          manuals: [{ title: `Manual ${cleanId}`, url: '' }],
+          manuals: [{ title: `Manual ${cleanId}`, url: 'https://drive.google.com' }],
           points: ['Punto clave 1']
         }]
       });
       quizzesBank[cleanId] = { hidden: false, minPass: 80, maxScore: 100, questions: [] };
-      closeNewModuleModal();
       saveCmsState(true);
-      refreshAllCmsDependentViews();
+      populateAdmSelectors();
       document.getElementById('admModSelect').value = cleanId;
       renderAdminModuleEditor();
     }
@@ -2899,7 +2076,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       AUDIENCE_CATALOG.forEach(a => { a.modules = a.modules.filter(id => id !== modId); });
       delete quizzesBank[modId];
       saveCmsState(true);
-      refreshAllCmsDependentViews();
+      populateAdmSelectors();
       renderAdminModuleEditor();
     }
 
@@ -2964,7 +2141,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       saveCmsState(!silent);
       if (!silent) {
-        refreshAllCmsDependentViews();
+        populateAdmSelectors();
         document.getElementById('admModSelect').value = modId;
       }
     }
@@ -3037,7 +2214,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       if (!qCfg.questions || qCfg.questions.length === 0) {
         listBox.innerHTML = `
-          <div class="pro-card p-10 text-center space-y-3 border-l-4 border-l-[#1A64FF]">
+          <div class="exec-card p-10 text-center space-y-3 border-l-4 border-l-[#1A64FF]">
             <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-clipboard-question"></i></div>
             <h4 class="text-base font-extrabold text-slate-900">Evaluación sin preguntas configuradas</h4>
             <p class="text-xs text-slate-500 max-w-md mx-auto">Selecciona cualquiera de los 15 formatos de pregunta en el menú desplegable superior y haz clic en <strong>Agregar Pregunta</strong>.</p>
@@ -3059,14 +2236,14 @@ const DEFAULT_AUDIENCE_CATALOG = [
           bodyFields = `
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <label class="block text-[11px] font-bold text-slate-700">Respuesta Corta Esperada (Clave de calificación)</label>
-              <input type="text" data-qidx="${qIdx}" data-gfield="expectedAnswer" value="${escapeHtml(qItem.expectedAnswer || '')}" placeholder="Ej. El tiempo de aprendizaje" class="ed-q-gen pro-input w-full px-3.5 py-2 text-xs font-semibold">
+              <input type="text" data-qidx="${qIdx}" data-gfield="expectedAnswer" value="${escapeHtml(qItem.expectedAnswer || '')}" placeholder="Ej. El tiempo de aprendizaje" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs font-semibold">
             </div>
           `;
         } else if (t === 'paragraph') {
           bodyFields = `
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <label class="block text-[11px] font-bold text-slate-700">Criterio / Respuesta Modelo de Párrafo (4 a 5 líneas)</label>
-              <textarea data-qidx="${qIdx}" data-gfield="expectedAnswer" rows="3" placeholder="Escribe la secuencia o criterios clave esperados..." class="ed-q-gen pro-input w-full px-3.5 py-2 text-xs">${escapeHtml(qItem.expectedAnswer || '')}</textarea>
+              <textarea data-qidx="${qIdx}" data-gfield="expectedAnswer" rows="3" placeholder="Escribe la secuencia o criterios clave esperados..." class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs">${escapeHtml(qItem.expectedAnswer || '')}</textarea>
             </div>
           `;
         } else if (t === 'checkboxes') {
@@ -3077,7 +2254,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
               ${opts.map((opt, oIdx) => `
                 <div class="flex items-center gap-2.5">
                   <input type="checkbox" data-qidx="${qIdx}" data-oidx="${oIdx}" ${corrArr.includes(oIdx) ? 'checked' : ''} class="ed-q-chk-corr w-4 h-4 accent-[#1A64FF] rounded cursor-pointer" title="Marcar como respuesta correcta">
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
                   ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
@@ -3093,7 +2270,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
                 <div class="flex items-center gap-2.5">
                   <span class="font-mono text-xs font-bold text-slate-400 w-5">${oIdx + 1}.</span>
                   <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#10B981] cursor-pointer">
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
                   ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
@@ -3105,19 +2282,19 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3">
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Mínimo</label>
-                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMin" value="${qItem.scaleMin ?? 1}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMin" value="${qItem.scaleMin ?? 1}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold">
               </div>
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Máximo</label>
-                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMax" value="${qItem.scaleMax ?? 5}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMax" value="${qItem.scaleMax ?? 5}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold">
               </div>
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Izquierda</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="minLabel" value="${escapeHtml(qItem.minLabel || 'Nada preparado')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <input type="text" data-qidx="${qIdx}" data-gfield="minLabel" value="${escapeHtml(qItem.minLabel || 'Nada preparado')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Derecha</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="maxLabel" value="${escapeHtml(qItem.maxLabel || 'Totalmente preparado')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <input type="text" data-qidx="${qIdx}" data-gfield="maxLabel" value="${escapeHtml(qItem.maxLabel || 'Totalmente preparado')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
             </div>
           `;
@@ -3128,11 +2305,11 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Filas (una por línea)</label>
-                <textarea data-qidx="${qIdx}" data-gfield="gridRows" rows="3" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(rows.join('\n'))}</textarea>
+                <textarea data-qidx="${qIdx}" data-gfield="gridRows" rows="3" class="ed-q-gen exec-input w-full px-3 py-2 text-xs">${escapeHtml(rows.join('\n'))}</textarea>
               </div>
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Columnas (una por línea)</label>
-                <textarea data-qidx="${qIdx}" data-gfield="gridCols" rows="3" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(cols.join('\n'))}</textarea>
+                <textarea data-qidx="${qIdx}" data-gfield="gridCols" rows="3" class="ed-q-gen exec-input w-full px-3 py-2 text-xs">${escapeHtml(cols.join('\n'))}</textarea>
               </div>
             </div>
           `;
@@ -3141,11 +2318,11 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Formatos Permitidos</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="allowedFormats" value="${escapeHtml(qItem.allowedFormats || 'PDF, XLSX, PNG, JPG')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <input type="text" data-qidx="${qIdx}" data-gfield="allowedFormats" value="${escapeHtml(qItem.allowedFormats || 'PDF, XLSX, PNG, JPG')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Peso Máximo (MB)</label>
-                <input type="number" data-qidx="${qIdx}" data-gfield="maxSizeMb" value="${qItem.maxSizeMb || 10}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+                <input type="number" data-qidx="${qIdx}" data-gfield="maxSizeMb" value="${qItem.maxSizeMb || 10}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold">
               </div>
             </div>
           `;
@@ -3154,11 +2331,11 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Fecha Exacta Esperada</label>
-                <input type="date" data-qidx="${qIdx}" data-gfield="expectedDate" value="${escapeHtml(qItem.expectedDate || '')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <input type="date" data-qidx="${qIdx}" data-gfield="expectedDate" value="${escapeHtml(qItem.expectedDate || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
               <div>
                 <label class="block text-[11px] font-bold text-slate-700 mb-1">Hora (Opcional)</label>
-                <input type="time" data-qidx="${qIdx}" data-gfield="expectedTime" value="${escapeHtml(qItem.expectedTime || '')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <input type="time" data-qidx="${qIdx}" data-gfield="expectedTime" value="${escapeHtml(qItem.expectedTime || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
             </div>
           `;
@@ -3177,8 +2354,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
               <div class="text-[11px] font-bold text-slate-700">Parejas de Columnas (Izquierda ↔ Derecha Correcta)</div>
               ${pairs.map((pr, pIdx) => `
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Elemento izquierda" class="ed-q-pair pro-input px-3 py-1.5 text-xs">
-                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="right" value="${escapeHtml(pr.right)}" placeholder="Pareja correcta derecha" class="ed-q-pair pro-input px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Elemento izquierda" class="ed-q-pair exec-input px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="right" value="${escapeHtml(pr.right)}" placeholder="Pareja correcta derecha" class="ed-q-pair exec-input px-3 py-1.5 text-xs">
                 </div>
               `).join('')}
             </div>
@@ -3188,14 +2365,14 @@ const DEFAULT_AUDIENCE_CATALOG = [
           bodyFields = `
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
               <label class="block text-[11px] font-bold text-slate-700">Secuencia en el Orden Lógico Correcto (de arriba hacia abajo)</label>
-              <textarea data-qidx="${qIdx}" data-gfield="orderSteps" rows="4" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(steps.join('\n'))}</textarea>
+              <textarea data-qidx="${qIdx}" data-gfield="orderSteps" rows="4" class="ed-q-gen exec-input w-full px-3 py-2 text-xs">${escapeHtml(steps.join('\n'))}</textarea>
             </div>
           `;
         } else if (t === 'cloze') {
           bodyFields = `
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
               <label class="block text-[11px] font-bold text-slate-700">Texto con Espacios entre Corchetes (ej. Un círculo azul indica [correcta] y una X roja [incorrecta])</label>
-              <textarea data-qidx="${qIdx}" data-gfield="clozeTemplate" rows="2" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(qItem.clozeTemplate || 'En la matriz Resumen de aprendizaje, un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].')}</textarea>
+              <textarea data-qidx="${qIdx}" data-gfield="clozeTemplate" rows="2" class="ed-q-gen exec-input w-full px-3 py-2 text-xs">${escapeHtml(qItem.clozeTemplate || 'En la matriz Resumen de aprendizaje, un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].')}</textarea>
             </div>
           `;
         } else if (t === 'hotspot') {
@@ -3203,8 +2380,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
               <div class="space-y-2">
                 <label class="block text-[11px] font-bold text-slate-700">Descripción de la Zona Activa Correcta</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="hotspotTarget" value="${escapeHtml(qItem.hotspotTarget || 'Ícono de reporte de dispositivo con incidencias')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
-                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B0F17] text-white text-[11px] font-bold cursor-pointer">
+                <input type="text" data-qidx="${qIdx}" data-gfield="hotspotTarget" value="${escapeHtml(qItem.hotspotTarget || 'Ícono de reporte de dispositivo con incidencias')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#090D16] text-white text-[11px] font-bold cursor-pointer">
                   <i class="fa-solid fa-image"></i><span>Subir Captura de Interfaz</span>
                   <input type="file" accept="image/*" onchange="uploadHotspotImage('${modId}', ${qIdx}, this)" class="hidden">
                 </label>
@@ -3224,7 +2401,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
               ${opts.map((opt, oIdx) => `
                 <div class="flex items-center gap-2.5">
                   <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#1A64FF] cursor-pointer" title="Respuesta correcta">
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
                   ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
@@ -3234,7 +2411,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         }
 
         return `
-          <div class="pro-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4">
+          <div class="exec-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4">
             <!-- Google Forms Top Row: Question Prompt on Left + Question Type Dropdown on Right -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
               <div class="md:col-span-8">
@@ -3242,12 +2419,12 @@ const DEFAULT_AUDIENCE_CATALOG = [
                   <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10.5px] font-extrabold">Pregunta #${qIdx + 1}</span>
                   <span class="text-[11px] font-semibold text-slate-400">${QUESTION_TYPE_LABELS[t] || 'Opción múltiple'}</span>
                 </div>
-                <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" placeholder="Escribe el enunciado de la pregunta..." class="ed-q-text pro-input w-full px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-slate-50/70">
+                <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" placeholder="Escribe el enunciado de la pregunta..." class="ed-q-text exec-input w-full px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-slate-50/70">
               </div>
 
               <div class="md:col-span-4 space-y-1">
                 <label class="block text-[10.5px] font-bold text-slate-500">Tipo de pregunta</label>
-                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="pro-input w-full px-3 py-2.5 text-xs font-bold text-slate-800">
+                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="exec-input w-full px-3 py-2.5 text-xs font-bold text-slate-800">
                   ${buildQuestionTypeOptionsHTML(t)}
                 </select>
               </div>
@@ -3260,7 +2437,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
               <div class="flex items-center gap-2 text-xs">
                 <span class="w-6 h-6 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center"><i class="fa-solid fa-check-double text-[11px]"></i></span>
                 <span class="font-bold text-slate-700">Puntuación:</span>
-                <input type="number" data-qidx="${qIdx}" value="${qItem.points || 10}" class="ed-q-pts pro-input w-20 px-2.5 py-1 font-bold text-center">
+                <input type="number" data-qidx="${qIdx}" value="${qItem.points || 10}" class="ed-q-pts exec-input w-20 px-2.5 py-1 font-bold text-center">
                 <span class="text-slate-500">puntos</span>
               </div>
 
@@ -3277,7 +2454,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         `;
       }).join('') + `
         <div class="flex justify-end pt-2">
-          <button type="button" onclick="saveAdminQuizChanges('${modId}')" class="px-6 py-3 rounded-xl bg-[#0B0F17] hover:bg-[#10B981] text-white text-xs font-bold shadow-md transition cursor-pointer">
+          <button type="button" onclick="saveAdminQuizChanges('${modId}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-emerald-600 text-white text-xs font-bold shadow-md transition cursor-pointer">
             <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar y Sincronizar Evaluación
           </button>
         </div>
@@ -3547,7 +2724,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
         const nowStr = new Date().toLocaleTimeString('es-SV', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         const tsEl = document.getElementById('dashLiveSyncTimestamp');
-        if (tsEl) tsEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-[#10B981] animate-pulse"></span> Actualizado ${nowStr}`;
+        if (tsEl) tsEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span> Actualizado ${nowStr}`;
 
         renderRealtimeDashboardCharts();
         renderGeneralInformationTables();
@@ -3560,6 +2737,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
     // ==================== 5. DASHBOARD REAL-TIME CHARTS ====================
     function renderRealtimeDashboardCharts() {
       const audFilter = document.getElementById('dashAudienceFilter') ? document.getElementById('dashAudienceFilter').value : 'ALL';
+      const modFilter = document.getElementById('dashModuleFilter') ? document.getElementById('dashModuleFilter').value : 'ALL';
       const filteredUsers = realtimeParticipantsList.filter(u =>
         audFilter === 'ALL' || String(u.role || '').toLowerCase() === audFilter.toLowerCase()
       );
@@ -3626,7 +2804,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       document.getElementById('dashKpiCertifiedSub').textContent = `${certifiedUsersCount} de ${totalUsers} acreditados (≥80%)`;
 
       // 1) 3-Stage Grouped Bar Chart per Module (Manuales/Videos, Práctica, Quiz)
-      const modsToShow = ALL_MODULES_MASTER.filter(m => !m.hidden);
+      const modsToShow = ALL_MODULES_MASTER.filter(m => !m.hidden && (modFilter === 'ALL' || m.id === modFilter));
       const threeStageBox = document.getElementById('chartThreeStageModulesBox');
       threeStageBox.innerHTML = `
         <div class="space-y-3.5">
@@ -3648,12 +2826,12 @@ const DEFAULT_AUDIENCE_CATALOG = [
                     <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-[#1A64FF] rounded-full transition-all duration-500" style="width:${p1}%"></div></div>
                   </div>
                   <div>
-                    <div class="flex justify-between font-semibold text-slate-600 mb-1"><span>Práctica en Vivo</span><span class="font-mono font-bold text-[#EC4899]">${p2}%</span></div>
-                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-[#EC4899] rounded-full transition-all duration-500" style="width:${p2}%"></div></div>
+                    <div class="flex justify-between font-semibold text-slate-600 mb-1"><span>Práctica en Vivo</span><span class="font-mono font-bold text-slate-700">${p2}%</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-slate-700 rounded-full transition-all duration-500" style="width:${p2}%"></div></div>
                   </div>
                   <div>
-                    <div class="flex justify-between font-semibold text-slate-600 mb-1"><span>Evaluación Quiz</span><span class="font-mono font-bold text-[#10B981]">${p3}%</span></div>
-                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-[#10B981] rounded-full transition-all duration-500" style="width:${p3}%"></div></div>
+                    <div class="flex justify-between font-semibold text-slate-600 mb-1"><span>Evaluación Quiz</span><span class="font-mono font-bold text-emerald-600">${p3}%</span></div>
+                    <div class="h-2 bg-slate-200 rounded-full overflow-hidden"><div class="h-full bg-emerald-600 rounded-full transition-all duration-500" style="width:${p3}%"></div></div>
                   </div>
                 </div>
               </div>
@@ -3663,7 +2841,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       `;
 
       // 2) Audience Breakdown Box
-      const audColors = ['#1A64FF', '#EC4899', '#8B5CF6', '#10B981', '#F59E0B', '#0284C7'];
+      const audColors = ['#1A64FF', '#334155', '#0F172A', '#059669', '#475569', '#2563EB'];
       const audBox = document.getElementById('chartAudienceBreakdownBox');
       audBox.innerHTML = AUDIENCE_CATALOG.map((aud, idx) => {
         const group = realtimeParticipantsList.filter(u => String(u.role || '').toLowerCase() === aud.role.toLowerCase());
@@ -3715,7 +2893,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       document.getElementById('chartCompetenceLegendBox').innerHTML = `
         <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 flex items-center justify-between text-xs">
-          <span class="font-bold text-emerald-900 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-[#10B981]"></span>Acreditados (≥80%)</span>
+          <span class="font-bold text-emerald-900 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>Acreditados (≥80%)</span>
           <span class="font-mono font-extrabold text-emerald-700">${compL3} (${pL3}%)</span>
         </div>
         <div class="p-3 rounded-xl bg-amber-50/70 border border-amber-200 flex items-center justify-between text-xs">
@@ -3773,7 +2951,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const active = selectedInfoAudienceTab === r;
         return `
           <button type="button" onclick="setInfoAudienceTab('${escapeHtml(r)}')"
-                  class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${active ? 'bg-[#0B0F17] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'}">
+                  class="px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 cursor-pointer ${active ? 'bg-[#090D16] text-white shadow-sm' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50'}">
             <span>${r === 'ALL' ? 'Todas las Audiencias' : escapeHtml(r)}</span>
             <span class="font-mono text-[10.5px] px-1.5 py-0.5 rounded ${active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'}">${count}</span>
           </button>
@@ -3785,9 +2963,10 @@ const DEFAULT_AUDIENCE_CATALOG = [
         : AUDIENCE_CATALOG.filter(a => a.role.toLowerCase() === selectedInfoAudienceTab.toLowerCase());
 
       tablesContainer.innerHTML = targetAudiences.map(aud => {
+        const infoModFilter = document.getElementById('infoModuleFilter')?.value || 'ALL';
         const assignedMods = (aud.modules || [])
           .map(mId => ALL_MODULES_MASTER.find(m => m.id === mId))
-          .filter(Boolean);
+          .filter(m => m && (infoModFilter === 'ALL' || m.id === infoModFilter));
 
         const groupUsers = realtimeParticipantsList.filter(u => {
           if (String(u.role || '').toLowerCase() !== aud.role.toLowerCase()) return false;
@@ -3807,10 +2986,10 @@ const DEFAULT_AUDIENCE_CATALOG = [
           : 0;
 
         return `
-          <div class="pro-card overflow-hidden">
+          <div class="exec-card overflow-hidden">
             <div class="px-5 py-4 bg-slate-50/90 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-3">
-                <span class="w-9 h-9 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-xs">
+                <span class="w-9 h-9 rounded-xl bg-[#090D16] text-white flex items-center justify-center text-xs">
                   <i class="fa-solid ${escapeHtml(aud.icon || 'fa-users')}"></i>
                 </span>
                 <div>
@@ -3862,7 +3041,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
                               return `<td class="px-2.5 py-3 text-center"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-mono font-extrabold text-[11px]">${st.score || 100}%</span></td>`;
                             }
                             if (st.step2) {
-                              return `<td class="px-2.5 py-3 text-center"><span class="px-2 py-0.5 rounded bg-pink-50 text-[#EC4899] font-mono font-bold text-[10.5px]" title="Práctica completada">Práct.</span></td>`;
+                              return `<td class="px-2.5 py-3 text-center"><span class="px-2 py-0.5 rounded bg-pink-50 text-slate-700 font-mono font-bold text-[10.5px]" title="Práctica completada">Práct.</span></td>`;
                             }
                             if (st.step1) {
                               return `<td class="px-2.5 py-3 text-center"><span class="px-2 py-0.5 rounded bg-blue-50 text-[#1A64FF] font-mono font-bold text-[10.5px]" title="Manuales leídos">Mat.</span></td>`;
@@ -3930,7 +3109,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
                     <span class="${st.step3 ? 'text-emerald-700 font-bold' : 'text-slate-400'}">${st.step3 ? '✓' : '○'} Paso 3: Quiz</span>
                   </div>
                 </div>
-                <div class="font-mono text-sm font-extrabold ${st.step3 ? 'text-[#10B981]' : 'text-slate-400'}">
+                <div class="font-mono text-sm font-extrabold ${st.step3 ? 'text-emerald-600' : 'text-slate-400'}">
                   ${st.step3 ? (st.score || 100) + '%' : 'Pendiente'}
                 </div>
               </div>
