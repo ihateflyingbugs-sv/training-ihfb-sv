@@ -5673,8 +5673,9 @@
       closePracticeStudioModal();
     }
 
-    // ==================== STEP 3: QUIZZES (NO RETRY + <60% REINFORCEMENT + TEMPLATES) ====================
+    // ==================== STEP 3: QUIZZES (ALL 15 QUESTION TEMPLATES + INTERACTIVE UI) ====================
     let quizActiveLock = false;
+    let quizRuntimeState = {};
 
     function goToModuleQuiz(modId) {
       const p = ensureProgressEntry(modId);
@@ -5686,6 +5687,26 @@
       currentSelectedModuleId = modId;
       document.getElementById('selectQuizModule').value = modId;
       switchTab('quizzes', true);
+    }
+
+    function escapeQuizHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function shuffleArrayWithOrigIndex(arr) {
+      const copy = arr.map((item, origIdx) => ({ item, origIdx }));
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = copy[i];
+        copy[i] = copy[j];
+        copy[j] = tmp;
+      }
+      return copy;
     }
 
     function loadQuizByModule(modId) {
@@ -5729,7 +5750,7 @@
             ${keyPoints.map(pt => `
               <label class="flex items-center gap-2.5 text-xs text-slate-800 cursor-pointer p-1.5 rounded hover:bg-slate-50">
                 <input type="checkbox" class="reinf-chk w-4 h-4 accent-rose-600">
-                <span>Confirmo dominio de: <strong>${pt}</strong></span>
+                <span>Confirmo dominio de: <strong>${escapeQuizHtml(pt)}</strong></span>
               </label>
             `).join('')}
           </div>
@@ -5756,7 +5777,10 @@
             <i class="fa-solid ${passed ? 'fa-award' : 'fa-clipboard-check'}"></i>
           </div>
           <div class="space-y-1">
-            <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase bg-white text-slate-800 border border-slate-200">Calificación Registrada: ${p.score}% (Intento Único)</span>
+            <div class="flex items-center justify-center gap-2 flex-wrap">
+              <span class="px-3 py-1 rounded-full text-[11px] font-bold uppercase bg-white text-slate-800 border border-slate-200">Calificación Registrada: ${p.score}% (Intento Único)</span>
+              ${p.hasManualReviewItems ? '<span class="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Incluye ítems pendientes de revisión manual</span>' : ''}
+            </div>
             <h4 class="text-lg font-extrabold text-slate-900 pt-1">${passed ? `¡Evaluación de ${mod.code} Aprobada!` : `Evaluación de ${mod.code} Registrada`}</h4>
             <p class="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
               Tu respuesta quedó registrada definitivamente en tu historial académico (sin reintentos).
@@ -5779,73 +5803,637 @@
       }
 
       quizActiveLock = true;
+      quizRuntimeState = {};
       document.getElementById('btnSubmitQuiz').disabled = false;
       const questions = qConfig.questions || [];
 
+      if (questions.length === 0) {
+        container.innerHTML = `<div class="p-6 rounded-xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-500">Este módulo aún no tiene preguntas configuradas por el administrador.</div>`;
+        return;
+      }
+
       container.innerHTML = questions.map((qItem, idx) => {
-        const ptsBadge = `<span class="font-mono text-[10.5px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700 ml-auto shrink-0">${qItem.points || 0} pts</span>`;
-        if (qItem.type === 'tf') {
+        const t = qItem.type || 'mcq';
+        const ptsBadge = `<span class="font-mono text-[10.5px] font-bold px-2.5 py-0.5 rounded-md bg-slate-200/80 text-slate-700 ml-auto shrink-0">${qItem.points || 0} pts</span>`;
+
+        // 1A. Respuesta corta
+        if (t === 'short') {
+          const maxC = Number(qItem.maxChars || 120);
+          const fmt = qItem.validationFormat || 'text';
+          const inpType = fmt === 'number' ? 'number' : (fmt === 'email' ? 'email' : 'text');
+          const ph = escapeQuizHtml(qItem.placeholderText || (fmt === 'number' ? 'Ingresa un valor numérico...' : (fmt === 'email' ? 'nombre@institucion.edu' : 'Escribe tu respuesta breve...')));
           return `
-            <div class="p-4 rounded-xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
               <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
-                <span class="font-mono text-xs px-2 py-0.5 rounded bg-pink-100 text-[#EC4899] shrink-0">${idx + 1} • V/F</span>
-                <span>${qItem.q}</span>
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-100 text-[#1A64FF] shrink-0">${idx + 1} • Corta</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
                 ${ptsBadge}
               </div>
-              <div class="flex gap-4 pl-7 pt-1">
-                <label class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-xs font-bold cursor-pointer">
-                  <input type="radio" name="q_${idx}" value="true" required class="accent-[#1A64FF]"> Verdadero
-                </label>
-                <label class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white border border-slate-200 text-xs font-bold cursor-pointer">
-                  <input type="radio" name="q_${idx}" value="false" required class="accent-[#1A64FF]"> Falso
-                </label>
+              <div class="space-y-1.5">
+                <input type="${inpType}" id="q_short_${idx}" maxlength="${maxC}" required placeholder="${ph}"
+                       oninput="document.getElementById('q_short_cnt_${idx}').textContent = this.value.length + ' / ${maxC} caracteres';"
+                       class="pro-input w-full px-3.5 py-2.5 text-xs sm:text-[13px] font-medium bg-white">
+                <div class="flex justify-between text-[10.5px] text-slate-400">
+                  <span>${fmt === 'number' ? 'Formato: Solo números' : (fmt === 'email' ? 'Formato: Correo electrónico' : 'Respuesta breve')}</span>
+                  <span id="q_short_cnt_${idx}" class="font-mono">0 / ${maxC} caracteres</span>
+                </div>
               </div>
             </div>
           `;
         }
-        if (qItem.type === 'match') {
-          const pairs = qItem.pairs || [];
-          const rightOpts = pairs.map((pr, pIdx) => `<option value="${pIdx}">${pr.right}</option>`).join('');
+
+        // 1B. Párrafo (Revisión Manual)
+        if (t === 'paragraph') {
+          const ph = escapeQuizHtml(qItem.placeholderText || 'Redacta tu respuesta extensa aquí...');
+          const mode = qItem.counterMode || 'words';
           return `
-            <div class="p-4 rounded-xl bg-slate-50/80 border border-slate-200 space-y-3">
-              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
-                <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0">${idx + 1} • Enlazar</span>
-                <span>${qItem.q}</span>
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 flex-wrap">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 shrink-0">${idx + 1} • Párrafo</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                <span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-bold">Revisión manual</span>
                 ${ptsBadge}
               </div>
-              <div class="space-y-2 pl-2 sm:pl-7">
-                ${pairs.map((pr, pIdx) => `
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 items-center bg-white p-2.5 rounded-lg border border-slate-200 text-xs">
-                    <span class="font-semibold text-slate-800">${pr.left}</span>
-                    <select name="q_${idx}_match_${pIdx}" required class="pro-input px-2.5 py-1.5 text-xs font-semibold">
-                      <option value="">Selecciona pareja...</option>
-                      ${rightOpts}
-                    </select>
-                  </div>
+              <div class="space-y-1.5">
+                <textarea id="q_para_${idx}" rows="4" required placeholder="${ph}"
+                          oninput="updateParagraphCounter(${idx}, '${mode}')"
+                          class="pro-input w-full px-3.5 py-2.5 text-xs sm:text-[13px] leading-relaxed bg-white resize-y"></textarea>
+                <div class="flex justify-between text-[10.5px] text-slate-400">
+                  <span>Quedará marcada como "Pendiente de revisión" por el instructor.</span>
+                  <span id="q_para_cnt_${idx}" class="font-mono">${mode === 'chars' ? '0 caracteres' : '0 palabras • 0 caracteres'}</span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 2B. Casillas de verificación (Checkboxes)
+        if (t === 'checkboxes') {
+          const opts = qItem.options || [];
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 flex-wrap">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-100 text-[#1A64FF] shrink-0">${idx + 1} • Casillas</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="text-[11px] font-semibold text-[#1A64FF]">Selecciona todas las opciones que apliquen:</div>
+              <div class="space-y-2">
+                ${opts.map((opt, oIdx) => `
+                  <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] text-xs cursor-pointer transition select-none">
+                    <input type="checkbox" name="q_chk_${idx}" value="${oIdx}" class="w-4 h-4 accent-[#1A64FF] rounded shrink-0">
+                    <span class="text-slate-800 font-medium">${escapeQuizHtml(opt)}</span>
+                  </label>
                 `).join('')}
               </div>
             </div>
           `;
         }
-        // Default: Multiple Choice ('mcq')
+
+        // 2C. Desplegable (Dropdown con buscador si >6 opciones)
+        if (t === 'dropdown') {
+          const opts = qItem.options || [];
+          const hasSearch = opts.length > 6;
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-100 text-[#1A64FF] shrink-0">${idx + 1} • Lista</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              ${hasSearch ? `
+                <div class="relative">
+                  <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                  <input type="text" placeholder="Filtrar opciones del desplegable..." oninput="filterQuizDropdownOptions(${idx}, this.value)" class="pro-input w-full pl-8 pr-3 py-1.5 text-xs bg-white">
+                </div>
+              ` : ''}
+              <select id="q_dd_${idx}" required class="pro-input w-full px-3.5 py-2.5 text-xs font-semibold text-slate-900 bg-white">
+                <option value="">Selecciona una opción...</option>
+                ${opts.map((opt, oIdx) => `<option value="${oIdx}">${escapeQuizHtml(opt)}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }
+
+        // 3A. Escala lineal
+        if (t === 'linear_scale') {
+          const minV = Number(qItem.scaleMin ?? 1);
+          const maxV = Number(qItem.scaleMax ?? 5);
+          const nums = [];
+          for (let n = minV; n <= maxV; n++) nums.push(n);
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-4">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 shrink-0">${idx + 1} • Escala</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3">
+                <div class="flex items-center justify-between text-[11px] font-bold text-slate-500">
+                  <span>${escapeQuizHtml(qItem.minLabel || 'Mínimo')}</span>
+                  <span>${escapeQuizHtml(qItem.maxLabel || 'Máximo')}</span>
+                </div>
+                <div class="flex items-center justify-between gap-1.5 overflow-x-auto py-1">
+                  ${nums.map(val => `
+                    <label class="flex-1 min-w-[36px] flex flex-col items-center gap-1.5 cursor-pointer group">
+                      <span class="font-mono text-xs font-extrabold text-slate-700">${val}</span>
+                      <input type="radio" name="q_scale_${idx}" value="${val}" required class="sr-only peer">
+                      <span class="w-8 h-8 rounded-full border-2 border-slate-300 peer-checked:border-[#1A64FF] peer-checked:bg-[#1A64FF] peer-checked:text-white flex items-center justify-center text-xs font-bold text-slate-500 group-hover:border-[#1A64FF] transition">
+                        ${val}
+                      </span>
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 3B & 3C. Cuadrícula de varias opciones / Cuadrícula de casillas
+        if (t === 'grid_radio' || t === 'grid_checkbox') {
+          const rows = qItem.gridRows || [];
+          const cols = qItem.gridCols || [];
+          const isRadio = (t === 'grid_radio');
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 shrink-0">${idx + 1} • Matriz</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+                <table class="w-full text-xs text-center border-collapse">
+                  <thead class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                    <tr>
+                      <th class="py-2.5 px-3 text-left font-extrabold">Criterio</th>
+                      ${cols.map(c => `<th class="py-2.5 px-3 font-bold">${escapeQuizHtml(c)}</th>`).join('')}
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    ${rows.map((rName, rIdx) => `
+                      <tr class="hover:bg-slate-50/80">
+                        <td class="py-2.5 px-3 text-left font-semibold text-slate-800">${escapeQuizHtml(rName)}</td>
+                        ${cols.map((_, cIdx) => `
+                          <td class="py-2.5 px-3">
+                            ${isRadio
+                              ? `<input type="radio" name="q_grid_${idx}_${rIdx}" value="${cIdx}" required class="w-4 h-4 accent-[#1A64FF] cursor-pointer">`
+                              : `<input type="checkbox" name="q_grid_${idx}_${rIdx}" value="${cIdx}" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">`}
+                          </td>
+                        `).join('')}
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        }
+
+        // 4A. Subir archivos (Dropzone interactivo con validación + Revisión Manual)
+        if (t === 'file_upload') {
+          const formats = escapeQuizHtml(qItem.allowedFormats || 'PDF, JPG, PNG');
+          const maxMb = Number(qItem.maxSizeMb || 10);
+          const maxFiles = Number(qItem.maxFiles || 2);
+          quizRuntimeState[idx] = { files: [] };
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2 flex-wrap">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 shrink-0">${idx + 1} • Archivo</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                <span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-700 text-[10px] font-bold">Revisión manual</span>
+                ${ptsBadge}
+              </div>
+              <div class="text-[11px] font-semibold text-slate-500">
+                Formatos: <strong>${formats}</strong> • Máx. <strong>${maxMb} MB</strong> • Hasta <strong>${maxFiles} archivo(s)</strong>
+              </div>
+              <div id="q_dropzone_${idx}"
+                   ondragover="event.preventDefault(); this.classList.add('border-[#1A64FF]','bg-blue-50/50');"
+                   ondragleave="this.classList.remove('border-[#1A64FF]','bg-blue-50/50');"
+                   ondrop="handleQuizFileDrop(event, ${idx}, '${formats}', ${maxMb}, ${maxFiles})"
+                   class="p-6 rounded-2xl border-2 border-dashed border-slate-300 bg-white text-center space-y-2 transition">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#1A64FF] mx-auto flex items-center justify-center text-base">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <div class="text-xs font-bold text-slate-800">Arrastra y suelta tus archivos aquí</div>
+                <label class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold cursor-pointer transition">
+                  <span>Seleccionar archivo</span>
+                  <input type="file" multiple onchange="handleQuizFileSelect(this, ${idx}, '${formats}', ${maxMb}, ${maxFiles})" class="hidden">
+                </label>
+              </div>
+              <div id="q_filelist_${idx}" class="space-y-1.5"></div>
+            </div>
+          `;
+        }
+
+        // 4B. Fecha y Hora
+        if (t === 'date_time') {
+          const mode = qItem.dateTimeMode || 'both';
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-100 text-[#1A64FF] shrink-0">${idx + 1} • Fecha/Hora</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${(mode === 'both' || mode === 'date') ? `
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-600 mb-1"><i class="fa-regular fa-calendar mr-1 text-[#1A64FF]"></i>Fecha (AAAA/MM/DD)</label>
+                    <input type="date" id="q_date_${idx}" required class="pro-input w-full px-3.5 py-2 text-xs font-semibold bg-white">
+                  </div>
+                ` : ''}
+                ${(mode === 'both' || mode === 'time') ? `
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-600 mb-1"><i class="fa-regular fa-clock mr-1 text-[#1A64FF]"></i>Hora (HH:MM)</label>
+                    <input type="time" id="q_time_${idx}" required class="pro-input w-full px-3.5 py-2 text-xs font-semibold bg-white">
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          `;
+        }
+
+        // 5A. Verdadero / Falso (Dos tarjetas horizontales lado a lado)
+        if (t === 'tf') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-pink-100 text-[#EC4899] shrink-0">${idx + 1} • V/F</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <label class="cursor-pointer">
+                  <input type="radio" name="q_${idx}" value="true" required class="sr-only peer">
+                  <div class="p-3.5 rounded-xl bg-white border-2 border-slate-200 peer-checked:border-emerald-600 peer-checked:bg-emerald-50 text-slate-700 peer-checked:text-emerald-900 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                    <span>Verdadero</span>
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="q_${idx}" value="false" required class="sr-only peer">
+                  <div class="p-3.5 rounded-xl bg-white border-2 border-slate-200 peer-checked:border-rose-600 peer-checked:bg-rose-50 text-slate-700 peer-checked:text-rose-900 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-circle-xmark text-rose-600"></i>
+                    <span>Falso</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          `;
+        }
+
+        // 5B. Emparejamiento (Relación de columnas visual con puntos de anclaje y líneas SVG)
+        if (t === 'match') {
+          const pairs = qItem.pairs || [];
+          const shuffledRight = shuffleArrayWithOrigIndex(pairs.map(pr => pr.right));
+          quizRuntimeState[idx] = {
+            selectedLeft: null,
+            connections: {}, // leftIdx -> displayRightIdx
+            shuffledRight: shuffledRight
+          };
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0">${idx + 1} • Enlazar</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <p class="text-[11px] text-slate-500">Haz clic en una tarjeta de la izquierda y luego en su pareja de la derecha para trazar la conexión (haz clic sobre una tarjeta conectada para borrar su enlace).</p>
+              <div id="q_match_stage_${idx}" class="relative grid grid-cols-12 gap-4 items-stretch pt-1 select-none">
+                <svg id="q_match_svg_${idx}" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
+                <div class="col-span-5 space-y-2.5 z-20">
+                  ${pairs.map((pr, lIdx) => `
+                    <button type="button" id="q_m_left_${idx}_${lIdx}" onclick="handleMatchLeftClick(${idx}, ${lIdx})"
+                            class="w-full p-3 rounded-xl bg-white border-2 border-slate-200 hover:border-[#1A64FF] text-left text-xs font-semibold text-slate-800 flex items-center justify-between gap-2 transition cursor-pointer">
+                      <span>${escapeQuizHtml(pr.left)}</span>
+                      <span class="w-3 h-3 rounded-full border-2 border-slate-400 bg-white shrink-0"></span>
+                    </button>
+                  `).join('')}
+                </div>
+                <div class="col-span-2"></div>
+                <div class="col-span-5 space-y-2.5 z-20">
+                  ${shuffledRight.map((sr, rDispIdx) => `
+                    <button type="button" id="q_m_right_${idx}_${rDispIdx}" onclick="handleMatchRightClick(${idx}, ${rDispIdx})"
+                            class="w-full p-3 rounded-xl bg-white border-2 border-slate-200 hover:border-[#1A64FF] text-left text-xs font-semibold text-slate-800 flex items-center gap-2 transition cursor-pointer">
+                      <span class="w-3 h-3 rounded-full border-2 border-slate-400 bg-white shrink-0"></span>
+                      <span>${escapeQuizHtml(sr.item)}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 5C. Ordenamiento / Secuencia (Arrastrar tarjetas + flechas arriba/abajo)
+        if (t === 'ordering') {
+          const steps = qItem.orderSteps || [];
+          const shuffled = shuffleArrayWithOrigIndex(steps);
+          quizRuntimeState[idx] = { items: shuffled, dragIdx: null };
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0">${idx + 1} • Ordenar</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <p class="text-[11px] text-slate-500">Arrastra las tarjetas hacia arriba o abajo (o usa las flechas) para ordenarlas en la secuencia correcta:</p>
+              <div id="q_order_list_${idx}" class="space-y-2">
+                ${renderOrderingCardsHTML(idx)}
+              </div>
+            </div>
+          `;
+        }
+
+        // 5D. Rellenar espacios en blanco (Cloze)
+        if (t === 'cloze') {
+          const tpl = String(qItem.clozeTemplate || '');
+          const style = qItem.clozeInputStyle || 'text';
+          const matches = [...tpl.matchAll(/\[([^\]]+)\]/g)];
+          const answers = matches.map(m => m[1].trim());
+          quizRuntimeState[idx] = { answers: answers };
+
+          const distractors = String(qItem.clozeDistractors || '')
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+          const allPool = Array.from(new Set([...answers, ...distractors]));
+
+          let blankCounter = 0;
+          const renderedSentence = escapeQuizHtml(tpl).replace(/\[([^\]]+)\]/g, () => {
+            const bIdx = blankCounter++;
+            if (style === 'dropdown') {
+              const shuffledOpts = shuffleArrayWithOrigIndex(allPool);
+              return `<select id="q_cloze_${idx}_${bIdx}" required class="inline-block mx-1 px-2.5 py-1 rounded-lg border-2 border-blue-200 bg-white text-xs font-bold text-[#1A64FF] focus:border-[#1A64FF] outline-none">
+                <option value="">Elegir...</option>
+                ${shuffledOpts.map(o => `<option value="${escapeQuizHtml(o.item)}">${escapeQuizHtml(o.item)}</option>`).join('')}
+              </select>`;
+            }
+            return `<input type="text" id="q_cloze_${idx}_${bIdx}" required placeholder="Espacio ${bIdx + 1}" class="inline-block mx-1 w-36 px-2.5 py-1 rounded-lg border-2 border-blue-200 bg-white text-xs font-bold text-slate-900 text-center focus:border-[#1A64FF] outline-none">`;
+          });
+
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 shrink-0">${idx + 1} • Completar</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-[13.5px] text-slate-800 leading-loose">
+                ${renderedSentence}
+              </div>
+            </div>
+          `;
+        }
+
+        // 6A. Zonas activas (Hotspot)
+        if (t === 'hotspot') {
+          quizRuntimeState[idx] = { clickX: null, clickY: null };
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-purple-100 text-purple-800 shrink-0">${idx + 1} • Hotspot</span>
+                <span>${escapeQuizHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <p class="text-[11px] text-slate-500">Haz clic directamente sobre el área exacta de la imagen que corresponde a la respuesta:</p>
+              <div onclick="handleQuizHotspotClick(event, ${idx})" class="relative aspect-video w-full rounded-2xl bg-[#0B0F17] border border-slate-300 overflow-hidden flex items-center justify-center cursor-crosshair select-none">
+                ${qItem.hotspotImg
+                  ? `<img src="${qItem.hotspotImg}" alt="Hotspot" class="w-full h-full object-contain pointer-events-none">`
+                  : `<div class="text-slate-400 text-xs">Imagen de referencia no cargada</div>`}
+                <div id="q_hs_marker_${idx}" class="hidden absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                  <span class="w-7 h-7 rounded-full bg-[#1A64FF]/30 border-2 border-[#1A64FF] flex items-center justify-center animate-pulse">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#1A64FF]"></span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // 2A. Default: Opción múltiple ('mcq' — Radio cards excluyentes)
         return `
-          <div class="p-4 rounded-xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+          <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/90 space-y-3">
             <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
               <span class="font-mono text-xs px-2 py-0.5 rounded bg-blue-100 text-[#1A64FF] shrink-0">${idx + 1}</span>
-              <span>${qItem.q}</span>
+              <span>${escapeQuizHtml(qItem.q)}</span>
               ${ptsBadge}
             </div>
-            <div class="space-y-1.5 pl-7">
+            <div class="space-y-2">
               ${(qItem.options || []).map((opt, oIdx) => `
-                <label class="flex items-center gap-2.5 p-2 rounded-lg hover:bg-white border border-transparent hover:border-slate-200 text-xs cursor-pointer">
-                  <input type="radio" name="q_${idx}" value="${oIdx}" required class="accent-[#1A64FF]">
-                  <span class="text-slate-700 font-medium">${opt}</span>
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] text-xs cursor-pointer transition select-none">
+                  <input type="radio" name="q_${idx}" value="${oIdx}" required class="w-4 h-4 accent-[#1A64FF] shrink-0">
+                  <span class="text-slate-800 font-medium">${escapeQuizHtml(opt)}</span>
                 </label>
               `).join('')}
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    // --- Interactive Runtime Helpers for All 15 Quiz Types ---
+    function updateParagraphCounter(idx, mode) {
+      const el = document.getElementById(`q_para_${idx}`);
+      const cntEl = document.getElementById(`q_para_cnt_${idx}`);
+      if (!el || !cntEl) return;
+      const val = el.value;
+      const chars = val.length;
+      const words = val.trim() ? val.trim().split(/\s+/).length : 0;
+      cntEl.textContent = mode === 'chars' ? `${chars} caracteres` : `${words} palabras • ${chars} caracteres`;
+    }
+
+    function filterQuizDropdownOptions(idx, query) {
+      const sel = document.getElementById(`q_dd_${idx}`);
+      if (!sel) return;
+      const q = query.toLowerCase().trim();
+      Array.from(sel.options).forEach((opt, i) => {
+        if (i === 0) return;
+        opt.hidden = q && !opt.textContent.toLowerCase().includes(q);
+      });
+    }
+
+    function handleQuizFileDrop(e, idx, formats, maxMb, maxFiles) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('border-[#1A64FF]', 'bg-blue-50/50');
+      if (e.dataTransfer && e.dataTransfer.files) {
+        processQuizUploadedFiles(e.dataTransfer.files, idx, formats, maxMb, maxFiles);
+      }
+    }
+
+    function handleQuizFileSelect(inputEl, idx, formats, maxMb, maxFiles) {
+      if (inputEl && inputEl.files) {
+        processQuizUploadedFiles(inputEl.files, idx, formats, maxMb, maxFiles);
+      }
+    }
+
+    function processQuizUploadedFiles(fileList, idx, formats, maxMb, maxFiles) {
+      const st = quizRuntimeState[idx] || { files: [] };
+      const allowedExts = formats.split(',').map(s => s.trim().toLowerCase().replace('.', '')).filter(Boolean);
+      Array.from(fileList).forEach(file => {
+        if (st.files.length >= maxFiles) {
+          showProAlert("Límite alcanzado", `Solo puedes subir hasta ${maxFiles} archivo(s).`, false);
+          return;
+        }
+        const ext = file.name.split('.').pop().toLowerCase();
+        if (allowedExts.length && !allowedExts.includes(ext)) {
+          showProAlert("Formato no permitido", `El archivo "${file.name}" no cumple con los formatos (${formats}).`, false);
+          return;
+        }
+        if (file.size > maxMb * 1024 * 1024) {
+          showProAlert("Archivo muy pesado", `El archivo "${file.name}" supera el límite de ${maxMb} MB.`, false);
+          return;
+        }
+        st.files.push({ name: file.name, sizeKb: Math.max(1, Math.round(file.size / 1024)) });
+      });
+      quizRuntimeState[idx] = st;
+      renderQuizUploadedFileList(idx);
+    }
+
+    function removeQuizUploadedFile(idx, fIdx) {
+      const st = quizRuntimeState[idx];
+      if (!st) return;
+      st.files.splice(fIdx, 1);
+      renderQuizUploadedFileList(idx);
+    }
+
+    function renderQuizUploadedFileList(idx) {
+      const box = document.getElementById(`q_filelist_${idx}`);
+      const st = quizRuntimeState[idx];
+      if (!box || !st) return;
+      box.innerHTML = st.files.map((f, fIdx) => `
+        <div class="p-2.5 rounded-xl bg-white border border-emerald-200 flex items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 min-w-0">
+            <i class="fa-solid fa-file-circle-check text-emerald-600"></i>
+            <span class="font-semibold text-slate-800 truncate">${escapeQuizHtml(f.name)}</span>
+            <span class="font-mono text-[10.5px] text-slate-400">(${f.sizeKb} KB)</span>
+          </div>
+          <button type="button" onclick="removeQuizUploadedFile(${idx}, ${fIdx})" class="text-rose-600 hover:underline text-[11px] font-bold cursor-pointer">Eliminar</button>
+        </div>
+      `).join('');
+    }
+
+    // Visual Matching (Column Connection with SVG lines)
+    function handleMatchLeftClick(qIdx, lIdx) {
+      const st = quizRuntimeState[qIdx];
+      if (!st) return;
+      if (st.connections[lIdx] !== undefined) {
+        delete st.connections[lIdx];
+        st.selectedLeft = null;
+      } else {
+        st.selectedLeft = (st.selectedLeft === lIdx) ? null : lIdx;
+      }
+      refreshMatchUI(qIdx);
+    }
+
+    function handleMatchRightClick(qIdx, rDispIdx) {
+      const st = quizRuntimeState[qIdx];
+      if (!st) return;
+      // If clicking an already-connected right card without an active left selection, clear its link
+      const existingLeft = Object.keys(st.connections).find(k => st.connections[k] === rDispIdx);
+      if (st.selectedLeft === null) {
+        if (existingLeft !== undefined) {
+          delete st.connections[existingLeft];
+          refreshMatchUI(qIdx);
+        }
+        return;
+      }
+      if (existingLeft !== undefined) delete st.connections[existingLeft];
+      st.connections[st.selectedLeft] = rDispIdx;
+      st.selectedLeft = null;
+      refreshMatchUI(qIdx);
+    }
+
+    function refreshMatchUI(qIdx) {
+      const st = quizRuntimeState[qIdx];
+      const stage = document.getElementById(`q_match_stage_${qIdx}`);
+      const svg = document.getElementById(`q_match_svg_${qIdx}`);
+      if (!st || !stage || !svg) return;
+
+      const stageRect = stage.getBoundingClientRect();
+      const connectedRightSet = new Set(Object.values(st.connections));
+
+      st.shuffledRight.forEach((_, idx) => {
+        const lBtn = document.getElementById(`q_m_left_${qIdx}_${idx}`);
+        const rBtn = document.getElementById(`q_m_right_${qIdx}_${idx}`);
+        if (lBtn) {
+          const isSel = st.selectedLeft === idx;
+          const isConn = st.connections[idx] !== undefined;
+          lBtn.className = `w-full p-3 rounded-xl text-left text-xs font-semibold flex items-center justify-between gap-2 transition cursor-pointer ${
+            isSel ? 'bg-blue-50 border-2 border-[#1A64FF] text-[#1A64FF] shadow-sm' :
+            (isConn ? 'bg-emerald-50/80 border-2 border-emerald-500 text-slate-900' : 'bg-white border-2 border-slate-200 hover:border-[#1A64FF] text-slate-800')
+          }`;
+        }
+        if (rBtn) {
+          const isConn = connectedRightSet.has(idx);
+          rBtn.className = `w-full p-3 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition cursor-pointer ${
+            isConn ? 'bg-emerald-50/80 border-2 border-emerald-500 text-slate-900' : 'bg-white border-2 border-slate-200 hover:border-[#1A64FF] text-slate-800'
+          }`;
+        }
+      });
+
+      let linesSvg = '';
+      Object.entries(st.connections).forEach(([lIdxStr, rDispIdx]) => {
+        const lBtn = document.getElementById(`q_m_left_${qIdx}_${lIdxStr}`);
+        const rBtn = document.getElementById(`q_m_right_${qIdx}_${rDispIdx}`);
+        if (lBtn && rBtn) {
+          const lr = lBtn.getBoundingClientRect();
+          const rr = rBtn.getBoundingClientRect();
+          const x1 = lr.right - stageRect.left;
+          const y1 = lr.top + lr.height / 2 - stageRect.top;
+          const x2 = rr.left - stageRect.left;
+          const y2 = rr.top + rr.height / 2 - stageRect.top;
+          linesSvg += `<path d="M ${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2} ${y2}" stroke="#10B981" stroke-width="2.5" fill="none" />`;
+        }
+      });
+      svg.innerHTML = linesSvg;
+    }
+
+    // Ordering / Sequence Drag-and-Drop + Accessible Arrows
+    function renderOrderingCardsHTML(qIdx) {
+      const st = quizRuntimeState[qIdx];
+      if (!st) return '';
+      return st.items.map((entry, pos) => `
+        <div draggable="true"
+             ondragstart="quizRuntimeState[${qIdx}].dragIdx=${pos}"
+             ondragover="event.preventDefault()"
+             ondrop="moveOrderingCard(${qIdx}, quizRuntimeState[${qIdx}].dragIdx, ${pos})"
+             class="p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] flex items-center justify-between gap-3 text-xs cursor-grab active:cursor-grabbing shadow-2xs">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="text-slate-400 font-bold tracking-tighter select-none">⋮⋮</span>
+            <span class="w-6 h-6 rounded-lg bg-[#0B0F17] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">${pos + 1}</span>
+            <span class="font-semibold text-slate-800 truncate">${escapeQuizHtml(entry.item)}</span>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            <button type="button" onclick="moveOrderingCard(${qIdx}, ${pos}, ${pos - 1})" ${pos === 0 ? 'disabled' : ''} class="w-7 h-7 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 disabled:opacity-30 cursor-pointer"><i class="fa-solid fa-arrow-up text-[10px]"></i></button>
+            <button type="button" onclick="moveOrderingCard(${qIdx}, ${pos}, ${pos + 1})" ${pos === st.items.length - 1 ? 'disabled' : ''} class="w-7 h-7 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 disabled:opacity-30 cursor-pointer"><i class="fa-solid fa-arrow-down text-[10px]"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function moveOrderingCard(qIdx, fromIdx, toIdx) {
+      const st = quizRuntimeState[qIdx];
+      if (!st || fromIdx === null || toIdx < 0 || toIdx >= st.items.length || fromIdx === toIdx) return;
+      const [moved] = st.items.splice(fromIdx, 1);
+      st.items.splice(toIdx, 0, moved);
+      st.dragIdx = null;
+      const box = document.getElementById(`q_order_list_${qIdx}`);
+      if (box) box.innerHTML = renderOrderingCardsHTML(qIdx);
+    }
+
+    // Hotspot Coordinate Click
+    function handleQuizHotspotClick(e, idx) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const xPct = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+      const yPct = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+      quizRuntimeState[idx] = { clickX: xPct, clickY: yPct };
+      const marker = document.getElementById(`q_hs_marker_${idx}`);
+      if (marker) {
+        marker.style.left = `${xPct}%`;
+        marker.style.top = `${yPct}%`;
+        marker.classList.remove('hidden');
+      }
     }
 
     function submitQuiz(e) {
@@ -5855,31 +6443,145 @@
       const questions = qConfig.questions || [];
 
       let earnedPts = 0;
-      let totalPossiblePts = 0;
+      let totalAutoPts = 0;
+      let hasManualReview = false;
 
-      questions.forEach((qItem, idx) => {
+      for (let idx = 0; idx < questions.length; idx++) {
+        const qItem = questions[idx];
+        const t = qItem.type || 'mcq';
         const qPts = Number(qItem.points || 10);
-        totalPossiblePts += qPts;
-        if (qItem.type === 'tf') {
+
+        if (t === 'paragraph') {
+          hasManualReview = true;
+          continue;
+        }
+        if (t === 'file_upload') {
+          const st = quizRuntimeState[idx];
+          if (!st || !st.files || st.files.length === 0) {
+            showProAlert("Archivo Requerido", `Adjunta al menos un archivo en la pregunta #${idx + 1}.`, false);
+            return;
+          }
+          hasManualReview = true;
+          continue;
+        }
+        if (t === 'match') {
+          const st = quizRuntimeState[idx];
+          const pairs = qItem.pairs || [];
+          if (!st || Object.keys(st.connections).length < pairs.length) {
+            showProAlert("Emparejamiento Incompleto", `Conecta todas las parejas en la pregunta #${idx + 1} antes de enviar.`, false);
+            return;
+          }
+          totalAutoPts += qPts;
+          let hits = 0;
+          pairs.forEach((_, lIdx) => {
+            const dispR = st.connections[lIdx];
+            if (dispR !== undefined && st.shuffledRight[dispR] && st.shuffledRight[dispR].origIdx === lIdx) hits++;
+          });
+          if (pairs.length > 0) earnedPts += (hits / pairs.length) * qPts;
+          continue;
+        }
+        if (t === 'hotspot') {
+          const st = quizRuntimeState[idx];
+          if (!st || st.clickX === null || st.clickY === null) {
+            showProAlert("Selección en Imagen Requerida", `Haz clic sobre la imagen en la pregunta #${idx + 1} antes de enviar.`, false);
+            return;
+          }
+          totalAutoPts += qPts;
+          const tx = Number(qItem.hotspotX ?? 50);
+          const ty = Number(qItem.hotspotY ?? 50);
+          const tr = Number(qItem.hotspotRadius ?? 14);
+          const dist = Math.hypot(st.clickX - tx, st.clickY - ty);
+          if (dist <= tr) earnedPts += qPts;
+          continue;
+        }
+
+        totalAutoPts += qPts;
+
+        if (t === 'short') {
+          const val = (document.getElementById(`q_short_${idx}`)?.value || '').trim().toLowerCase();
+          const accepted = String(qItem.expectedAnswer || '')
+            .split(',')
+            .map(s => s.trim().toLowerCase())
+            .filter(Boolean);
+          if (accepted.length === 0 || accepted.some(k => val === k || val.includes(k))) {
+            earnedPts += qPts;
+          }
+        } else if (t === 'checkboxes') {
+          const checked = Array.from(document.querySelectorAll(`input[name="q_chk_${idx}"]:checked`)).map(el => Number(el.value));
+          const expected = (qItem.correctMultiple || []).map(Number);
+          if ((qItem.scoringMode || 'all_or_nothing') === 'partial') {
+            const rightHits = checked.filter(v => expected.includes(v)).length;
+            const wrongHits = checked.filter(v => !expected.includes(v)).length;
+            const net = Math.max(0, rightHits - wrongHits);
+            if (expected.length > 0) earnedPts += (net / expected.length) * qPts;
+          } else {
+            const exact = checked.length === expected.length && expected.every(v => checked.includes(v));
+            if (exact) earnedPts += qPts;
+          }
+        } else if (t === 'dropdown') {
+          const val = document.getElementById(`q_dd_${idx}`)?.value;
+          if (val !== '' && Number(val) === Number(qItem.correct)) earnedPts += qPts;
+        } else if (t === 'linear_scale') {
+          const sel = document.querySelector(`input[name="q_scale_${idx}"]:checked`);
+          const exp = String(qItem.expectedScale ?? '').trim();
+          if (sel && (exp === '' || Number(sel.value) === Number(exp))) earnedPts += qPts;
+        } else if (t === 'grid_radio') {
+          const rows = qItem.gridRows || [];
+          const key = qItem.gridCorrect || [];
+          let hits = 0;
+          rows.forEach((_, rIdx) => {
+            const sel = document.querySelector(`input[name="q_grid_${idx}_${rIdx}"]:checked`);
+            if (sel && Number(sel.value) === Number(key[rIdx] ?? 0)) hits++;
+          });
+          if (rows.length > 0) earnedPts += (hits / rows.length) * qPts;
+        } else if (t === 'grid_checkbox') {
+          const rows = qItem.gridRows || [];
+          const key = qItem.gridCorrect || [];
+          let hits = 0;
+          rows.forEach((_, rIdx) => {
+            const checked = Array.from(document.querySelectorAll(`input[name="q_grid_${idx}_${rIdx}"]:checked`)).map(el => Number(el.value));
+            const expArr = Array.isArray(key[rIdx]) ? key[rIdx].map(Number) : [];
+            if (checked.length === expArr.length && expArr.every(v => checked.includes(v))) hits++;
+          });
+          if (rows.length > 0) earnedPts += (hits / rows.length) * qPts;
+        } else if (t === 'date_time') {
+          const dVal = document.getElementById(`q_date_${idx}`)?.value || '';
+          const tVal = document.getElementById(`q_time_${idx}`)?.value || '';
+          const dOk = !qItem.expectedDate || dVal === qItem.expectedDate;
+          const tOk = !qItem.expectedTime || tVal === qItem.expectedTime;
+          if (dOk && tOk) earnedPts += qPts;
+        } else if (t === 'tf') {
           const sel = document.querySelector(`input[name="q_${idx}"]:checked`);
           if (sel && String(sel.value) === String(qItem.correctBool)) earnedPts += qPts;
-        } else if (qItem.type === 'match') {
-          const pairs = qItem.pairs || [];
-          let pairHits = 0;
-          pairs.forEach((_, pIdx) => {
-            const sel = document.querySelector(`select[name="q_${idx}_match_${pIdx}"]`);
-            if (sel && sel.value !== '' && Number(sel.value) === pIdx) pairHits++;
+        } else if (t === 'ordering') {
+          const st = quizRuntimeState[idx];
+          if (st && Array.isArray(st.items)) {
+            let hits = 0;
+            st.items.forEach((entry, pos) => {
+              if (entry.origIdx === pos) hits++;
+            });
+            if (st.items.length > 0) earnedPts += (hits / st.items.length) * qPts;
+          }
+        } else if (t === 'cloze') {
+          const st = quizRuntimeState[idx];
+          const answers = st?.answers || [];
+          let hits = 0;
+          answers.forEach((ans, bIdx) => {
+            const userVal = (document.getElementById(`q_cloze_${idx}_${bIdx}`)?.value || '').trim().toLowerCase();
+            if (userVal === ans.toLowerCase()) hits++;
           });
-          if (pairs.length > 0) earnedPts += (pairHits / pairs.length) * qPts;
+          if (answers.length > 0) earnedPts += (hits / answers.length) * qPts;
         } else {
+          // Default: mcq
           const sel = document.querySelector(`input[name="q_${idx}"]:checked`);
           if (sel && Number(sel.value) === Number(qItem.correct)) earnedPts += qPts;
         }
-      });
+      }
 
-      const score = totalPossiblePts > 0 ? Math.round((earnedPts / totalPossiblePts) * 100) : 100;
+      const score = totalAutoPts > 0 ? Math.round((earnedPts / totalAutoPts) * 100) : 100;
       const p = ensureProgressEntry(modId);
       p.score = score;
+      p.hasManualReviewItems = hasManualReview;
       quizActiveLock = false;
 
       if (score < 60) {
