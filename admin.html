@@ -2292,57 +2292,53 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
     }
 
-    // ==================== 4. EVALUACIONES PRO (15 PLANTILLAS COMPLETAS + EDITOR VISUAL) ====================
+    // ==================== 4. EVALUACIONES EJECUTIVAS PRO (15 TIPOS ESPECIFICADOS) ====================
     const QUESTION_TYPE_META = {
-      short: { label: "Respuesta corta", group: "Respuesta abierta", icon: "fa-minus", badge: "Texto Breve" },
-      paragraph: { label: "Párrafo", group: "Respuesta abierta", icon: "fa-align-left", badge: "Revisión Manual" },
-      mcq: { label: "Opción múltiple", group: "Selección", icon: "fa-circle-dot", badge: "Selección Única" },
-      checkboxes: { label: "Casillas de verificación", group: "Selección", icon: "fa-square-check", badge: "Selección Múltiple" },
-      dropdown: { label: "Desplegable", group: "Selección", icon: "fa-caret-square-down", badge: "Lista Compacta" },
-      linear_scale: { label: "Escala lineal", group: "Escalas y cuadrículas", icon: "fa-sliders", badge: "Escala Numérica" },
-      grid_radio: { label: "Cuadrícula de varias opciones", group: "Escalas y cuadrículas", icon: "fa-table-cells", badge: "Matriz Radio" },
-      grid_checkbox: { label: "Cuadrícula de casillas", group: "Escalas y cuadrículas", icon: "fa-table-list", badge: "Matriz Casillas" },
-      file_upload: { label: "Subir archivos", group: "Datos específicos y archivos", icon: "fa-cloud-arrow-up", badge: "Revisión Manual" },
-      date_time: { label: "Fecha y Hora", group: "Datos específicos y archivos", icon: "fa-calendar-days", badge: "Dato Exacto" },
-      tf: { label: "Verdadero / Falso", group: "Respuestas cerradas", icon: "fa-toggle-on", badge: "Binaria" },
-      match: { label: "Emparejamiento (Relación de columnas)", group: "Respuestas cerradas", icon: "fa-arrows-left-right", badge: "Conexión Visual" },
-      ordering: { label: "Ordenamiento / Secuencia", group: "Respuestas cerradas", icon: "fa-arrow-down-1-9", badge: "Arrastrar / Ordenar" },
-      cloze: { label: "Rellenar espacios en blanco (Cloze)", group: "Respuestas cerradas", icon: "fa-pen-to-square", badge: "Huecos en Texto" },
-      hotspot: { label: "Zonas activas (Hotspot)", group: "Interactivas / Multimedia", icon: "fa-crosshairs", badge: "Coordenadas X/Y" }
+      short:         { label: "Respuesta corta",             cat: "Respuesta Abierta",        icon: "fa-minus",            auto: true },
+      paragraph:     { label: "Párrafo",                     cat: "Respuesta Abierta",        icon: "fa-align-left",       auto: false },
+      mcq:           { label: "Opción múltiple",             cat: "Selección",                icon: "fa-circle-dot",       auto: true },
+      checkboxes:    { label: "Casillas de verificación",    cat: "Selección",                icon: "fa-square-check",     auto: true },
+      dropdown:      { label: "Desplegable",                 cat: "Selección",                icon: "fa-square-caret-down",auto: true },
+      linear_scale:  { label: "Escala lineal",               cat: "Escalas y Cuadrículas",    icon: "fa-sliders",          auto: true },
+      grid_radio:    { label: "Cuadrícula varias opciones",  cat: "Escalas y Cuadrículas",    icon: "fa-table-cells",      auto: true },
+      grid_checkbox: { label: "Cuadrícula de casillas",      cat: "Escalas y Cuadrículas",    icon: "fa-table-list",       auto: true },
+      file_upload:   { label: "Subir archivos",              cat: "Datos y Archivos",         icon: "fa-cloud-arrow-up",   auto: false },
+      date_time:     { label: "Fecha y Hora",                cat: "Datos y Archivos",         icon: "fa-calendar-days",    auto: true },
+      tf:            { label: "Verdadero / Falso",           cat: "Respuestas Cerradas",      icon: "fa-code-branch",      auto: true },
+      match:         { label: "Emparejamiento",              cat: "Respuestas Cerradas",      icon: "fa-arrows-left-right",auto: true },
+      ordering:      { label: "Ordenamiento / Secuencia",    cat: "Respuestas Cerradas",      icon: "fa-arrow-down-1-9",   auto: true },
+      cloze:         { label: "Rellenar espacios (Cloze)",   cat: "Respuestas Cerradas",      icon: "fa-pen-to-square",    auto: true },
+      hotspot:       { label: "Zonas activas (Hotspot)",     cat: "Interactivas / Multimedia",icon: "fa-crosshairs",       auto: true }
     };
-
-    const QUESTION_TYPE_LABELS = Object.fromEntries(
-      Object.entries(QUESTION_TYPE_META).map(([k, v]) => [k, v.label])
-    );
 
     function buildQuestionTypeOptionsHTML(selectedType) {
       return `
-        <optgroup label="1. Respuesta abierta">
-          <option value="short" ${selectedType === 'short' ? 'selected' : ''}>Respuesta corta (1 línea + palabras clave)</option>
-          <option value="paragraph" ${selectedType === 'paragraph' ? 'selected' : ''}>Párrafo (4-5 líneas • Revisión manual)</option>
+        <optgroup label="1. Respuesta Abierta">
+          <option value="short" ${selectedType === 'short' ? 'selected' : ''}>Respuesta corta</option>
+          <option value="paragraph" ${selectedType === 'paragraph' ? 'selected' : ''}>Párrafo (Revisión manual)</option>
         </optgroup>
         <optgroup label="2. Selección">
-          <option value="mcq" ${selectedType === 'mcq' ? 'selected' : ''}>Opción múltiple (Botón de radio)</option>
-          <option value="checkboxes" ${selectedType === 'checkboxes' ? 'selected' : ''}>Casillas de verificación (Varias correctas)</option>
-          <option value="dropdown" ${selectedType === 'dropdown' ? 'selected' : ''}>Desplegable (Ideal >6 opciones)</option>
+          <option value="mcq" ${selectedType === 'mcq' ? 'selected' : ''}>Opción múltiple</option>
+          <option value="checkboxes" ${selectedType === 'checkboxes' ? 'selected' : ''}>Casillas de verificación</option>
+          <option value="dropdown" ${selectedType === 'dropdown' ? 'selected' : ''}>Desplegable</option>
         </optgroup>
-        <optgroup label="3. Escalas y cuadrículas">
-          <option value="linear_scale" ${selectedType === 'linear_scale' ? 'selected' : ''}>Escala lineal (Barra numerada)</option>
-          <option value="grid_radio" ${selectedType === 'grid_radio' ? 'selected' : ''}>Cuadrícula de varias opciones (1 por fila)</option>
-          <option value="grid_checkbox" ${selectedType === 'grid_checkbox' ? 'selected' : ''}>Cuadrícula de casillas (Varias por fila)</option>
+        <optgroup label="3. Escalas y Cuadrículas">
+          <option value="linear_scale" ${selectedType === 'linear_scale' ? 'selected' : ''}>Escala lineal</option>
+          <option value="grid_radio" ${selectedType === 'grid_radio' ? 'selected' : ''}>Cuadrícula de varias opciones</option>
+          <option value="grid_checkbox" ${selectedType === 'grid_checkbox' ? 'selected' : ''}>Cuadrícula de casillas</option>
         </optgroup>
-        <optgroup label="4. Datos específicos y archivos">
-          <option value="file_upload" ${selectedType === 'file_upload' ? 'selected' : ''}>Subir archivos (Dropzone • Revisión manual)</option>
-          <option value="date_time" ${selectedType === 'date_time' ? 'selected' : ''}>Fecha y Hora (Calendario / Reloj)</option>
+        <optgroup label="4. Datos Específicos y Archivos">
+          <option value="file_upload" ${selectedType === 'file_upload' ? 'selected' : ''}>Subir archivos (Revisión manual)</option>
+          <option value="date_time" ${selectedType === 'date_time' ? 'selected' : ''}>Fecha y Hora</option>
         </optgroup>
-        <optgroup label="5. Respuestas cerradas">
-          <option value="tf" ${selectedType === 'tf' ? 'selected' : ''}>Verdadero / Falso (Tarjetas lado a lado)</option>
+        <optgroup label="5. Respuestas Cerradas">
+          <option value="tf" ${selectedType === 'tf' ? 'selected' : ''}>Verdadero / Falso</option>
           <option value="match" ${selectedType === 'match' ? 'selected' : ''}>Emparejamiento (Relación de columnas)</option>
-          <option value="ordering" ${selectedType === 'ordering' ? 'selected' : ''}>Ordenamiento / Secuencia (Arrastrar tarjetas)</option>
+          <option value="ordering" ${selectedType === 'ordering' ? 'selected' : ''}>Ordenamiento / Secuencia</option>
           <option value="cloze" ${selectedType === 'cloze' ? 'selected' : ''}>Rellenar espacios en blanco (Cloze)</option>
         </optgroup>
         <optgroup label="6. Interactivas / Multimedia">
-          <option value="hotspot" ${selectedType === 'hotspot' ? 'selected' : ''}>Zonas activas (Hotspot sobre imagen)</option>
+          <option value="hotspot" ${selectedType === 'hotspot' ? 'selected' : ''}>Zonas activas (Hotspot)</option>
         </optgroup>
       `;
     }
@@ -2362,37 +2358,28 @@ const DEFAULT_AUDIENCE_CATALOG = [
       const searchQ = (document.getElementById('admQuizSearchInput')?.value || '').toLowerCase().trim();
       const listBox = document.getElementById('admQuizQuestionsList');
 
-      const totalAssignedPts = (qCfg.questions || []).reduce((acc, it) => acc + Number(it.points || 0), 0);
-
       if (!qCfg.questions || qCfg.questions.length === 0) {
         listBox.innerHTML = `
-          <div class="exec-card p-10 text-center space-y-3 border-l-4 border-l-[#1A64FF]">
+          <div class="exec-card p-10 text-center space-y-3 border-t-4 border-t-[#1A64FF]">
             <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-clipboard-question"></i></div>
             <h4 class="text-base font-extrabold text-slate-900">Evaluación sin preguntas configuradas</h4>
-            <p class="text-xs text-slate-500 max-w-md mx-auto">Selecciona cualquiera de los 15 tipos de pregunta en la barra superior y haz clic en <strong>+ Agregar Pregunta</strong>.</p>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">Elige cualquiera de los 15 formatos de pregunta en la barra superior y presiona <strong>+ Agregar Pregunta</strong>.</p>
           </div>
         `;
         return;
       }
 
+      const totalPts = qCfg.questions.reduce((acc, item) => acc + Number(item.points || 0), 0);
       const visibleQuestions = qCfg.questions
         .map((qItem, qIdx) => Object.assign({}, qItem, { _origIdx: qIdx }))
         .filter(qItem => !searchQ || (qItem.q || '').toLowerCase().includes(searchQ));
 
-      const summaryHeader = `
-        <div class="exec-card px-5 py-3.5 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div class="flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span class="font-bold">Estructura de Evaluación: ${qCfg.questions.length} pregunta(s)</span>
-          </div>
-          <div class="flex items-center gap-4 font-mono text-[11px]">
-            <span>Suma actual: <strong class="text-emerald-400">${totalAssignedPts} pts</strong></span>
-            <span>Mínimo aprobación: <strong class="text-blue-300">${qCfg.minPass || 80}%</strong></span>
-          </div>
+      listBox.innerHTML = `
+        <div class="flex items-center justify-between px-1 text-xs text-slate-500">
+          <span><strong>${qCfg.questions.length}</strong> pregunta(s) configurada(s)</span>
+          <span class="font-mono font-bold px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-800">Suma total: ${totalPts} pts</span>
         </div>
-      `;
-
-      listBox.innerHTML = summaryHeader + visibleQuestions.map(qItem => {
+      ` + visibleQuestions.map(qItem => {
         const qIdx = qItem._origIdx;
         const t = qItem.type || 'mcq';
         const meta = QUESTION_TYPE_META[t] || QUESTION_TYPE_META.mcq;
@@ -2400,69 +2387,45 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
         if (t === 'short') {
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
-                <div class="md:col-span-6">
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Palabras clave aceptadas (separadas por coma)</label>
-                  <input type="text" data-qidx="${qIdx}" data-gfield="expectedAnswer" value="${escapeHtml(qItem.expectedAnswer || '')}" placeholder="Ej. Google, cuenta institucional, correo Google" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs font-semibold">
-                  <p class="text-[10.5px] text-slate-500 mt-1">Ignora mayúsculas/minúsculas y espacios extra.</p>
-                </div>
-                <div class="md:col-span-3">
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Validación de formato</label>
-                  <select data-qidx="${qIdx}" data-gfield="validationFormat" class="ed-q-gen exec-input w-full px-3 py-2 text-xs font-semibold">
-                    <option value="text" ${(qItem.validationFormat || 'text') === 'text' ? 'selected' : ''}>Texto libre / Palabra clave</option>
-                    <option value="number" ${qItem.validationFormat === 'number' ? 'selected' : ''}>Solo números</option>
-                    <option value="email" ${qItem.validationFormat === 'email' ? 'selected' : ''}>Correo electrónico</option>
-                  </select>
-                </div>
-                <div class="md:col-span-3">
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Límite de caracteres</label>
-                  <input type="number" data-qidx="${qIdx}" data-gfield="maxChars" min="10" max="500" value="${qItem.maxChars || 120}" class="ed-q-gen exec-input w-full px-3 py-2 text-xs font-bold text-center">
-                </div>
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 grid grid-cols-1 md:grid-cols-12 gap-3.5">
+              <div class="md:col-span-6">
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Palabras clave o respuestas aceptadas (separadas por coma) <span class="text-rose-600">*</span></label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="expectedAnswer" value="${escapeHtml(qItem.expectedAnswer || '')}" placeholder="Ej. Google Workspace, cuenta institucional" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs font-semibold">
+                <span class="text-[10.5px] text-slate-400 mt-1 block">Ignora mayúsculas, tildes y espacios adicionales al calificar.</span>
               </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Texto de ayuda (Placeholder opcional)</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="placeholderText" value="${escapeHtml(qItem.placeholderText || '')}" placeholder="Ej. Escribe aquí tu respuesta breve..." class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs">
+              <div class="md:col-span-4">
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Texto de ayuda (Placeholder)</label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="placeholderText" value="${escapeHtml(qItem.placeholderText || 'Escribe tu respuesta breve...')}" class="ed-q-gen exec-input w-full px-3 py-2 text-xs">
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Máx. caracteres</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="maxChars" min="10" max="500" value="${qItem.maxChars || 120}" class="ed-q-gen exec-input w-full px-2.5 py-2 text-xs font-mono font-bold text-center">
               </div>
             </div>
           `;
         } else if (t === 'paragraph') {
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-semibold">
-                <span><i class="fa-solid fa-user-check mr-1.5"></i>Esta pregunta queda marcada como "Pendiente de revisión" para evaluación manual del instructor.</span>
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-700">Criterio / Guía de Evaluación para el Instructor</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10.5px] font-bold">Revisión Manual</span>
               </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Rúbrica / Guía de respuesta modelo para el instructor</label>
-                <textarea data-qidx="${qIdx}" data-gfield="expectedAnswer" rows="3" placeholder="Describe los criterios clave que el instructor evaluará..." class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs">${escapeHtml(qItem.expectedAnswer || '')}</textarea>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Contador visible al participante</label>
-                  <select data-qidx="${qIdx}" data-gfield="counterMode" class="ed-q-gen exec-input w-full px-3 py-2 text-xs font-semibold">
-                    <option value="words" ${(qItem.counterMode || 'words') === 'words' ? 'selected' : ''}>Palabras y caracteres</option>
-                    <option value="chars" ${qItem.counterMode === 'chars' ? 'selected' : ''}>Solo caracteres</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Placeholder opcional</label>
-                  <input type="text" data-qidx="${qIdx}" data-gfield="placeholderText" value="${escapeHtml(qItem.placeholderText || '')}" placeholder="Redacta tu análisis detallado..." class="ed-q-gen exec-input w-full px-3 py-2 text-xs">
-                </div>
-              </div>
+              <textarea data-qidx="${qIdx}" data-gfield="expectedAnswer" rows="3" placeholder="Describe los puntos clave que el instructor evaluará en esta respuesta extensa..." class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs">${escapeHtml(qItem.expectedAnswer || '')}</textarea>
             </div>
           `;
         } else if (t === 'checkboxes') {
           const opts = qItem.options || ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
           const corrArr = Array.isArray(qItem.correctMultiple) ? qItem.correctMultiple : [0];
+          const gMode = qItem.gradingMode || 'all_or_nothing';
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-slate-200">
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
                 <span class="text-[11px] font-bold text-slate-600">Marca todas las casillas correctas:</span>
                 <div class="flex items-center gap-2 text-xs">
-                  <span class="text-[11px] font-bold text-slate-600">Modo de calificación:</span>
-                  <select data-qidx="${qIdx}" data-gfield="scoringMode" class="ed-q-gen exec-input px-2.5 py-1 text-xs font-semibold">
-                    <option value="all_or_nothing" ${(qItem.scoringMode || 'all_or_nothing') === 'all_or_nothing' ? 'selected' : ''}>Todo o nada (Exacto)</option>
-                    <option value="partial" ${qItem.scoringMode === 'partial' ? 'selected' : ''}>Puntuación parcial</option>
+                  <span class="text-[11px] font-semibold text-slate-500">Regla de calificación:</span>
+                  <select data-qidx="${qIdx}" data-gfield="gradingMode" class="ed-q-gen exec-input px-2.5 py-1 text-xs font-bold text-slate-800">
+                    <option value="all_or_nothing" ${gMode === 'all_or_nothing' ? 'selected' : ''}>Todo o nada (Exacta)</option>
+                    <option value="partial" ${gMode === 'partial' ? 'selected' : ''}>Puntuación parcial proporcional</option>
                   </select>
                 </div>
               </div>
@@ -2470,8 +2433,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
                 ${opts.map((opt, oIdx) => `
                   <div class="flex items-center gap-2.5">
                     <input type="checkbox" data-qidx="${qIdx}" data-oidx="${oIdx}" ${corrArr.includes(oIdx) ? 'checked' : ''} class="ed-q-chk-corr w-4 h-4 accent-[#1A64FF] rounded cursor-pointer" title="Marcar como correcta">
-                    <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs bg-white">
-                    ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                    <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
+                    ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center cursor-pointer">✕</button>` : ''}
                   </div>
                 `).join('')}
               </div>
@@ -2479,250 +2442,276 @@ const DEFAULT_AUDIENCE_CATALOG = [
             </div>
           `;
         } else if (t === 'dropdown') {
-          const opts = qItem.options || ['Alternativa 1', 'Alternativa 2', 'Alternativa 3', 'Alternativa 4', 'Alternativa 5', 'Alternativa 6', 'Alternativa 7'];
+          const opts = qItem.options || ['Alternativa 1', 'Alternativa 2', 'Alternativa 3'];
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-2.5">
-              <div class="text-[11px] font-bold text-slate-600">Opciones de la lista desplegable (ideal para >6 alternativas; marca la correcta):</div>
+            <div class="space-y-2.5">
+              <div class="text-[11px] font-bold text-slate-500">Alternativas de la lista desplegable (selecciona la opción correcta):</div>
               ${opts.map((opt, oIdx) => `
                 <div class="flex items-center gap-2.5">
-                  <span class="font-mono text-xs font-bold text-slate-400 w-5">${oIdx + 1}.</span>
-                  <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-emerald-600 cursor-pointer">
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs bg-white">
-                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                  <span class="font-mono text-xs font-bold text-slate-400 w-5 text-right">${oIdx + 1}.</span>
+                  <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#1A64FF] cursor-pointer" title="Respuesta correcta">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
+                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
-              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline mt-1 cursor-pointer">+ Añadir opción al desplegable</button>
+              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline cursor-pointer">+ Añadir alternativa desplegable</button>
             </div>
           `;
         } else if (t === 'linear_scale') {
           const sMin = Number(qItem.scaleMin ?? 1);
           const sMax = Number(qItem.scaleMax ?? 5);
+          const sCorr = Number(qItem.scaleCorrect ?? sMax);
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 grid grid-cols-1 sm:grid-cols-5 gap-3">
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 grid grid-cols-1 sm:grid-cols-5 gap-3">
               <div>
-                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Valor Mínimo</label>
-                <select data-qidx="${qIdx}" data-gfield="scaleMin" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold bg-white">
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Inicio (0 o 1)</label>
+                <select data-qidx="${qIdx}" data-gfield="scaleMin" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold">
                   <option value="0" ${sMin === 0 ? 'selected' : ''}>0</option>
                   <option value="1" ${sMin === 1 ? 'selected' : ''}>1</option>
                 </select>
               </div>
               <div>
-                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Valor Máximo</label>
-                <select data-qidx="${qIdx}" data-gfield="scaleMax" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold bg-white">
-                  ${[3,4,5,7,10].map(n => `<option value="${n}" ${sMax === n ? 'selected' : ''}>${n}</option>`).join('')}
-                </select>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Fin (2 a 10)</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMax" min="2" max="10" value="${sMax}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Valor Esperado</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleCorrect" min="0" max="10" value="${sCorr}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center text-[#1A64FF]">
               </div>
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Izquierda</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="minLabel" value="${escapeHtml(qItem.minLabel || 'Totalmente en desacuerdo')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
+                <input type="text" data-qidx="${qIdx}" data-gfield="minLabel" value="${escapeHtml(qItem.minLabel || 'Totalmente en desacuerdo')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
               <div>
                 <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Derecha</label>
-                <input type="text" data-qidx="${qIdx}" data-gfield="maxLabel" value="${escapeHtml(qItem.maxLabel || 'Totalmente de acuerdo')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
-              </div>
-              <div>
-                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Valor Esperado (Opcional)</label>
-                <input type="number" data-qidx="${qIdx}" data-gfield="expectedScale" value="${escapeHtml(qItem.expectedScale ?? '')}" placeholder="Cualquiera" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center bg-white">
+                <input type="text" data-qidx="${qIdx}" data-gfield="maxLabel" value="${escapeHtml(qItem.maxLabel || 'Totalmente de acuerdo')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
               </div>
             </div>
           `;
         } else if (t === 'grid_radio' || t === 'grid_checkbox') {
-          const rows = qItem.gridRows || ['Criterio 1', 'Criterio 2'];
-          const cols = qItem.gridCols || ['Columna A', 'Columna B', 'Columna C'];
-          const rowKey = Array.isArray(qItem.gridCorrect) ? qItem.gridCorrect : [];
+          const rows = Array.isArray(qItem.gridRows) && qItem.gridRows.length ? qItem.gridRows : ['Criterio 1', 'Criterio 2'];
+          const cols = Array.isArray(qItem.gridCols) && qItem.gridCols.length ? qItem.gridCols : ['Columna A', 'Columna B', 'Columna C'];
+          const gAns = qItem.gridAnswers || {};
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Enunciados / Criterios (Filas — uno por línea)</label>
-                  <textarea data-qidx="${qIdx}" data-gfield="gridRows" rows="3" class="ed-q-gen exec-input w-full px-3 py-2 text-xs bg-white">${escapeHtml(rows.join('
-'))}</textarea>
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-slate-700">Filas / Enunciados (${rows.length})</span>
+                    <button type="button" onclick="addGridRowOrCol('${modId}', ${qIdx}, 'row')" class="text-[11px] font-bold text-[#1A64FF] hover:underline cursor-pointer">+ Fila</button>
+                  </div>
+                  ${rows.map((rTxt, rIdx) => `
+                    <div class="flex items-center gap-1.5">
+                      <input type="text" data-qidx="${qIdx}" data-ridx="${rIdx}" value="${escapeHtml(rTxt)}" class="ed-q-grid-row exec-input flex-1 px-2.5 py-1.5 text-xs">
+                      ${rows.length > 1 ? `<button type="button" onclick="removeGridRowOrCol('${modId}', ${qIdx}, 'row', ${rIdx})" class="px-2 py-1 text-slate-400 hover:text-rose-600 cursor-pointer">✕</button>` : ''}
+                    </div>
+                  `).join('')}
                 </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Opciones de Respuesta (Columnas — una por línea)</label>
-                  <textarea data-qidx="${qIdx}" data-gfield="gridCols" rows="3" class="ed-q-gen exec-input w-full px-3 py-2 text-xs bg-white">${escapeHtml(cols.join('
-'))}</textarea>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-bold text-slate-700">Columnas / Opciones (${cols.length})</span>
+                    <button type="button" onclick="addGridRowOrCol('${modId}', ${qIdx}, 'col')" class="text-[11px] font-bold text-[#1A64FF] hover:underline cursor-pointer">+ Columna</button>
+                  </div>
+                  ${cols.map((cTxt, cIdx) => `
+                    <div class="flex items-center gap-1.5">
+                      <input type="text" data-qidx="${qIdx}" data-cidx="${cIdx}" value="${escapeHtml(cTxt)}" class="ed-q-grid-col exec-input flex-1 px-2.5 py-1.5 text-xs">
+                      ${cols.length > 2 ? `<button type="button" onclick="removeGridRowOrCol('${modId}', ${qIdx}, 'col', ${cIdx})" class="px-2 py-1 text-slate-400 hover:text-rose-600 cursor-pointer">✕</button>` : ''}
+                    </div>
+                  `).join('')}
                 </div>
               </div>
-              <div class="p-3 rounded-lg bg-white border border-slate-200 space-y-2">
-                <div class="flex items-center justify-between">
-                  <span class="text-[11px] font-bold text-slate-700">Clave de respuestas por fila (actualiza filas/columnas para refrescar):</span>
-                  <button type="button" onclick="saveAdminQuizChanges('${modId}', true); renderAdminQuizEditor();" class="text-[11px] font-bold text-[#1A64FF] hover:underline cursor-pointer">Actualizar tabla</button>
+
+              <!-- Interactive Key Matrix so Admin marks exact answers per row -->
+              <div class="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                <div class="px-3.5 py-2 bg-slate-100/70 border-b border-slate-200 text-[10.5px] font-bold uppercase tracking-wider text-slate-600">
+                  Clave de Respuestas Correctas (${t === 'grid_radio' ? '1 por fila' : 'Varias por fila'})
                 </div>
-                <div class="overflow-x-auto">
-                  <table class="w-full text-xs text-center border-collapse">
-                    <thead>
-                      <tr class="border-b border-slate-200 text-slate-600">
-                        <th class="py-1.5 px-2 text-left">Fila</th>
-                        ${cols.map(c => `<th class="py-1.5 px-2 font-semibold">${escapeHtml(c)}</th>`).join('')}
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                      ${rows.map((rName, rIdx) => `
+                <table class="w-full text-xs">
+                  <thead>
+                    <tr class="border-b border-slate-100 text-slate-600">
+                      <th class="px-3.5 py-2 text-left font-bold">Fila</th>
+                      ${cols.map(cTxt => `<th class="px-3 py-2 text-center font-bold">${escapeHtml(cTxt)}</th>`).join('')}
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    ${rows.map((rTxt, rIdx) => {
+                      const rowSel = Array.isArray(gAns[rIdx]) ? gAns[rIdx] : (gAns[rIdx] !== undefined ? [Number(gAns[rIdx])] : [0]);
+                      return `
                         <tr>
-                          <td class="py-1.5 px-2 text-left font-semibold text-slate-800">${escapeHtml(rName)}</td>
-                          ${cols.map((_, cIdx) => {
-                            if (t === 'grid_radio') {
-                              const checked = Number(rowKey[rIdx] ?? 0) === cIdx;
-                              return `<td class="py-1.5 px-2"><input type="radio" name="ed_grid_r_${qIdx}_${rIdx}" value="${cIdx}" ${checked ? 'checked' : ''} class="w-4 h-4 accent-[#1A64FF] cursor-pointer"></td>`;
-                            } else {
-                              const arr = Array.isArray(rowKey[rIdx]) ? rowKey[rIdx] : [0];
-                              const checked = arr.includes(cIdx);
-                              return `<td class="py-1.5 px-2"><input type="checkbox" data-qidx="${qIdx}" data-ridx="${rIdx}" data-cidx="${cIdx}" ${checked ? 'checked' : ''} class="ed-grid-chk w-4 h-4 accent-[#1A64FF] rounded cursor-pointer"></td>`;
-                            }
-                          }).join('')}
+                          <td class="px-3.5 py-2 font-semibold text-slate-800">${escapeHtml(rTxt)}</td>
+                          ${cols.map((_, cIdx) => `
+                            <td class="px-3 py-2 text-center">
+                              <input type="${t === 'grid_radio' ? 'radio' : 'checkbox'}"
+                                     name="ed_grid_${qIdx}_${rIdx}"
+                                     data-qidx="${qIdx}" data-ridx="${rIdx}" data-cidx="${cIdx}"
+                                     ${rowSel.includes(cIdx) ? 'checked' : ''}
+                                     class="ed-q-grid-ans w-4 h-4 accent-[#1A64FF] cursor-pointer">
+                            </td>
+                          `).join('')}
                         </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
+                      `;
+                    }).join('')}
+                  </tbody>
+                </table>
               </div>
             </div>
           `;
         } else if (t === 'file_upload') {
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div class="px-3 py-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-semibold">
-                <i class="fa-solid fa-folder-open mr-1.5"></i>Los archivos adjuntos quedan registrados como "Pendiente de revisión" para calificación manual del instructor.
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-700">Restricciones de Carga de Archivos</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10.5px] font-bold">Revisión Manual</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Formatos Permitidos</label>
-                  <input type="text" data-qidx="${qIdx}" data-gfield="allowedFormats" value="${escapeHtml(qItem.allowedFormats || 'PDF, JPG, PNG')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Formatos Permitidos</label>
+                  <input type="text" data-qidx="${qIdx}" data-gfield="allowedFormats" value="${escapeHtml(qItem.allowedFormats || 'PDF, JPG, PNG')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-mono">
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Peso Máximo (MB)</label>
-                  <input type="number" data-qidx="${qIdx}" data-gfield="maxSizeMb" min="1" max="50" value="${qItem.maxSizeMb || 10}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center bg-white">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Peso Máximo (MB)</label>
+                  <input type="number" data-qidx="${qIdx}" data-gfield="maxSizeMb" min="1" max="100" value="${qItem.maxSizeMb || 10}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center">
                 </div>
                 <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Máx. de Archivos</label>
-                  <input type="number" data-qidx="${qIdx}" data-gfield="maxFiles" min="1" max="5" value="${qItem.maxFiles || 2}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center bg-white">
+                  <label class="block text-[11px] font-bold text-slate-600 mb-1">Máx. de Archivos</label>
+                  <input type="number" data-qidx="${qIdx}" data-gfield="maxFiles" min="1" max="5" value="${qItem.maxFiles || 2}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold text-center">
                 </div>
               </div>
             </div>
           `;
         } else if (t === 'date_time') {
+          const dtMode = qItem.dateTimeMode || 'datetime';
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Campos a mostrar</label>
-                <select data-qidx="${qIdx}" data-gfield="dateTimeMode" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-semibold bg-white">
-                  <option value="both" ${(qItem.dateTimeMode || 'both') === 'both' ? 'selected' : ''}>Fecha y Hora</option>
-                  <option value="date" ${qItem.dateTimeMode === 'date' ? 'selected' : ''}>Solo Fecha (AAAA/MM/DD)</option>
-                  <option value="time" ${qItem.dateTimeMode === 'time' ? 'selected' : ''}>Solo Hora (HH:MM)</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Fecha Exacta Correcta</label>
-                <input type="date" data-qidx="${qIdx}" data-gfield="expectedDate" value="${escapeHtml(qItem.expectedDate || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Hora Exacta Correcta</label>
-                <input type="time" data-qidx="${qIdx}" data-gfield="expectedTime" value="${escapeHtml(qItem.expectedTime || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Campos Solicitados</label>
+                  <select data-qidx="${qIdx}" data-gfield="dateTimeMode" onchange="saveAdminQuizChanges('${modId}', true); renderAdminQuizEditor();" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-bold">
+                    <option value="date" ${dtMode === 'date' ? 'selected' : ''}>Solo Fecha (AAAA/MM/DD)</option>
+                    <option value="time" ${dtMode === 'time' ? 'selected' : ''}>Solo Hora (HH:MM)</option>
+                    <option value="datetime" ${dtMode === 'datetime' ? 'selected' : ''}>Fecha y Hora</option>
+                  </select>
+                </div>
+                <div class="${dtMode === 'time' ? 'opacity-40 pointer-events-none' : ''}">
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Fecha Exacta Esperada</label>
+                  <input type="date" data-qidx="${qIdx}" data-gfield="expectedDate" value="${escapeHtml(qItem.expectedDate || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
+                </div>
+                <div class="${dtMode === 'date' ? 'opacity-40 pointer-events-none' : ''}">
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Hora Exacta Esperada</label>
+                  <input type="time" data-qidx="${qIdx}" data-gfield="expectedTime" value="${escapeHtml(qItem.expectedTime || '')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs">
+                </div>
               </div>
             </div>
           `;
         } else if (t === 'tf') {
           bodyFields = `
-            <div class="flex items-center gap-5 text-xs p-4 rounded-xl bg-slate-50 border border-slate-200/90">
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 flex flex-wrap items-center gap-4 text-xs">
               <span class="font-bold text-slate-700">Respuesta Correcta:</span>
-              <label class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 font-bold text-emerald-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="true" ${qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-emerald-600"> Verdadero</label>
-              <label class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-slate-200 font-bold text-rose-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="false" ${!qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-rose-600"> Falso</label>
+              <label class="flex items-center gap-2 px-4 py-2 rounded-xl border ${qItem.correctBool ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : 'bg-white border-slate-200 text-slate-600'} font-bold cursor-pointer">
+                <input type="radio" name="ed_tf_${qIdx}" value="true" ${qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-emerald-600"> Verdadero
+              </label>
+              <label class="flex items-center gap-2 px-4 py-2 rounded-xl border ${!qItem.correctBool ? 'bg-rose-50 border-rose-300 text-rose-800' : 'bg-white border-slate-200 text-slate-600'} font-bold cursor-pointer">
+                <input type="radio" name="ed_tf_${qIdx}" value="false" ${!qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-rose-600"> Falso
+              </label>
             </div>
           `;
         } else if (t === 'match') {
-          const pairs = qItem.pairs || [{ left: '', right: '' }, { left: '', right: '' }];
+          const pairs = Array.isArray(qItem.pairs) && qItem.pairs.length ? qItem.pairs : [{ left: '', right: '' }, { left: '', right: '' }];
           bodyFields = `
-            <div class="space-y-2.5 p-4 rounded-xl bg-slate-50 border border-slate-200/90">
+            <div class="space-y-2.5 p-4 rounded-xl bg-slate-50/90 border border-slate-200/90">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold text-slate-700">Parejas de Columnas (Izquierda ↔ Derecha Correcta; al participante se le barajan)</span>
-                <button type="button" onclick="addMatchPair('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline cursor-pointer">+ Añadir pareja</button>
+                <span class="text-[11px] font-bold text-slate-700">Parejas de Columnas (Izquierda ↔ Derecha Correcta)</span>
+                <button type="button" onclick="addMatchPair('${modId}', ${qIdx})" class="text-xs font-bold text-[#1A64FF] hover:underline cursor-pointer">+ Añadir pareja</button>
               </div>
               ${pairs.map((pr, pIdx) => `
-                <div class="flex items-center gap-2">
-                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Premisa izquierda #${pIdx + 1}" class="ed-q-pair exec-input flex-1 px-3 py-1.5 text-xs bg-white">
-                  <span class="text-slate-400 font-bold">↔</span>
-                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="right" value="${escapeHtml(pr.right)}" placeholder="Respuesta derecha #${pIdx + 1}" class="ed-q-pair exec-input flex-1 px-3 py-1.5 text-xs bg-white">
-                  ${pairs.length > 2 ? `<button type="button" onclick="removeMatchPair('${modId}', ${qIdx}, ${pIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 items-center">
+                  <div class="sm:col-span-5">
+                    <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Premisa izquierda #${pIdx + 1}" class="ed-q-pair exec-input w-full px-3 py-1.5 text-xs font-medium">
+                  </div>
+                  <div class="sm:col-span-1 text-center text-slate-400 font-bold">↔</div>
+                  <div class="sm:col-span-5">
+                    <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="right" value="${escapeHtml(pr.right)}" placeholder="Respuesta pareja #${pIdx + 1}" class="ed-q-pair exec-input w-full px-3 py-1.5 text-xs font-medium">
+                  </div>
+                  <div class="sm:col-span-1 text-right">
+                    ${pairs.length > 2 ? `<button type="button" onclick="removeMatchPair('${modId}', ${qIdx}, ${pIdx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer">✕</button>` : ''}
+                  </div>
                 </div>
               `).join('')}
             </div>
           `;
         } else if (t === 'ordering') {
-          const steps = qItem.orderSteps || ['Paso 1: Iniciar sesión con Google', 'Paso 2: Seleccionar aula', 'Paso 3: Activar Modo Clase'];
+          const steps = Array.isArray(qItem.orderSteps) && qItem.orderSteps.length ? qItem.orderSteps : ['Paso 1', 'Paso 2', 'Paso 3'];
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-2">
-              <label class="block text-[11px] font-bold text-slate-700">Tarjetas en su Secuencia Correcta (de arriba hacia abajo; se mostrarán desordenadas al participante)</label>
-              <textarea data-qidx="${qIdx}" data-gfield="orderSteps" rows="4" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs bg-white leading-relaxed">${escapeHtml(steps.join('
-'))}</textarea>
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-700">Orden Lógico Correcto (1 → ${steps.length}; se mostrará desordenado al estudiante)</span>
+                <button type="button" onclick="addOrderingStep('${modId}', ${qIdx})" class="text-xs font-bold text-[#1A64FF] hover:underline cursor-pointer">+ Añadir paso</button>
+              </div>
+              <div class="space-y-2">
+                ${steps.map((st, sIdx) => `
+                  <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-lg bg-[#090D16] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">${sIdx + 1}</span>
+                    <input type="text" data-qidx="${qIdx}" data-sidx="${sIdx}" value="${escapeHtml(st)}" class="ed-q-order-step exec-input flex-1 px-3 py-1.5 text-xs font-medium">
+                    ${steps.length > 2 ? `<button type="button" onclick="removeOrderingStep('${modId}', ${qIdx}, ${sIdx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer">✕</button>` : ''}
+                  </div>
+                `).join('')}
+              </div>
             </div>
           `;
         } else if (t === 'cloze') {
+          const tpl = qItem.clozeTemplate || 'Un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].';
+          const detected = (tpl.match(/\[([^\]]+)\]/g) || []).map(m => m.slice(1, -1));
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Párrafo con espacios clave entre corchetes <code class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[#1A64FF]">[palabra]</code></label>
-                <textarea data-qidx="${qIdx}" data-gfield="clozeTemplate" rows="3" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs bg-white leading-relaxed">${escapeHtml(qItem.clozeTemplate || 'En la matriz Resumen de aprendizaje, un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].')}</textarea>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Interacción en los espacios</label>
-                  <select data-qidx="${qIdx}" data-gfield="clozeInputStyle" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-semibold bg-white">
-                    <option value="text" ${(qItem.clozeInputStyle || 'text') === 'text' ? 'selected' : ''}>Cajas de texto en línea (Escribir palabra)</option>
-                    <option value="dropdown" ${qItem.clozeInputStyle === 'dropdown' ? 'selected' : ''}>Menús desplegables incrustados</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Distractores extra para desplegable (opcional, separados por coma)</label>
-                  <input type="text" data-qidx="${qIdx}" data-gfield="clozeDistractors" value="${escapeHtml(qItem.clozeDistractors || 'pendiente, bloqueada')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
-                </div>
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 space-y-2.5">
+              <label class="block text-[11px] font-bold text-slate-700">Párrafo con espacios entre corchetes <code class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[#1A64FF]">[palabra]</code> o desplegables <code class="px-1.5 py-0.5 rounded bg-white border border-slate-200 text-[#1A64FF]">[correcta*|opción2|opción3]</code></label>
+              <textarea data-qidx="${qIdx}" data-gfield="clozeTemplate" rows="3" class="ed-q-gen exec-input w-full px-3.5 py-2 text-xs leading-relaxed">${escapeHtml(tpl)}</textarea>
+              <div class="flex flex-wrap items-center gap-1.5 text-[11px]">
+                <span class="font-semibold text-slate-500">Huecos detectados (${detected.length}):</span>
+                ${detected.length ? detected.map((d, i) => `<span class="px-2 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-[#1A64FF] font-mono font-bold">#${i + 1}: ${escapeHtml(d)}</span>`).join('') : '<span class="text-rose-600 font-semibold">Usa [corchetes] para definir al menos un hueco.</span>'}
               </div>
             </div>
           `;
         } else if (t === 'hotspot') {
-          const hx = Number(qItem.hotspotX ?? 50);
-          const hy = Number(qItem.hotspotY ?? 50);
-          const hr = Number(qItem.hotspotRadius ?? 12);
+          const hs = qItem.hotspotBox || { x: 25, y: 25, w: 50, h: 50 };
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-3">
-              <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
-                <div class="md:col-span-5 space-y-2.5">
-                  <div>
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Etiqueta de la Zona Activa Correcta</label>
-                    <input type="text" data-qidx="${qIdx}" data-gfield="hotspotTarget" value="${escapeHtml(qItem.hotspotTarget || 'Botón objetivo en la interfaz')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs bg-white">
-                  </div>
-                  <div class="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <label class="block text-[10px] font-bold text-slate-500">Coord. X (%)</label>
-                      <input type="number" id="hs_x_${qIdx}" data-qidx="${qIdx}" data-gfield="hotspotX" min="0" max="100" value="${hx}" oninput="updateHotspotPreviewPin(${qIdx})" class="ed-q-gen exec-input w-full px-2 py-1 text-xs font-mono font-bold text-center bg-white">
-                    </div>
-                    <div>
-                      <label class="block text-[10px] font-bold text-slate-500">Coord. Y (%)</label>
-                      <input type="number" id="hs_y_${qIdx}" data-qidx="${qIdx}" data-gfield="hotspotY" min="0" max="100" value="${hy}" oninput="updateHotspotPreviewPin(${qIdx})" class="ed-q-gen exec-input w-full px-2 py-1 text-xs font-mono font-bold text-center bg-white">
-                    </div>
-                    <div>
-                      <label class="block text-[10px] font-bold text-slate-500">Radio (%)</label>
-                      <input type="number" id="hs_r_${qIdx}" data-qidx="${qIdx}" data-gfield="hotspotRadius" min="4" max="40" value="${hr}" oninput="updateHotspotPreviewPin(${qIdx})" class="ed-q-gen exec-input w-full px-2 py-1 text-xs font-mono font-bold text-center bg-white">
-                    </div>
-                  </div>
-                  <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-                    <i class="fa-solid fa-image"></i>
-                    <span>Subir Imagen / Captura HD</span>
-                    <input type="file" accept="image/*" onchange="uploadHotspotImage('${modId}', ${qIdx}, this)" class="hidden">
-                  </label>
-                  <p class="text-[10.5px] text-slate-500">Haz clic directamente sobre la vista previa de la derecha para fijar el centro exacto de la zona correcta.</p>
+            <div class="p-4 rounded-xl bg-slate-50/90 border border-slate-200/90 grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+              <div class="lg:col-span-5 space-y-3">
+                <div>
+                  <label class="block text-[11px] font-bold text-slate-700 mb-1">Nombre / Descripción de la Zona Activa</label>
+                  <input type="text" data-qidx="${qIdx}" data-gfield="hotspotTarget" value="${escapeHtml(qItem.hotspotTarget || 'Botón de acción principal')}" class="ed-q-gen exec-input w-full px-3 py-1.5 text-xs font-semibold">
                 </div>
+                <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+                  <i class="fa-solid fa-image"></i>
+                  <span>Subir Captura / Diagrama HD</span>
+                  <input type="file" accept="image/*" onchange="uploadHotspotImage('${modId}', ${qIdx}, this)" class="hidden">
+                </label>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                  <strong>Cómo marcar la zona:</strong> Haz clic y arrastra el cursor directamente sobre la imagen de la derecha para trazar el recuadro exacto donde el participante deberá hacer clic.
+                </p>
+                <div class="font-mono text-[10.5px] text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200">
+                  Zona: X:${Math.round(hs.x)}% Y:${Math.round(hs.y)}% • Ancho:${Math.round(hs.w)}% Alto:${Math.round(hs.h)}%
+                </div>
+              </div>
 
-                <div class="md:col-span-7">
-                  <div onclick="setHotspotCoordsFromClick(event, ${qIdx})" class="relative aspect-video w-full rounded-xl bg-white border border-slate-300 overflow-hidden flex items-center justify-center cursor-crosshair select-none shadow-2xs">
-                    ${qItem.hotspotImg
-                      ? `<img src="${qItem.hotspotImg}" alt="Hotspot" class="w-full h-full object-contain pointer-events-none">
-                         <div id="hs_pin_${qIdx}" class="absolute -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-emerald-500 bg-emerald-500/25 pointer-events-none flex items-center justify-center" style="left:${hx}%; top:${hy}%; width:${hr * 2}%; aspect-ratio:1/1;">
-                           <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 shadow"></span>
-                         </div>`
-                      : `<div class="text-center text-slate-400 p-4 space-y-1"><i class="fa-solid fa-crosshairs text-2xl"></i><div class="text-xs font-semibold">Sube una imagen y haz clic para marcar la zona activa</div></div>`}
+              <div class="lg:col-span-7">
+                ${qItem.hotspotImg ? `
+                  <div id="hotspotEditorStage_${qIdx}"
+                       onmousedown="startHotspotBoxDraw(event, '${modId}', ${qIdx})"
+                       class="relative w-full rounded-xl overflow-hidden border-2 border-slate-300 bg-slate-900 select-none cursor-crosshair shadow-sm">
+                    <img src="${qItem.hotspotImg}" alt="Hotspot" draggable="false" class="w-full h-auto block pointer-events-none">
+                    <div id="hotspotRectOverlay_${qIdx}"
+                         style="left:${hs.x}%; top:${hs.y}%; width:${hs.w}%; height:${hs.h}%;"
+                         class="absolute border-2 border-[#1A64FF] bg-[#1A64FF]/25 rounded-md pointer-events-none flex items-center justify-center">
+                      <span class="px-2 py-0.5 rounded bg-[#1A64FF] text-white text-[10px] font-bold shadow">Zona Correcta</span>
+                    </div>
                   </div>
-                </div>
+                ` : `
+                  <div class="h-44 rounded-xl bg-white border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 text-xs gap-1.5">
+                    <i class="fa-solid fa-crosshairs text-xl text-slate-300"></i>
+                    <span>Sube una imagen a la izquierda para trazar la zona activa</span>
+                  </div>
+                `}
               </div>
             </div>
           `;
@@ -2730,37 +2719,41 @@ const DEFAULT_AUDIENCE_CATALOG = [
           // Default: mcq (Opción múltiple - botones de radio)
           const opts = qItem.options || ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
           bodyFields = `
-            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/90 space-y-2">
-              <div class="text-[11px] font-bold text-slate-600">Alternativas (selecciona la única respuesta correcta):</div>
+            <div class="space-y-2.5">
+              <div class="text-[11px] font-bold text-slate-500">Opciones excluyentes (marca el círculo de la única respuesta correcta):</div>
               ${opts.map((opt, oIdx) => `
                 <div class="flex items-center gap-2.5">
                   <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#1A64FF] cursor-pointer" title="Respuesta correcta">
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs bg-white">
-                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt exec-input flex-1 px-3 py-1.5 text-xs">
+                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="w-7 h-7 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
-              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline mt-1 cursor-pointer">+ Añadir opción</button>
+              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline cursor-pointer">+ Añadir opción</button>
             </div>
           `;
         }
 
         return `
           <div class="exec-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4">
+            <!-- Executive Top Row: Question Prompt + Styled Type Badge & Selector -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-start">
               <div class="md:col-span-8 space-y-1.5">
-                <div class="flex items-center gap-2 flex-wrap">
+                <div class="flex items-center flex-wrap gap-2">
                   <span class="px-2.5 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[10.5px] font-bold">Pregunta #${qIdx + 1}</span>
-                  <span class="px-2.5 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[10.5px] font-bold inline-flex items-center gap-1.5">
-                    <i class="fa-solid ${meta.icon}"></i>
-                    <span>${meta.group} • ${meta.badge}</span>
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[11px] font-bold">
+                    <i class="fa-solid ${meta.icon} text-[10px]"></i>
+                    <span>${meta.label}</span>
+                  </span>
+                  <span class="text-[10.5px] font-semibold ${meta.auto ? 'text-emerald-700 bg-emerald-50' : 'text-amber-700 bg-amber-50'} px-2 py-0.5 rounded-md">
+                    ${meta.auto ? 'Calificación automática' : 'Revisión manual'}
                   </span>
                 </div>
-                <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" placeholder="Escribe el enunciado de la pregunta..." class="ed-q-text exec-input w-full px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-slate-50/60">
+                <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" placeholder="Escribe el enunciado o caso práctico de la pregunta..." class="ed-q-text exec-input w-full px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-slate-50/60">
               </div>
 
               <div class="md:col-span-4 space-y-1.5">
-                <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-500">Tipo de pregunta</label>
-                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="exec-input w-full px-3 py-2.5 text-xs font-bold text-slate-800 bg-white">
+                <label class="block text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Formato de Pregunta</label>
+                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="exec-input w-full px-3 py-2.5 text-xs font-bold text-slate-900 bg-slate-50">
                   ${buildQuestionTypeOptionsHTML(t)}
                 </select>
               </div>
@@ -2768,19 +2761,20 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
             ${bodyFields}
 
+            <!-- Executive Bottom Action Footer -->
             <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
               <div class="flex items-center gap-2 text-xs">
-                <span class="w-6 h-6 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center"><i class="fa-solid fa-star text-[11px]"></i></span>
-                <span class="font-bold text-slate-700">Puntuación:</span>
-                <input type="number" data-qidx="${qIdx}" value="${qItem.points || 10}" class="ed-q-pts exec-input w-20 px-2.5 py-1 font-bold text-center">
-                <span class="text-slate-500">puntos</span>
+                <span class="w-6 h-6 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center"><i class="fa-solid fa-star text-[10px]"></i></span>
+                <span class="font-semibold text-slate-700">Valor:</span>
+                <input type="number" data-qidx="${qIdx}" value="${qItem.points || 10}" min="1" class="ed-q-pts exec-input w-20 px-2.5 py-1 font-mono font-bold text-center">
+                <span class="text-slate-500">pts</span>
               </div>
 
               <div class="flex items-center gap-2">
                 <button type="button" onclick="duplicateQuizQuestion('${modId}', ${qIdx})" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-semibold cursor-pointer">
                   <i class="fa-regular fa-copy mr-1"></i> Duplicar
                 </button>
-                <button type="button" onclick="removeQuizQuestion('${modId}', ${qIdx})" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-semibold transition cursor-pointer">
+                <button type="button" onclick="removeQuizQuestion('${modId}', ${qIdx})" class="px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-semibold transition cursor-pointer">
                   <i class="fa-solid fa-trash-can mr-1"></i> Eliminar
                 </button>
               </div>
@@ -2789,42 +2783,77 @@ const DEFAULT_AUDIENCE_CATALOG = [
         `;
       }).join('') + `
         <div class="flex justify-end pt-2">
-          <button type="button" onclick="saveAdminQuizChanges('${modId}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-emerald-600 text-white text-xs font-bold shadow-md transition cursor-pointer">
+          <button type="button" onclick="saveAdminQuizChanges('${modId}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition cursor-pointer">
             <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar y Sincronizar Evaluación
           </button>
         </div>
       `;
     }
 
-    function setHotspotCoordsFromClick(e, qIdx) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const xPct = Math.max(0, Math.min(100, Math.round(((e.clientX - rect.left) / rect.width) * 100)));
-      const yPct = Math.max(0, Math.min(100, Math.round(((e.clientY - rect.top) / rect.height) * 100)));
-      const xEl = document.getElementById(`hs_x_${qIdx}`);
-      const yEl = document.getElementById(`hs_y_${qIdx}`);
-      if (xEl) xEl.value = xPct;
-      if (yEl) yEl.value = yPct;
-      updateHotspotPreviewPin(qIdx);
+    function startHotspotBoxDraw(e, modId, qIdx) {
+      const stage = document.getElementById(`hotspotEditorStage_${qIdx}`);
+      const rectEl = document.getElementById(`hotspotRectOverlay_${qIdx}`);
+      if (!stage || !rectEl) return;
+      const bounds = stage.getBoundingClientRect();
+      const startX = Math.max(0, Math.min(100, ((e.clientX - bounds.left) / bounds.width) * 100));
+      const startY = Math.max(0, Math.min(100, ((e.clientY - bounds.top) / bounds.height) * 100));
+
+      function onMove(ev) {
+        const curX = Math.max(0, Math.min(100, ((ev.clientX - bounds.left) / bounds.width) * 100));
+        const curY = Math.max(0, Math.min(100, ((ev.clientY - bounds.top) / bounds.height) * 100));
+        const x = Math.min(startX, curX);
+        const y = Math.min(startY, curY);
+        const w = Math.max(4, Math.abs(curX - startX));
+        const h = Math.max(4, Math.abs(curY - startY));
+        rectEl.style.left = `${x}%`;
+        rectEl.style.top = `${y}%`;
+        rectEl.style.width = `${w}%`;
+        rectEl.style.height = `${h}%`;
+        quizzesBank[modId].questions[qIdx].hotspotBox = { x, y, w, h };
+      }
+
+      function onUp() {
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup', onUp);
+        saveAdminQuizChanges(modId, true);
+        renderAdminQuizEditor();
+      }
+
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
     }
 
-    function updateHotspotPreviewPin(qIdx) {
-      const x = Number(document.getElementById(`hs_x_${qIdx}`)?.value ?? 50);
-      const y = Number(document.getElementById(`hs_y_${qIdx}`)?.value ?? 50);
-      const r = Number(document.getElementById(`hs_r_${qIdx}`)?.value ?? 12);
-      const pin = document.getElementById(`hs_pin_${qIdx}`);
-      if (pin) {
-        pin.style.left = `${x}%`;
-        pin.style.top = `${y}%`;
-        pin.style.width = `${r * 2}%`;
+    function addGridRowOrCol(modId, qIdx, kind) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q) return;
+      if (kind === 'row') {
+        q.gridRows = q.gridRows || ['Fila 1'];
+        q.gridRows.push(`Fila ${q.gridRows.length + 1}`);
+      } else {
+        q.gridCols = q.gridCols || ['Columna A', 'Columna B'];
+        q.gridCols.push(`Columna ${String.fromCharCode(65 + q.gridCols.length)}`);
       }
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function removeGridRowOrCol(modId, qIdx, kind, idx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q) return;
+      if (kind === 'row' && q.gridRows && q.gridRows.length > 1) q.gridRows.splice(idx, 1);
+      if (kind === 'col' && q.gridCols && q.gridCols.length > 2) q.gridCols.splice(idx, 1);
+      saveCmsState(true);
+      renderAdminQuizEditor();
     }
 
     function addMatchPair(modId, qIdx) {
       saveAdminQuizChanges(modId, true);
       const q = quizzesBank[modId]?.questions[qIdx];
       if (!q) return;
-      if (!Array.isArray(q.pairs)) q.pairs = [];
-      q.pairs.push({ left: `Elemento ${q.pairs.length + 1}`, right: `Pareja ${q.pairs.length + 1}` });
+      q.pairs = q.pairs || [];
+      q.pairs.push({ left: `Premisa ${q.pairs.length + 1}`, right: `Respuesta ${q.pairs.length + 1}` });
       saveCmsState(true);
       renderAdminQuizEditor();
     }
@@ -2832,8 +2861,27 @@ const DEFAULT_AUDIENCE_CATALOG = [
     function removeMatchPair(modId, qIdx, pIdx) {
       saveAdminQuizChanges(modId, true);
       const q = quizzesBank[modId]?.questions[qIdx];
-      if (!q || !Array.isArray(q.pairs) || q.pairs.length <= 2) return;
+      if (!q || !q.pairs || q.pairs.length <= 2) return;
       q.pairs.splice(pIdx, 1);
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function addOrderingStep(modId, qIdx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q) return;
+      q.orderSteps = q.orderSteps || [];
+      q.orderSteps.push(`Paso ${q.orderSteps.length + 1}`);
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function removeOrderingStep(modId, qIdx, sIdx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q || !q.orderSteps || q.orderSteps.length <= 2) return;
+      q.orderSteps.splice(sIdx, 1);
       saveCmsState(true);
       renderAdminQuizEditor();
     }
@@ -2846,59 +2894,44 @@ const DEFAULT_AUDIENCE_CATALOG = [
     function addQuestionFromTemplate(type) {
       const modId = document.getElementById('admQuizModSelect').value;
       if (!quizzesBank[modId]) quizzesBank[modId] = { hidden: false, minPass: 80, maxScore: 100, questions: [] };
-      const base = { type: type, points: 10, q: `Nueva pregunta (${QUESTION_TYPE_LABELS[type] || type})` };
+      const meta = QUESTION_TYPE_META[type] || { label: type };
+      const base = { type: type, points: 10, q: `Enunciado de ${meta.label}` };
 
       if (type === 'short') {
-        base.expectedAnswer = 'Google';
-        base.validationFormat = 'text';
-        base.maxChars = 120;
+        base.expectedAnswer = 'Respuesta esperada';
         base.placeholderText = 'Escribe tu respuesta breve...';
+        base.maxChars = 120;
       } else if (type === 'paragraph') {
-        base.expectedAnswer = 'Describe paso a paso el procedimiento operativo.';
-        base.counterMode = 'words';
-        base.placeholderText = 'Redacta tu respuesta completa aquí...';
+        base.expectedAnswer = 'Criterios clave que evaluará el instructor';
       } else if (type === 'tf') {
         base.correctBool = true;
       } else if (type === 'match') {
-        base.pairs = [
-          { left: 'Iniciar sesión con Google', right: 'Autenticación institucional oficial' },
-          { left: 'Lista de Aulas', right: 'Directorio de grados y asignaturas' },
-          { left: 'Modo Clase', right: 'Registro de sesión en tiempo real' }
-        ];
+        base.pairs = [{ left: 'Concepto A', right: 'Definición A' }, { left: 'Concepto B', right: 'Definición B' }];
       } else if (type === 'checkboxes') {
-        base.options = ['Bloqueo de pantalla', 'Sincronización', 'Pizarra en vivo', 'Eliminar cuenta'];
-        base.correctMultiple = [0, 1, 2];
-        base.scoringMode = 'all_or_nothing';
+        base.options = ['Opción correcta 1', 'Opción correcta 2', 'Distractor 1', 'Distractor 2'];
+        base.correctMultiple = [0, 1];
+        base.gradingMode = 'all_or_nothing';
       } else if (type === 'dropdown') {
-        base.options = ['Clase de hoy', 'Clase regular en tiempo real', 'Mi progreso', 'Lista de clases regulares', 'Lista de tareas', 'Información del aula', 'Control de asistencia'];
+        base.options = ['Alternativa 1', 'Alternativa 2', 'Alternativa 3'];
         base.correct = 0;
       } else if (type === 'linear_scale') {
-        base.scaleMin = 1; base.scaleMax = 5;
+        base.scaleMin = 1; base.scaleMax = 5; base.scaleCorrect = 5;
         base.minLabel = 'Totalmente en desacuerdo'; base.maxLabel = 'Totalmente de acuerdo';
-        base.expectedScale = '';
-      } else if (type === 'grid_radio') {
-        base.gridRows = ['Pasar lista', 'Modo Clase'];
-        base.gridCols = ['Espacio de clase', 'Gestión de clases', 'Supervisión'];
-        base.gridCorrect = [0, 0];
-      } else if (type === 'grid_checkbox') {
-        base.gridRows = ['Docente', 'Supervisor'];
-        base.gridCols = ['Gestión diaria', 'Pasar lista', 'Modo Clase'];
-        base.gridCorrect = [[1, 2], [0]];
+      } else if (type === 'grid_radio' || type === 'grid_checkbox') {
+        base.gridRows = ['Criterio 1', 'Criterio 2'];
+        base.gridCols = ['Columna A', 'Columna B', 'Columna C'];
+        base.gridAnswers = { 0: [0], 1: [1] };
       } else if (type === 'file_upload') {
         base.allowedFormats = 'PDF, JPG, PNG'; base.maxSizeMb = 10; base.maxFiles = 2;
       } else if (type === 'date_time') {
-        base.dateTimeMode = 'both'; base.expectedDate = ''; base.expectedTime = '';
+        base.dateTimeMode = 'datetime'; base.expectedDate = ''; base.expectedTime = '';
       } else if (type === 'ordering') {
-        base.orderSteps = ['1. Iniciar sesión con Google', '2. Seleccionar el aula asignada', '3. Activar el Modo Clase'];
+        base.orderSteps = ['Primer paso', 'Segundo paso', 'Tercer paso'];
       } else if (type === 'cloze') {
-        base.clozeTemplate = 'En la matriz Resumen de aprendizaje, un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].';
-        base.clozeInputStyle = 'text';
-        base.clozeDistractors = 'pendiente, bloqueada';
+        base.clozeTemplate = 'En la matriz Resumen de aprendizaje, un círculo azul indica [correcta] y una X roja [incorrecta].';
       } else if (type === 'hotspot') {
         base.hotspotTarget = 'Control visual objetivo';
-        base.hotspotX = 50;
-        base.hotspotY = 50;
-        base.hotspotRadius = 14;
+        base.hotspotBox = { x: 25, y: 25, w: 50, h: 50 };
       } else {
         base.options = ['Opción correcta', 'Distractor 1', 'Distractor 2', 'Distractor 3'];
         base.correct = 0;
@@ -2943,6 +2976,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const q = quizzesBank[modId]?.questions[qIdx];
         if (!q) return;
         q.hotspotImg = dataUrl;
+        if (!q.hotspotBox) q.hotspotBox = { x: 25, y: 25, w: 50, h: 50 };
         saveCmsState(true);
         renderAdminQuizEditor();
       });
@@ -2950,29 +2984,28 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
     function changeQuestionTemplateType(modId, qIdx, newType) {
       saveAdminQuizChanges(modId, true);
-      const q = quizzesBank[modId].questions[qIdx];
-      if (!q) return;
-      q.type = newType;
-      if (newType === 'short') { q.expectedAnswer = q.expectedAnswer || ''; q.validationFormat = q.validationFormat || 'text'; q.maxChars = q.maxChars || 120; }
-      if (newType === 'paragraph') { q.expectedAnswer = q.expectedAnswer || ''; q.counterMode = q.counterMode || 'words'; }
-      if (newType === 'tf') q.correctBool = true;
-      if (newType === 'match' && !q.pairs) q.pairs = [{ left: 'Concepto 1', right: 'Pareja 1' }, { left: 'Concepto 2', right: 'Pareja 2' }];
-      if ((newType === 'mcq' || newType === 'checkboxes' || newType === 'dropdown') && !q.options) {
-        q.options = ['Opción A', 'Opción B', 'Opción C'];
-        q.correct = 0;
-        q.correctMultiple = [0];
+      const old = quizzesBank[modId].questions[qIdx];
+      if (!old) return;
+      const keepPrompt = old.q;
+      const keepPts = old.points;
+      const next = { type: newType, q: keepPrompt, points: keepPts };
+      if (newType === 'short') { next.expectedAnswer = ''; next.placeholderText = 'Escribe tu respuesta breve...'; next.maxChars = 120; }
+      else if (newType === 'paragraph') { next.expectedAnswer = ''; }
+      else if (newType === 'tf') { next.correctBool = true; }
+      else if (newType === 'match') { next.pairs = [{ left: 'Concepto 1', right: 'Pareja 1' }, { left: 'Concepto 2', right: 'Pareja 2' }]; }
+      else if (newType === 'linear_scale') { next.scaleMin = 1; next.scaleMax = 5; next.scaleCorrect = 5; next.minLabel = 'Totalmente en desacuerdo'; next.maxLabel = 'Totalmente de acuerdo'; }
+      else if (newType === 'grid_radio' || newType === 'grid_checkbox') { next.gridRows = ['Criterio 1', 'Criterio 2']; next.gridCols = ['Columna A', 'Columna B', 'Columna C']; next.gridAnswers = { 0: [0], 1: [1] }; }
+      else if (newType === 'file_upload') { next.allowedFormats = 'PDF, JPG, PNG'; next.maxSizeMb = 10; next.maxFiles = 2; }
+      else if (newType === 'date_time') { next.dateTimeMode = 'datetime'; next.expectedDate = ''; next.expectedTime = ''; }
+      else if (newType === 'ordering') { next.orderSteps = ['Paso 1', 'Paso 2', 'Paso 3']; }
+      else if (newType === 'cloze') { next.clozeTemplate = 'Completa el espacio [clave] dentro de la oración.'; }
+      else if (newType === 'hotspot') { next.hotspotTarget = 'Zona objetivo'; next.hotspotBox = { x: 25, y: 25, w: 50, h: 50 }; }
+      else {
+        next.options = old.options || ['Opción A', 'Opción B', 'Opción C'];
+        next.correct = 0;
+        next.correctMultiple = [0];
       }
-      if (newType === 'linear_scale') { q.scaleMin = q.scaleMin ?? 1; q.scaleMax = q.scaleMax ?? 5; }
-      if (newType === 'grid_radio' || newType === 'grid_checkbox') {
-        q.gridRows = q.gridRows || ['Fila 1', 'Fila 2'];
-        q.gridCols = q.gridCols || ['Columna A', 'Columna B', 'Columna C'];
-        q.gridCorrect = q.gridCorrect || (newType === 'grid_radio' ? [0, 0] : [[0], [0]]);
-      }
-      if (newType === 'file_upload') { q.allowedFormats = q.allowedFormats || 'PDF, JPG, PNG'; q.maxSizeMb = q.maxSizeMb || 10; q.maxFiles = q.maxFiles || 2; }
-      if (newType === 'date_time') { q.dateTimeMode = q.dateTimeMode || 'both'; }
-      if (newType === 'ordering' && !q.orderSteps) { q.orderSteps = ['Paso 1', 'Paso 2', 'Paso 3']; }
-      if (newType === 'cloze' && !q.clozeTemplate) { q.clozeTemplate = 'Completa el espacio [clave] en la oración.'; }
-      if (newType === 'hotspot') { q.hotspotX = q.hotspotX ?? 50; q.hotspotY = q.hotspotY ?? 50; q.hotspotRadius = q.hotspotRadius ?? 14; }
+      quizzesBank[modId].questions[qIdx] = next;
       saveCmsState(true);
       renderAdminQuizEditor();
     }
@@ -3032,16 +3065,32 @@ const DEFAULT_AUDIENCE_CATALOG = [
           qCfg.questions[idx].pairs[pIdx][side] = el.value.trim();
         }
       });
+      document.querySelectorAll('.ed-q-order-step').forEach(el => {
+        const idx = Number(el.dataset.qidx);
+        const sIdx = Number(el.dataset.sidx);
+        if (qCfg.questions[idx] && qCfg.questions[idx].orderSteps) {
+          qCfg.questions[idx].orderSteps[sIdx] = el.value.trim();
+        }
+      });
+      document.querySelectorAll('.ed-q-grid-row').forEach(el => {
+        const idx = Number(el.dataset.qidx);
+        const rIdx = Number(el.dataset.ridx);
+        if (qCfg.questions[idx] && qCfg.questions[idx].gridRows) {
+          qCfg.questions[idx].gridRows[rIdx] = el.value.trim();
+        }
+      });
+      document.querySelectorAll('.ed-q-grid-col').forEach(el => {
+        const idx = Number(el.dataset.qidx);
+        const cIdx = Number(el.dataset.cidx);
+        if (qCfg.questions[idx] && qCfg.questions[idx].gridCols) {
+          qCfg.questions[idx].gridCols[cIdx] = el.value.trim();
+        }
+      });
       document.querySelectorAll('.ed-q-gen').forEach(el => {
         const idx = Number(el.dataset.qidx);
         const gfield = el.dataset.gfield;
         if (!qCfg.questions[idx]) return;
-        if (gfield === 'gridRows' || gfield === 'gridCols' || gfield === 'orderSteps') {
-          qCfg.questions[idx][gfield] = el.value.split('
-').map(s => s.trim()).filter(Boolean);
-        } else {
-          qCfg.questions[idx][gfield] = el.value;
-        }
+        qCfg.questions[idx][gfield] = el.value;
       });
 
       qCfg.questions.forEach((qItem, idx) => {
@@ -3057,21 +3106,15 @@ const DEFAULT_AUDIENCE_CATALOG = [
             if (chk.checked) checkedIndices.push(Number(chk.dataset.oidx));
           });
           qItem.correctMultiple = checkedIndices;
-        } else if (qItem.type === 'grid_radio') {
-          const rows = qItem.gridRows || [];
-          qItem.gridCorrect = rows.map((_, rIdx) => {
-            const sel = document.querySelector(`input[name="ed_grid_r_${idx}_${rIdx}"]:checked`);
-            return sel ? Number(sel.value) : 0;
+        } else if (qItem.type === 'grid_radio' || qItem.type === 'grid_checkbox') {
+          const gAns = {};
+          document.querySelectorAll(`.ed-q-grid-ans[data-qidx="${idx}"]`).forEach(inp => {
+            const rIdx = Number(inp.dataset.ridx);
+            const cIdx = Number(inp.dataset.cidx);
+            if (!gAns[rIdx]) gAns[rIdx] = [];
+            if (inp.checked) gAns[rIdx].push(cIdx);
           });
-        } else if (qItem.type === 'grid_checkbox') {
-          const rows = qItem.gridRows || [];
-          qItem.gridCorrect = rows.map((_, rIdx) => {
-            const arr = [];
-            document.querySelectorAll(`.ed-grid-chk[data-qidx="${idx}"][data-ridx="${rIdx}"]`).forEach(chk => {
-              if (chk.checked) arr.push(Number(chk.dataset.cidx));
-            });
-            return arr;
-          });
+          qItem.gridAnswers = gAns;
         }
       });
 
