@@ -130,70 +130,6 @@
       visibility: visible !important;
       transform: translateX(0) !important;
     }
-  
-    /* Modern Executive Pill Toggle Switch (Replacing Legacy Checkboxes) */
-    .exec-switch {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      width: 40px;
-      height: 22px;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-    .exec-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-    }
-    .exec-switch-track {
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      background-color: #CBD5E1;
-      transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .exec-switch input:checked + .exec-switch-track {
-      background-color: #090D16;
-    }
-    .exec-switch.brand-blue input:checked + .exec-switch-track {
-      background-color: #1A64FF;
-    }
-    .exec-switch-thumb {
-      position: absolute;
-      left: 3px;
-      top: 3px;
-      width: 16px;
-      height: 16px;
-      border-radius: 9999px;
-      background-color: #FFFFFF;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.28);
-      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .exec-switch input:checked ~ .exec-switch-thumb {
-      transform: translateX(18px);
-    }
-
-    /* Multi-column Masonry Grid for Audience Cards (Zero empty vertical gaps when expanding one card) */
-    .adaptive-audience-masonry {
-      column-count: 1;
-      column-gap: 1.25rem;
-    }
-    @media (min-width: 768px) {
-      .adaptive-audience-masonry { column-count: 2; }
-    }
-    @media (min-width: 1280px) {
-      .adaptive-audience-masonry { column-count: 3; }
-    }
-    .audience-masonry-item {
-      break-inside: avoid;
-      page-break-inside: avoid;
-      display: inline-block;
-      width: 100%;
-      margin-bottom: 1.25rem;
-    }
-
   </style>
 </head>
 <body class="bg-[#F3F5F8] text-slate-900 antialiased overflow-x-hidden">
@@ -346,7 +282,7 @@
             <nav class="space-y-1 text-[13px] font-medium">
 
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('accesos')" id="navAdm-accesos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-[#1A64FF] transition cursor-pointer">
+                <button type="button" onclick="switchAdminTab('accesos')" id="navAdm-accesos" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
                   <span class="w-7 h-7 rounded-lg bg-white/[0.06] text-slate-300 flex items-center justify-center shrink-0"><i class="fa-solid fa-key text-xs"></i></span>
                   <span class="sb-hide truncate">1. Accesos</span>
                 </button>
@@ -386,7 +322,7 @@
               </div>
 
               <div class="nav-item-wrap relative">
-                <button type="button" onclick="switchAdminTab('dashboard')" id="navAdm-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-400 hover:bg-white/[0.06] hover:text-white transition cursor-pointer">
+                <button type="button" onclick="switchAdminTab('dashboard')" id="navAdm-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white bg-[#1A64FF] transition cursor-pointer">
                   <span class="w-7 h-7 rounded-lg bg-white/15 text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-chart-pie text-xs"></i></span>
                   <span class="sb-hide truncate">5. Dashboard</span>
                 </button>
@@ -446,7 +382,8 @@
       <main class="flex-1 p-4 sm:p-6 lg:p-8 w-full max-w-[1760px] mx-auto space-y-6">
 
         <!-- ================================================================ -->
-        <!-- SECTION 1: ACCESOS (BALANCED EXECUTIVE DIRECTORY — ZERO DEAD SPACE) -->
+        <!-- SECTION 1: ACCESOS (REFINED PROPORTIONAL DIRECTORY & PILL SWITCH)-->
+        <!-- ================================================================ -->
         <section id="viewAdm-accesos" class="adm-section space-y-5">
           <div class="exec-card px-6 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
@@ -471,50 +408,50 @@
           </div>
 
           <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-            <!-- Left 4 Cols: Compact & Balanced Credential Form -->
-            <div class="xl:col-span-4 exec-card p-6 space-y-5">
+            <!-- Left 4 Cols: Compact Self-Sized Executive Form (No Stretched Blank Space) -->
+            <div class="xl:col-span-4 exec-card p-6 space-y-5 border-t-4 border-t-[#090D16]">
               <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
                 <div>
                   <h3 id="admAccessFormTitle" class="text-base font-extrabold text-slate-900">Otorgar Acceso</h3>
-                  <p class="text-xs text-slate-500 mt-0.5">Registra o edita credenciales administrativas.</p>
+                  <p class="text-xs text-slate-500 mt-0.5">Registra o actualiza credenciales administrativas.</p>
                 </div>
-                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xs shadow-2xs">
-                  <i class="fa-solid fa-user-shield"></i>
+                <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-user-plus"></i>
                 </div>
               </div>
 
-              <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-4 text-xs">
+              <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-3.5 text-xs">
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Nombre Completo <span class="text-rose-600">*</span></label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Nombre Completo <span class="text-rose-600">*</span></label>
                   <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="exec-input w-full px-3.5 py-2.5 font-medium">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Correo Institucional <span class="text-rose-600">*</span></label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Correo Institucional <span class="text-rose-600">*</span></label>
                   <input type="email" id="newAdmEmail" required placeholder="nombre@ihateflyingbugs.com" class="exec-input w-full px-3.5 py-2.5 font-medium">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Departamento / Cargo</label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Departamento / Cargo</label>
                   <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica" class="exec-input w-full px-3.5 py-2.5 font-medium">
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold text-slate-700 mb-1.5">Contraseña de Acceso <span class="text-rose-600">*</span></label>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Contraseña de Acceso <span class="text-rose-600">*</span></label>
                   <input type="text" id="newAdmPassword" required placeholder="Asigna una contraseña" class="exec-input w-full px-3.5 py-2.5 font-medium">
                 </div>
+
+                <!-- Sleek Pill Toggle Switch for Account Status -->
                 <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
                   <div>
-                    <div class="font-bold text-slate-800">Estado de la Cuenta</div>
-                    <div class="text-[11px] text-slate-500">Habilita el ingreso inmediato</div>
+                    <div class="font-semibold text-slate-800">Estado de la Cuenta</div>
+                    <div class="text-[11px] text-slate-500">Habilita el acceso inmediato</div>
                   </div>
-                  <div class="flex items-center gap-2.5">
-                    <label class="exec-switch">
-                      <input type="checkbox" id="newAdmActive" checked>
-                      <span class="exec-switch-track"></span>
-                      <span class="exec-switch-thumb"></span>
-                    </label>
-                    <span class="font-bold text-slate-800">Activa</span>
-                  </div>
+                  <label class="relative inline-flex items-center gap-2.5 cursor-pointer select-none">
+                    <input type="checkbox" id="newAdmActive" checked onchange="document.getElementById('newAdmActiveLabel').textContent = this.checked ? 'Activa' : 'Inactiva'" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-[#090D16] transition-colors after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:shadow-sm after:transition-all peer-checked:after:translate-x-5"></div>
+                    <span id="newAdmActiveLabel" class="font-bold text-slate-800 w-12">Activa</span>
+                  </label>
                 </div>
-                <div class="flex gap-2.5 pt-1">
+
+                <div class="flex gap-2.5 pt-2">
                   <button type="button" onclick="resetAdminAccessForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-semibold cursor-pointer">Limpiar</button>
                   <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white font-semibold shadow-sm transition cursor-pointer">
                     Guardar Credenciales
@@ -523,19 +460,14 @@
               </form>
             </div>
 
-            <!-- Right 8 Cols: Crisp Corporate Directory (Natural Height, No Awkward White Gap) -->
+            <!-- Right 8 Cols: Self-Sized Corporate Directory (Zero Awkward Empty Space) -->
             <div class="xl:col-span-8 exec-card overflow-hidden">
               <div class="px-6 py-4 border-b border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <h3 class="text-sm font-extrabold text-slate-900">Directorio de Administradores</h3>
                   <p class="text-xs text-slate-500 mt-0.5">Cuentas autorizadas para gestionar el portal de capacitación.</p>
                 </div>
-                <div class="flex items-center gap-2">
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-semibold">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Sincronización activa
-                  </span>
-                  <span id="admAccessCountBadge" class="text-xs font-bold px-3 py-1 rounded-lg bg-slate-100 text-slate-700">0 cuentas</span>
-                </div>
+                <span id="admAccessCountBadge" class="font-mono text-xs font-bold px-3 py-1 rounded-lg bg-slate-100 text-slate-700">0 cuentas</span>
               </div>
               <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs text-slate-700">
@@ -551,11 +483,16 @@
                   <tbody id="admAccessTableBody" class="divide-y divide-slate-100"></tbody>
                 </table>
               </div>
+              <div class="px-6 py-3.5 bg-slate-50/70 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-[11.5px] text-slate-500">
+                <span>Los cambios de estado o contraseña aplican al instante en el próximo inicio de sesión.</span>
+                <span class="font-semibold text-slate-700 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Sincronización activa</span>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- SECTION 2: ASIGNACIONES (ADAPTIVE PROPORTIONAL CARDS)            -->
+        <!-- ================================================================ -->
+        <!-- SECTION 2: ASIGNACIONES (SLEEK PILL TOGGLES + MODAL/DRAWER)      -->
         <!-- ================================================================ -->
         <section id="viewAdm-asignaciones" class="adm-section hidden space-y-5">
           <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
@@ -565,10 +502,7 @@
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
               <button type="button" onclick="assignAllModulesToAllAudiences()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-[#1554D6] text-white text-xs font-semibold shadow-sm transition cursor-pointer">
-                Marcar Todos a Todas las Audiencias
-              </button>
-              <button type="button" onclick="toggleExpandAllAudienceCards()" id="btnToggleExpandAllAud" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
-                Desplegar Módulos
+                Asignar Todos Globalmente
               </button>
               <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
                 Restaurar Predeterminados
@@ -589,14 +523,15 @@
               <select id="asigRoleFilter" onchange="renderAdminAudienceMatrix()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
               <select id="asigModuleFilter" onchange="renderAdminAudienceMatrix()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-800"></select>
             </div>
-            <span class="text-xs text-slate-500">Despliega cada tarjeta para gestionar sus módulos individualmente.</span>
+            <span class="text-xs text-slate-500">Activa los interruptores o haz clic en <strong>Configurar Módulos</strong> en cada audiencia.</span>
           </div>
 
-          <div id="admAudienceMatrixGrid" class="adaptive-audience-masonry"></div>
+          <!-- Uniform Height Cards Grid (Zero Jagged Row Gaps!) -->
+          <div id="admAudienceMatrixGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 3: MÓDULOS (GLOBAL SYNC + CHARACTER + THUMBNAILS)        -->
+        <!-- SECTION 3: MÓDULOS (ARCHITECTURAL 2-COLUMN STUDIO WORKSPACE)     -->
         <!-- ================================================================ -->
         <section id="viewAdm-modulos" class="adm-section hidden space-y-5">
           <div class="exec-card px-6 py-5 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
@@ -622,7 +557,7 @@
             </div>
           </div>
 
-          <div id="admModuleEditorContainer" class="exec-card p-6 sm:p-8 space-y-6"></div>
+          <div id="admModuleEditorContainer" class="space-y-5"></div>
         </section>
 
         <!-- ================================================================ -->
@@ -704,7 +639,7 @@
         <!-- ================================================================ -->
         <!-- SECTION 5: DASHBOARD EN TIEMPO REAL (ADAPTIVE PROPORTIONAL GRID) -->
         <!-- ================================================================ -->
-        <section id="viewAdm-dashboard" class="adm-section hidden space-y-5">
+        <section id="viewAdm-dashboard" class="adm-section space-y-5">
           <div class="exec-card px-6 py-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div class="flex items-center gap-2.5">
@@ -941,6 +876,38 @@
     </div>
   </div>
 
+
+  <!-- ======================================================================== -->
+  <!-- MODAL: CONFIGURADOR DE MÓDULOS POR AUDIENCIA (SIN HUECOS EN LA GRILLA)   -->
+  <!-- ======================================================================== -->
+  <div id="audienceModulesModal" onclick="if(event.target===this) closeAudienceModulesModal()" class="fixed inset-0 bg-slate-950/70 modal-glass z-[60] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[88vh] overflow-hidden shadow-2xl border border-slate-200 flex flex-col">
+      <div class="px-6 py-4 bg-[#090D16] text-white flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div id="audModalIconBox" class="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center text-base">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#60A5FA]">Ruta Curricular Asignada</div>
+            <h4 id="audModalTitle" class="text-base font-extrabold">Audiencia</h4>
+          </div>
+        </div>
+        <button type="button" onclick="closeAudienceModulesModal()" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="audModalBody" class="p-6 overflow-y-auto custom-scroll space-y-2.5 flex-1"></div>
+
+      <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0 text-xs">
+        <span id="audModalSummaryText" class="font-semibold text-slate-600">0 de 0 módulos activos</span>
+        <button type="button" onclick="closeAudienceModulesModal()" class="px-5 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white font-bold transition cursor-pointer">
+          Listo
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
 const TRAINING_SUPABASE_URL = "https://tcrzqkdcigiewsxglkjg.supabase.co";
     const TRAINING_SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjcnpxa2RjaWdpZXdzeGdsa2pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1NDY1NDAsImV4cCI6MjExMTEyMjU0MH0.6r0R6_yplAzAY_NPtbGH85zFkOqEvDHDfiG82pHOHI4";
@@ -971,7 +938,7 @@ const TRAINING_SUPABASE_URL = "https://tcrzqkdcigiewsxglkjg.supabase.co";
       { cls: "fa-award", label: "Diploma" },
       { cls: "fa-users", label: "Grupos" },
       { cls: "fa-clipboard-check", label: "Auditoría" },
-      { cls: "fa-sparkles", label: "IA" },
+      { cls: "fa-wand-magic-sparkles", label: "IA" },
       { cls: "fa-shield-halved", label: "Seguridad" }
     ];
 
@@ -1677,8 +1644,11 @@ const DEFAULT_AUDIENCE_CATALOG = [
             <td class="px-4 py-3.5 text-slate-700 font-medium">${escapeHtml(a.email)}</td>
             <td class="px-4 py-3.5 text-slate-600">${escapeHtml(a.address || 'Administración General')}</td>
             <td class="px-4 py-3.5">
-              <button type="button" onclick="toggleAdminActiveStatus(${idx})" class="px-3 py-1 rounded-full text-[11px] font-bold cursor-pointer ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}">
-                ${isActive ? '● Activa' : '○ Inactiva'}
+              <button type="button" onclick="toggleAdminActiveStatus(${idx})" class="inline-flex items-center gap-2 cursor-pointer group" title="Cambiar estado de cuenta">
+                <span class="relative inline-flex items-center w-9 h-5 rounded-full transition-colors ${isActive ? 'bg-[#090D16]' : 'bg-slate-300'}">
+                  <span class="w-4 h-4 rounded-full bg-white shadow-xs transform transition-transform ${isActive ? 'translate-x-4.5' : 'translate-x-0.5'}"></span>
+                </span>
+                <span class="text-[11px] font-bold ${isActive ? 'text-slate-900' : 'text-slate-400'}">${isActive ? 'Activa' : 'Inactiva'}</span>
               </button>
             </td>
             <td class="px-5 py-3.5 text-right space-x-1.5">
@@ -1704,13 +1674,18 @@ const DEFAULT_AUDIENCE_CATALOG = [
       document.getElementById('newAdmEmail').value = a.email || '';
       document.getElementById('newAdmAddress').value = a.address || '';
       document.getElementById('newAdmPassword').value = a.password || '';
-      document.getElementById('newAdmActive').checked = a.active !== false;
+      const isAct = a.active !== false;
+      document.getElementById('newAdmActive').checked = isAct;
+      const lbl = document.getElementById('newAdmActiveLabel');
+      if (lbl) lbl.textContent = isAct ? 'Activa' : 'Inactiva';
     }
 
     function resetAdminAccessForm() {
-      document.getElementById('admAccessFormTitle').textContent = "Otorgar Acceso Administrativo";
+      document.getElementById('admAccessFormTitle').textContent = "Otorgar Acceso";
       document.getElementById('admAccessForm').reset();
       document.getElementById('newAdmActive').checked = true;
+      const lbl = document.getElementById('newAdmActiveLabel');
+      if (lbl) lbl.textContent = 'Activa';
     }
 
     async function toggleAdminActiveStatus(idx) {
@@ -1773,24 +1748,78 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
     }
 
-    // ==================== 2. ASIGNACIONES POR AUDIENCIA (COLLAPSIBLE SQUARE CARDS) ====================
-    let expandedAudienceCardsMap = {}; // Default collapsed (false)
+    // ==================== 2. ASIGNACIONES POR AUDIENCIA (SLEEK PILL SWITCHES + UNIFORM CARDS) ====================
+    let activeModalAudienceIdx = null;
 
-    function toggleAudienceCardAccordion(roleName) {
-      expandedAudienceCardsMap[roleName] = !expandedAudienceCardsMap[roleName];
-      renderAdminAudienceMatrix();
+    function buildSleekToggleSwitchHTML(isChecked, onChangeJs) {
+      return `
+        <label class="relative inline-flex items-center cursor-pointer shrink-0 select-none" onclick="event.stopPropagation()">
+          <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="${onChangeJs}" class="sr-only peer">
+          <div class="w-10 h-5.5 bg-slate-200 rounded-full peer peer-checked:bg-[#090D16] transition-colors after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:shadow-xs after:transition-all peer-checked:after:translate-x-[18px]"></div>
+        </label>
+      `;
     }
 
-    function toggleExpandAllAudienceCards() {
-      const anyCollapsed = AUDIENCE_CATALOG.some(a => !expandedAudienceCardsMap[a.role]);
-      AUDIENCE_CATALOG.forEach(a => { expandedAudienceCardsMap[a.role] = anyCollapsed; });
-      const btn = document.getElementById('btnToggleExpandAllAud');
-      if (btn) {
-        btn.innerHTML = anyCollapsed
-          ? '<i class="fa-solid fa-angles-up mr-1"></i> Contraer Módulos'
-          : '<i class="fa-solid fa-angles-down mr-1"></i> Desplegar Módulos';
-      }
-      renderAdminAudienceMatrix();
+    function openAudienceModulesModal(aIdx) {
+      activeModalAudienceIdx = aIdx;
+      const aud = AUDIENCE_CATALOG[aIdx];
+      if (!aud) return;
+      document.getElementById('audModalIconBox').innerHTML = `<i class="fa-solid ${escapeHtml(aud.icon || 'fa-users')}"></i>`;
+      document.getElementById('audModalTitle').textContent = `${aud.role} • ${aud.title || aud.role}`;
+      renderAudienceModalContent();
+      const m = document.getElementById('audienceModulesModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeAudienceModulesModal() {
+      activeModalAudienceIdx = null;
+      const m = document.getElementById('audienceModulesModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function renderAudienceModalContent() {
+      if (activeModalAudienceIdx === null) return;
+      const aud = AUDIENCE_CATALOG[activeModalAudienceIdx];
+      if (!aud) return;
+      const assignedCount = (aud.modules || []).length;
+      const allSelected = assignedCount === ALL_MODULES_MASTER.length && ALL_MODULES_MASTER.length > 0;
+      document.getElementById('audModalSummaryText').textContent = `${assignedCount} de ${ALL_MODULES_MASTER.length} módulos habilitados`;
+
+      const body = document.getElementById('audModalBody');
+      body.innerHTML = `
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between mb-3">
+          <div>
+            <div class="text-xs font-extrabold text-slate-900">Habilitar Ruta Completa</div>
+            <div class="text-[11px] text-slate-500">Activa o desactiva todos los módulos para ${escapeHtml(aud.role)}</div>
+          </div>
+          ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${activeModalAudienceIdx}, this.checked); renderAudienceModalContent();`)}
+        </div>
+        <div class="space-y-2">
+          ${ALL_MODULES_MASTER.map(m => {
+            const isChecked = (aud.modules || []).includes(m.id);
+            return `
+              <div onclick="toggleAudMod(${activeModalAudienceIdx}, '${m.id}', ${!isChecked}); renderAudienceModalContent();"
+                   class="p-3 rounded-xl border transition flex items-center justify-between gap-3 cursor-pointer ${isChecked ? 'bg-white border-slate-300 shadow-2xs' : 'bg-slate-50/60 border-slate-200/70 opacity-75 hover:opacity-100'}">
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class="w-8 h-8 rounded-lg ${isChecked ? 'bg-[#090D16] text-white' : 'bg-slate-200/80 text-slate-600'} font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">
+                    ${escapeHtml(m.code)}
+                  </span>
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-900 truncate">${escapeHtml(m.title)}</div>
+                    <div class="text-[10.5px] text-slate-400 truncate">${escapeHtml(m.desc || '')}</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  ${m.hidden ? '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Oculto</span>' : ''}
+                  ${buildSleekToggleSwitchHTML(isChecked, `toggleAudMod(${activeModalAudienceIdx}, '${m.id}', this.checked); renderAudienceModalContent();`)}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
     }
 
     function assignAllModulesToAllAudiences() {
@@ -1830,7 +1859,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       });
 
       if (!filteredAudiences.length) {
-        grid.innerHTML = '<div class="exec-card p-8 text-center text-xs text-slate-400">No hay audiencias que coincidan con los filtros seleccionados.</div>';
+        grid.innerHTML = '<div class="col-span-full exec-card p-8 text-center text-xs text-slate-400">No hay audiencias que coincidan con los filtros seleccionados.</div>';
         return;
       }
 
@@ -1838,82 +1867,58 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const aIdx = aud._origIdx;
         const assignedCount = (aud.modules || []).length;
         const allSelected = assignedCount === ALL_MODULES_MASTER.length && ALL_MODULES_MASTER.length > 0;
-        const isExpanded = !!expandedAudienceCardsMap[aud.role];
+        const pct = ALL_MODULES_MASTER.length ? Math.round((assignedCount / ALL_MODULES_MASTER.length) * 100) : 0;
 
         return `
-          <div class="audience-masonry-item">
-            <div class="exec-card p-5 space-y-4 border-t-[3px] ${allSelected ? 'border-t-emerald-500' : 'border-t-[#1A64FF]'} transition">
-              <!-- Card Header: Icon + Role + Assigned Ratio -->
+          <div class="exec-card p-5 flex flex-col justify-between space-y-4 border-t-4 ${allSelected ? 'border-t-emerald-500' : 'border-t-[#090D16]'} hover:border-slate-300 transition h-full">
+            <div class="space-y-3.5">
+              <!-- Header -->
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
-                  <div class="w-11 h-11 rounded-2xl bg-[#090D16] text-white flex items-center justify-center text-base shadow-2xs shrink-0">
+                  <div class="w-11 h-11 rounded-2xl bg-[#090D16] text-white flex items-center justify-center text-base shadow-xs shrink-0">
                     <i class="fa-solid ${escapeHtml(aud.icon || 'fa-users')}"></i>
                   </div>
                   <div class="min-w-0">
-                    <h3 class="text-base font-extrabold text-slate-900 leading-tight truncate">${escapeHtml(aud.role)}</h3>
-                    <p class="text-[11px] font-semibold text-slate-500 mt-0.5 truncate">${escapeHtml(aud.title || aud.role)}</p>
+                    <h3 class="text-base font-extrabold text-slate-900 truncate">${escapeHtml(aud.role)}</h3>
+                    <p class="text-[11px] font-medium text-slate-500 truncate">${escapeHtml(aud.title || aud.role)}</p>
                   </div>
                 </div>
-                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0 ${allSelected ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-[#1A64FF] border border-blue-200'}">
-                  ${assignedCount} / ${ALL_MODULES_MASTER.length}
+                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg shrink-0 ${allSelected ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-800'}">
+                  ${assignedCount}/${ALL_MODULES_MASTER.length}
                 </span>
               </div>
 
-              <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(aud.desc || '')}</p>
+              <p class="text-xs text-slate-600 leading-relaxed line-clamp-2 min-h-[2.4rem]">${escapeHtml(aud.desc || '')}</p>
 
-              <!-- Compact Module Pills Preview -->
-              <div class="flex flex-wrap gap-1.5">
+              <!-- Sleek Module Pills -->
+              <div class="flex flex-wrap gap-1.5 min-h-[1.75rem] items-center">
                 ${assignedCount === 0
                   ? '<span class="text-[11px] text-slate-400 italic">Sin módulos asignados</span>'
                   : (aud.modules || []).map(mId => {
                       const mObj = ALL_MODULES_MASTER.find(item => item.id === mId);
-                      return mObj ? `<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono text-[10.5px] font-bold">${escapeHtml(mObj.code)}</span>` : '';
+                      return mObj ? `<span class="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200/80 text-slate-800 font-mono text-[10.5px] font-bold">${escapeHtml(mObj.code)}</span>` : '';
                     }).join('')}
               </div>
+            </div>
 
-              <!-- Footer Controls: Modern Pill Switch ("Marcar todos") + Accordion Toggle -->
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                <div class="inline-flex items-center gap-2.5 select-none">
-                  <label class="exec-switch" title="Asignar o quitar todos los módulos">
-                    <input type="checkbox" ${allSelected ? 'checked' : ''} onchange="toggleAllModsForSingleAudience(${aIdx}, this.checked)">
-                    <span class="exec-switch-track"></span>
-                    <span class="exec-switch-thumb"></span>
-                  </label>
-                  <span class="text-xs font-bold text-slate-700">Todos (${ALL_MODULES_MASTER.length})</span>
-                </div>
-
-                <button type="button" onclick="toggleAudienceCardAccordion('${escapeHtml(aud.role)}')"
-                        class="px-3.5 py-1.5 rounded-xl ${isExpanded ? 'bg-[#090D16] text-white' : 'bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white'} text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
-                  <span>${isExpanded ? 'Ocultar' : 'Configurar'}</span>
-                  <i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
-                </button>
+            <!-- Bottom Control Strip with Sleek Dark Pill Toggle + Config Button -->
+            <div class="pt-3.5 border-t border-slate-100 space-y-3">
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full ${allSelected ? 'bg-emerald-500' : 'bg-[#090D16]'} transition-all duration-300" style="width:${pct}%"></div>
               </div>
 
-              <!-- Collapsible Module Rows with Executive Pill Switches -->
-              ${isExpanded ? `
-                <div class="pt-3 border-t border-slate-100 space-y-2">
-                  ${ALL_MODULES_MASTER.map(m => {
-                    const isChecked = (aud.modules || []).includes(m.id);
-                    return `
-                      <div onclick="toggleAudMod(${aIdx}, '${m.id}', ${!isChecked})"
-                           class="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl border ${isChecked ? 'bg-slate-50/90 border-slate-300/90' : 'bg-white border-slate-200/80 opacity-80'} hover:border-[#1A64FF] cursor-pointer transition text-xs select-none">
-                        <div class="flex items-center gap-2.5 min-w-0">
-                          <span class="px-2 py-0.5 rounded-md ${isChecked ? 'bg-[#090D16] text-white' : 'bg-slate-100 text-slate-600'} font-mono text-[10.5px] font-extrabold shrink-0">${escapeHtml(m.code)}</span>
-                          <span class="truncate ${isChecked ? 'text-slate-900 font-bold' : 'text-slate-600 font-medium'}">${escapeHtml(m.title)}</span>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0" onclick="event.stopPropagation()">
-                          ${m.hidden ? '<span class="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800">Oculto</span>' : ''}
-                          <label class="exec-switch brand-blue">
-                            <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAudMod(${aIdx}, '${m.id}', this.checked)">
-                            <span class="exec-switch-track"></span>
-                            <span class="exec-switch-thumb"></span>
-                          </label>
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-2.5">
+                  ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${aIdx}, this.checked)`)}
+                  <span class="text-xs font-semibold text-slate-700">Todos</span>
                 </div>
-              ` : ''}
+
+                <button type="button" onclick="openAudienceModulesModal(${aIdx})"
+                        class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+                  <i class="fa-solid fa-sliders text-[10px]"></i>
+                  <span>Configurar</span>
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -1954,7 +1959,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       });
     }
 
-    // ==================== 3. MÓDULOS (PERSONAJE + MINIATURA VIDEO + MANUALES) ====================
+    // ==================== 3. MÓDULOS (ARCHITECTURAL 2-COLUMN STUDIO LAYOUT) ====================
     function getNormalizedCardManuals(c) {
       if (Array.isArray(c.manuals) && c.manuals.length > 0) return c.manuals;
       if (c.manual || c.manualUrl) return [{ title: c.manual || 'Manual Operativo', url: c.manualUrl || '' }];
@@ -2039,183 +2044,166 @@ const DEFAULT_AUDIENCE_CATALOG = [
       visBtn.textContent = mod.hidden ? 'Mostrar al Público' : 'Ocultar Módulo';
 
       const container = document.getElementById('admModuleEditorContainer');
-      container.className = "space-y-5";
       container.innerHTML = `
-        <!-- CARD 1: IDENTIDAD DEL MÓDULO + PERSONAJE + ÍCONO -->
-        <div class="exec-card p-6 sm:p-7 space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-            <div class="flex items-center gap-3">
-              <span class="w-10 h-10 rounded-xl bg-[#090D16] text-white font-mono text-sm font-extrabold flex items-center justify-center shadow-2xs">${escapeHtml(mod.code)}</span>
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+          <!-- LEFT 5 COLS: MODULE IDENTITY, VISUAL EMBLEM & ICON SELECTOR -->
+          <div class="xl:col-span-5 exec-card p-6 space-y-5 border-t-4 border-t-[#090D16]">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
               <div>
-                <div class="flex items-center gap-2">
-                  <h3 class="text-base font-extrabold text-slate-900">Configuración General del Módulo</h3>
-                  <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold ${mod.hidden ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">
-                    ${mod.hidden ? '● Oculto' : '● Visible en portal'}
-                  </span>
-                </div>
-                <p class="text-xs text-slate-500 mt-0.5">Define la identidad visual, descripción operativa e ilustración del módulo.</p>
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Ficha del Módulo</span>
+                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">Identidad y Apariencia</h3>
               </div>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${mod.hidden ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">
+                ${mod.hidden ? 'Oculto' : 'Visible'}
+              </span>
             </div>
-            <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer">
-              <i class="fa-solid fa-floppy-disk"></i>
-              <span>Guardar Cambios</span>
-            </button>
-          </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            <!-- Left 8 Cols: Structured Inputs & Compact Icon Selector -->
-            <div class="lg:col-span-8 space-y-5">
-              <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                <div class="sm:col-span-3">
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Código <span class="text-rose-600">*</span></label>
-                  <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="exec-input w-full px-3.5 py-2.5 font-mono font-extrabold text-slate-900 text-center">
-                </div>
-                <div class="sm:col-span-9">
-                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
-                  <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="exec-input w-full px-3.5 py-2.5 font-display font-bold text-slate-900">
-                </div>
-              </div>
-
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
               <div>
-                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">Objetivo y Descripción Operativa</label>
-                <textarea id="edModDesc" rows="2" class="exec-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Código <span class="text-rose-600">*</span></label>
+                <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="exec-input w-full px-3 py-2 font-display font-extrabold text-slate-900 text-center">
               </div>
-
-              <!-- Compact & Aligned Icon Selector -->
-              <div class="p-4 rounded-2xl bg-slate-50/90 border border-slate-200/80 space-y-2.5">
-                <div class="flex items-center justify-between">
-                  <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600">Ícono del Menú Lateral</span>
-                  <span class="font-mono text-[10.5px] text-slate-400">${escapeHtml(mod.icon || 'fa-graduation-cap')}</span>
-                </div>
-                <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                  ${ICON_CATALOG.map(ic => {
-                    const active = mod.icon === ic.cls;
-                    return `
-                      <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')"
-                              class="py-2 px-1.5 rounded-xl border transition flex flex-col items-center justify-center gap-1 cursor-pointer ${active ? 'bg-[#090D16] text-white border-[#090D16] shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:border-[#1A64FF] hover:text-[#1A64FF]'}">
-                        <i class="fa-solid ${ic.cls} text-xs"></i>
-                        <span class="text-[10px] font-semibold truncate w-full text-center">${ic.label}</span>
-                      </button>
-                    `;
-                  }).join('')}
-                </div>
+              <div class="sm:col-span-3">
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
+                <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="exec-input w-full px-3.5 py-2 font-display font-bold text-slate-900">
               </div>
             </div>
 
-            <!-- Right 4 Cols: Character / Module Illustration Card -->
-            <div class="lg:col-span-4 p-5 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col justify-between space-y-3.5">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Propósito y Descripción Operativa</label>
+              <textarea id="edModDesc" rows="3" class="exec-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
+            </div>
+
+            <!-- Character / Module Emblem Card -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700">Ilustración del Módulo</span>
-                ${mod.characterImg ? `<button type="button" onclick="removeModuleCharacterImage('${mod.id}')" class="text-[11px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600">Personaje / Ilustración</span>
+                ${mod.characterImg ? `<button type="button" onclick="removeModuleCharacterImage('${mod.id}')" class="text-[11px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar imagen</button>` : ''}
               </div>
-              <div class="h-44 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden p-3">
+              <div class="h-32 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden p-3">
                 ${mod.characterImg
                   ? `<img src="${mod.characterImg}" alt="Personaje ${escapeHtml(mod.code)}" class="max-h-full max-w-full object-contain">`
-                  : `<div class="text-center text-slate-400 space-y-1.5"><i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-3xl text-slate-300"></i><div class="text-[11px] font-medium">Sin ilustración cargada</div></div>`}
+                  : `<div class="text-center text-slate-400 space-y-1"><i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-2xl text-slate-300"></i><div class="text-[11px] font-medium">Usando ilustración predeterminada</div></div>`}
               </div>
-              <label class="w-full py-2.5 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+              <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
-                <span>Subir Ilustración</span>
+                <span>Subir Ilustración Personalizada</span>
                 <input type="file" accept="image/*" onchange="uploadModuleCharacterImage('${mod.id}', this)" class="hidden">
               </label>
             </div>
-          </div>
-        </div>
 
-        <!-- CARD 2: LECCIONES AUDIOVISUALES, MINIATURAS 16:9 Y MANUALES PDF -->
-        <div class="exec-card p-6 sm:p-7 space-y-5">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-            <div>
-              <h3 class="text-base font-extrabold text-slate-900">Lecciones Audiovisuales y Manuales PDF</h3>
-              <p class="text-xs text-slate-500 mt-0.5">Configura cada video tutorial, su miniatura Full HD (16:9) y los manuales descargables asociados.</p>
+            <!-- Compact 4x4 Visual Icon Matrix -->
+            <div class="space-y-2 pt-1">
+              <label class="block text-[11px] font-bold text-slate-700">Ícono del Módulo</label>
+              <div class="grid grid-cols-4 gap-2">
+                ${ICON_CATALOG.map(ic => `
+                  <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" class="p-2 rounded-xl border transition flex flex-col items-center gap-1 text-xs cursor-pointer ${mod.icon === ic.cls ? 'bg-[#090D16] text-white border-[#090D16] shadow-xs' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'}">
+                    <i class="fa-solid ${ic.cls} text-xs"></i>
+                    <span class="text-[9.5px] font-semibold truncate w-full text-center">${ic.label}</span>
+                  </button>
+                `).join('')}
+              </div>
             </div>
-            <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-[#1554D6] text-white text-xs font-bold shadow-2xs transition cursor-pointer">
-              + Agregar Video / Lección
-            </button>
           </div>
 
-          <div class="space-y-5">
-            ${(mod.cards || []).map((c, idx) => {
-              const manuals = getNormalizedCardManuals(c);
-              return `
-                <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/60 space-y-5">
-                  <div class="flex items-center justify-between border-b border-slate-200/80 pb-3">
-                    <div class="flex items-center gap-2.5">
-                      <span class="px-2.5 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[11px] font-bold">Lección #${idx + 1}</span>
-                      <span class="text-xs font-bold text-slate-700 truncate">${escapeHtml(c.title || 'Sin título')}</span>
-                    </div>
-                    ${mod.cards.length > 1 ? `<button type="button" onclick="removeLessonFromModule('${mod.id}', ${idx})" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition cursor-pointer">Eliminar Lección</button>` : ''}
-                  </div>
+          <!-- RIGHT 7 COLS: LESSONS, HD THUMBNAILS & PDF MANUALS STUDIO -->
+          <div class="xl:col-span-7 exec-card p-6 space-y-5 border-t-4 border-t-[#1A64FF]">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
+              <div>
+                <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Contenido Multimedia</span>
+                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">Lecciones, Miniaturas HD y Manuales PDF</h3>
+              </div>
+              <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-3.5 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-plus text-[10px]"></i>
+                <span>Agregar Lección</span>
+              </button>
+            </div>
 
-                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-                    <!-- Left 7 Cols: Title, Video URL & Bullet Points -->
-                    <div class="lg:col-span-7 space-y-3.5">
-                      <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Título de la Lección</label>
-                        <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp exec-input w-full px-3.5 py-2 font-bold text-slate-900">
+            <div class="space-y-4">
+              ${(mod.cards || []).map((c, idx) => {
+                const manuals = getNormalizedCardManuals(c);
+                return `
+                  <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                      <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[10.5px] font-bold">Lección #${idx + 1}</span>
+                        <span class="text-xs font-bold text-slate-700 truncate">${escapeHtml(c.title)}</span>
                       </div>
-                      <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Enlace del Video (YouTube / Google Drive)</label>
-                        <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp exec-input w-full px-3.5 py-2 text-xs font-mono">
-                      </div>
-                      <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Puntos Clave del Video (uno por línea)</label>
-                        <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('
-'))}</textarea>
-                      </div>
+                      ${mod.cards.length > 1 ? `<button type="button" onclick="removeLessonFromModule('${mod.id}', ${idx})" class="text-xs text-rose-600 font-semibold hover:underline cursor-pointer">Eliminar</button>` : ''}
                     </div>
 
-                    <!-- Right 5 Cols: 16:9 Thumbnail Card -->
-                    <div class="lg:col-span-5 p-4 rounded-xl bg-white border border-slate-200 space-y-3">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600">Miniatura (16:9 Full HD)</span>
-                        ${c.thumbnailUrl ? `<button type="button" onclick="removeLessonVideoThumbnail('${mod.id}', ${idx})" class="text-[11px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
-                      </div>
-                      <div class="aspect-video w-full rounded-xl bg-slate-100 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
-                        ${c.thumbnailUrl
-                          ? `<img src="${c.thumbnailUrl}" alt="Miniatura" class="w-full h-full object-cover">`
-                          : `<div class="text-center text-slate-400 p-3"><i class="fa-regular fa-image text-2xl"></i><div class="text-[11px] mt-1 font-medium">1280 × 720 px recomendado</div></div>`}
-                      </div>
-                      <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
-                        <i class="fa-solid fa-image"></i>
-                        <span>Subir Miniatura</span>
-                        <input type="file" accept="image/*" onchange="uploadLessonVideoThumbnail('${mod.id}', ${idx}, this)" class="hidden">
-                      </label>
-                    </div>
-                  </div>
-
-                  <!-- Clean Attached PDF Manuals Sub-Panel -->
-                  <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-3">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700"><i class="fa-solid fa-book-open text-[#1A64FF] mr-1.5"></i> Manuales PDF Adjuntos (${manuals.length})</span>
-                      <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold transition cursor-pointer">+ Agregar Manual</button>
-                    </div>
-                    <div class="space-y-2">
-                      ${manuals.map((mn, mIdx) => `
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-2.5 items-center p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                          <div class="md:col-span-5">
-                            <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs font-semibold">
-                          </div>
-                          <div class="md:col-span-6">
-                            <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs font-mono">
-                          </div>
-                          <div class="md:col-span-1 text-right">
-                            ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold transition cursor-pointer">✕</button>` : ''}
-                          </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+                      <div class="lg:col-span-7 space-y-3">
+                        <div>
+                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Título de la Lección</label>
+                          <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp exec-input w-full px-3.5 py-2 font-semibold">
                         </div>
-                      `).join('')}
+                        <div>
+                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Enlace del Video (YouTube / Google Drive)</label>
+                          <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp exec-input w-full px-3.5 py-2 text-xs">
+                        </div>
+                        <div>
+                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Objetivos de Aprendizaje (uno por línea)</label>
+                          <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('
+'))}</textarea>
+                        </div>
+                      </div>
+
+                      <!-- HD 16:9 Video Thumbnail Preview & Uploader -->
+                      <div class="lg:col-span-5 p-3.5 rounded-xl bg-white border border-slate-200 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[11px] font-bold text-slate-700">Miniatura HD (16:9)</span>
+                          ${c.thumbnailUrl ? `<button type="button" onclick="removeLessonVideoThumbnail('${mod.id}', ${idx})" class="text-[10.5px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+                        </div>
+                        <div class="aspect-video w-full rounded-lg bg-slate-100 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
+                          ${c.thumbnailUrl
+                            ? `<img src="${c.thumbnailUrl}" alt="Miniatura" class="w-full h-full object-cover">`
+                            : `<div class="text-center text-slate-400 p-2"><i class="fa-regular fa-image text-xl"></i><div class="text-[10px] mt-1">1280×720 px recomendado</div></div>`}
+                        </div>
+                        <label class="w-full py-2 px-3 rounded-lg bg-[#090D16] hover:bg-[#1A64FF] text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                          <i class="fa-solid fa-image"></i>
+                          <span>Subir Miniatura</span>
+                          <input type="file" accept="image/*" onchange="uploadLessonVideoThumbnail('${mod.id}', ${idx}, this)" class="hidden">
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Attached PDF Manuals -->
+                    <div class="p-3.5 rounded-xl bg-white border border-slate-200 space-y-2.5">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                          <i class="fa-solid fa-book-open text-[#1A64FF]"></i>
+                          <span>Manuales PDF Adjuntos (${manuals.length})</span>
+                        </span>
+                        <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-[11px] font-bold transition cursor-pointer">+ Agregar Manual</button>
+                      </div>
+                      <div class="space-y-2">
+                        ${manuals.map((mn, mIdx) => `
+                          <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 rounded-lg bg-slate-50 border border-slate-200/80">
+                            <div class="md:col-span-5">
+                              <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs font-semibold">
+                            </div>
+                            <div class="md:col-span-6">
+                              <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs">
+                            </div>
+                            <div class="md:col-span-1 text-right">
+                              ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold cursor-pointer">✕</button>` : ''}
+                            </div>
+                          </div>
+                        `).join('')}
+                      </div>
                     </div>
                   </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
+                `;
+              }).join('')}
+            </div>
 
-          <div class="flex justify-end pt-3 border-t border-slate-100">
-            <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
-              <i class="fa-solid fa-floppy-disk"></i>
-              <span>Guardar y Sincronizar Módulo</span>
-            </button>
+            <div class="flex justify-end pt-3 border-t border-slate-100">
+              <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Guardar y Sincronizar Módulo</span>
+              </button>
+            </div>
           </div>
         </div>
       `;
@@ -2374,7 +2362,8 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const cIdx = Number(el.dataset.cidx);
         const field = el.dataset.field;
         if (!mod.cards[cIdx]) return;
-        if (field === 'points') mod.cards[cIdx].points = el.value.split('\n').map(s => s.trim()).filter(Boolean);
+        if (field === 'points') mod.cards[cIdx].points = el.value.split('
+').map(s => s.trim()).filter(Boolean);
         else mod.cards[cIdx][field] = el.value.trim();
       });
 
