@@ -46,7 +46,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
     html {
-      font-size: clamp(13.5px, 0.18vw + 13px, 16px);
+      font-size: clamp(13px, 0.16vw + 12.5px, 14.5px);
     }
     h1, h2, h3, h4, .font-display {
       font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
@@ -917,7 +917,7 @@
   <!-- MODAL: VISTA PREVIA DEL QUIZ (ESTILO GOOGLE FORMS + SIMULADOR DE NOTA)   -->
   <!-- ======================================================================== -->
   <div id="adminQuizPreviewModal" onclick="if(event.target===this) closeAdminQuizPreviewModal()" class="fixed inset-0 bg-slate-950/75 modal-glass z-[65] hidden items-center justify-center p-3 sm:p-5">
-    <div class="bg-[#EBF0F7] rounded-2xl max-w-4xl w-full h-[90vh] overflow-hidden shadow-2xl border border-slate-700/60 flex flex-col">
+    <div class="bg-[#EBF0F7] rounded-2xl max-w-5xl w-[95vw] h-[94vh] overflow-hidden shadow-2xl border border-slate-700/60 flex flex-col">
       <!-- Top Preview Bar (Google Forms Style) -->
       <div class="px-5 py-3.5 bg-[#090D16] text-white flex flex-wrap items-center justify-between gap-3 shrink-0 border-b border-slate-800">
         <div class="flex items-center gap-3 min-w-0">
@@ -944,7 +944,7 @@
 
       <!-- Scrollable Public Portal Quiz Container -->
       <div class="flex-1 overflow-y-auto custom-scroll p-4 sm:p-7">
-        <div class="pro-card bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
+        <div class="pro-card bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-9 max-w-4xl mx-auto space-y-6">
           <div class="border-b border-slate-100 pb-4 flex items-center justify-between flex-wrap gap-2">
             <div>
               <span id="prevQuizInnerBadge" class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800">Evaluación: M1</span>
@@ -1810,14 +1810,18 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
     }
 
-    // ==================== 2. ASIGNACIONES POR AUDIENCIA (SLEEK PILL SWITCHES + UNIFORM CARDS) ====================
+    // ==================== 2. ASIGNACIONES POR AUDIENCIA (SMOOTH PILL SWITCHES + UNIFORM CARDS) ====================
     let activeModalAudienceIdx = null;
 
-    function buildSleekToggleSwitchHTML(isChecked, onChangeJs) {
+    function buildSleekToggleSwitchHTML(isChecked, onChangeJs, labelText = '') {
       return `
-        <label class="relative inline-flex items-center cursor-pointer shrink-0 select-none" onclick="event.stopPropagation()">
-          <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="${onChangeJs}" class="sr-only peer">
-          <div class="w-10 h-5.5 bg-slate-200 rounded-full peer peer-checked:bg-[#090D16] transition-colors after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:shadow-xs after:transition-all peer-checked:after:translate-x-[18px]"></div>
+        <label class="inline-flex items-center gap-2.5 cursor-pointer shrink-0 select-none group" onclick="event.stopPropagation()">
+          <span class="relative inline-flex items-center w-11 h-6 shrink-0">
+            <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="${onChangeJs}" class="sr-only peer">
+            <span class="w-11 h-6 bg-slate-200 group-hover:bg-slate-300 rounded-full peer-checked:bg-[#090D16] peer-checked:group-hover:bg-[#1A64FF] transition-colors duration-200 ease-out"></span>
+            <span class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-sm transition-transform duration-200 ease-out peer-checked:translate-x-5 group-active:scale-95"></span>
+          </span>
+          ${labelText ? `<span class="text-xs font-semibold ${isChecked ? 'text-slate-900' : 'text-slate-500'} transition-colors">${labelText}</span>` : ''}
         </label>
       `;
     }
@@ -1847,35 +1851,35 @@ const DEFAULT_AUDIENCE_CATALOG = [
       if (!aud) return;
       const assignedCount = (aud.modules || []).length;
       const allSelected = assignedCount === ALL_MODULES_MASTER.length && ALL_MODULES_MASTER.length > 0;
-      document.getElementById('audModalSummaryText').textContent = `${assignedCount} de ${ALL_MODULES_MASTER.length} módulos habilitados`;
+      document.getElementById('audModalSummaryText').textContent = `${assignedCount} de ${ALL_MODULES_MASTER.length} módulos visibles para ${aud.role}`;
 
       const body = document.getElementById('audModalBody');
       body.innerHTML = `
-        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between mb-3">
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-center justify-between gap-3 mb-3">
           <div>
-            <div class="text-xs font-extrabold text-slate-900">Habilitar Ruta Completa</div>
-            <div class="text-[11px] text-slate-500">Activa o desactiva todos los módulos para ${escapeHtml(aud.role)}</div>
+            <div class="text-xs font-extrabold text-slate-900">Mostrar / Ocultar Todos los Módulos</div>
+            <div class="text-[11px] text-slate-500">Control global de visibilidad para ${escapeHtml(aud.role)}</div>
           </div>
-          ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${activeModalAudienceIdx}, this.checked); renderAudienceModalContent();`)}
+          ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${activeModalAudienceIdx}, this.checked); renderAudienceModalContent();`, allSelected ? 'Todos activos' : 'Inactivo')}
         </div>
         <div class="space-y-2">
           ${ALL_MODULES_MASTER.map(m => {
             const isChecked = (aud.modules || []).includes(m.id);
             return `
               <div onclick="toggleAudMod(${activeModalAudienceIdx}, '${m.id}', ${!isChecked}); renderAudienceModalContent();"
-                   class="p-3 rounded-xl border transition flex items-center justify-between gap-3 cursor-pointer ${isChecked ? 'bg-white border-slate-300 shadow-2xs' : 'bg-slate-50/60 border-slate-200/70 opacity-75 hover:opacity-100'}">
+                   class="p-3 rounded-xl border transition-all duration-150 flex items-center justify-between gap-3 cursor-pointer ${isChecked ? 'bg-white border-slate-300 shadow-2xs' : 'bg-slate-50/70 border-slate-200/70 hover:bg-white'}">
                 <div class="flex items-center gap-3 min-w-0">
-                  <span class="w-8 h-8 rounded-lg ${isChecked ? 'bg-[#090D16] text-white' : 'bg-slate-200/80 text-slate-600'} font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition">
+                  <span class="w-8 h-8 rounded-lg ${isChecked ? 'bg-[#090D16] text-white' : 'bg-slate-200/80 text-slate-500'} font-mono text-xs font-extrabold flex items-center justify-center shrink-0 transition-colors">
                     ${escapeHtml(m.code)}
                   </span>
                   <div class="min-w-0">
-                    <div class="text-xs font-bold text-slate-900 truncate">${escapeHtml(m.title)}</div>
+                    <div class="text-xs font-bold ${isChecked ? 'text-slate-900' : 'text-slate-500'} truncate transition-colors">${escapeHtml(m.title)}</div>
                     <div class="text-[10.5px] text-slate-400 truncate">${escapeHtml(m.desc || '')}</div>
                   </div>
                 </div>
-                <div class="flex items-center gap-2 shrink-0">
-                  ${m.hidden ? '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Oculto</span>' : ''}
-                  ${buildSleekToggleSwitchHTML(isChecked, `toggleAudMod(${activeModalAudienceIdx}, '${m.id}', this.checked); renderAudienceModalContent();`)}
+                <div class="flex items-center gap-2.5 shrink-0">
+                  ${m.hidden ? '<span class="text-[9.5px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800">Oculto global</span>' : ''}
+                  ${buildSleekToggleSwitchHTML(isChecked, `toggleAudMod(${activeModalAudienceIdx}, '${m.id}', this.checked); renderAudienceModalContent();`, isChecked ? 'Mostrar' : 'Ocultar')}
                 </div>
               </div>
             `;
@@ -1934,7 +1938,6 @@ const DEFAULT_AUDIENCE_CATALOG = [
         return `
           <div class="exec-card p-5 flex flex-col justify-between space-y-4 border-t-4 ${allSelected ? 'border-t-emerald-500' : 'border-t-[#090D16]'} hover:border-slate-300 transition h-full">
             <div class="space-y-3.5">
-              <!-- Header -->
               <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3 min-w-0">
                   <div class="w-11 h-11 rounded-2xl bg-[#090D16] text-white flex items-center justify-center text-base shadow-xs shrink-0">
@@ -1952,7 +1955,6 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
               <p class="text-xs text-slate-600 leading-relaxed line-clamp-2 min-h-[2.4rem]">${escapeHtml(aud.desc || '')}</p>
 
-              <!-- Sleek Module Pills -->
               <div class="flex flex-wrap gap-1.5 min-h-[1.75rem] items-center">
                 ${assignedCount === 0
                   ? '<span class="text-[11px] text-slate-400 italic">Sin módulos asignados</span>'
@@ -1963,17 +1965,13 @@ const DEFAULT_AUDIENCE_CATALOG = [
               </div>
             </div>
 
-            <!-- Bottom Control Strip with Sleek Dark Pill Toggle + Config Button -->
             <div class="pt-3.5 border-t border-slate-100 space-y-3">
               <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                 <div class="h-full ${allSelected ? 'bg-emerald-500' : 'bg-[#090D16]'} transition-all duration-300" style="width:${pct}%"></div>
               </div>
 
               <div class="flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2.5">
-                  ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${aIdx}, this.checked)`)}
-                  <span class="text-xs font-semibold text-slate-700">Todos</span>
-                </div>
+                ${buildSleekToggleSwitchHTML(allSelected, `toggleAllModsForSingleAudience(${aIdx}, this.checked)`, 'Todos')}
 
                 <button type="button" onclick="openAudienceModulesModal(${aIdx})"
                         class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
@@ -2021,7 +2019,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       });
     }
 
-    // ==================== 3. MÓDULOS (ARCHITECTURAL 2-COLUMN STUDIO LAYOUT) ====================
+    // ==================== 3. MÓDULOS (BALANCED EQUAL-HEIGHT 2-COLUMN STUDIO) ====================
     function getNormalizedCardManuals(c) {
       if (Array.isArray(c.manuals) && c.manuals.length > 0) return c.manuals;
       if (c.manual || c.manualUrl) return [{ title: c.manual || 'Manual Operativo', url: c.manualUrl || '' }];
@@ -2107,160 +2105,167 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       const container = document.getElementById('admModuleEditorContainer');
       container.innerHTML = `
-        <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-          <!-- LEFT 5 COLS: MODULE IDENTITY, VISUAL EMBLEM & ICON SELECTOR -->
-          <div class="xl:col-span-5 exec-card p-6 space-y-5 border-t-4 border-t-[#090D16]">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+          <!-- LEFT 5 COLS: COMPACT MODULE IDENTITY, VISUAL EMBLEM & ICON SELECTOR (EQUAL HEIGHT) -->
+          <div class="xl:col-span-5 exec-card p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-[#090D16]">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-[#1A64FF]">Ficha del Módulo</span>
+                  <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mt-0.5">Identidad y Apariencia</h3>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-lg text-[10.5px] font-bold ${mod.hidden ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">
+                  ${mod.hidden ? 'Oculto' : 'Visible'}
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+                <div>
+                  <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Código <span class="text-rose-600">*</span></label>
+                  <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="exec-input w-full px-2.5 py-1.5 text-xs font-display font-extrabold text-slate-900 text-center">
+                </div>
+                <div class="sm:col-span-3">
+                  <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
+                  <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="exec-input w-full px-3 py-1.5 text-xs font-display font-bold text-slate-900">
+                </div>
+              </div>
+
               <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Ficha del Módulo</span>
-                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">Identidad y Apariencia</h3>
+                <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Propósito y Descripción Operativa</label>
+                <textarea id="edModDesc" rows="2" class="exec-input w-full px-3 py-2 text-xs leading-relaxed">${escapeHtml(mod.desc)}</textarea>
               </div>
-              <span class="px-2.5 py-1 rounded-lg text-[11px] font-bold ${mod.hidden ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}">
-                ${mod.hidden ? 'Oculto' : 'Visible'}
-              </span>
+
+              <!-- Compact Horizontal Character / Illustration Strip -->
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center gap-3.5">
+                <div class="w-20 h-20 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden p-1.5 shrink-0">
+                  ${mod.characterImg
+                    ? `<img src="${mod.characterImg}" alt="Personaje ${escapeHtml(mod.code)}" class="max-h-full max-w-full object-contain">`
+                    : `<i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-2xl text-slate-300"></i>`}
+                </div>
+                <div class="flex-1 min-w-0 space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-600">Personaje / Ilustración</span>
+                    ${mod.characterImg ? `<button type="button" onclick="removeModuleCharacterImage('${mod.id}')" class="text-[10.5px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+                  </div>
+                  <p class="text-[11px] text-slate-500 leading-snug truncate">${mod.characterImg ? 'Ilustración personalizada cargada' : 'Usando ilustración predeterminada'}</p>
+                  <label class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-lg bg-[#090D16] hover:bg-[#1A64FF] text-white text-[11px] font-semibold transition cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up text-[10px]"></i>
+                    <span>Subir Imagen</span>
+                    <input type="file" accept="image/*" onchange="uploadModuleCharacterImage('${mod.id}', this)" class="hidden">
+                  </label>
+                </div>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-              <div>
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Código <span class="text-rose-600">*</span></label>
-                <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="exec-input w-full px-3 py-2 font-display font-extrabold text-slate-900 text-center">
-              </div>
-              <div class="sm:col-span-3">
-                <label class="block text-[11px] font-bold text-slate-700 mb-1">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
-                <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="exec-input w-full px-3.5 py-2 font-display font-bold text-slate-900">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-bold text-slate-700 mb-1">Propósito y Descripción Operativa</label>
-              <textarea id="edModDesc" rows="3" class="exec-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
-            </div>
-
-            <!-- Character / Module Emblem Card -->
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-              <div class="flex items-center justify-between">
-                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-600">Personaje / Ilustración</span>
-                ${mod.characterImg ? `<button type="button" onclick="removeModuleCharacterImage('${mod.id}')" class="text-[11px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar imagen</button>` : ''}
-              </div>
-              <div class="h-32 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden p-3">
-                ${mod.characterImg
-                  ? `<img src="${mod.characterImg}" alt="Personaje ${escapeHtml(mod.code)}" class="max-h-full max-w-full object-contain">`
-                  : `<div class="text-center text-slate-400 space-y-1"><i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-2xl text-slate-300"></i><div class="text-[11px] font-medium">Usando ilustración predeterminada</div></div>`}
-              </div>
-              <label class="w-full py-2 px-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold flex items-center justify-center gap-2 transition cursor-pointer">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
-                <span>Subir Ilustración Personalizada</span>
-                <input type="file" accept="image/*" onchange="uploadModuleCharacterImage('${mod.id}', this)" class="hidden">
-              </label>
-            </div>
-
-            <!-- Compact 4x4 Visual Icon Matrix -->
-            <div class="space-y-2 pt-1">
-              <label class="block text-[11px] font-bold text-slate-700">Ícono del Módulo</label>
-              <div class="grid grid-cols-4 gap-2">
+            <!-- Compact 8-Column Icon Matrix -->
+            <div class="space-y-1.5 pt-2 border-t border-slate-100">
+              <label class="block text-[10.5px] font-bold text-slate-700">Ícono del Módulo</label>
+              <div class="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
                 ${ICON_CATALOG.map(ic => `
-                  <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" class="p-2 rounded-xl border transition flex flex-col items-center gap-1 text-xs cursor-pointer ${mod.icon === ic.cls ? 'bg-[#090D16] text-white border-[#090D16] shadow-xs' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'}">
-                    <i class="fa-solid ${ic.cls} text-xs"></i>
-                    <span class="text-[9.5px] font-semibold truncate w-full text-center">${ic.label}</span>
+                  <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" title="${ic.label}" class="p-1.5 rounded-lg border transition flex flex-col items-center gap-0.5 cursor-pointer ${mod.icon === ic.cls ? 'bg-[#090D16] text-white border-[#090D16] shadow-2xs' : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50'}">
+                    <i class="fa-solid ${ic.cls} text-[11px]"></i>
+                    <span class="text-[8.5px] font-semibold truncate w-full text-center">${ic.label}</span>
                   </button>
                 `).join('')}
               </div>
             </div>
           </div>
 
-          <!-- RIGHT 7 COLS: LESSONS, HD THUMBNAILS & PDF MANUALS STUDIO -->
-          <div class="xl:col-span-7 exec-card p-6 space-y-5 border-t-4 border-t-[#1A64FF]">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3.5">
-              <div>
-                <span class="text-[10.5px] font-bold uppercase tracking-wider text-[#1A64FF]">Contenido Multimedia</span>
-                <h3 class="text-base font-extrabold text-slate-900 mt-0.5">Lecciones, Miniaturas HD y Manuales PDF</h3>
-              </div>
-              <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-3.5 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer">
-                <i class="fa-solid fa-plus text-[10px]"></i>
-                <span>Agregar Lección</span>
-              </button>
-            </div>
-
+          <!-- RIGHT 7 COLS: LESSONS, HD THUMBNAILS & PDF MANUALS STUDIO (EQUAL HEIGHT) -->
+          <div class="xl:col-span-7 exec-card p-5 flex flex-col justify-between space-y-4 border-t-4 border-t-[#1A64FF]">
             <div class="space-y-4">
-              ${(mod.cards || []).map((c, idx) => {
-                const manuals = getNormalizedCardManuals(c);
-                return `
-                  <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
-                      <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[10.5px] font-bold">Lección #${idx + 1}</span>
-                        <span class="text-xs font-bold text-slate-700 truncate">${escapeHtml(c.title)}</span>
-                      </div>
-                      ${mod.cards.length > 1 ? `<button type="button" onclick="removeLessonFromModule('${mod.id}', ${idx})" class="text-xs text-rose-600 font-semibold hover:underline cursor-pointer">Eliminar</button>` : ''}
-                    </div>
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                <div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-[#1A64FF]">Contenido Multimedia</span>
+                  <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mt-0.5">Lecciones, Miniaturas HD y Manuales PDF</h3>
+                </div>
+                <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-3.5 py-1.5 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Agregar Lección</span>
+                </button>
+              </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-                      <div class="lg:col-span-7 space-y-3">
-                        <div>
-                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Título de la Lección</label>
-                          <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp exec-input w-full px-3.5 py-2 font-semibold">
+              <div class="space-y-3.5">
+                ${(mod.cards || []).map((c, idx) => {
+                  const manuals = getNormalizedCardManuals(c);
+                  return `
+                    <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-3">
+                      <div class="flex items-center justify-between border-b border-slate-200/80 pb-2">
+                        <div class="flex items-center gap-2">
+                          <span class="px-2 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[10px] font-bold">Lección #${idx + 1}</span>
+                          <span class="text-xs font-bold text-slate-700 truncate">${escapeHtml(c.title)}</span>
                         </div>
-                        <div>
-                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Enlace del Video (YouTube / Google Drive)</label>
-                          <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp exec-input w-full px-3.5 py-2 text-xs">
-                        </div>
-                        <div>
-                          <label class="block text-[11px] font-bold text-slate-700 mb-1">Objetivos de Aprendizaje (uno por línea)</label>
-                          <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
-                        </div>
+                        ${mod.cards.length > 1 ? `<button type="button" onclick="removeLessonFromModule('${mod.id}', ${idx})" class="text-[11px] text-rose-600 font-semibold hover:underline cursor-pointer">Eliminar</button>` : ''}
                       </div>
 
-                      <!-- HD 16:9 Video Thumbnail Preview & Uploader -->
-                      <div class="lg:col-span-5 p-3.5 rounded-xl bg-white border border-slate-200 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                          <span class="text-[11px] font-bold text-slate-700">Miniatura HD (16:9)</span>
-                          ${c.thumbnailUrl ? `<button type="button" onclick="removeLessonVideoThumbnail('${mod.id}', ${idx})" class="text-[10.5px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
-                        </div>
-                        <div class="aspect-video w-full rounded-lg bg-slate-100 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
-                          ${c.thumbnailUrl
-                            ? `<img src="${c.thumbnailUrl}" alt="Miniatura" class="w-full h-full object-cover">`
-                            : `<div class="text-center text-slate-400 p-2"><i class="fa-regular fa-image text-xl"></i><div class="text-[10px] mt-1">1280×720 px recomendado</div></div>`}
-                        </div>
-                        <label class="w-full py-2 px-3 rounded-lg bg-[#090D16] hover:bg-[#1A64FF] text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
-                          <i class="fa-solid fa-image"></i>
-                          <span>Subir Miniatura</span>
-                          <input type="file" accept="image/*" onchange="uploadLessonVideoThumbnail('${mod.id}', ${idx}, this)" class="hidden">
-                        </label>
-                      </div>
-                    </div>
-
-                    <!-- Attached PDF Manuals -->
-                    <div class="p-3.5 rounded-xl bg-white border border-slate-200 space-y-2.5">
-                      <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                          <i class="fa-solid fa-book-open text-[#1A64FF]"></i>
-                          <span>Manuales PDF Adjuntos (${manuals.length})</span>
-                        </span>
-                        <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-[11px] font-bold transition cursor-pointer">+ Agregar Manual</button>
-                      </div>
-                      <div class="space-y-2">
-                        ${manuals.map((mn, mIdx) => `
-                          <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 rounded-lg bg-slate-50 border border-slate-200/80">
-                            <div class="md:col-span-5">
-                              <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs font-semibold">
-                            </div>
-                            <div class="md:col-span-6">
-                              <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp exec-input w-full px-3 py-1.5 text-xs">
-                            </div>
-                            <div class="md:col-span-1 text-right">
-                              ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="w-7 h-7 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold cursor-pointer">✕</button>` : ''}
-                            </div>
+                      <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start">
+                        <div class="lg:col-span-7 space-y-2.5">
+                          <div>
+                            <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Título de la Lección</label>
+                            <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp exec-input w-full px-3 py-1.5 text-xs font-semibold">
                           </div>
-                        `).join('')}
+                          <div>
+                            <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Enlace del Video (YouTube / Google Drive)</label>
+                            <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp exec-input w-full px-3 py-1.5 text-xs">
+                          </div>
+                          <div>
+                            <label class="block text-[10.5px] font-bold text-slate-700 mb-1">Objetivos de Aprendizaje (uno por línea)</label>
+                            <textarea data-cidx="${idx}" data-field="points" rows="2" class="ed-card-inp exec-input w-full px-3 py-1.5 text-xs leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
+                          </div>
+                        </div>
+
+                        <!-- HD 16:9 Video Thumbnail Preview & Uploader -->
+                        <div class="lg:col-span-5 p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+                          <div class="flex items-center justify-between">
+                            <span class="text-[10.5px] font-bold text-slate-700">Miniatura HD (16:9)</span>
+                            ${c.thumbnailUrl ? `<button type="button" onclick="removeLessonVideoThumbnail('${mod.id}', ${idx})" class="text-[10px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+                          </div>
+                          <div class="aspect-video w-full rounded-lg bg-slate-100 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
+                            ${c.thumbnailUrl
+                              ? `<img src="${c.thumbnailUrl}" alt="Miniatura" class="w-full h-full object-cover">`
+                              : `<div class="text-center text-slate-400 p-2"><i class="fa-regular fa-image text-lg"></i><div class="text-[9.5px] mt-0.5">1280×720 px recomendado</div></div>`}
+                          </div>
+                          <label class="w-full py-1.5 px-3 rounded-lg bg-[#090D16] hover:bg-[#1A64FF] text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                            <i class="fa-solid fa-image text-[10px]"></i>
+                            <span>Subir Miniatura</span>
+                            <input type="file" accept="image/*" onchange="uploadLessonVideoThumbnail('${mod.id}', ${idx}, this)" class="hidden">
+                          </label>
+                        </div>
+                      </div>
+
+                      <!-- Attached PDF Manuals -->
+                      <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                          <span class="text-[10.5px] font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <i class="fa-solid fa-book-open text-[#1A64FF]"></i>
+                            <span>Manuales PDF Adjuntos (${manuals.length})</span>
+                          </span>
+                          <button type="button" onclick="addManualToLesson('${mod.id}', ${idx})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#090D16] text-slate-800 hover:text-white text-[10.5px] font-bold transition cursor-pointer">+ Agregar Manual</button>
+                        </div>
+                        <div class="space-y-1.5">
+                          ${manuals.map((mn, mIdx) => `
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2 rounded-lg bg-slate-50 border border-slate-200/80">
+                              <div class="md:col-span-5">
+                                <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp exec-input w-full px-2.5 py-1 text-xs font-semibold">
+                              </div>
+                              <div class="md:col-span-6">
+                                <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp exec-input w-full px-2.5 py-1 text-xs">
+                              </div>
+                              <div class="md:col-span-1 text-right">
+                                ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="w-6 h-6 rounded-lg bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold cursor-pointer">✕</button>` : ''}
+                              </div>
+                            </div>
+                          `).join('')}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                `;
-              }).join('')}
+                  `;
+                }).join('')}
+              </div>
             </div>
 
             <div class="flex justify-end pt-3 border-t border-slate-100">
-              <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-6 py-3 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
+              <button type="button" onclick="saveAdminModuleChanges('${mod.id}')" class="px-5 py-2.5 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white text-xs font-bold shadow-md transition flex items-center gap-2 cursor-pointer">
                 <i class="fa-solid fa-floppy-disk"></i>
                 <span>Guardar y Sincronizar Módulo</span>
               </button>
@@ -2895,12 +2900,22 @@ const DEFAULT_AUDIENCE_CATALOG = [
         }
 
         return `
-          <div class="exec-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4">
-            <!-- Executive Top Row: Question Prompt + Styled Type Badge & Selector -->
+          <div draggable="true"
+               ondragstart="onQuizQuestionDragStart(event, ${qIdx})"
+               ondragover="event.preventDefault(); this.classList.add('ring-2','ring-[#1A64FF]');"
+               ondragleave="this.classList.remove('ring-2','ring-[#1A64FF]');"
+               ondrop="onQuizQuestionDrop(event, '${modId}', ${qIdx})"
+               class="exec-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4 transition">
+            <!-- Executive Top Row: Drag Handle + Automatic Numbering + Move Buttons + Question Type -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-start">
               <div class="md:col-span-8 space-y-1.5">
                 <div class="flex items-center flex-wrap gap-2">
+                  <span title="Arrastra para reordenar esta pregunta" class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold text-xs cursor-grab active:cursor-grabbing select-none">⋮⋮</span>
                   <span class="px-2.5 py-0.5 rounded-md bg-[#090D16] text-white font-mono text-[10.5px] font-bold">Pregunta #${qIdx + 1}</span>
+                  <div class="inline-flex items-center gap-1">
+                    <button type="button" onclick="moveQuizQuestion('${modId}', ${qIdx}, -1)" ${qIdx === 0 ? 'disabled' : ''} title="Subir pregunta" class="w-6 h-6 rounded-md border border-slate-200 bg-white hover:bg-slate-100 text-slate-600 disabled:opacity-30 flex items-center justify-center text-[10px] cursor-pointer"><i class="fa-solid fa-arrow-up"></i></button>
+                    <button type="button" onclick="moveQuizQuestion('${modId}', ${qIdx}, 1)" ${qIdx === qCfg.questions.length - 1 ? 'disabled' : ''} title="Bajar pregunta" class="w-6 h-6 rounded-md border border-slate-200 bg-white hover:bg-slate-100 text-slate-600 disabled:opacity-30 flex items-center justify-center text-[10px] cursor-pointer"><i class="fa-solid fa-arrow-down"></i></button>
+                  </div>
                   <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[11px] font-bold">
                     <i class="fa-solid ${meta.icon} text-[10px]"></i>
                     <span>${meta.label}</span>
@@ -3099,6 +3114,37 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
 
       quizzesBank[modId].questions.push(base);
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    let draggedQuizQuestionIdx = null;
+
+    function onQuizQuestionDragStart(e, qIdx) {
+      draggedQuizQuestionIdx = qIdx;
+      if (e.dataTransfer) e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function onQuizQuestionDrop(e, modId, targetIdx) {
+      e.preventDefault();
+      if (draggedQuizQuestionIdx === null || draggedQuizQuestionIdx === targetIdx) return;
+      saveAdminQuizChanges(modId, true);
+      const list = quizzesBank[modId]?.questions;
+      if (!list) return;
+      const moved = list.splice(draggedQuizQuestionIdx, 1)[0];
+      list.splice(targetIdx, 0, moved);
+      draggedQuizQuestionIdx = null;
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function moveQuizQuestion(modId, qIdx, delta) {
+      saveAdminQuizChanges(modId, true);
+      const list = quizzesBank[modId]?.questions;
+      if (!list) return;
+      const targetIdx = qIdx + delta;
+      if (targetIdx < 0 || targetIdx >= list.length) return;
+      [list[qIdx], list[targetIdx]] = [list[targetIdx], list[qIdx]];
       saveCmsState(true);
       renderAdminQuizEditor();
     }
@@ -3438,15 +3484,37 @@ const DEFAULT_AUDIENCE_CATALOG = [
       if (qItem && host) host.innerHTML = buildPrevOrderHTML(qIdx, qItem);
     }
 
+    function onPrevOrderDragStart(qIdx, posIdx) {
+      if (admPrevRuntimeState[qIdx]) admPrevRuntimeState[qIdx].dragFrom = posIdx;
+    }
+
+    function onPrevOrderDrop(e, qIdx, targetPos) {
+      e.preventDefault();
+      const st = admPrevRuntimeState[qIdx];
+      if (!st || st.dragFrom === null || st.dragFrom === undefined || st.dragFrom === targetPos) return;
+      const moved = st.currentOrder.splice(st.dragFrom, 1)[0];
+      st.currentOrder.splice(targetPos, 0, moved);
+      st.dragFrom = null;
+      const modId = document.getElementById('admQuizModSelect').value;
+      const qItem = (quizzesBank[modId]?.questions || [])[qIdx];
+      const host = document.getElementById(`prevOrderHost_${qIdx}`);
+      if (qItem && host) host.innerHTML = buildPrevOrderHTML(qIdx, qItem);
+    }
+
     function buildPrevOrderHTML(qIdx, qItem) {
       const steps = qItem.orderSteps || [];
-      const st = admPrevRuntimeState[qIdx] || { currentOrder: steps.map((_, i) => i) };
+      const st = admPrevRuntimeState[qIdx] || { currentOrder: steps.map((_, i) => i), dragFrom: null };
       return `
         <div class="space-y-2">
           ${st.currentOrder.map((origIdx, posIdx) => `
-            <div class="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3 text-xs">
+            <div draggable="true"
+                 ondragstart="onPrevOrderDragStart(${qIdx}, ${posIdx})"
+                 ondragover="event.preventDefault(); this.classList.add('border-[#1A64FF]','bg-blue-50/40');"
+                 ondragleave="this.classList.remove('border-[#1A64FF]','bg-blue-50/40');"
+                 ondrop="onPrevOrderDrop(event, ${qIdx}, ${posIdx})"
+                 class="p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] shadow-2xs flex items-center justify-between gap-3 cursor-grab active:cursor-grabbing transition text-xs">
               <div class="flex items-center gap-2.5 min-w-0">
-                <span class="text-slate-400 font-bold">⋮⋮</span>
+                <span class="text-slate-400 font-bold select-none">⋮⋮</span>
                 <span class="w-6 h-6 rounded-lg bg-[#090D16] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">${posIdx + 1}</span>
                 <span class="font-semibold text-slate-800">${escapeHtml(steps[origIdx] || '')}</span>
               </div>
@@ -3472,6 +3540,18 @@ const DEFAULT_AUDIENCE_CATALOG = [
       pin.style.top = `${yPct}%`;
       pin.classList.remove('hidden');
       pin.classList.add('flex');
+    }
+
+    function handlePrevFileSelect(qIdx, inputEl) {
+      const files = Array.from(inputEl.files || []);
+      const listEl = document.getElementById(`prevFileList_${qIdx}`);
+      if (!listEl || !files.length) return;
+      listEl.innerHTML = files.map(f => `
+        <div class="p-2.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs">
+          <span class="font-semibold text-slate-800 truncate"><i class="fa-solid fa-file-circle-check text-emerald-600 mr-1.5"></i>${escapeHtml(f.name)}</span>
+          <span class="font-mono text-[10.5px] text-slate-400">${Math.max(1, Math.round(f.size / 1024))} KB</span>
+        </div>
+      `).join('');
     }
 
     function renderAdminQuizPreviewContent() {
@@ -3621,6 +3701,9 @@ const DEFAULT_AUDIENCE_CATALOG = [
           `;
         }
         if (t === 'file_upload') {
+          const fmt = qItem.allowedFormats || 'PDF, JPG, PNG';
+          const maxMb = Number(qItem.maxSizeMb || 10);
+          const maxF = Number(qItem.maxFiles || 2);
           return `
             <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
               <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -3629,11 +3712,13 @@ const DEFAULT_AUDIENCE_CATALOG = [
                 <span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold shrink-0">Revisión manual</span>
                 ${ptsBadge}
               </div>
-              <div class="text-[11px] font-mono text-slate-500">Formatos: ${escapeHtml(qItem.allowedFormats || 'PDF, JPG, PNG')} | Máx. ${qItem.maxSizeMb || 10} MB | Hasta ${qItem.maxFiles || 2} archivo(s)</div>
-              <div class="p-6 rounded-2xl border-2 border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-center gap-1.5 text-xs text-slate-600">
+              <div class="text-[11px] font-mono text-slate-500">Formatos: ${escapeHtml(fmt)} | Máx. ${maxMb} MB | Hasta ${maxF} archivo(s)</div>
+              <label class="p-6 rounded-2xl border-2 border-dashed border-slate-300 hover:border-[#1A64FF] bg-white flex flex-col items-center justify-center text-center gap-1.5 text-xs text-slate-600 cursor-pointer transition">
                 <i class="fa-solid fa-cloud-arrow-up text-2xl text-[#1A64FF]"></i>
-                <span class="font-bold text-slate-800">Zona interactiva de carga de archivos</span>
-              </div>
+                <span class="font-bold text-slate-800">Haz clic para seleccionar archivo(s) de prueba</span>
+                <input type="file" multiple onchange="handlePrevFileSelect(${idx}, this)" class="hidden">
+              </label>
+              <div id="prevFileList_${idx}" class="space-y-1.5"></div>
             </div>
           `;
         }
