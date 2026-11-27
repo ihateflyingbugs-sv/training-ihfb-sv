@@ -571,6 +571,10 @@
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
               <select id="admQuizModSelect" onchange="renderAdminQuizEditor()" class="exec-input px-3.5 py-2 text-xs font-semibold text-slate-900"></select>
+              <button type="button" onclick="openAdminQuizPreviewModal()" title="Vista previa interactiva como en el portal público" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-[#1554D6] text-white text-xs font-bold shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-regular fa-eye"></i>
+                <span>Vista Previa</span>
+              </button>
               <button type="button" id="btnToggleQuizHidden" onclick="toggleSelectedQuizHidden()" class="px-3.5 py-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition cursor-pointer">
                 Ocultar Quiz
               </button>
@@ -904,6 +908,64 @@
         <button type="button" onclick="closeAudienceModulesModal()" class="px-5 py-2 rounded-xl bg-[#090D16] hover:bg-[#1A64FF] text-white font-bold transition cursor-pointer">
           Listo
         </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======================================================================== -->
+  <!-- MODAL: VISTA PREVIA DEL QUIZ (ESTILO GOOGLE FORMS + SIMULADOR DE NOTA)   -->
+  <!-- ======================================================================== -->
+  <div id="adminQuizPreviewModal" onclick="if(event.target===this) closeAdminQuizPreviewModal()" class="fixed inset-0 bg-slate-950/75 modal-glass z-[65] hidden items-center justify-center p-3 sm:p-5">
+    <div class="bg-[#EBF0F7] rounded-2xl max-w-4xl w-full h-[90vh] overflow-hidden shadow-2xl border border-slate-700/60 flex flex-col">
+      <!-- Top Preview Bar (Google Forms Style) -->
+      <div class="px-5 py-3.5 bg-[#090D16] text-white flex flex-wrap items-center justify-between gap-3 shrink-0 border-b border-slate-800">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-8 h-8 rounded-xl bg-[#1A64FF] text-white flex items-center justify-center text-xs shrink-0"><i class="fa-regular fa-eye"></i></span>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#60A5FA]">Modo Vista Previa • Portal Público</span>
+              <span id="prevQuizModBadge" class="font-mono text-[10.5px] font-bold px-2 py-0.5 rounded bg-white/10 text-emerald-300">M1</span>
+            </div>
+            <h4 id="prevQuizTitle" class="text-sm sm:text-base font-extrabold truncate">Vista Previa de Evaluación</h4>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button type="button" onclick="resetAdminQuizPreview()" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-rotate-right text-[10px]"></i>
+            <span>Reiniciar Respuestas</span>
+          </button>
+          <button type="button" onclick="closeAdminQuizPreviewModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-xmark"></i>
+            <span>Cerrar Vista Previa</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable Public Portal Quiz Container -->
+      <div class="flex-1 overflow-y-auto custom-scroll p-4 sm:p-7">
+        <div class="pro-card bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-8 max-w-3xl mx-auto space-y-6">
+          <div class="border-b border-slate-100 pb-4 flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <span id="prevQuizInnerBadge" class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-800">Evaluación: M1</span>
+              <h3 id="prevQuizInnerTitle" class="text-lg font-extrabold text-slate-900 mt-2">Evaluación del Módulo</h3>
+            </div>
+            <span id="prevQuizMinPassBadge" class="text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full">Mínimo 80% • Intento Único</span>
+          </div>
+
+          <div id="prevQuizResultBanner" class="hidden p-5 rounded-2xl border text-xs space-y-2"></div>
+
+          <form id="prevQuizForm" onsubmit="submitAdminQuizPreview(event)" class="space-y-5">
+            <div id="prevQuizQuestionsContainer" class="space-y-5"></div>
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <span class="text-xs text-slate-500">Prueba responder las preguntas como lo hará el participante.</span>
+              <button type="submit" class="px-6 py-2.5 bg-[#090D16] hover:bg-[#1A64FF] text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-check-circle"></i>
+                <span>Simular Calificación</span>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -2144,8 +2206,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
                         </div>
                         <div>
                           <label class="block text-[11px] font-bold text-slate-700 mb-1">Objetivos de Aprendizaje (uno por línea)</label>
-                          <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('
-'))}</textarea>
+                          <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp exec-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
                         </div>
                       </div>
 
@@ -2362,8 +2423,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const cIdx = Number(el.dataset.cidx);
         const field = el.dataset.field;
         if (!mod.cards[cIdx]) return;
-        if (field === 'points') mod.cards[cIdx].points = el.value.split('
-').map(s => s.trim()).filter(Boolean);
+        if (field === 'points') mod.cards[cIdx].points = el.value.split('\n').map(s => s.trim()).filter(Boolean);
         else mod.cards[cIdx][field] = el.value.trim();
       });
 
@@ -3221,6 +3281,585 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       saveCmsState(!silent);
     }
+
+    // ==================== VISTA PREVIA INTERACTIVA DEL QUIZ (ESTILO GOOGLE FORMS) ====================
+    let admPrevRuntimeState = {};
+
+    function normalizePrevText(str) {
+      return String(str || '').trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ");
+    }
+
+    function openAdminQuizPreviewModal() {
+      const modId = document.getElementById('admQuizModSelect')?.value;
+      if (!modId) return;
+      saveAdminQuizChanges(modId, true);
+      const modal = document.getElementById('adminQuizPreviewModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      renderAdminQuizPreviewContent();
+    }
+
+    function closeAdminQuizPreviewModal() {
+      const modal = document.getElementById('adminQuizPreviewModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function resetAdminQuizPreview() {
+      renderAdminQuizPreviewContent();
+    }
+
+    function selectPrevTf(qIdx, valBool) {
+      admPrevRuntimeState[qIdx] = { selectedBool: valBool };
+      const bT = document.getElementById(`prevTf_${qIdx}_true`);
+      const bF = document.getElementById(`prevTf_${qIdx}_false`);
+      if (bT && bF) {
+        bT.className = valBool
+          ? "py-3.5 px-4 rounded-xl border-2 border-[#1A64FF] bg-blue-50/80 text-[#1A64FF] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer"
+          : "py-3.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer";
+        bF.className = !valBool
+          ? "py-3.5 px-4 rounded-xl border-2 border-[#1A64FF] bg-blue-50/80 text-[#1A64FF] font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer"
+          : "py-3.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer";
+      }
+    }
+
+    function selectPrevScale(qIdx, valNum) {
+      admPrevRuntimeState[qIdx] = { selectedVal: valNum };
+      document.querySelectorAll(`[id^="prevScale_${qIdx}_"]`).forEach(btn => {
+        const isSel = Number(btn.dataset.val) === Number(valNum);
+        btn.className = isSel
+          ? "w-10 h-10 rounded-full bg-[#1A64FF] text-white font-mono text-xs font-extrabold shadow-md ring-4 ring-[#1A64FF]/20 transition cursor-pointer"
+          : "w-10 h-10 rounded-full bg-white border-2 border-slate-300 hover:border-[#1A64FF] text-slate-700 font-mono text-xs font-bold transition cursor-pointer";
+      });
+    }
+
+    function clickPrevMatchLeft(qIdx, lIdx) {
+      const st = admPrevRuntimeState[qIdx];
+      if (!st) return;
+      if (st.links[lIdx] !== undefined) { delete st.links[lIdx]; st.activeLeft = null; }
+      else { st.activeLeft = (st.activeLeft === lIdx) ? null : lIdx; }
+      rerenderPrevMatch(qIdx);
+    }
+
+    function clickPrevMatchRight(qIdx, rOrig) {
+      const st = admPrevRuntimeState[qIdx];
+      if (!st) return;
+      const existingLeft = Object.keys(st.links).find(k => Number(st.links[k]) === Number(rOrig));
+      if (st.activeLeft === null) {
+        if (existingLeft !== undefined) { delete st.links[existingLeft]; rerenderPrevMatch(qIdx); }
+        return;
+      }
+      if (existingLeft !== undefined) delete st.links[existingLeft];
+      st.links[st.activeLeft] = rOrig;
+      st.activeLeft = null;
+      rerenderPrevMatch(qIdx);
+    }
+
+    function rerenderPrevMatch(qIdx) {
+      const modId = document.getElementById('admQuizModSelect').value;
+      const qItem = (quizzesBank[modId]?.questions || [])[qIdx];
+      const host = document.getElementById(`prevMatchHost_${qIdx}`);
+      if (!qItem || !host) return;
+      host.innerHTML = buildPrevMatchHTML(qIdx, qItem);
+      requestAnimationFrame(() => drawPrevMatchSvg(qIdx));
+    }
+
+    function drawPrevMatchSvg(qIdx) {
+      const st = admPrevRuntimeState[qIdx];
+      const svg = document.getElementById(`prevMatchSvg_${qIdx}`);
+      const wrap = document.getElementById(`prevMatchWrap_${qIdx}`);
+      if (!st || !svg || !wrap) return;
+      const wRect = wrap.getBoundingClientRect();
+      svg.setAttribute('viewBox', `0 0 ${wRect.width} ${wRect.height}`);
+      let paths = '';
+      Object.keys(st.links).forEach(lStr => {
+        const lIdx = Number(lStr);
+        const rOrig = Number(st.links[lIdx]);
+        const dotL = document.getElementById(`prevMatchDotL_${qIdx}_${lIdx}`);
+        const dotR = document.getElementById(`prevMatchDotR_${qIdx}_${rOrig}`);
+        if (dotL && dotR) {
+          const rL = dotL.getBoundingClientRect();
+          const rR = dotR.getBoundingClientRect();
+          const x1 = (rL.left + rL.width / 2) - wRect.left;
+          const y1 = (rL.top + rL.height / 2) - wRect.top;
+          const x2 = (rR.left + rR.width / 2) - wRect.left;
+          const y2 = (rR.top + rR.height / 2) - wRect.top;
+          const cx = (x1 + x2) / 2;
+          paths += `<path d="M ${x1} ${y1} C ${cx} ${y1}, ${cx} ${y2}, ${x2} ${y2}" stroke="#1A64FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+        }
+      });
+      svg.innerHTML = paths;
+    }
+
+    function buildPrevMatchHTML(qIdx, qItem) {
+      const pairs = qItem.pairs || [];
+      const st = admPrevRuntimeState[qIdx] || { shuffledRight: pairs.map((_, i) => i), activeLeft: null, links: {} };
+      return `
+        <div id="prevMatchWrap_${qIdx}" class="relative grid grid-cols-1 sm:grid-cols-12 gap-4 items-center select-none">
+          <svg id="prevMatchSvg_${qIdx}" class="hidden sm:block absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
+          <div class="sm:col-span-5 space-y-2 z-20">
+            ${pairs.map((pr, lIdx) => {
+              const isActive = st.activeLeft === lIdx;
+              const isLinked = st.links[lIdx] !== undefined;
+              return `
+                <div onclick="clickPrevMatchLeft(${qIdx}, ${lIdx})" class="p-3 rounded-xl border-2 transition cursor-pointer flex items-center justify-between gap-2 text-xs ${isActive ? 'border-[#1A64FF] bg-blue-50 text-[#1A64FF] font-extrabold' : (isLinked ? 'border-emerald-300 bg-emerald-50/60 text-slate-900 font-bold' : 'border-slate-200 bg-white text-slate-800 font-semibold')}">
+                  <span>${escapeHtml(pr.left)}</span>
+                  <span id="prevMatchDotL_${qIdx}_${lIdx}" class="w-3 h-3 rounded-full border-2 ${isActive || isLinked ? 'bg-[#1A64FF] border-[#1A64FF]' : 'bg-white border-slate-400'} shrink-0"></span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <div class="hidden sm:block sm:col-span-2"></div>
+          <div class="sm:col-span-5 space-y-2 z-20">
+            ${st.shuffledRight.map(origRIdx => {
+              const pr = pairs[origRIdx];
+              const isLinked = Object.keys(st.links).some(k => Number(st.links[k]) === origRIdx);
+              return `
+                <div onclick="clickPrevMatchRight(${qIdx}, ${origRIdx})" class="p-3 rounded-xl border-2 transition cursor-pointer flex items-center justify-between gap-2 text-xs ${isLinked ? 'border-emerald-300 bg-emerald-50/60 text-slate-900 font-bold' : 'border-slate-200 bg-white hover:border-[#1A64FF] text-slate-800 font-semibold'}">
+                  <span id="prevMatchDotR_${qIdx}_${origRIdx}" class="w-3 h-3 rounded-full border-2 ${isLinked ? 'bg-[#1A64FF] border-[#1A64FF]' : 'bg-white border-slate-400'} shrink-0"></span>
+                  <span class="text-right flex-1">${escapeHtml(pr ? pr.right : '')}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function movePrevOrderItem(qIdx, posIdx, delta) {
+      const st = admPrevRuntimeState[qIdx];
+      if (!st) return;
+      const target = posIdx + delta;
+      if (target < 0 || target >= st.currentOrder.length) return;
+      [st.currentOrder[posIdx], st.currentOrder[target]] = [st.currentOrder[target], st.currentOrder[posIdx]];
+      const modId = document.getElementById('admQuizModSelect').value;
+      const qItem = (quizzesBank[modId]?.questions || [])[qIdx];
+      const host = document.getElementById(`prevOrderHost_${qIdx}`);
+      if (qItem && host) host.innerHTML = buildPrevOrderHTML(qIdx, qItem);
+    }
+
+    function buildPrevOrderHTML(qIdx, qItem) {
+      const steps = qItem.orderSteps || [];
+      const st = admPrevRuntimeState[qIdx] || { currentOrder: steps.map((_, i) => i) };
+      return `
+        <div class="space-y-2">
+          ${st.currentOrder.map((origIdx, posIdx) => `
+            <div class="p-3 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3 text-xs">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <span class="text-slate-400 font-bold">⋮⋮</span>
+                <span class="w-6 h-6 rounded-lg bg-[#090D16] text-white font-mono text-[11px] font-bold flex items-center justify-center shrink-0">${posIdx + 1}</span>
+                <span class="font-semibold text-slate-800">${escapeHtml(steps[origIdx] || '')}</span>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="movePrevOrderItem(${qIdx}, ${posIdx}, -1)" ${posIdx === 0 ? 'disabled' : ''} class="w-7 h-7 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-30 cursor-pointer"><i class="fa-solid fa-chevron-up text-[10px]"></i></button>
+                <button type="button" onclick="movePrevOrderItem(${qIdx}, ${posIdx}, 1)" ${posIdx === st.currentOrder.length - 1 ? 'disabled' : ''} class="w-7 h-7 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-30 cursor-pointer"><i class="fa-solid fa-chevron-down text-[10px]"></i></button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function clickPrevHotspot(e, qIdx) {
+      const stage = document.getElementById(`prevHotspotStage_${qIdx}`);
+      const pin = document.getElementById(`prevHotspotPin_${qIdx}`);
+      if (!stage || !pin) return;
+      const rect = stage.getBoundingClientRect();
+      const xPct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+      const yPct = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+      admPrevRuntimeState[qIdx] = { pinX: xPct, pinY: yPct };
+      pin.style.left = `${xPct}%`;
+      pin.style.top = `${yPct}%`;
+      pin.classList.remove('hidden');
+      pin.classList.add('flex');
+    }
+
+    function renderAdminQuizPreviewContent() {
+      const modId = document.getElementById('admQuizModSelect')?.value;
+      const mod = ALL_MODULES_MASTER.find(m => m.id === modId) || ALL_MODULES_MASTER[0];
+      const qCfg = quizzesBank[modId] || { minPass: 80, maxScore: 100, questions: [] };
+      const questions = qCfg.questions || [];
+
+      document.getElementById('prevQuizModBadge').textContent = mod.code;
+      document.getElementById('prevQuizTitle').textContent = `${mod.code}: ${mod.title}`;
+      document.getElementById('prevQuizInnerBadge').textContent = `Evaluación: ${mod.code}`;
+      document.getElementById('prevQuizInnerTitle').textContent = `Evaluación: ${mod.title}`;
+      document.getElementById('prevQuizMinPassBadge').textContent = `Mínimo ${qCfg.minPass || 80}% • Puntaje Máx. ${qCfg.maxScore || 100} pts • Intento Único`;
+
+      const resBanner = document.getElementById('prevQuizResultBanner');
+      resBanner.classList.add('hidden');
+      admPrevRuntimeState = {};
+
+      const container = document.getElementById('prevQuizQuestionsContainer');
+      if (!questions.length) {
+        container.innerHTML = `<div class="p-8 rounded-2xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-500">Este módulo aún no tiene preguntas configuradas.</div>`;
+        return;
+      }
+
+      questions.forEach((qItem, idx) => {
+        const t = qItem.type || 'mcq';
+        if (t === 'match') {
+          const pairs = qItem.pairs || [];
+          const shuf = pairs.map((_, i) => i).sort(() => Math.random() - 0.5);
+          admPrevRuntimeState[idx] = { shuffledRight: shuf, activeLeft: null, links: {} };
+        } else if (t === 'ordering') {
+          const steps = qItem.orderSteps || [];
+          const shuf = steps.map((_, i) => i).sort(() => Math.random() - 0.5);
+          admPrevRuntimeState[idx] = { currentOrder: shuf };
+        }
+      });
+
+      container.innerHTML = questions.map((qItem, idx) => {
+        const t = qItem.type || 'mcq';
+        const ptsBadge = `<span class="font-mono text-[10.5px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-700 ml-auto shrink-0">${qItem.points || 0} pts</span>`;
+
+        if (t === 'short') {
+          const maxC = Number(qItem.maxChars || 120);
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <input type="text" id="prevShort_${idx}" maxlength="${maxC}" placeholder="${escapeHtml(qItem.placeholderText || 'Escribe tu respuesta breve...')}" class="exec-input w-full px-3.5 py-2.5 text-xs sm:text-sm font-medium">
+            </div>
+          `;
+        }
+        if (t === 'paragraph') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                <span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold shrink-0">Revisión manual</span>
+                ${ptsBadge}
+              </div>
+              <textarea id="prevPara_${idx}" rows="4" placeholder="Redacta tu respuesta detallada..." class="exec-input w-full px-3.5 py-2.5 text-xs sm:text-sm leading-relaxed"></textarea>
+            </div>
+          `;
+        }
+        if (t === 'checkboxes') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="text-[11px] font-semibold text-[#1A64FF]">Selecciona todas las opciones que apliquen:</div>
+              <div class="space-y-2">
+                ${(qItem.options || []).map((opt, oIdx) => `
+                  <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] text-xs cursor-pointer">
+                    <input type="checkbox" name="prev_chk_${idx}" value="${oIdx}" class="w-4 h-4 accent-[#1A64FF] rounded">
+                    <span class="text-slate-800 font-medium">${escapeHtml(opt)}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'dropdown') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <select id="prevDrop_${idx}" class="exec-input w-full px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-800">
+                <option value="">Selecciona una alternativa...</option>
+                ${(qItem.options || []).map((opt, oIdx) => `<option value="${oIdx}">${escapeHtml(opt)}</option>`).join('')}
+              </select>
+            </div>
+          `;
+        }
+        if (t === 'linear_scale') {
+          const sMin = Number(qItem.scaleMin ?? 1);
+          const sMax = Number(qItem.scaleMax ?? 5);
+          const nums = [];
+          for (let n = sMin; n <= sMax; n++) nums.push(n);
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="p-4 rounded-xl bg-white border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-xs font-semibold text-slate-500">${escapeHtml(qItem.minLabel || 'Mínimo')}</span>
+                <div class="flex flex-wrap items-center justify-center gap-2">
+                  ${nums.map(n => `<button type="button" id="prevScale_${idx}_${n}" data-val="${n}" onclick="selectPrevScale(${idx}, ${n})" class="w-10 h-10 rounded-full bg-white border-2 border-slate-300 hover:border-[#1A64FF] text-slate-700 font-mono text-xs font-bold transition cursor-pointer">${n}</button>`).join('')}
+                </div>
+                <span class="text-xs font-semibold text-slate-500">${escapeHtml(qItem.maxLabel || 'Máximo')}</span>
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'grid_radio' || t === 'grid_checkbox') {
+          const rows = qItem.gridRows || [];
+          const cols = qItem.gridCols || [];
+          const inpType = t === 'grid_radio' ? 'radio' : 'checkbox';
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="bg-white rounded-xl border border-slate-200 overflow-x-auto">
+                <table class="w-full text-xs">
+                  <thead class="bg-slate-50 border-b border-slate-200 text-slate-700">
+                    <tr><th class="px-4 py-2.5 text-left font-bold">Criterio</th>${cols.map(c => `<th class="px-3 py-2.5 text-center font-bold">${escapeHtml(c)}</th>`).join('')}</tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    ${rows.map((r, rIdx) => `<tr><td class="px-4 py-3 font-semibold text-slate-800">${escapeHtml(r)}</td>${cols.map((_, cIdx) => `<td class="px-3 py-3 text-center"><input type="${inpType}" name="prev_grid_${idx}_${rIdx}" value="${cIdx}" class="w-4 h-4 accent-[#1A64FF]"></td>`).join('')}</tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'file_upload') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                <span class="px-2 py-0.5 rounded bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-bold shrink-0">Revisión manual</span>
+                ${ptsBadge}
+              </div>
+              <div class="text-[11px] font-mono text-slate-500">Formatos: ${escapeHtml(qItem.allowedFormats || 'PDF, JPG, PNG')} | Máx. ${qItem.maxSizeMb || 10} MB | Hasta ${qItem.maxFiles || 2} archivo(s)</div>
+              <div class="p-6 rounded-2xl border-2 border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-center gap-1.5 text-xs text-slate-600">
+                <i class="fa-solid fa-cloud-arrow-up text-2xl text-[#1A64FF]"></i>
+                <span class="font-bold text-slate-800">Zona interactiva de carga de archivos</span>
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'date_time') {
+          const dtMode = qItem.dateTimeMode || 'datetime';
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md">
+                ${dtMode !== 'time' ? `<div><label class="block text-[11px] font-bold text-slate-600 mb-1">Fecha (AAAA/MM/DD)</label><input type="date" id="prevDate_${idx}" class="exec-input w-full px-3.5 py-2 text-xs font-semibold"></div>` : ''}
+                ${dtMode !== 'date' ? `<div><label class="block text-[11px] font-bold text-slate-600 mb-1">Hora (HH:MM)</label><input type="time" id="prevTime_${idx}" class="exec-input w-full px-3.5 py-2 text-xs font-semibold"></div>` : ''}
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'tf') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <button type="button" id="prevTf_${idx}_true" onclick="selectPrevTf(${idx}, true)" class="py-3.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer"><i class="fa-solid fa-circle-check"></i><span>Verdadero</span></button>
+                <button type="button" id="prevTf_${idx}_false" onclick="selectPrevTf(${idx}, false)" class="py-3.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer"><i class="fa-solid fa-circle-xmark"></i><span>Falso</span></button>
+              </div>
+            </div>
+          `;
+        }
+        if (t === 'match') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div id="prevMatchHost_${idx}">${buildPrevMatchHTML(idx, qItem)}</div>
+            </div>
+          `;
+        }
+        if (t === 'ordering') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div id="prevOrderHost_${idx}">${buildPrevOrderHTML(idx, qItem)}</div>
+            </div>
+          `;
+        }
+        if (t === 'cloze') {
+          const tpl = qItem.clozeTemplate || '';
+          let bCnt = 0;
+          const htmlSentence = escapeHtml(tpl).replace(/\[([^\]]+)\]/g, (_, inner) => {
+            const bIdx = bCnt++;
+            if (inner.includes('|')) {
+              const choices = inner.split('|').map(s => s.replace(/\*$/, '').trim());
+              return `<select data-qidx="${idx}" data-bidx="${bIdx}" class="prev-cloze-inp inline-block mx-1 px-2.5 py-1 rounded-lg border border-[#1A64FF] bg-white text-xs font-bold text-slate-900"><option value="">Seleccionar...</option>${choices.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}</select>`;
+            }
+            return `<input type="text" data-qidx="${idx}" data-bidx="${bIdx}" placeholder="Completa..." class="prev-cloze-inp inline-block mx-1 px-2.5 py-1 w-36 rounded-lg border-b-2 border-[#1A64FF] bg-white text-xs font-bold text-slate-900 text-center focus:outline-none">`;
+          });
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              <div class="p-4 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 leading-loose">${htmlSentence}</div>
+            </div>
+          `;
+        }
+        if (t === 'hotspot') {
+          return `
+            <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+              <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+                <span>${escapeHtml(qItem.q)}</span>
+                ${ptsBadge}
+              </div>
+              ${qItem.hotspotImg ? `
+                <div id="prevHotspotStage_${idx}" onclick="clickPrevHotspot(event, ${idx})" class="relative w-full rounded-2xl overflow-hidden border-2 border-slate-300 bg-slate-900 cursor-crosshair select-none">
+                  <img src="${qItem.hotspotImg}" alt="Hotspot" draggable="false" class="w-full h-auto block pointer-events-none">
+                  <div id="prevHotspotPin_${idx}" class="hidden absolute -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-[#1A64FF]/30 border-2 border-white shadow-xl items-center justify-center pointer-events-none">
+                    <span class="w-3 h-3 rounded-full bg-[#1A64FF] animate-ping absolute"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#1A64FF] relative"></span>
+                  </div>
+                </div>
+              ` : `<div class="p-5 rounded-xl bg-white border border-slate-200 text-center text-xs text-slate-400">Sube una captura en la tarjeta de edición para probar el Hotspot aquí.</div>`}
+            </div>
+          `;
+        }
+        return `
+          <div class="p-5 rounded-2xl bg-slate-50/70 border border-slate-200 space-y-3">
+            <div class="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="font-mono text-xs px-2 py-0.5 rounded bg-[#090D16] text-white shrink-0">${idx + 1}</span>
+              <span>${escapeHtml(qItem.q)}</span>
+              ${ptsBadge}
+            </div>
+            <div class="space-y-2">
+              ${(qItem.options || []).map((opt, oIdx) => `
+                <label class="flex items-center gap-3 p-3 rounded-xl bg-white border border-slate-200 hover:border-[#1A64FF] text-xs cursor-pointer">
+                  <input type="radio" name="prev_mcq_${idx}" value="${oIdx}" class="w-4 h-4 accent-[#1A64FF]">
+                  <span class="text-slate-800 font-medium">${escapeHtml(opt)}</span>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function submitAdminQuizPreview(e) {
+      e.preventDefault();
+      const modId = document.getElementById('admQuizModSelect').value;
+      const qCfg = quizzesBank[modId] || { minPass: 80, questions: [] };
+      const questions = qCfg.questions || [];
+      let earned = 0, totalAuto = 0, manualCount = 0;
+
+      questions.forEach((qItem, idx) => {
+        const t = qItem.type || 'mcq';
+        const qPts = Number(qItem.points || 10);
+        if (t === 'paragraph' || t === 'file_upload') { manualCount++; return; }
+        totalAuto += qPts;
+        if (t === 'short') {
+          const v = document.getElementById(`prevShort_${idx}`)?.value || '';
+          const acc = String(qItem.expectedAnswer || '').split(',').map(s => normalizePrevText(s)).filter(Boolean);
+          if (acc.includes(normalizePrevText(v))) earned += qPts;
+        } else if (t === 'checkboxes') {
+          const picked = Array.from(document.querySelectorAll(`input[name="prev_chk_${idx}"]:checked`)).map(el => Number(el.value));
+          const corr = Array.isArray(qItem.correctMultiple) ? qItem.correctMultiple.map(Number) : [0];
+          const hits = picked.filter(v => corr.includes(v)).length;
+          const wrong = picked.filter(v => !corr.includes(v)).length;
+          if ((qItem.gradingMode || 'all_or_nothing') === 'partial') earned += Math.max(0, (hits - wrong) / (corr.length || 1)) * qPts;
+          else if (hits === corr.length && wrong === 0) earned += qPts;
+        } else if (t === 'dropdown') {
+          const v = document.getElementById(`prevDrop_${idx}`)?.value;
+          if (v !== '' && Number(v) === Number(qItem.correct)) earned += qPts;
+        } else if (t === 'linear_scale') {
+          if (Number(admPrevRuntimeState[idx]?.selectedVal) === Number(qItem.scaleCorrect ?? qItem.scaleMax ?? 5)) earned += qPts;
+        } else if (t === 'grid_radio' || t === 'grid_checkbox') {
+          const rows = qItem.gridRows || [];
+          const gAns = qItem.gridAnswers || {};
+          let rSum = 0;
+          rows.forEach((_, rIdx) => {
+            const picked = Array.from(document.querySelectorAll(`input[name="prev_grid_${idx}_${rIdx}"]:checked`)).map(el => Number(el.value));
+            const exp = Array.isArray(gAns[rIdx]) ? gAns[rIdx].map(Number) : [0];
+            if (t === 'grid_radio') { if (picked[0] === exp[0]) rSum += 1; }
+            else {
+              const h = picked.filter(v => exp.includes(v)).length;
+              const w = picked.filter(v => !exp.includes(v)).length;
+              rSum += Math.max(0, (h - w) / (exp.length || 1));
+            }
+          });
+          if (rows.length > 0) earned += (rSum / rows.length) * qPts;
+        } else if (t === 'date_time') {
+          const dtMode = qItem.dateTimeMode || 'datetime';
+          const dV = document.getElementById(`prevDate_${idx}`)?.value || '';
+          const tV = document.getElementById(`prevTime_${idx}`)?.value || '';
+          const dOk = (dtMode === 'time') || (!qItem.expectedDate || dV === qItem.expectedDate);
+          const tOk = (dtMode === 'date') || (!qItem.expectedTime || tV === qItem.expectedTime);
+          if (dOk && tOk && (dV || tV)) earned += qPts;
+        } else if (t === 'tf') {
+          if (admPrevRuntimeState[idx]?.selectedBool === Boolean(qItem.correctBool)) earned += qPts;
+        } else if (t === 'match') {
+          const pairs = qItem.pairs || [];
+          const links = admPrevRuntimeState[idx]?.links || {};
+          let hits = 0;
+          pairs.forEach((_, pIdx) => { if (Number(links[pIdx]) === pIdx) hits++; });
+          if (pairs.length > 0) earned += (hits / pairs.length) * qPts;
+        } else if (t === 'ordering') {
+          const steps = qItem.orderSteps || [];
+          const cur = admPrevRuntimeState[idx]?.currentOrder || [];
+          let hits = 0;
+          steps.forEach((_, sIdx) => { if (Number(cur[sIdx]) === sIdx) hits++; });
+          if (steps.length > 0) earned += (hits / steps.length) * qPts;
+        } else if (t === 'cloze') {
+          const tpl = qItem.clozeTemplate || '';
+          const expBlanks = (tpl.match(/\[([^\]]+)\]/g) || []).map(m => {
+            const inner = m.slice(1, -1);
+            if (inner.includes('|')) {
+              const parts = inner.split('|').map(s => s.trim());
+              const st = parts.find(s => s.endsWith('*'));
+              return (st ? st.slice(0, -1) : parts[0]).trim();
+            }
+            return inner.trim();
+          });
+          const inputs = Array.from(document.querySelectorAll(`.prev-cloze-inp[data-qidx="${idx}"]`));
+          let hits = 0;
+          expBlanks.forEach((exp, bIdx) => { if (normalizePrevText(inputs[bIdx]?.value) === normalizePrevText(exp)) hits++; });
+          if (expBlanks.length > 0) earned += (hits / expBlanks.length) * qPts;
+        } else if (t === 'hotspot') {
+          const st = admPrevRuntimeState[idx] || {};
+          const box = qItem.hotspotBox || { x: 25, y: 25, w: 50, h: 50 };
+          if (st.pinX !== undefined && st.pinX >= box.x && st.pinX <= (box.x + box.w) && st.pinY >= box.y && st.pinY <= (box.y + box.h)) earned += qPts;
+        } else {
+          const sel = document.querySelector(`input[name="prev_mcq_${idx}"]:checked`);
+          if (sel && Number(sel.value) === Number(qItem.correct)) earned += qPts;
+        }
+      });
+
+      const pct = totalAuto > 0 ? Math.round((earned / totalAuto) * 100) : 100;
+      const passed = pct >= (qCfg.minPass || 80);
+      const resBanner = document.getElementById('prevQuizResultBanner');
+      resBanner.className = passed
+        ? "p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs flex items-center justify-between gap-3"
+        : "p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center justify-between gap-3";
+      resBanner.innerHTML = `
+        <div>
+          <div class="font-extrabold text-sm">${passed ? '✓ Evaluación Aprobada en Simulación' : 'Resultado de Simulación'}: ${pct}%</div>
+          <div class="mt-0.5">Puntaje automático: <strong>${Math.round(earned)} / ${totalAuto} pts</strong> ${manualCount > 0 ? `• +${manualCount} pregunta(s) de revisión manual` : ''}</div>
+        </div>
+        <button type="button" onclick="resetAdminQuizPreview()" class="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-800 font-bold cursor-pointer">Probar de nuevo</button>
+      `;
+      resBanner.classList.remove('hidden');
+      resBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
 
     // ==================== REAL-TIME DATA SYNC (SUPABASE + LOCAL FALLBACK) ====================
     function parseModulesDetailString(detailStr, roleName) {
