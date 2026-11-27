@@ -389,123 +389,205 @@
       <main class="flex-1 p-3 sm:p-5 lg:p-6 w-full space-y-5">
 
         <!-- ================================================================ -->
-        <!-- SECTION 1: ACCESOS (GESTIÓN DE ADMINISTRADORES)                  -->
+        <!-- SECTION 1: ACCESOS (GESTIÓN CORPORATIVA DE ADMINISTRADORES)      -->
         <!-- ================================================================ -->
-        <section id="viewAdm-accesos" class="adm-section hidden space-y-5">
+        <section id="viewAdm-accesos" class="adm-section hidden space-y-4">
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Sección 1 • Seguridad y Permisos</span>
+              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#1A64FF]/25 text-[#60A5FA]">Sección 1 • Control de Seguridad y Permisos</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Accesos de Administradores</h2>
             </div>
-            <button type="button" onclick="loadAdminAccessTable(true)" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 flex items-center gap-2 self-start sm:self-center cursor-pointer">
-              <i class="fa-solid fa-rotate text-[#34D399]"></i>
-              <span>Sincronizar Accesos</span>
-            </button>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="admAccessSearchInput" oninput="filterAdminAccessTable()" placeholder="Buscar administrador o correo..." class="pro-input pl-8 pr-3 py-2 text-xs text-slate-900 w-56">
+              </div>
+              <select id="admAccessStatusFilter" onchange="filterAdminAccessTable()" class="pro-input px-3 py-2 text-xs font-bold text-slate-900">
+                <option value="ALL">Todos los estados</option>
+                <option value="ACTIVE">Activos</option>
+                <option value="INACTIVE">Inactivos</option>
+              </select>
+              <button type="button" onclick="loadAdminAccessTable(true)" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 flex items-center gap-2 cursor-pointer">
+                <i class="fa-solid fa-rotate text-[#34D399]"></i>
+                <span>Sincronizar</span>
+              </button>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-            <!-- Left 4 Cols: Create / Update Admin Access Form -->
-            <div class="lg:col-span-4 pro-card p-5 sm:p-6 space-y-4">
-              <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
-                <div>
-                  <h3 id="admAccessFormTitle" class="text-sm font-extrabold text-slate-900">Otorgar Acceso Administrativo</h3>
-                  <p class="text-[11px] text-slate-500 mt-0.5">Registra o actualiza credenciales en tiempo real.</p>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <!-- Left 4 Cols: Corporate Access Form -->
+            <div class="lg:col-span-4 pro-card p-5 sm:p-6 flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <div class="border-b border-slate-100 pb-3.5 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-[#1A64FF]">Alta / Edición</span>
+                    <h3 id="admAccessFormTitle" class="text-base font-extrabold text-slate-900 mt-0.5">Otorgar Acceso Administrativo</h3>
+                  </div>
+                  <div class="w-10 h-10 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-sm shadow-sm">
+                    <i class="fa-solid fa-user-shield"></i>
+                  </div>
                 </div>
-                <span class="w-8 h-8 rounded-xl bg-blue-50 text-[#1A64FF] flex items-center justify-center text-xs"><i class="fa-solid fa-user-plus"></i></span>
-              </div>
 
-              <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-3.5 text-xs">
-                <div>
-                  <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Nombre Completo *</label>
-                  <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="pro-input w-full px-3.5 py-2 font-semibold">
-                </div>
-                <div>
-                  <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Correo Institucional *</label>
-                  <input type="email" id="newAdmEmail" required placeholder="usuario@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2 font-mono">
-                </div>
-                <div>
-                  <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Área / Cargo</label>
-                  <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica" class="pro-input w-full px-3.5 py-2 font-medium">
-                </div>
-                <div>
-                  <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Contraseña de Acceso *</label>
-                  <input type="text" id="newAdmPassword" required placeholder="Asigna una contraseña segura" class="pro-input w-full px-3.5 py-2 font-mono">
-                </div>
-                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <span class="font-bold text-slate-700">Estado de la Cuenta</span>
-                  <label class="inline-flex items-center gap-2 cursor-pointer font-bold text-emerald-700">
-                    <input type="checkbox" id="newAdmActive" checked class="w-4 h-4 accent-[#10B981]">
-                    <span>Activa</span>
-                  </label>
-                </div>
-                <div class="flex gap-2 pt-1">
-                  <button type="button" onclick="resetAdminAccessForm()" class="px-3.5 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-bold cursor-pointer">Limpiar</button>
-                  <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold shadow-sm transition cursor-pointer">
-                    <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar Acceso
-                  </button>
-                </div>
-              </form>
+                <form id="admAccessForm" onsubmit="saveAdminAccessRecord(event)" class="space-y-3.5 text-xs">
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Nombre Completo del Administrador <span class="text-rose-600">*</span></label>
+                    <input type="text" id="newAdmName" required placeholder="Ej. Rebeca Callejas" class="pro-input w-full px-3.5 py-2.5 font-semibold">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Correo Institucional <span class="text-rose-600">*</span></label>
+                    <input type="email" id="newAdmEmail" required placeholder="nombre@ihateflyingbugs.com" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Departamento / Cargo</label>
+                    <input type="text" id="newAdmAddress" placeholder="Ej. Coordinación Académica Regional" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-bold text-slate-700 mb-1">Contraseña de Acceso <span class="text-rose-600">*</span></label>
+                    <input type="text" id="newAdmPassword" required placeholder="Asigna una contraseña segura" class="pro-input w-full px-3.5 py-2.5 font-medium">
+                  </div>
+                  <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/90">
+                    <div>
+                      <div class="font-bold text-slate-800">Estado de Habilitación</div>
+                      <div class="text-[11px] text-slate-500">Permite el ingreso inmediato a la consola</div>
+                    </div>
+                    <label class="inline-flex items-center gap-2 cursor-pointer font-bold text-emerald-700">
+                      <input type="checkbox" id="newAdmActive" checked class="w-4 h-4 accent-[#10B981] rounded cursor-pointer">
+                      <span>Activa</span>
+                    </label>
+                  </div>
+                  <div class="flex gap-2.5 pt-2">
+                    <button type="button" onclick="resetAdminAccessForm()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-600 hover:bg-slate-50 font-bold cursor-pointer">Limpiar</button>
+                    <button type="submit" class="flex-1 py-2.5 px-4 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white font-bold shadow-sm transition cursor-pointer">
+                      <i class="fa-solid fa-floppy-disk mr-1.5"></i> Guardar Credenciales
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
 
-            <!-- Right 8 Cols: Active Administrators Directory -->
-            <div class="lg:col-span-8 pro-card overflow-hidden">
-              <div class="px-5 py-4 bg-slate-50/80 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-2">
-                  <i class="fa-solid fa-shield-halved text-[#1A64FF]"></i>
-                  <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">Administradores Autorizados</h3>
+            <!-- Right 8 Cols: Full-Height Corporate Directory + Policy Footer -->
+            <div class="lg:col-span-8 pro-card flex flex-col justify-between overflow-hidden">
+              <div>
+                <div class="px-5 py-4 bg-slate-50/90 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center text-xs"><i class="fa-solid fa-building-shield"></i></span>
+                    <div>
+                      <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900">Directorio Corporativo de Administradores</h3>
+                      <p class="text-[11px] text-slate-500">Gestión centralizada de cuentas con privilegios de edición curricular.</p>
+                    </div>
+                  </div>
+                  <span id="admAccessCountBadge" class="text-xs font-bold px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">0 cuentas</span>
                 </div>
-                <span id="admAccessCountBadge" class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-600">0 cuentas</span>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left text-xs text-slate-700">
+                    <thead class="bg-white text-slate-500 uppercase font-bold text-[10.5px] tracking-wider border-b border-slate-200">
+                      <tr>
+                        <th class="px-5 py-3.5">Administrador</th>
+                        <th class="px-4 py-3.5">Correo Institucional</th>
+                        <th class="px-4 py-3.5">Departamento / Cargo</th>
+                        <th class="px-4 py-3.5">Estado</th>
+                        <th class="px-5 py-3.5 text-right">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admAccessTableBody" class="divide-y divide-slate-100"></tbody>
+                  </table>
+                </div>
               </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-left text-xs text-slate-700">
-                  <thead class="bg-white text-slate-500 uppercase font-bold text-[10.5px] tracking-wider border-b border-slate-200">
-                    <tr>
-                      <th class="px-4 py-3.5">Administrador</th>
-                      <th class="px-4 py-3.5">Correo</th>
-                      <th class="px-4 py-3.5">Área / Cargo</th>
-                      <th class="px-4 py-3.5">Estado</th>
-                      <th class="px-4 py-3.5 text-right">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="admAccessTableBody" class="divide-y divide-slate-100"></tbody>
-                </table>
+
+              <!-- Balanced Corporate Security Summary Strip (Eliminates Empty White Space) -->
+              <div class="px-5 py-4 bg-slate-50/80 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11.5px]">
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0"><i class="fa-solid fa-bolt"></i></span>
+                  <div>
+                    <div class="font-bold text-slate-900">Activación Inmediata</div>
+                    <div class="text-slate-500 text-[10.5px]">Vigencia instantánea al guardar</div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center shrink-0"><i class="fa-solid fa-lock"></i></span>
+                  <div>
+                    <div class="font-bold text-slate-900">Control de Permisos</div>
+                    <div class="text-slate-500 text-[10.5px]">Suspensión temporal o revocación</div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-slate-200/80 flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center shrink-0"><i class="fa-solid fa-clipboard-check"></i></span>
+                  <div>
+                    <div class="font-bold text-slate-900">Trazabilidad Total</div>
+                    <div class="text-slate-500 text-[10.5px]">Cambios auditables por cuenta</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 2: ASIGNACIONES (MÓDULOS POR AUDIENCIA)                  -->
+        <!-- SECTION 2: ASIGNACIONES (TARJETAS CUADRADAS + CONTRAÍBLES + FILTROS) -->
         <!-- ================================================================ -->
-        <section id="viewAdm-asignaciones" class="adm-section hidden space-y-5">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <section id="viewAdm-asignaciones" class="adm-section hidden space-y-4">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             <div>
               <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#EC4899]/25 text-[#F472B6]">Sección 2 • Matriz Curricular por Rol</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Asignación de Módulos por Audiencia</h2>
             </div>
-            <div class="flex items-center gap-2.5">
-              <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 cursor-pointer">
+            <div class="flex flex-wrap items-center gap-2">
+              <button type="button" onclick="assignAllModulesToAllAudiences()" class="px-3.5 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-check-double"></i>
+                <span>Marcar Todos a Todas las Audiencias</span>
+              </button>
+              <button type="button" onclick="toggleExpandAllAudienceCards()" id="btnToggleExpandAllAud" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/15 cursor-pointer">
+                <i class="fa-solid fa-angles-down mr-1"></i> Desplegar Módulos
+              </button>
+              <button type="button" onclick="resetAudienceAssignmentsDefault()" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-bold border border-white/15 cursor-pointer">
                 Restaurar Predeterminados
               </button>
               <button type="button" onclick="saveCmsState(true)" class="px-4 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold shadow cursor-pointer">
-                <i class="fa-solid fa-check mr-1"></i> Publicar Cambios
+                <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Publicar Cambios
               </button>
             </div>
           </div>
 
-          <div id="admAudienceMatrixGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5"></div>
+          <!-- Filter & Search Bar for Assignments -->
+          <div class="pro-card p-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="asigSearchInput" oninput="renderAdminAudienceMatrix()" placeholder="Filtrar audiencia o módulo..." class="pro-input pl-8 pr-3.5 py-2 text-xs w-60">
+              </div>
+              <select id="asigRoleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-bold text-slate-800">
+                <option value="ALL">Todas las Audiencias</option>
+                <option value="Docente">Docente</option>
+                <option value="Tutor">Tutor</option>
+                <option value="Facilitador">Facilitador</option>
+                <option value="Monitor">Monitor</option>
+                <option value="Supervisor">Supervisor</option>
+                <option value="Auditor">Auditor</option>
+              </select>
+              <select id="asigModuleFilter" onchange="renderAdminAudienceMatrix()" class="pro-input px-3 py-2 text-xs font-bold text-slate-800"></select>
+            </div>
+            <div class="text-xs text-slate-500 font-medium">
+              Haz clic en cada tarjeta para desplegar o contraer sus módulos asignables.
+            </div>
+          </div>
+
+          <div id="admAudienceMatrixGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 items-start"></div>
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 3: MÓDULOS (CREACIÓN, MODIFICACIÓN, ELIMINACIÓN)         -->
+        <!-- SECTION 3: MÓDULOS (PERSONAJE POR MÓDULO + MINIATURAS + FILTROS) -->
         <!-- ================================================================ -->
-        <section id="viewAdm-modulos" class="adm-section hidden space-y-5">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <section id="viewAdm-modulos" class="adm-section hidden space-y-4">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-amber-500/25 text-amber-300">Sección 3 • Contenidos, Videos y Manuales</span>
+              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-amber-500/25 text-amber-300">Sección 3 • Contenidos, Personajes, Videos y Miniaturas</span>
               <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Gestión Integral de Módulos</h2>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="admModSearchFilter" oninput="filterAdminModuleSelector()" placeholder="Filtrar módulo..." class="pro-input pl-8 pr-3 py-2 text-xs text-slate-900 w-44">
+              </div>
               <select id="admModSelect" onchange="renderAdminModuleEditor()" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
               <button type="button" onclick="createNewModulePrompt()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-500 text-white text-xs font-bold shadow cursor-pointer">
                 <i class="fa-solid fa-plus mr-1"></i> Nuevo Módulo
@@ -523,13 +605,13 @@
         </section>
 
         <!-- ================================================================ -->
-        <!-- SECTION 4: EVALUACIONES (CREACIÓN, MODIFICACIÓN, ELIMINACIÓN)    -->
+        <!-- SECTION 4: EVALUACIONES ESTILO GOOGLE FORMS (13 TIPOS DE PREGUNTA) -->
         <!-- ================================================================ -->
-        <section id="viewAdm-evaluaciones" class="adm-section hidden space-y-5">
-          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <section id="viewAdm-evaluaciones" class="adm-section hidden space-y-4">
+          <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             <div>
-              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/25 text-[#34D399]">Sección 4 • Banco de Preguntas y Ponderación</span>
-              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Gestión de Evaluaciones (Quizzes)</h2>
+              <span class="px-2 py-0.5 rounded text-[9.5px] font-bold uppercase tracking-widest bg-[#10B981]/25 text-[#34D399]">Sección 4 • Constructor de Evaluaciones</span>
+              <h2 class="text-lg sm:text-xl font-extrabold tracking-tight mt-0.5">Evaluaciones Modulares (Quizzes)</h2>
             </div>
             <div class="flex flex-wrap items-center gap-2.5">
               <select id="admQuizModSelect" onchange="renderAdminQuizEditor()" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-900"></select>
@@ -542,36 +624,65 @@
             </div>
           </div>
 
-          <!-- Quiz Scoring & Template Bar -->
-          <div class="pro-card p-4 sm:p-5 flex flex-wrap items-center justify-between gap-4">
+          <!-- Google Forms Style Top Settings & Add Question Dropdown Bar -->
+          <div class="pro-card p-4 sm:p-5 border-t-4 border-t-[#1A64FF] flex flex-wrap items-center justify-between gap-4">
             <div class="flex flex-wrap items-center gap-4 text-xs">
               <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-700">Nota Mínima Aprobatoria (%):</span>
-                <input type="number" id="admQuizMinPass" min="1" max="100" value="80" class="pro-input w-20 px-2.5 py-1.5 font-mono font-bold text-center">
+                <input type="number" id="admQuizMinPass" min="1" max="100" value="80" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
               </div>
               <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-700">Puntaje Máximo:</span>
-                <input type="number" id="admQuizMaxScore" min="1" max="1000" value="100" class="pro-input w-20 px-2.5 py-1.5 font-mono font-bold text-center">
+                <span class="font-bold text-slate-700">Puntaje Total:</span>
+                <input type="number" id="admQuizMaxScore" min="1" max="1000" value="100" class="pro-input w-20 px-2.5 py-1.5 font-bold text-center">
+              </div>
+              <div class="relative">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 text-xs absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input type="text" id="admQuizSearchInput" oninput="renderAdminQuizEditor()" placeholder="Filtrar preguntas..." class="pro-input pl-8 pr-3 py-1.5 text-xs w-48">
               </div>
             </div>
+
+            <!-- Google Forms Style Question Type Selector + Add Button -->
             <div class="flex flex-wrap items-center gap-2">
-              <button type="button" onclick="addQuestionFromTemplate('mcq')" class="px-3.5 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-600 text-white text-xs font-bold cursor-pointer">
-                + Opción Múltiple
-              </button>
-              <button type="button" onclick="addQuestionFromTemplate('tf')" class="px-3.5 py-2 rounded-xl bg-[#EC4899] hover:bg-pink-600 text-white text-xs font-bold cursor-pointer">
-                + Verdadero / Falso
-              </button>
-              <button type="button" onclick="addQuestionFromTemplate('match')" class="px-3.5 py-2 rounded-xl bg-[#10B981] hover:bg-emerald-600 text-white text-xs font-bold cursor-pointer">
-                + Enlazar Parejas
+              <select id="newQuizQuestionTypeSelect" class="pro-input px-3.5 py-2 text-xs font-bold text-slate-800 bg-slate-50">
+                <optgroup label="Respuesta abierta">
+                  <option value="short">Respuesta corta</option>
+                  <option value="paragraph">Párrafo</option>
+                </optgroup>
+                <optgroup label="Selección">
+                  <option value="mcq" selected>Opción múltiple (Una respuesta)</option>
+                  <option value="checkboxes">Casillas (Varias respuestas)</option>
+                  <option value="dropdown">Desplegable</option>
+                </optgroup>
+                <optgroup label="Escalas y cuadrículas">
+                  <option value="linear_scale">Escala lineal</option>
+                  <option value="grid_radio">Cuadrícula de varias opciones</option>
+                  <option value="grid_checkbox">Cuadrícula de casillas</option>
+                </optgroup>
+                <optgroup label="Datos específicos y archivos">
+                  <option value="file_upload">Subir archivos</option>
+                  <option value="date_time">Fecha y Hora</option>
+                </optgroup>
+                <optgroup label="Respuestas cerradas">
+                  <option value="tf">Verdadero / Falso</option>
+                  <option value="match">Emparejamiento (Relación de columnas)</option>
+                  <option value="ordering">Ordenamiento / Secuencia</option>
+                  <option value="cloze">Rellenar espacios en blanco (Cloze)</option>
+                </optgroup>
+                <optgroup label="Interactivas / Multimedia">
+                  <option value="hotspot">Zonas activas (Hotspot)</option>
+                </optgroup>
+              </select>
+              <button type="button" onclick="addSelectedQuestionType()" class="px-4 py-2 rounded-xl bg-[#1A64FF] hover:bg-blue-600 text-white text-xs font-bold shadow flex items-center gap-1.5 cursor-pointer">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Agregar Pregunta</span>
               </button>
             </div>
           </div>
 
-          <div id="admQuizQuestionsList" class="space-y-4"></div>
+          <div id="admQuizQuestionsList" class="max-w-4xl mx-auto w-full space-y-4"></div>
         </section>
 
-        <!-- ================================================================ -->
-        <!-- SECTION 5: DASHBOARD EN TIEMPO REAL (MANUALES, PRÁCTICA Y QUIZ)  -->
+        <!-- ================================================================ --><!-- SECTION 5: DASHBOARD EN TIEMPO REAL (MANUALES, PRÁCTICA Y QUIZ)  -->
         <!-- ================================================================ -->
         <section id="viewAdm-dashboard" class="adm-section space-y-5">
           <div class="pro-card bg-[#0B0F17] text-white px-5 py-4 sm:px-6 border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -1078,13 +1189,22 @@ const DEFAULT_AUDIENCE_CATALOG = [
     }
 
     function saveCmsState(notify = false) {
-      localStorage.setItem('ihfb_cms_data_v6', JSON.stringify({
+      const payload = {
         audiences: AUDIENCE_CATALOG,
         modules: ALL_MODULES_MASTER,
         quizzes: quizzesBank,
         updatedAt: new Date().toISOString()
-      }));
-      if (notify) showAdmToast("Configuración sincronizada con el Portal de Capacitación");
+      };
+      localStorage.setItem('ihfb_cms_data_v6', JSON.stringify(payload));
+      // Instant cross-tab & real-time broadcast to the training portal
+      try {
+        if ('BroadcastChannel' in window) {
+          const bc = new BroadcastChannel('ihfb_cms_live_channel');
+          bc.postMessage({ type: 'CMS_UPDATED', updatedAt: payload.updatedAt });
+          bc.close();
+        }
+      } catch (e) {}
+      if (notify) showAdmToast("Actualizado en tiempo real para todos los roles y audiencias");
     }
 
     loadCmsState();
@@ -1205,7 +1325,6 @@ const DEFAULT_AUDIENCE_CATALOG = [
       syncAllRealtimeData(false);
       switchAdminTab('dashboard');
 
-      // Real-time background polling every 15 seconds
       if (autoRefreshTimer) clearInterval(autoRefreshTimer);
       autoRefreshTimer = setInterval(() => syncAllRealtimeData(false), 15000);
     }
@@ -1233,11 +1352,28 @@ const DEFAULT_AUDIENCE_CATALOG = [
     }
 
     function populateAdmSelectors() {
-      const opts = ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(OCULTO)' : ''}</option>`).join('');
+      const searchQ = (document.getElementById('admModSearchFilter')?.value || '').toLowerCase().trim();
+      const filteredMods = ALL_MODULES_MASTER.filter(m =>
+        !searchQ || `${m.code} ${m.title}`.toLowerCase().includes(searchQ)
+      );
+      const listToUse = filteredMods.length ? filteredMods : ALL_MODULES_MASTER;
+      const opts = listToUse.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(OCULTO)' : ''}</option>`).join('');
       const s1 = document.getElementById('admModSelect');
       const s2 = document.getElementById('admQuizModSelect');
       if (s1) s1.innerHTML = opts;
-      if (s2) s2.innerHTML = opts;
+      if (s2) s2.innerHTML = ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)} ${m.hidden ? '(OCULTO)' : ''}</option>`).join('');
+
+      const asigModSel = document.getElementById('asigModuleFilter');
+      if (asigModSel) {
+        const prev = asigModSel.value || 'ALL';
+        asigModSel.innerHTML = `<option value="ALL">Todos los Módulos</option>` + ALL_MODULES_MASTER.map(m => `<option value="${m.id}">${escapeHtml(m.code)}: ${escapeHtml(m.title)}</option>`).join('');
+        asigModSel.value = prev;
+      }
+    }
+
+    function filterAdminModuleSelector() {
+      populateAdmSelectors();
+      renderAdminModuleEditor();
     }
 
     // ==================== 1. ACCESOS ADMIN (`admin_access`) ====================
@@ -1252,50 +1388,68 @@ const DEFAULT_AUDIENCE_CATALOG = [
         });
         const rows = res.ok ? await res.json() : [];
         cachedAdminRows = Array.isArray(rows) ? rows : [];
-        document.getElementById('admAccessCountBadge').textContent = `${cachedAdminRows.length} cuentas`;
-
-        if (!cachedAdminRows.length) {
-          tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-slate-400">No hay cuentas administrativas registradas.</td></tr>';
-          return;
-        }
-
-        tbody.innerHTML = cachedAdminRows.map((a, idx) => {
-          const isActive = a.active !== false;
-          const isSelf = currentAdminUser && String(a.email || '').toLowerCase() === currentAdminUser.email.toLowerCase();
-          return `
-            <tr class="hover:bg-slate-50/80 transition">
-              <td class="px-4 py-3.5">
-                <div class="flex items-center gap-2.5">
-                  <span class="w-8 h-8 rounded-xl bg-[#0B0F17] text-white font-bold text-xs flex items-center justify-center shrink-0">${escapeHtml((a.name || a.email || 'A').charAt(0).toUpperCase())}</span>
-                  <div>
-                    <div class="font-bold text-slate-900">${escapeHtml(a.name || 'Sin nombre')} ${isSelf ? '<span class="ml-1 px-1.5 py-0.5 rounded bg-blue-50 text-[#1A64FF] text-[10px]">Tú</span>' : ''}</div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-4 py-3.5 font-mono text-[11.5px] text-slate-700">${escapeHtml(a.email)}</td>
-              <td class="px-4 py-3.5 text-slate-600">${escapeHtml(a.address || 'Administración General')}</td>
-              <td class="px-4 py-3.5">
-                <button type="button" onclick="toggleAdminActiveStatus(${idx})" class="px-2.5 py-1 rounded-full text-[11px] font-bold cursor-pointer ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}">
-                  ${isActive ? '● Activo' : '○ Inactivo'}
-                </button>
-              </td>
-              <td class="px-4 py-3.5 text-right space-x-1.5">
-                <button type="button" onclick="editAdminAccessRow(${idx})" title="Editar" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-blue-50 hover:text-[#1A64FF] text-slate-600 font-bold text-[11px] cursor-pointer">
-                  <i class="fa-solid fa-pen"></i>
-                </button>
-                ${!isSelf ? `
-                  <button type="button" onclick="deleteAdminAccessRow('${escapeHtml(a.email)}')" title="Eliminar" class="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white font-bold text-[11px] cursor-pointer">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </button>
-                ` : ''}
-              </td>
-            </tr>
-          `;
-        }).join('');
-        if (notify) showAdmToast("Lista de accesos actualizada");
+        filterAdminAccessTable();
+        if (notify) showAdmToast("Directorio de accesos sincronizado");
       } catch (e) {
         showAdmToast("Error al consultar accesos", true);
       }
+    }
+
+    function filterAdminAccessTable() {
+      const tbody = document.getElementById('admAccessTableBody');
+      if (!tbody) return;
+      const q = (document.getElementById('admAccessSearchInput')?.value || '').toLowerCase().trim();
+      const st = document.getElementById('admAccessStatusFilter')?.value || 'ALL';
+
+      const filtered = cachedAdminRows.map((a, idx) => Object.assign({}, a, { _origIdx: idx })).filter(a => {
+        const isActive = a.active !== false;
+        if (st === 'ACTIVE' && !isActive) return false;
+        if (st === 'INACTIVE' && isActive) return false;
+        if (q && !`${a.name || ''} ${a.email || ''} ${a.address || ''}`.toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      document.getElementById('admAccessCountBadge').textContent = `${filtered.length} de ${cachedAdminRows.length} cuentas`;
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-8 text-center text-slate-400">No se encontraron cuentas administrativas con los filtros actuales.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(a => {
+        const idx = a._origIdx;
+        const isActive = a.active !== false;
+        const isSelf = currentAdminUser && String(a.email || '').toLowerCase() === currentAdminUser.email.toLowerCase();
+        return `
+          <tr class="hover:bg-slate-50/80 transition">
+            <td class="px-5 py-3.5">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-[#0B0F17] text-white font-bold text-xs flex items-center justify-center shrink-0">${escapeHtml((a.name || a.email || 'A').charAt(0).toUpperCase())}</span>
+                <div>
+                  <div class="font-bold text-slate-900">${escapeHtml(a.name || 'Sin nombre')} ${isSelf ? '<span class="ml-1.5 px-2 py-0.5 rounded-md bg-blue-50 text-[#1A64FF] text-[10px] font-bold">Sesión actual</span>' : ''}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3.5 text-slate-700 font-medium">${escapeHtml(a.email)}</td>
+            <td class="px-4 py-3.5 text-slate-600">${escapeHtml(a.address || 'Administración General')}</td>
+            <td class="px-4 py-3.5">
+              <button type="button" onclick="toggleAdminActiveStatus(${idx})" class="px-3 py-1 rounded-full text-[11px] font-bold cursor-pointer ${isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-500 border border-slate-200'}">
+                ${isActive ? '● Activa' : '○ Inactiva'}
+              </button>
+            </td>
+            <td class="px-5 py-3.5 text-right space-x-1.5">
+              <button type="button" onclick="editAdminAccessRow(${idx})" title="Editar credenciales" class="px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-blue-50 hover:text-[#1A64FF] text-slate-600 font-bold text-[11px] cursor-pointer">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              ${!isSelf ? `
+                <button type="button" onclick="deleteAdminAccessRow('${escapeHtml(a.email)}')" title="Revocar acceso" class="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white font-bold text-[11px] cursor-pointer">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              ` : ''}
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function editAdminAccessRow(idx) {
@@ -1368,55 +1522,141 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
     }
 
-    // ==================== 2. ASIGNACIONES POR AUDIENCIA ====================
+    // ==================== 2. ASIGNACIONES POR AUDIENCIA (COLLAPSIBLE SQUARE CARDS) ====================
+    let expandedAudienceCardsMap = {}; // Default collapsed (false)
+
+    function toggleAudienceCardAccordion(roleName) {
+      expandedAudienceCardsMap[roleName] = !expandedAudienceCardsMap[roleName];
+      renderAdminAudienceMatrix();
+    }
+
+    function toggleExpandAllAudienceCards() {
+      const anyCollapsed = AUDIENCE_CATALOG.some(a => !expandedAudienceCardsMap[a.role]);
+      AUDIENCE_CATALOG.forEach(a => { expandedAudienceCardsMap[a.role] = anyCollapsed; });
+      const btn = document.getElementById('btnToggleExpandAllAud');
+      if (btn) {
+        btn.innerHTML = anyCollapsed
+          ? '<i class="fa-solid fa-angles-up mr-1"></i> Contraer Módulos'
+          : '<i class="fa-solid fa-angles-down mr-1"></i> Desplegar Módulos';
+      }
+      renderAdminAudienceMatrix();
+    }
+
+    function assignAllModulesToAllAudiences() {
+      if (!confirm("¿Asignar TODOS los módulos disponibles a TODAS las audiencias de forma inmediata?")) return;
+      const allIds = ALL_MODULES_MASTER.map(m => m.id);
+      AUDIENCE_CATALOG.forEach(a => { a.modules = [...allIds]; });
+      saveCmsState(true);
+      renderAdminAudienceMatrix();
+    }
+
     function renderAdminAudienceMatrix() {
       const grid = document.getElementById('admAudienceMatrixGrid');
       if (!grid) return;
 
-      grid.innerHTML = AUDIENCE_CATALOG.map((aud, aIdx) => {
+      const query = (document.getElementById('asigSearchInput')?.value || '').toLowerCase().trim();
+      const roleFilter = document.getElementById('asigRoleFilter')?.value || 'ALL';
+      const modFilter = document.getElementById('asigModuleFilter')?.value || 'ALL';
+
+      const filteredAudiences = AUDIENCE_CATALOG.map((aud, aIdx) => Object.assign({}, aud, { _origIdx: aIdx })).filter(aud => {
+        if (roleFilter !== 'ALL' && aud.role.toLowerCase() !== roleFilter.toLowerCase()) return false;
+        if (modFilter !== 'ALL' && !(aud.modules || []).includes(modFilter)) return false;
+        if (query) {
+          const modNames = (aud.modules || []).map(id => {
+            const m = ALL_MODULES_MASTER.find(item => item.id === id);
+            return m ? `${m.code} ${m.title}` : id;
+          }).join(' ');
+          if (!`${aud.role} ${aud.title || ''} ${aud.desc || ''} ${modNames}`.toLowerCase().includes(query)) return false;
+        }
+        return true;
+      });
+
+      if (!filteredAudiences.length) {
+        grid.innerHTML = '<div class="col-span-full pro-card p-8 text-center text-xs text-slate-400">No hay audiencias que coincidan con los filtros seleccionados.</div>';
+        return;
+      }
+
+      grid.innerHTML = filteredAudiences.map(aud => {
+        const aIdx = aud._origIdx;
         const assignedCount = (aud.modules || []).length;
+        const allSelected = assignedCount === ALL_MODULES_MASTER.length && ALL_MODULES_MASTER.length > 0;
+        const isExpanded = !!expandedAudienceCardsMap[aud.role];
+
         return `
-          <div class="pro-card p-5 flex flex-col justify-between space-y-4">
+          <div class="pro-card p-5 flex flex-col justify-between space-y-4 border-t-4 ${allSelected ? 'border-t-[#10B981]' : 'border-t-[#1A64FF]'} transition">
+            <!-- Square Header Summary (Always Visible with Icon & Audience Name) -->
             <div class="space-y-3">
-              <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+              <div class="flex items-start justify-between gap-3">
                 <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-[#0B0F17] text-white flex items-center justify-center text-sm shrink-0">
+                  <div class="w-12 h-12 rounded-2xl bg-[#0B0F17] text-white flex items-center justify-center text-lg shadow-sm shrink-0">
                     <i class="fa-solid ${escapeHtml(aud.icon || 'fa-users')}"></i>
                   </div>
                   <div>
-                    <h3 class="text-sm font-extrabold text-slate-900">${escapeHtml(aud.role)}</h3>
-                    <p class="text-[11px] text-slate-500">${escapeHtml(aud.title || aud.role)}</p>
+                    <h3 class="text-base font-extrabold text-slate-900 leading-tight">${escapeHtml(aud.role)}</h3>
+                    <p class="text-[11px] font-semibold text-slate-500 mt-0.5">${escapeHtml(aud.title || aud.role)}</p>
                   </div>
                 </div>
-                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-blue-50 text-[#1A64FF]">
+                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg ${allSelected ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-[#1A64FF] border border-blue-200'}">
                   ${assignedCount} / ${ALL_MODULES_MASTER.length}
                 </span>
               </div>
 
-              <div class="space-y-1.5">
+              <p class="text-xs text-slate-600 leading-relaxed line-clamp-2">${escapeHtml(aud.desc || '')}</p>
+
+              <!-- Compact Assigned Badges Preview when Collapsed -->
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${assignedCount === 0
+                  ? '<span class="text-[11px] text-slate-400 italic">Sin módulos asignados</span>'
+                  : (aud.modules || []).map(mId => {
+                      const mObj = ALL_MODULES_MASTER.find(item => item.id === mId);
+                      return mObj ? `<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-800 font-mono text-[10.5px] font-bold">${escapeHtml(mObj.code)}</span>` : '';
+                    }).join('')}
+              </div>
+            </div>
+
+            <!-- Quick Individual Toggle All + Accordion Trigger -->
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <label class="inline-flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer select-none">
+                <input type="checkbox" ${allSelected ? 'checked' : ''} onchange="toggleAllModsForSingleAudience(${aIdx}, this.checked)" class="w-4 h-4 accent-[#10B981] rounded cursor-pointer">
+                <span>Marcar todos (${ALL_MODULES_MASTER.length})</span>
+              </label>
+
+              <button type="button" onclick="toggleAudienceCardAccordion('${escapeHtml(aud.role)}')"
+                      class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#0B0F17] text-slate-800 hover:text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+                <span>${isExpanded ? 'Ocultar' : 'Módulos'}</span>
+                <i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[10px]"></i>
+              </button>
+            </div>
+
+            <!-- Collapsible Module Checkboxes Drawer -->
+            ${isExpanded ? `
+              <div class="pt-2 border-t border-slate-100 space-y-1.5">
                 ${ALL_MODULES_MASTER.map(m => {
                   const isChecked = (aud.modules || []).includes(m.id);
                   return `
-                    <label class="flex items-center justify-between gap-2 p-2.5 rounded-xl border ${isChecked ? 'bg-blue-50/50 border-blue-200/80' : 'bg-slate-50/70 border-slate-200/70'} hover:border-[#1A64FF] cursor-pointer transition text-xs">
+                    <label class="flex items-center justify-between gap-2.5 p-2.5 rounded-xl border ${isChecked ? 'bg-blue-50/70 border-blue-200' : 'bg-slate-50/70 border-slate-200/80'} hover:border-[#1A64FF] cursor-pointer transition text-xs select-none">
                       <div class="flex items-center gap-2.5 min-w-0">
-                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAudMod(${aIdx}, '${m.id}', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded cursor-pointer">
-                        <span class="font-mono text-[11px] font-extrabold text-slate-900">${escapeHtml(m.code)}</span>
-                        <span class="truncate text-slate-700 font-medium">${escapeHtml(m.title)}</span>
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAudMod(${aIdx}, '${m.id}', this.checked)" class="w-4 h-4 accent-[#1A64FF] rounded shrink-0 cursor-pointer">
+                        <span class="px-1.5 py-0.5 rounded bg-white border border-slate-200 font-mono text-[10.5px] font-extrabold text-slate-900 shrink-0">${escapeHtml(m.code)}</span>
+                        <span class="truncate text-slate-800 font-semibold">${escapeHtml(m.title)}</span>
                       </div>
                       ${m.hidden ? '<span class="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 shrink-0">Oculto</span>' : ''}
                     </label>
                   `;
                 }).join('')}
               </div>
-            </div>
-
-            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-              <span>Ruta secuencial activa</span>
-              <button type="button" onclick="selectAllModsForAudience(${aIdx})" class="text-[#1A64FF] hover:underline font-bold cursor-pointer">Asignar todos</button>
-            </div>
+            ` : ''}
           </div>
         `;
       }).join('');
+    }
+
+    function toggleAllModsForSingleAudience(aIdx, checked) {
+      const aud = AUDIENCE_CATALOG[aIdx];
+      if (!aud) return;
+      aud.modules = checked ? ALL_MODULES_MASTER.map(m => m.id) : [];
+      saveCmsState(true);
+      renderAdminAudienceMatrix();
     }
 
     function toggleAudMod(aIdx, modId, checked) {
@@ -1424,18 +1664,9 @@ const DEFAULT_AUDIENCE_CATALOG = [
       if (!aud) return;
       if (checked && !aud.modules.includes(modId)) aud.modules.push(modId);
       if (!checked) aud.modules = aud.modules.filter(id => id !== modId);
-      // Keep modules ordered according to ALL_MODULES_MASTER
       const orderMap = {};
       ALL_MODULES_MASTER.forEach((m, i) => orderMap[m.id] = i);
       aud.modules.sort((a, b) => (orderMap[a] ?? 99) - (orderMap[b] ?? 99));
-      saveCmsState(true);
-      renderAdminAudienceMatrix();
-    }
-
-    function selectAllModsForAudience(aIdx) {
-      const aud = AUDIENCE_CATALOG[aIdx];
-      if (!aud) return;
-      aud.modules = ALL_MODULES_MASTER.map(m => m.id);
       saveCmsState(true);
       renderAdminAudienceMatrix();
     }
@@ -1447,11 +1678,75 @@ const DEFAULT_AUDIENCE_CATALOG = [
       renderAdminAudienceMatrix();
     }
 
-    // ==================== 3. MÓDULOS (CRUD + VIDEOS + MANUALES) ====================
+    // ==================== 3. MÓDULOS (PERSONAJE + MINIATURA VIDEO + MANUALES) ====================
     function getNormalizedCardManuals(c) {
       if (Array.isArray(c.manuals) && c.manuals.length > 0) return c.manuals;
       if (c.manual || c.manualUrl) return [{ title: c.manual || 'Manual Operativo', url: c.manualUrl || '' }];
       return [{ title: 'Manual Operativo', url: '' }];
+    }
+
+    function handleImageFileToDataUrl(fileInput, callback) {
+      const file = fileInput && fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 640;
+          let w = img.width;
+          let h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL('image/webp', 0.85));
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function uploadModuleCharacterImage(modId, inputEl) {
+      handleImageFileToDataUrl(inputEl, (dataUrl) => {
+        const mod = ALL_MODULES_MASTER.find(m => m.id === modId);
+        if (!mod) return;
+        mod.characterImg = dataUrl;
+        saveCmsState(true);
+        renderAdminModuleEditor();
+      });
+    }
+
+    function removeModuleCharacterImage(modId) {
+      const mod = ALL_MODULES_MASTER.find(m => m.id === modId);
+      if (!mod) return;
+      delete mod.characterImg;
+      saveCmsState(true);
+      renderAdminModuleEditor();
+    }
+
+    function uploadLessonVideoThumbnail(modId, cIdx, inputEl) {
+      saveAdminModuleChanges(modId, true);
+      handleImageFileToDataUrl(inputEl, (dataUrl) => {
+        const mod = ALL_MODULES_MASTER.find(m => m.id === modId);
+        if (!mod || !mod.cards[cIdx]) return;
+        mod.cards[cIdx].thumbnailUrl = dataUrl;
+        saveCmsState(true);
+        renderAdminModuleEditor();
+      });
+    }
+
+    function removeLessonVideoThumbnail(modId, cIdx) {
+      saveAdminModuleChanges(modId, true);
+      const mod = ALL_MODULES_MASTER.find(m => m.id === modId);
+      if (!mod || !mod.cards[cIdx]) return;
+      mod.cards[cIdx].thumbnailUrl = '';
+      saveCmsState(true);
+      renderAdminModuleEditor();
     }
 
     function renderAdminModuleEditor() {
@@ -1467,42 +1762,65 @@ const DEFAULT_AUDIENCE_CATALOG = [
 
       const container = document.getElementById('admModuleEditorContainer');
       container.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Código *</label>
-            <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="pro-input w-full px-3.5 py-2 font-mono font-bold">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <!-- Left 8 Cols: Title, Code & Description -->
+          <div class="lg:col-span-8 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Código <span class="text-rose-600">*</span></label>
+                <input type="text" id="edModCode" value="${escapeHtml(mod.code)}" class="pro-input w-full px-3.5 py-2.5 font-display font-extrabold text-slate-900">
+              </div>
+              <div class="sm:col-span-3">
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Título Oficial del Módulo <span class="text-rose-600">*</span></label>
+                <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="pro-input w-full px-3.5 py-2.5 font-display font-bold text-slate-900">
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">Objetivo y Descripción Operativa</label>
+              <textarea id="edModDesc" rows="3" class="pro-input w-full px-3.5 py-2.5 leading-relaxed">${escapeHtml(mod.desc)}</textarea>
+            </div>
           </div>
-          <div class="md:col-span-3">
-            <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Título del Módulo *</label>
-            <input type="text" id="edModTitle" value="${escapeHtml(mod.title)}" class="pro-input w-full px-3.5 py-2 font-bold">
-          </div>
-          <div class="md:col-span-4">
-            <label class="block text-[10.5px] font-bold uppercase text-slate-600 mb-1">Objetivo / Descripción Operativa</label>
-            <textarea id="edModDesc" rows="2" class="pro-input w-full px-3.5 py-2">${escapeHtml(mod.desc)}</textarea>
+
+          <!-- Right 4 Cols: Upload Character / Module Card Image -->
+          <div class="lg:col-span-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#1A64FF]">Imagen / Personaje del Módulo</span>
+              ${mod.characterImg ? `<button type="button" onclick="removeModuleCharacterImage('${mod.id}')" class="text-[11px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+            </div>
+            <div class="h-32 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden p-2">
+              ${mod.characterImg
+                ? `<img src="${mod.characterImg}" alt="Personaje ${escapeHtml(mod.code)}" class="max-h-full max-w-full object-contain">`
+                : `<div class="text-center text-slate-400 space-y-1"><i class="fa-solid ${escapeHtml(mod.icon || 'fa-graduation-cap')} text-2xl text-slate-300"></i><div class="text-[11px] font-medium">Sin imagen personalizada</div></div>`}
+            </div>
+            <label class="w-full py-2 px-3 rounded-xl bg-[#0B0F17] hover:bg-[#1A64FF] text-white text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Subir Imagen del Módulo</span>
+              <input type="file" accept="image/*" onchange="uploadModuleCharacterImage('${mod.id}', this)" class="hidden">
+            </label>
           </div>
         </div>
 
         <!-- Visual Icon Picker -->
-        <div class="space-y-2">
-          <label class="block text-[10.5px] font-bold uppercase text-slate-600">Ícono del Módulo</label>
+        <div class="space-y-2 pt-2 border-t border-slate-100">
+          <label class="block text-[11px] font-bold text-slate-700">Ícono Alternativo en Menú Lateral</label>
           <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
             ${ICON_CATALOG.map(ic => `
               <button type="button" onclick="selectModuleIcon('${mod.id}', '${ic.cls}')" class="p-2.5 rounded-xl border ${mod.icon === ic.cls ? 'bg-[#0B0F17] text-white border-[#1A64FF] ring-2 ring-[#1A64FF]/30' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-white'} flex flex-col items-center gap-1 text-xs cursor-pointer">
                 <i class="fa-solid ${ic.cls} text-sm"></i>
-                <span class="text-[9.5px] truncate w-full text-center">${ic.label}</span>
+                <span class="text-[10px] font-medium truncate w-full text-center">${ic.label}</span>
               </button>
             `).join('')}
           </div>
         </div>
 
-        <!-- Videos, Key Points & Multiple PDF Manuals -->
+        <!-- Videos + Video Thumbnail Upload + Key Points + Multiple PDF Manuals -->
         <div class="border-t border-slate-100 pt-5 space-y-4">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <div>
-              <h4 class="text-sm font-extrabold text-slate-900">Lecciones Audiovisuales y Manuales PDF</h4>
-              <p class="text-[11px] text-slate-500">Configura videos tutoriales, puntos clave y manuales PDF adjuntos.</p>
+              <h4 class="text-sm font-extrabold text-slate-900">Lecciones Audiovisuales, Miniaturas y Manuales PDF</h4>
+              <p class="text-xs text-slate-500">Agrega el enlace del video, sube su imagen miniatura y adjunta los manuales PDF.</p>
             </div>
-            <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-3.5 py-2 rounded-xl bg-blue-50 text-[#1A64FF] hover:bg-[#1A64FF] hover:text-white text-xs font-bold transition cursor-pointer">
+            <button type="button" onclick="addLessonToModule('${mod.id}')" class="px-4 py-2 rounded-xl bg-blue-50 text-[#1A64FF] hover:bg-[#1A64FF] hover:text-white text-xs font-bold transition cursor-pointer">
               + Agregar Video / Lección
             </button>
           </div>
@@ -1516,21 +1834,42 @@ const DEFAULT_AUDIENCE_CATALOG = [
                   ${mod.cards.length > 1 ? `<button type="button" onclick="removeLessonFromModule('${mod.id}', ${idx})" class="text-xs text-rose-600 font-bold hover:underline cursor-pointer">Eliminar Lección</button>` : ''}
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <label class="block text-[10.5px] font-bold uppercase text-slate-500 mb-1">Título de la Lección</label>
-                    <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp pro-input w-full px-3 py-2 font-semibold">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+                  <div class="lg:col-span-8 space-y-3">
+                    <div>
+                      <label class="block text-[11px] font-bold text-slate-700 mb-1">Título de la Lección</label>
+                      <input type="text" data-cidx="${idx}" data-field="title" value="${escapeHtml(c.title)}" class="ed-card-inp pro-input w-full px-3.5 py-2 font-semibold">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-slate-700 mb-1">Enlace del Video (YouTube / Google Drive)</label>
+                      <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" placeholder="https://www.youtube.com/watch?v=..." class="ed-card-inp pro-input w-full px-3.5 py-2 text-xs">
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold text-slate-700 mb-1">Puntos Clave del Video (uno por línea)</label>
+                      <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp pro-input w-full px-3.5 py-2 leading-relaxed">${escapeHtml((c.points || []).join('\n'))}</textarea>
+                    </div>
                   </div>
-                  <div>
-                    <label class="block text-[10.5px] font-bold uppercase text-slate-500 mb-1">URL del Video (YouTube / Google Drive)</label>
-                    <input type="url" data-cidx="${idx}" data-field="videoUrl" value="${escapeHtml(c.videoUrl || '')}" class="ed-card-inp pro-input w-full px-3 py-2 font-mono text-xs">
-                  </div>
-                  <div class="md:col-span-2">
-                    <label class="block text-[10.5px] font-bold uppercase text-slate-500 mb-1">Puntos Clave del Video (uno por línea)</label>
-                    <textarea data-cidx="${idx}" data-field="points" rows="3" class="ed-card-inp pro-input w-full px-3 py-2">${escapeHtml((c.points || []).join('\n'))}</textarea>
+
+                  <!-- Video Thumbnail Upload Side Box -->
+                  <div class="lg:col-span-4 p-3.5 rounded-xl bg-white border border-slate-200 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-slate-700">Miniatura del Video</span>
+                      ${c.thumbnailUrl ? `<button type="button" onclick="removeLessonVideoThumbnail('${mod.id}', ${idx})" class="text-[10.5px] text-rose-600 font-bold hover:underline cursor-pointer">Quitar</button>` : ''}
+                    </div>
+                    <div class="aspect-video w-full rounded-lg bg-slate-100 border border-dashed border-slate-300 overflow-hidden flex items-center justify-center">
+                      ${c.thumbnailUrl
+                        ? `<img src="${c.thumbnailUrl}" alt="Miniatura" class="w-full h-full object-cover">`
+                        : `<div class="text-center text-slate-400 p-2"><i class="fa-regular fa-image text-xl"></i><div class="text-[10.5px] mt-1">Sin miniatura cargada</div></div>`}
+                    </div>
+                    <label class="w-full py-2 px-3 rounded-lg bg-slate-900 hover:bg-[#1A64FF] text-white text-[11px] font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
+                      <i class="fa-solid fa-image"></i>
+                      <span>Subir Miniatura</span>
+                      <input type="file" accept="image/*" onchange="uploadLessonVideoThumbnail('${mod.id}', ${idx}, this)" class="hidden">
+                    </label>
                   </div>
                 </div>
 
+                <!-- Attached PDF Manuals -->
                 <div class="p-3.5 rounded-xl bg-white border border-slate-200 space-y-3">
                   <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#1A64FF]"><i class="fa-solid fa-book-open mr-1"></i> Manuales PDF Adjuntos (${manuals.length})</span>
@@ -1540,10 +1879,10 @@ const DEFAULT_AUDIENCE_CATALOG = [
                     ${manuals.map((mn, mIdx) => `
                       <div class="grid grid-cols-1 md:grid-cols-12 gap-2 items-center p-2.5 rounded-lg bg-slate-50 border border-slate-200/80">
                         <div class="md:col-span-5">
-                          <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp pro-input w-full px-2.5 py-1.5 text-xs font-semibold">
+                          <input type="text" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="title" value="${escapeHtml(mn.title)}" placeholder="Título del Manual #${mIdx + 1}" class="ed-manual-inp pro-input w-full px-3 py-1.5 text-xs font-semibold">
                         </div>
                         <div class="md:col-span-6">
-                          <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp pro-input w-full px-2.5 py-1.5 font-mono text-xs">
+                          <input type="url" data-cidx="${idx}" data-midx="${mIdx}" data-mfield="url" value="${escapeHtml(mn.url || '')}" placeholder="https://drive.google.com/file/d/.../view" class="ed-manual-inp pro-input w-full px-3 py-1.5 text-xs">
                         </div>
                         <div class="md:col-span-1 text-right">
                           ${manuals.length > 1 ? `<button type="button" onclick="removeManualFromLesson('${mod.id}', ${idx}, ${mIdx})" title="Quitar manual" class="px-2 py-1 rounded bg-rose-50 text-rose-600 hover:bg-rose-600 hover:text-white text-xs font-bold cursor-pointer">✕</button>` : ''}
@@ -1630,6 +1969,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         cards: [{
           title: title.trim(),
           videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+          thumbnailUrl: '',
           manualUrl: 'https://drive.google.com',
           manual: `Manual ${cleanId}`,
           manuals: [{ title: `Manual ${cleanId}`, url: 'https://drive.google.com' }],
@@ -1665,6 +2005,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
       mod.cards.push({
         title: `Nueva Lección #${mod.cards.length + 1}`,
         videoUrl: '',
+        thumbnailUrl: '',
         manualUrl: '',
         manual: 'Manual Operativo',
         manuals: [{ title: 'Manual Operativo', url: '' }],
@@ -1723,7 +2064,57 @@ const DEFAULT_AUDIENCE_CATALOG = [
       }
     }
 
-    // ==================== 4. EVALUACIONES (QUIZZES CRUD) ====================
+    // ==================== 4. EVALUACIONES ESTILO GOOGLE FORMS (ALL 13 TYPES) ====================
+    const QUESTION_TYPE_LABELS = {
+      short: "Respuesta corta",
+      paragraph: "Párrafo",
+      mcq: "Opción múltiple",
+      checkboxes: "Casillas",
+      dropdown: "Desplegable",
+      linear_scale: "Escala lineal",
+      grid_radio: "Cuadrícula de varias opciones",
+      grid_checkbox: "Cuadrícula de casillas",
+      file_upload: "Subir archivos",
+      date_time: "Fecha y Hora",
+      tf: "Verdadero / Falso",
+      match: "Emparejamiento",
+      ordering: "Ordenamiento / Secuencia",
+      cloze: "Rellenar espacios en blanco (Cloze)",
+      hotspot: "Zonas activas (Hotspot)"
+    };
+
+    function buildQuestionTypeOptionsHTML(selectedType) {
+      return `
+        <optgroup label="Respuesta abierta">
+          <option value="short" ${selectedType === 'short' ? 'selected' : ''}>Respuesta corta</option>
+          <option value="paragraph" ${selectedType === 'paragraph' ? 'selected' : ''}>Párrafo</option>
+        </optgroup>
+        <optgroup label="Selección">
+          <option value="mcq" ${selectedType === 'mcq' ? 'selected' : ''}>Opción múltiple</option>
+          <option value="checkboxes" ${selectedType === 'checkboxes' ? 'selected' : ''}>Casillas</option>
+          <option value="dropdown" ${selectedType === 'dropdown' ? 'selected' : ''}>Desplegable</option>
+        </optgroup>
+        <optgroup label="Escalas y cuadrículas">
+          <option value="linear_scale" ${selectedType === 'linear_scale' ? 'selected' : ''}>Escala lineal</option>
+          <option value="grid_radio" ${selectedType === 'grid_radio' ? 'selected' : ''}>Cuadrícula de varias opciones</option>
+          <option value="grid_checkbox" ${selectedType === 'grid_checkbox' ? 'selected' : ''}>Cuadrícula de casillas</option>
+        </optgroup>
+        <optgroup label="Datos específicos y archivos">
+          <option value="file_upload" ${selectedType === 'file_upload' ? 'selected' : ''}>Subir archivos</option>
+          <option value="date_time" ${selectedType === 'date_time' ? 'selected' : ''}>Fecha y Hora</option>
+        </optgroup>
+        <optgroup label="Respuestas cerradas">
+          <option value="tf" ${selectedType === 'tf' ? 'selected' : ''}>Verdadero / Falso</option>
+          <option value="match" ${selectedType === 'match' ? 'selected' : ''}>Emparejamiento</option>
+          <option value="ordering" ${selectedType === 'ordering' ? 'selected' : ''}>Ordenamiento / Secuencia</option>
+          <option value="cloze" ${selectedType === 'cloze' ? 'selected' : ''}>Rellenar espacios en blanco (Cloze)</option>
+        </optgroup>
+        <optgroup label="Interactivas / Multimedia">
+          <option value="hotspot" ${selectedType === 'hotspot' ? 'selected' : ''}>Zonas activas (Hotspot)</option>
+        </optgroup>
+      `;
+    }
+
     function renderAdminQuizEditor() {
       const sel = document.getElementById('admQuizModSelect');
       if (!sel || !ALL_MODULES_MASTER.length) return;
@@ -1736,84 +2127,247 @@ const DEFAULT_AUDIENCE_CATALOG = [
       document.getElementById('admQuizMaxScore').value = qCfg.maxScore || 100;
       document.getElementById('btnToggleQuizHidden').textContent = qCfg.hidden ? 'Mostrar Quiz' : 'Ocultar Quiz';
 
+      const searchQ = (document.getElementById('admQuizSearchInput')?.value || '').toLowerCase().trim();
       const listBox = document.getElementById('admQuizQuestionsList');
+
       if (!qCfg.questions || qCfg.questions.length === 0) {
         listBox.innerHTML = `
-          <div class="pro-card p-8 text-center space-y-3">
-            <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-file-circle-question"></i></div>
-            <h4 class="text-sm font-extrabold text-slate-900">Esta evaluación aún no tiene preguntas</h4>
-            <p class="text-xs text-slate-500">Usa los botones superiores para agregar preguntas de Opción Múltiple, Verdadero/Falso o Enlazar Parejas.</p>
+          <div class="pro-card p-10 text-center space-y-3 border-l-4 border-l-[#1A64FF]">
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#1A64FF] mx-auto flex items-center justify-center text-xl"><i class="fa-solid fa-clipboard-question"></i></div>
+            <h4 class="text-base font-extrabold text-slate-900">Evaluación sin preguntas configuradas</h4>
+            <p class="text-xs text-slate-500 max-w-md mx-auto">Selecciona cualquiera de los 15 formatos de pregunta en el menú desplegable superior y haz clic en <strong>Agregar Pregunta</strong>.</p>
           </div>
         `;
         return;
       }
 
-      listBox.innerHTML = qCfg.questions.map((qItem, qIdx) => {
-        let templateFields = '';
-        if (qItem.type === 'tf') {
-          templateFields = `
-            <div class="flex items-center gap-4 text-xs p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <span class="font-bold text-slate-700">Respuesta Correcta:</span>
-              <label class="flex items-center gap-1.5 font-bold text-emerald-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="true" ${qItem.correctBool ? 'checked' : ''}> Verdadero</label>
-              <label class="flex items-center gap-1.5 font-bold text-rose-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="false" ${!qItem.correctBool ? 'checked' : ''}> Falso</label>
+      const visibleQuestions = qCfg.questions
+        .map((qItem, qIdx) => Object.assign({}, qItem, { _origIdx: qIdx }))
+        .filter(qItem => !searchQ || (qItem.q || '').toLowerCase().includes(searchQ));
+
+      listBox.innerHTML = visibleQuestions.map(qItem => {
+        const qIdx = qItem._origIdx;
+        const t = qItem.type || 'mcq';
+        let bodyFields = '';
+
+        if (t === 'short') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <label class="block text-[11px] font-bold text-slate-700">Respuesta Corta Esperada (Clave de calificación)</label>
+              <input type="text" data-qidx="${qIdx}" data-gfield="expectedAnswer" value="${escapeHtml(qItem.expectedAnswer || '')}" placeholder="Ej. El tiempo de aprendizaje" class="ed-q-gen pro-input w-full px-3.5 py-2 text-xs font-semibold">
             </div>
           `;
-        } else if (qItem.type === 'match') {
+        } else if (t === 'paragraph') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <label class="block text-[11px] font-bold text-slate-700">Criterio / Respuesta Modelo de Párrafo (4 a 5 líneas)</label>
+              <textarea data-qidx="${qIdx}" data-gfield="expectedAnswer" rows="3" placeholder="Escribe la secuencia o criterios clave esperados..." class="ed-q-gen pro-input w-full px-3.5 py-2 text-xs">${escapeHtml(qItem.expectedAnswer || '')}</textarea>
+            </div>
+          `;
+        } else if (t === 'checkboxes') {
+          const opts = qItem.options || ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+          const corrArr = Array.isArray(qItem.correctMultiple) ? qItem.correctMultiple : [0];
+          bodyFields = `
+            <div class="space-y-2">
+              ${opts.map((opt, oIdx) => `
+                <div class="flex items-center gap-2.5">
+                  <input type="checkbox" data-qidx="${qIdx}" data-oidx="${oIdx}" ${corrArr.includes(oIdx) ? 'checked' : ''} class="ed-q-chk-corr w-4 h-4 accent-[#1A64FF] rounded cursor-pointer" title="Marcar como respuesta correcta">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                </div>
+              `).join('')}
+              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline mt-1 cursor-pointer">+ Añadir casilla</button>
+            </div>
+          `;
+        } else if (t === 'dropdown') {
+          const opts = qItem.options || ['Alternativa 1', 'Alternativa 2', 'Alternativa 3'];
+          bodyFields = `
+            <div class="space-y-2">
+              <div class="text-[11px] font-bold text-slate-500">Elementos del menú desplegable (selecciona el correcto):</div>
+              ${opts.map((opt, oIdx) => `
+                <div class="flex items-center gap-2.5">
+                  <span class="font-mono text-xs font-bold text-slate-400 w-5">${oIdx + 1}.</span>
+                  <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#10B981] cursor-pointer">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
+                </div>
+              `).join('')}
+              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline mt-1 cursor-pointer">+ Añadir opción desplegable</button>
+            </div>
+          `;
+        } else if (t === 'linear_scale') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-4 gap-3">
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Mínimo</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMin" value="${qItem.scaleMin ?? 1}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Máximo</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="scaleMax" value="${qItem.scaleMax ?? 5}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Izquierda</label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="minLabel" value="${escapeHtml(qItem.minLabel || 'Nada preparado')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+              </div>
+              <div>
+                <label class="block text-[10.5px] font-bold text-slate-600 mb-1">Etiqueta Derecha</label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="maxLabel" value="${escapeHtml(qItem.maxLabel || 'Totalmente preparado')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+              </div>
+            </div>
+          `;
+        } else if (t === 'grid_radio' || t === 'grid_checkbox') {
+          const rows = qItem.gridRows || ['Fila 1', 'Fila 2'];
+          const cols = qItem.gridCols || ['Columna A', 'Columna B', 'Columna C'];
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Filas (una por línea)</label>
+                <textarea data-qidx="${qIdx}" data-gfield="gridRows" rows="3" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(rows.join('\n'))}</textarea>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Columnas (una por línea)</label>
+                <textarea data-qidx="${qIdx}" data-gfield="gridCols" rows="3" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(cols.join('\n'))}</textarea>
+              </div>
+            </div>
+          `;
+        } else if (t === 'file_upload') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Formatos Permitidos</label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="allowedFormats" value="${escapeHtml(qItem.allowedFormats || 'PDF, XLSX, PNG, JPG')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Peso Máximo (MB)</label>
+                <input type="number" data-qidx="${qIdx}" data-gfield="maxSizeMb" value="${qItem.maxSizeMb || 10}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs font-bold">
+              </div>
+            </div>
+          `;
+        } else if (t === 'date_time') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Fecha Exacta Esperada</label>
+                <input type="date" data-qidx="${qIdx}" data-gfield="expectedDate" value="${escapeHtml(qItem.expectedDate || '')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-700 mb-1">Hora (Opcional)</label>
+                <input type="time" data-qidx="${qIdx}" data-gfield="expectedTime" value="${escapeHtml(qItem.expectedTime || '')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+              </div>
+            </div>
+          `;
+        } else if (t === 'tf') {
+          bodyFields = `
+            <div class="flex items-center gap-5 text-xs p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <span class="font-bold text-slate-700">Respuesta Correcta:</span>
+              <label class="flex items-center gap-2 font-bold text-emerald-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="true" ${qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-[#10B981]"> Verdadero</label>
+              <label class="flex items-center gap-2 font-bold text-rose-700 cursor-pointer"><input type="radio" name="ed_tf_${qIdx}" value="false" ${!qItem.correctBool ? 'checked' : ''} class="w-4 h-4 accent-rose-600"> Falso</label>
+            </div>
+          `;
+        } else if (t === 'match') {
           const pairs = qItem.pairs || [{ left: '', right: '' }, { left: '', right: '' }];
-          templateFields = `
+          bodyFields = `
             <div class="space-y-2 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-              <div class="text-[10.5px] font-bold uppercase text-slate-500">Parejas a Enlazar (Izquierda ↔ Derecha Correcta)</div>
+              <div class="text-[11px] font-bold text-slate-700">Parejas de Columnas (Izquierda ↔ Derecha Correcta)</div>
               ${pairs.map((pr, pIdx) => `
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Concepto izquierdo" class="ed-q-pair pro-input px-3 py-1.5 text-xs">
+                  <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="left" value="${escapeHtml(pr.left)}" placeholder="Elemento izquierda" class="ed-q-pair pro-input px-3 py-1.5 text-xs">
                   <input type="text" data-qidx="${qIdx}" data-pidx="${pIdx}" data-side="right" value="${escapeHtml(pr.right)}" placeholder="Pareja correcta derecha" class="ed-q-pair pro-input px-3 py-1.5 text-xs">
                 </div>
               `).join('')}
             </div>
           `;
+        } else if (t === 'ordering') {
+          const steps = qItem.orderSteps || ['Paso 1: Iniciar sesión con Google', 'Paso 2: Seleccionar aula', 'Paso 3: Activar Modo Clase'];
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+              <label class="block text-[11px] font-bold text-slate-700">Secuencia en el Orden Lógico Correcto (de arriba hacia abajo)</label>
+              <textarea data-qidx="${qIdx}" data-gfield="orderSteps" rows="4" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(steps.join('\n'))}</textarea>
+            </div>
+          `;
+        } else if (t === 'cloze') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <label class="block text-[11px] font-bold text-slate-700">Texto con Espacios entre Corchetes (ej. Un círculo azul indica [correcta] y una X roja [incorrecta])</label>
+              <textarea data-qidx="${qIdx}" data-gfield="clozeTemplate" rows="2" class="ed-q-gen pro-input w-full px-3 py-2 text-xs">${escapeHtml(qItem.clozeTemplate || 'En la matriz Resumen de aprendizaje, un círculo azul indica una respuesta [correcta], mientras que una equis roja señala una respuesta [incorrecta].')}</textarea>
+            </div>
+          `;
+        } else if (t === 'hotspot') {
+          bodyFields = `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
+              <div class="space-y-2">
+                <label class="block text-[11px] font-bold text-slate-700">Descripción de la Zona Activa Correcta</label>
+                <input type="text" data-qidx="${qIdx}" data-gfield="hotspotTarget" value="${escapeHtml(qItem.hotspotTarget || 'Ícono de reporte de dispositivo con incidencias')}" class="ed-q-gen pro-input w-full px-3 py-1.5 text-xs">
+                <label class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B0F17] text-white text-[11px] font-bold cursor-pointer">
+                  <i class="fa-solid fa-image"></i><span>Subir Captura de Interfaz</span>
+                  <input type="file" accept="image/*" onchange="uploadHotspotImage('${modId}', ${qIdx}, this)" class="hidden">
+                </label>
+              </div>
+              <div class="h-28 rounded-xl bg-white border border-dashed border-slate-300 flex items-center justify-center overflow-hidden">
+                ${qItem.hotspotImg
+                  ? `<img src="${qItem.hotspotImg}" alt="Hotspot" class="max-h-full max-w-full object-contain">`
+                  : `<span class="text-[11px] text-slate-400">Vista previa de captura</span>`}
+              </div>
+            </div>
+          `;
         } else {
-          const opts = qItem.options || ['Opción A', 'Opción B', 'Opción C'];
-          templateFields = `
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          // Default: mcq (Opción múltiple - botones de radio)
+          const opts = qItem.options || ['Opción 1', 'Opción 2', 'Opción 3', 'Opción 4'];
+          bodyFields = `
+            <div class="space-y-2">
               ${opts.map((opt, oIdx) => `
-                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <label class="flex items-center gap-1.5 text-[10.5px] font-bold text-slate-700 mb-1 cursor-pointer">
-                    <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="accent-[#10B981]">
-                    <span>Opción ${oIdx + 1} ${Number(qItem.correct) === oIdx ? '(Correcta)' : ''}</span>
-                  </label>
-                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input w-full px-3 py-1.5 text-xs">
+                <div class="flex items-center gap-2.5">
+                  <input type="radio" name="ed_mcq_${qIdx}" value="${oIdx}" ${Number(qItem.correct) === oIdx ? 'checked' : ''} class="w-4 h-4 accent-[#1A64FF] cursor-pointer" title="Respuesta correcta">
+                  <input type="text" data-qidx="${qIdx}" data-oidx="${oIdx}" value="${escapeHtml(opt)}" class="ed-q-opt pro-input flex-1 px-3 py-1.5 text-xs">
+                  ${opts.length > 2 ? `<button type="button" onclick="removeOptionFromQuestion('${modId}', ${qIdx}, ${oIdx})" class="text-slate-400 hover:text-rose-600 px-1.5 cursor-pointer">✕</button>` : ''}
                 </div>
               `).join('')}
+              <button type="button" onclick="addOptionToQuestion('${modId}', ${qIdx})" class="text-xs text-[#1A64FF] font-bold hover:underline mt-1 cursor-pointer">+ Añadir opción</button>
             </div>
           `;
         }
 
         return `
-          <div class="pro-card p-5 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="flex items-center gap-2.5">
-                <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-[#0B0F17] text-white">#${qIdx + 1}</span>
-                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="pro-input px-2.5 py-1.5 text-xs font-bold">
-                  <option value="mcq" ${qItem.type === 'mcq' ? 'selected' : ''}>Plantilla: Opción Múltiple</option>
-                  <option value="tf" ${qItem.type === 'tf' ? 'selected' : ''}>Plantilla: Verdadero / Falso</option>
-                  <option value="match" ${qItem.type === 'match' ? 'selected' : ''}>Plantilla: Enlazar Parejas</option>
+          <div class="pro-card p-5 sm:p-6 border-l-4 border-l-[#1A64FF] space-y-4">
+            <!-- Google Forms Top Row: Question Prompt on Left + Question Type Dropdown on Right -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+              <div class="md:col-span-8">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-mono text-[10.5px] font-extrabold">Pregunta #${qIdx + 1}</span>
+                  <span class="text-[11px] font-semibold text-slate-400">${QUESTION_TYPE_LABELS[t] || 'Opción múltiple'}</span>
+                </div>
+                <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" placeholder="Escribe el enunciado de la pregunta..." class="ed-q-text pro-input w-full px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-slate-50/70">
+              </div>
+
+              <div class="md:col-span-4 space-y-1">
+                <label class="block text-[10.5px] font-bold text-slate-500">Tipo de pregunta</label>
+                <select onchange="changeQuestionTemplateType('${modId}', ${qIdx}, this.value)" class="pro-input w-full px-3 py-2.5 text-xs font-bold text-slate-800">
+                  ${buildQuestionTypeOptionsHTML(t)}
                 </select>
               </div>
-              <div class="flex items-center gap-3">
-                <div class="flex items-center gap-1.5 text-xs">
-                  <span class="font-bold text-slate-500">Puntos:</span>
-                  <input type="number" data-qidx="${qIdx}" value="${qItem.points || 25}" class="ed-q-pts pro-input w-20 px-2.5 py-1 font-mono font-bold text-center">
-                </div>
-                <button type="button" onclick="removeQuizQuestion('${modId}', ${qIdx})" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition cursor-pointer">
-                  Eliminar
+            </div>
+
+            ${bodyFields}
+
+            <!-- Google Forms Bottom Action Footer: Points, Duplicate, Delete -->
+            <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-xs">
+                <span class="w-6 h-6 rounded-lg bg-blue-50 text-[#1A64FF] flex items-center justify-center"><i class="fa-solid fa-check-double text-[11px]"></i></span>
+                <span class="font-bold text-slate-700">Puntuación:</span>
+                <input type="number" data-qidx="${qIdx}" value="${qItem.points || 10}" class="ed-q-pts pro-input w-20 px-2.5 py-1 font-bold text-center">
+                <span class="text-slate-500">puntos</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="duplicateQuizQuestion('${modId}', ${qIdx})" title="Duplicar pregunta" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-bold cursor-pointer">
+                  <i class="fa-regular fa-copy mr-1"></i> Duplicar
+                </button>
+                <button type="button" onclick="removeQuizQuestion('${modId}', ${qIdx})" title="Eliminar pregunta" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition cursor-pointer">
+                  <i class="fa-solid fa-trash-can mr-1"></i> Eliminar
                 </button>
               </div>
             </div>
-            <div>
-              <label class="block text-[10.5px] font-bold uppercase text-slate-500 mb-1">Enunciado de la Pregunta</label>
-              <input type="text" data-qidx="${qIdx}" value="${escapeHtml(qItem.q)}" class="ed-q-text pro-input w-full px-3.5 py-2 font-semibold">
-            </div>
-            ${templateFields}
           </div>
         `;
       }).join('') + `
@@ -1825,27 +2379,102 @@ const DEFAULT_AUDIENCE_CATALOG = [
       `;
     }
 
+    function addSelectedQuestionType() {
+      const type = document.getElementById('newQuizQuestionTypeSelect')?.value || 'mcq';
+      addQuestionFromTemplate(type);
+    }
+
     function addQuestionFromTemplate(type) {
       const modId = document.getElementById('admQuizModSelect').value;
       if (!quizzesBank[modId]) quizzesBank[modId] = { hidden: false, minPass: 80, maxScore: 100, questions: [] };
+      const base = { type: type, points: 10, q: `Nueva pregunta (${QUESTION_TYPE_LABELS[type] || type})` };
+
       if (type === 'tf') {
-        quizzesBank[modId].questions.push({ type: 'tf', points: 25, q: 'Nueva afirmación Verdadero / Falso', correctBool: true });
+        base.correctBool = true;
       } else if (type === 'match') {
-        quizzesBank[modId].questions.push({ type: 'match', points: 25, q: 'Relaciona cada concepto con su definición:', pairs: [{ left: 'Concepto A', right: 'Definición A' }, { left: 'Concepto B', right: 'Definición B' }] });
+        base.pairs = [{ left: 'Concepto A', right: 'Definición A' }, { left: 'Concepto B', right: 'Definición B' }];
+      } else if (type === 'checkboxes') {
+        base.options = ['Herramienta 1', 'Herramienta 2', 'Herramienta 3', 'Distractor'];
+        base.correctMultiple = [0, 1];
+      } else if (type === 'dropdown') {
+        base.options = ['Alternativa 1', 'Alternativa 2', 'Alternativa 3'];
+        base.correct = 0;
+      } else if (type === 'linear_scale') {
+        base.scaleMin = 1; base.scaleMax = 5; base.minLabel = 'Nada preparado'; base.maxLabel = 'Preparado';
+      } else if (type === 'grid_radio' || type === 'grid_checkbox') {
+        base.gridRows = ['Fila 1', 'Fila 2'];
+        base.gridCols = ['Criterio A', 'Criterio B', 'Criterio C'];
+      } else if (type === 'file_upload') {
+        base.allowedFormats = 'PDF, XLSX, PNG'; base.maxSizeMb = 10;
+      } else if (type === 'date_time') {
+        base.expectedDate = ''; base.expectedTime = '';
+      } else if (type === 'ordering') {
+        base.orderSteps = ['Paso 1', 'Paso 2', 'Paso 3'];
+      } else if (type === 'cloze') {
+        base.clozeTemplate = 'En la matriz Resumen de aprendizaje, un círculo azul indica [correcta] y una X roja [incorrecta].';
+      } else if (type === 'hotspot') {
+        base.hotspotTarget = 'Control visual objetivo';
       } else {
-        quizzesBank[modId].questions.push({ type: 'mcq', points: 25, q: 'Nueva pregunta de opción múltiple', options: ['Opción A', 'Opción B', 'Opción C'], correct: 0 });
+        base.options = ['Opción correcta', 'Distractor 1', 'Distractor 2', 'Distractor 3'];
+        base.correct = 0;
       }
+
+      quizzesBank[modId].questions.push(base);
       saveCmsState(true);
       renderAdminQuizEditor();
     }
 
+    function duplicateQuizQuestion(modId, qIdx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q) return;
+      quizzesBank[modId].questions.splice(qIdx + 1, 0, JSON.parse(JSON.stringify(q)));
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function addOptionToQuestion(modId, qIdx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q) return;
+      if (!Array.isArray(q.options)) q.options = ['Opción 1', 'Opción 2'];
+      q.options.push(`Opción ${q.options.length + 1}`);
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function removeOptionFromQuestion(modId, qIdx, oIdx) {
+      saveAdminQuizChanges(modId, true);
+      const q = quizzesBank[modId]?.questions[qIdx];
+      if (!q || !Array.isArray(q.options) || q.options.length <= 2) return;
+      q.options.splice(oIdx, 1);
+      saveCmsState(true);
+      renderAdminQuizEditor();
+    }
+
+    function uploadHotspotImage(modId, qIdx, inputEl) {
+      saveAdminQuizChanges(modId, true);
+      handleImageFileToDataUrl(inputEl, (dataUrl) => {
+        const q = quizzesBank[modId]?.questions[qIdx];
+        if (!q) return;
+        q.hotspotImg = dataUrl;
+        saveCmsState(true);
+        renderAdminQuizEditor();
+      });
+    }
+
     function changeQuestionTemplateType(modId, qIdx, newType) {
+      saveAdminQuizChanges(modId, true);
       const q = quizzesBank[modId].questions[qIdx];
       if (!q) return;
       q.type = newType;
       if (newType === 'tf') q.correctBool = true;
       if (newType === 'match' && !q.pairs) q.pairs = [{ left: 'Concepto 1', right: 'Pareja 1' }, { left: 'Concepto 2', right: 'Pareja 2' }];
-      if (newType === 'mcq' && !q.options) { q.options = ['Opción A', 'Opción B', 'Opción C']; q.correct = 0; }
+      if ((newType === 'mcq' || newType === 'checkboxes' || newType === 'dropdown') && !q.options) {
+        q.options = ['Opción A', 'Opción B', 'Opción C'];
+        q.correct = 0;
+        q.correctMultiple = [0];
+      }
       saveCmsState(true);
       renderAdminQuizEditor();
     }
@@ -1871,8 +2500,9 @@ const DEFAULT_AUDIENCE_CATALOG = [
       renderAdminQuizEditor();
     }
 
-    function saveAdminQuizChanges(modId) {
+    function saveAdminQuizChanges(modId, silent = false) {
       const qCfg = quizzesBank[modId];
+      if (!qCfg) return;
       qCfg.minPass = Number(document.getElementById('admQuizMinPass').value || 80);
       qCfg.maxScore = Number(document.getElementById('admQuizMaxScore').value || 100);
 
@@ -1897,18 +2527,34 @@ const DEFAULT_AUDIENCE_CATALOG = [
           qCfg.questions[idx].pairs[pIdx][side] = el.value.trim();
         }
       });
+      document.querySelectorAll('.ed-q-gen').forEach(el => {
+        const idx = Number(el.dataset.qidx);
+        const gfield = el.dataset.gfield;
+        if (!qCfg.questions[idx]) return;
+        if (gfield === 'gridRows' || gfield === 'gridCols' || gfield === 'orderSteps') {
+          qCfg.questions[idx][gfield] = el.value.split('\n').map(s => s.trim()).filter(Boolean);
+        } else {
+          qCfg.questions[idx][gfield] = el.value;
+        }
+      });
 
       qCfg.questions.forEach((qItem, idx) => {
         if (qItem.type === 'tf') {
           const sel = document.querySelector(`input[name="ed_tf_${idx}"]:checked`);
           if (sel) qItem.correctBool = (sel.value === 'true');
-        } else if (qItem.type === 'mcq') {
+        } else if (qItem.type === 'mcq' || qItem.type === 'dropdown') {
           const sel = document.querySelector(`input[name="ed_mcq_${idx}"]:checked`);
           if (sel) qItem.correct = Number(sel.value);
+        } else if (qItem.type === 'checkboxes') {
+          const checkedIndices = [];
+          document.querySelectorAll(`.ed-q-chk-corr[data-qidx="${idx}"]`).forEach(chk => {
+            if (chk.checked) checkedIndices.push(Number(chk.dataset.oidx));
+          });
+          qItem.correctMultiple = checkedIndices;
         }
       });
 
-      saveCmsState(true);
+      saveCmsState(!silent);
     }
 
     // ==================== REAL-TIME DATA SYNC (SUPABASE + LOCAL FALLBACK) ====================
@@ -1947,7 +2593,6 @@ const DEFAULT_AUDIENCE_CATALOG = [
         });
         const mainRows = resMain.ok ? await resMain.json() : [];
 
-        // Fetch role tables in parallel for granular module breakdown
         const roleSlugs = ['docente', 'tutor', 'facilitador', 'monitor', 'supervisor', 'auditor'];
         const roleDetailByEmail = {};
 
@@ -1974,7 +2619,6 @@ const DEFAULT_AUDIENCE_CATALOG = [
           const detailStr = roleDetailByEmail[cleanEmail] || '';
           const modBreakdown = parseModulesDetailString(detailStr, u.role);
 
-          // Also merge any localStorage progress if present on same browser
           try {
             const localProg = JSON.parse(localStorage.getItem(`ihfb_prog_v4_${cleanEmail}`) || 'null');
             if (localProg && typeof localProg === 'object') {
