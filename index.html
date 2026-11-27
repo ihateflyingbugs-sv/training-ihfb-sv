@@ -1806,39 +1806,62 @@
     let ALL_MODULES_MASTER = [];
     let quizzesBank = {};
 
+    let lastAppliedCmsTimestamp = "";
+
+    function applyCmsPayloadToPortal(savedCms) {
+      if (!savedCms || !Array.isArray(savedCms.modules) || savedCms.modules.length === 0) return false;
+      if (savedCms.updatedAt && savedCms.updatedAt === lastAppliedCmsTimestamp) return false;
+      AUDIENCE_CATALOG = (Array.isArray(savedCms.audiences) && savedCms.audiences.length > 0)
+        ? savedCms.audiences
+        : JSON.parse(JSON.stringify(DEFAULT_AUDIENCE_CATALOG));
+      ALL_MODULES_MASTER = savedCms.modules;
+      quizzesBank = (savedCms.quizzes && typeof savedCms.quizzes === 'object')
+        ? savedCms.quizzes
+        : JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
+      if (savedCms.updatedAt) lastAppliedCmsTimestamp = savedCms.updatedAt;
+      return true;
+    }
+
     function loadCmsState() {
       try {
         const savedCms = JSON.parse(localStorage.getItem('ihfb_cms_data_v6') || 'null');
-        if (savedCms && Array.isArray(savedCms.modules) && savedCms.modules.length > 0) {
-          AUDIENCE_CATALOG = savedCms.audiences || JSON.parse(JSON.stringify(DEFAULT_AUDIENCE_CATALOG));
-          ALL_MODULES_MASTER = savedCms.modules;
-          const canonicalTitles = {
-            M1: "Acceso e inicio de sesión",
-            M2: "Navegación y Gestión de Clases",
-            M3: "Clase Regular en Tiempo Real",
-            M4: "Modo de Clase y Herramientas en Vivo",
-            M5: "Monitoreo y Métricas del Aula",
-            M6: "Flujo de Clase",
-            M7: "Supervisión y seguimiento"
-          };
-          ALL_MODULES_MASTER.forEach(m => {
-            if (canonicalTitles[m.id]) m.title = canonicalTitles[m.id];
-            const defMod = DEFAULT_MODULES_MASTER.find(dm => dm.id === m.id);
-            if (defMod && Array.isArray(m.cards)) {
-              m.cards.forEach((c, idx) => {
-                if (Array.isArray(c.points) && c.points.some(pt => /repliques|expediente de ruta|progreso y diploma/i.test(pt))) {
-                  c.points = (defMod.cards[idx] && defMod.cards[idx].points) ? defMod.cards[idx].points : defMod.cards[0].points;
-                }
-              });
-            }
-          });
-          quizzesBank = savedCms.quizzes || JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
-          return;
-        }
+        if (applyCmsPayloadToPortal(savedCms)) return;
       } catch (e) {}
       AUDIENCE_CATALOG = JSON.parse(JSON.stringify(DEFAULT_AUDIENCE_CATALOG));
       ALL_MODULES_MASTER = JSON.parse(JSON.stringify(DEFAULT_MODULES_MASTER));
       quizzesBank = JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
+    }
+
+    async function syncGlobalCmsFromSupabase(forceRefreshUI = true) {
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?id=eq.global&select=*`, {
+          headers: getSbHeaders()
+        });
+        if (!res.ok) return false;
+        const rows = await res.json();
+        if (Array.isArray(rows) && rows.length > 0 && Array.isArray(rows[0].modules) && rows[0].modules.length > 0) {
+          const remote = rows[0];
+          const payload = {
+            audiences: remote.audiences,
+            modules: remote.modules,
+            quizzes: remote.quizzes,
+            updatedAt: remote.updated_at || new Date().toISOString()
+          };
+          const changed = applyCmsPayloadToPortal(payload);
+          localStorage.setItem('ihfb_cms_data_v6', JSON.stringify(payload));
+          if (changed && forceRefreshUI && currentUser) {
+            ALL_MODULES_MASTER.forEach(m => ensureProgressEntry(m.id));
+            if (!document.getElementById('audienceGateScreen').classList.contains('hidden')) {
+              enterAudienceGate();
+            }
+            if (!document.getElementById('workspaceShell').classList.contains('hidden')) {
+              refreshAllWorkspaceUI();
+            }
+          }
+          return changed;
+        }
+      } catch (e) {}
+      return false;
     }
 
     loadCmsState();
@@ -2018,6 +2041,26 @@
         const bl = document.getElementById('trainingBootLoader');
         if (bl) { bl.classList.add('hidden'); bl.classList.remove('flex'); }
       };
+
+      // Fetch latest global modules, videos, manuals, assignments & quizzes from Supabase first
+      await syncGlobalCmsFromSupabase(false);
+
+      // Listen for real-time updates from Admin Console (cross-tab & cloud polling every 10s)
+      try {
+        if ('BroadcastChannel' in window) {
+          const bc = new BroadcastChannel('ihfb_cms_live_channel');
+          bc.onmessage = (ev) => {
+            if (ev.data && ev.data.type === 'CMS_UPDATED') {
+              loadCmsState();
+              if (currentUser) {
+                if (!document.getElementById('audienceGateScreen').classList.contains('hidden')) enterAudienceGate();
+                if (!document.getElementById('workspaceShell').classList.contains('hidden')) refreshAllWorkspaceUI();
+              }
+            }
+          };
+        }
+      } catch (e) {}
+      setInterval(() => syncGlobalCmsFromSupabase(true), 10000);
 
       const handledOAuth = await handleOAuthRedirectCallbackIfPresent();
       if (handledOAuth) {
@@ -2338,7 +2381,7 @@
         const p = ensureProgressEntry(mod.id);
         const modPct = p.quizCompleted ? 100 : (p.practiceCompleted ? 67 : (p.materialConfirmed ? 33 : 0));
         const fallbackKeys = ["M1", "M2", "M3", "M4", "M5", "M6", "M7"];
-        const mascotSrc = MODULE_MASCOT_ART_MAP[mod.id] || MODULE_MASCOT_ART_MAP[fallbackKeys[mIndex % fallbackKeys.length]];
+        const mascotSrc = mod.characterImg || MODULE_MASCOT_ART_MAP[mod.id] || MODULE_MASCOT_ART_MAP[fallbackKeys[mIndex % fallbackKeys.length]];
 
         let badgeHtml = '';
         let barColor = 'bg-slate-200';
