@@ -1896,7 +1896,7 @@ const DEFAULT_AUDIENCE_CATALOG = [
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
-          const maxDim = 420;
+          const maxDim = 1280;
           let w = img.width;
           let h = img.height;
           if (w > maxDim || h > maxDim) {
@@ -1906,8 +1906,10 @@ const DEFAULT_AUDIENCE_CATALOG = [
           canvas.width = w;
           canvas.height = h;
           const ctx = canvas.getContext('2d');
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
           ctx.drawImage(img, 0, 0, w, h);
-          callback(canvas.toDataURL('image/webp', 0.85));
+          callback(canvas.toDataURL('image/webp', 0.90));
         };
         img.src = ev.target.result;
       };
