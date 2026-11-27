@@ -1188,23 +1188,74 @@ const DEFAULT_AUDIENCE_CATALOG = [
       quizzesBank = JSON.parse(JSON.stringify(DEFAULT_QUIZZES_BANK));
     }
 
-    function saveCmsState(notify = false) {
+    async function hydrateCmsFromSupabase() {
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?id=eq.global&select=*`, {
+          headers: getSbHeaders()
+        });
+        if (!res.ok) return false;
+        const rows = await res.json();
+        if (Array.isArray(rows) && rows.length > 0 && Array.isArray(rows[0].modules) && rows[0].modules.length > 0) {
+          const remote = rows[0];
+          AUDIENCE_CATALOG = Array.isArray(remote.audiences) && remote.audiences.length ? remote.audiences : AUDIENCE_CATALOG;
+          ALL_MODULES_MASTER = remote.modules;
+          quizzesBank = (remote.quizzes && typeof remote.quizzes === 'object') ? remote.quizzes : quizzesBank;
+          localStorage.setItem('ihfb_cms_data_v6', JSON.stringify({
+            audiences: AUDIENCE_CATALOG,
+            modules: ALL_MODULES_MASTER,
+            quizzes: quizzesBank,
+            updatedAt: remote.updated_at || new Date().toISOString()
+          }));
+          return true;
+        } else {
+          // Seed initial global configuration in Supabase so all accounts read from cloud immediately
+          await saveCmsState(false);
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    async function saveCmsState(notify = false) {
+      const nowIso = new Date().toISOString();
       const payload = {
         audiences: AUDIENCE_CATALOG,
         modules: ALL_MODULES_MASTER,
         quizzes: quizzesBank,
-        updatedAt: new Date().toISOString()
+        updatedAt: nowIso
       };
       localStorage.setItem('ihfb_cms_data_v6', JSON.stringify(payload));
-      // Instant cross-tab & real-time broadcast to the training portal
+
       try {
         if ('BroadcastChannel' in window) {
           const bc = new BroadcastChannel('ihfb_cms_live_channel');
-          bc.postMessage({ type: 'CMS_UPDATED', updatedAt: payload.updatedAt });
+          bc.postMessage({ type: 'CMS_UPDATED', updatedAt: nowIso });
           bc.close();
         }
       } catch (e) {}
-      if (notify) showAdmToast("Actualizado en tiempo real para todos los roles y audiencias");
+
+      // Persist globally to Supabase `portal_cms_config` so EVERY participant account & device updates immediately
+      try {
+        const res = await fetch(`${TRAINING_SUPABASE_URL}/rest/v1/portal_cms_config?on_conflict=id`, {
+          method: 'POST',
+          headers: getSbHeaders({ 'Prefer': 'resolution=merge-duplicates' }),
+          body: JSON.stringify({
+            id: 'global',
+            audiences: AUDIENCE_CATALOG,
+            modules: ALL_MODULES_MASTER,
+            quizzes: quizzesBank,
+            updated_at: nowIso
+          })
+        });
+        if (notify) {
+          if (res.ok) {
+            showAdmToast("Publicado en la nube para todas las cuentas y roles");
+          } else {
+            showAdmToast("Guardado local; verifica la tabla portal_cms_config en Supabase", true);
+          }
+        }
+      } catch (err) {
+        if (notify) showAdmToast("Guardado local (sin conexión a la nube)", true);
+      }
     }
 
     loadCmsState();
@@ -1322,6 +1373,14 @@ const DEFAULT_AUDIENCE_CATALOG = [
       document.getElementById('admAvatarBadge').textContent = name.charAt(0).toUpperCase();
 
       populateAdmSelectors();
+      hydrateCmsFromSupabase().then((updated) => {
+        if (updated) {
+          populateAdmSelectors();
+          renderAdminAudienceMatrix();
+          renderAdminModuleEditor();
+          renderAdminQuizEditor();
+        }
+      });
       syncAllRealtimeData(false);
       switchAdminTab('dashboard');
 
